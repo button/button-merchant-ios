@@ -1,0 +1,14 @@
+osx_image: xcode9.2
+language: swift
+env:
+  - TEST_SUITE=UnitTests
+  - TEST_SUITE=IntegrationTests
+cache:
+  - bundler
+  - cocoapods
+before_install:
+  - bundle install
+  - pod repo update
+  - pod install
+script:
+  - bundle exec fastlane test scheme:$TEST_SUITE

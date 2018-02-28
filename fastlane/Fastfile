@@ -1,0 +1,30 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Run SwiftLint on the project"
+  lane :lint do
+    swift_lint(:lint)
+  end
+
+  def swift_lint(mode)
+    swiftlint(
+      mode: :lint,
+      config_file: ".swiftlint.yml",
+      output_file: "swiftlint.result.json",
+      executable: "./Pods/SwiftLint/swiftlint"
+    )
+  end
+
+  desc "Run the Button merchant library tests"
+  lane :test do |options|
+
+    lint
+    run_tests(
+      workspace: "ButtonMerchant.xcworkspace",
+      scheme: options[:scheme],
+      device: "iPhone X",
+      slack_message: "button-merchant-ios"
+    )
+  end
+end
