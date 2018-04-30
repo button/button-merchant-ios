@@ -1,6 +1,6 @@
 /**
 
- PublicInterface.swift
+ ApplicationId.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,17 +24,6 @@
 
 */
 
-public protocol PublicStaticInterface {
-    static var attributionToken: String? { get }
-    static func configure(applicationId: String)
-    static func trackIncomingURL(_ url: URL)
-    static func clearAllData()
-    static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
-}
-
-internal protocol PublicInterface {
-    var attributionToken: String? { get set }
-    func clearAllData()
-    func trackIncomingURL(_ url: URL)
-    func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
+public struct ApplicationId {
+    static let stringValue: String? = {% if argument.application_id != 1 %}"{{ argument.application_id }}"{% else %}nil{% endif %}
 }

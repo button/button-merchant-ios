@@ -1,6 +1,6 @@
 /**
 
- Order.swift
+ TrackOrderBody.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -26,46 +26,49 @@
 
 import Foundation
 
-/**
-Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
- */
-final public class Order: NSObject, Codable {
+internal struct TrackOrderBody: Codable {
 
-    /**
-     The order identifier (required).
-     */
-    let id: String
-
-    /**
-     The total order value in pennies (e.g. 3999 for $39.99)
-     or the smallest decimal unit of the currency.
-     */
-    private(set) var amount: Int64?
-
-    /**
-     The ISO 4217 currency code (default is USD).
-     */
-    private(set) var currencyCode: String
-
-    /**
-     Initializes an order object with the passed parameters.
-
-     - Parameters:
-        - id: The order identifier (required).
-        - amount: The total order value in pennies or the
-                  smallest decimal unit of the currency (e.g. 3999 for $39.99).
-        - currencyCode: The ISO 4217 currency code (default is USD).
-     */
-    public init(id: String, amount: Int64?, currencyCode: String = "USD") {
-        self.id = id
-        self.amount = amount
-        self.currencyCode = currencyCode
-    }
+    let applicationId: String
+    let attributionToken: String?
+    let device: Device
+    let userLocalTime: String
+    let type: String = "order-checkout"
+    let order: Order
 
     enum CodingKeys: String, CodingKey {
-        case id = "order_id"
-        case amount
-        case currencyCode = "currency_code"
+        case applicationId = "app_id"
+        case attributionToken = "btn_ref"
+        case userLocalTime = "user_local_time"
+        case device
+        case type
+        case order
     }
 
+    init(system: SystemProtocol,
+         applicationId: String,
+         attributionToken: String?,
+         order: Order) {
+
+        device = Device(system: system)
+        userLocalTime = system.currentDate.ISO8601String
+        self.applicationId = applicationId
+        self.attributionToken = attributionToken
+        self.order = order
+    }
+
+    internal struct Device: Codable {
+
+        let ifa: String
+        let ifaLimited: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case ifa
+            case ifaLimited = "ifa_limited"
+        }
+
+        init(system: SystemProtocol) {
+            ifa = system.adIdManager.advertisingIdentifier.uuidString
+            ifaLimited = !system.adIdManager.isAdvertisingTrackingEnabled
+        }
+    }
 }

@@ -11,7 +11,8 @@ excluded:
 
 
 disabled_rules:
-  leading_whitespace
+  - leading_whitespace
+  - nesting
 
 opt_in_rules:
   conditional_returns_on_newline
@@ -19,7 +20,6 @@ opt_in_rules:
   file_header
   # single_test_class
   # explicit_acl
-  # file_length
 
 # Rule Configuration
 
@@ -145,19 +145,11 @@ large_tuple:
   error: 3
 
 line_length:
-  warning: 120
+  warning: 150
   error: 200
   ignores_urls: false
   ignores_function_declarations: true
   ignores_comments: false
-
-nesting:
-  type_level:
-    warning: 1
-    error: nil
-  statementLevel:
-    warning: 5
-    error: nil
 
 private_over_fileprivate:
   severity: error
@@ -181,12 +173,15 @@ trailing_whitespace:
   ignores_comments: true
 
 type_body_length:
-  warning: 250
+  warning: 300
   error: 350
 
 unused_optional_binding:
   severity: error
   ignore_optional_try: false
+
+file_length:
+  warning: 500
 
 ## Opt-In
 conditional_returns_on_newline: error

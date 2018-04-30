@@ -5,6 +5,7 @@ pod 'SwiftLint'
 
 target 'Example' do
   pod 'ButtonMerchant', :path => './'
+  pod 'Sourcery'
 end
 
 target 'ButtonMerchant' do
@@ -14,4 +15,12 @@ target 'UnitTests' do
 end
 
 target 'IntegrationTests' do
+end
+
+post_install do |installer|
+    podspec = JSON.parse(`pod ipc spec ./ButtonMerchant.podspec`)
+    version = podspec["version"]
+    `Pods/Sourcery/bin/sourcery --templates .templates/Version.stencil --sources . --output Source/Version/ --args version=#{version}`
+    `Pods/Sourcery/bin/sourcery --templates .templates/VersionTests.stencil --sources . --output Tests/UnitTests/Version/ --args version=#{version}`
+    `/usr/libexec/PlistBuddy -c "set :CFBundleShortVersionString '#{version}'" Source/Info.plist`
 end

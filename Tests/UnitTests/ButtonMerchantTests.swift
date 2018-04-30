@@ -27,101 +27,121 @@
 import XCTest
 @testable import ButtonMerchant
 
-class MerchantTests: XCTestCase {
-    
+class ButtonMerchantTests: XCTestCase {
+
     override func tearDown() {
         super.tearDown()
         ButtonMerchant._core = nil
     }
-    
-    func testVersion() {
-        XCTAssertEqual(ButtonMerchantVersionNumber, 0.1)
+
+    func testBuildNumber() {
+        XCTAssertEqual(ButtonMerchantVersionNumber, 1)
     }
-    
+
     func testConfigureApplicationId() {
         // Arrange
-        let applicationId = "derp"
+        let applicationId = "app-test"
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession()),
+                                client: TestClient(session: TestURLSession(),
+                                                   userAgent: TestUserAgent(system: TestSystem())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
         // Act
         ButtonMerchant._core = testCore
         ButtonMerchant.configure(applicationId: applicationId)
-        
+
         // Assert
-        XCTAssertEqual(applicationId, testCore.applicationId)
+        XCTAssertEqual(testCore.applicationId, applicationId)
     }
-    
+
     func testCreateCoreCreatesCoreWhenCoreSetToNil() {
         ButtonMerchant._core = nil
-        
-        ButtonMerchant.configure(applicationId: "derp")
-        
+        ButtonMerchant.configure(applicationId: "app-test")
         XCTAssertTrue(ButtonMerchant._core is Core)
     }
-    
+
     func testTrackIncomingURLInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession()),
+                                client: TestClient(session: TestURLSession(),
+                                                   userAgent: TestUserAgent(system: TestSystem())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "usebutton.com")!
-        
+
         // Act
         ButtonMerchant._core = testCore
         ButtonMerchant.trackIncomingURL(expectedUrl)
         let actualUrl = testCore.testUrl
-        
+
         // Assert
-        XCTAssertEqual(expectedUrl, actualUrl)
+        XCTAssertEqual(actualUrl, expectedUrl)
     }
-    
+
     func testAccessingAttributionToken() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession()),
+                                client: TestClient(session: TestURLSession(),
+                                                   userAgent: TestUserAgent(system: TestSystem())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         testCore.testToken = "srctok-123"
         let expectedToken = testCore.testToken
-        
+
         // Act
         ButtonMerchant._core = testCore
-        
+
         // Assert
         XCTAssertNotNil(ButtonMerchant.attributionToken)
         XCTAssertEqual(ButtonMerchant.attributionToken, expectedToken)
     }
-    
+
     func testClearAllDataInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession()),
+                                client: TestClient(session: TestURLSession(),
+                                                   userAgent: TestUserAgent(system: TestSystem())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
         // Act
         ButtonMerchant._core = testCore
         ButtonMerchant.clearAllData()
-        
+
         // Assert
         XCTAssertTrue(testCore.didCallClearAllData)
     }
-    
+
     func testHandlePostInstallURLInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession()),
+                                client: TestClient(session: TestURLSession(),
+                                                   userAgent: TestUserAgent(system: TestSystem())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
         // Act
         ButtonMerchant._core = testCore
         ButtonMerchant.handlePostInstallURL { _, _  in }
-        
+
         XCTAssertTrue(testCore.didCallFetchPostInstallURL)
+    }
+
+    func testTrackOrderInvokesCoreWithOrder() {
+        // Arrange
+        let testSystem = TestSystem()
+        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                system: testSystem,
+                                notificationCenter: TestNotificationCenter())
+        let expectedOrder = Order(id: "test", amount: Int64(12))
+
+        // Act
+        ButtonMerchant._core = testCore
+        ButtonMerchant.trackOrder(expectedOrder) { _ in }
+
+        // Assert
+        XCTAssertEqual(testCore.testOrder, expectedOrder)
     }
 }

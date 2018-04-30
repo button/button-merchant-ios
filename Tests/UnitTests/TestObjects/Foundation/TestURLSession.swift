@@ -31,17 +31,12 @@ class TestURLSession: URLSessionProtocol {
     
     // Test Properties
     var didCallDataTaskWithRequest = false
-    var lastRequest: URLRequest?
-    
-    func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
-        return (URLSessionDataTask() as URLSessionDataTaskProtocol)
-    }
+    var lastDataTask: TestURLSessionDataTask?
     
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
-        lastRequest = request
         didCallDataTaskWithRequest = true
-        completionHandler(nil, nil, nil)
-        return TestURLSessionDataTask()
+        lastDataTask = TestURLSessionDataTask(request: request, completion: completionHandler)
+        return lastDataTask!
     }
 
 }

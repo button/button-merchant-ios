@@ -28,14 +28,13 @@ import Foundation
 
 internal extension Date {
 
-    static var ISO8601Formatter: DateFormatter {
+    static let ISO8601Formatter = { () -> DateFormatter in
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return formatter
-    }
-
+    }()
+    
     var ISO8601String: String {
         return Date.ISO8601Formatter.string(from: self)
     }
-
 }

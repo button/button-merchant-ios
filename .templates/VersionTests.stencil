@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ VersionTests.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +24,17 @@
 
 */
 
-import Foundation
+import XCTest
+@testable import ButtonMerchant
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+class VersionTests: XCTestCase {
+
+    func testLibraryVersion() {
+        XCTAssertEqual(Version.stringValue, "{{ argument.version }}")
+    }
+
+    func testPlistVersion() {
+      let libraryBundle = Bundle(for: ButtonMerchant.self)
+      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "{{ argument.version }}")
+    }
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

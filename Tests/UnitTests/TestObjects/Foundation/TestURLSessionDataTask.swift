@@ -31,6 +31,13 @@ class TestURLSessionDataTask: URLSessionDataTaskProtocol {
     
     // Test Properties
     var didCallResume = false
+    var originalRequest: URLRequest?
+    var completion: (Data?, URLResponse?, Error?) -> Void
+    
+    required init(request: URLRequest, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        self.originalRequest = request
+        self.completion = completion
+    }
     
     func resume() {
         didCallResume = true

@@ -1,6 +1,9 @@
+// Generated using Sourcery 0.13.0 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
+
 /**
 
- URLSessionDataTaskExtensions.swift
+ Version.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +27,6 @@
 
 */
 
-import Foundation
-
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+public struct Version {
+    static let stringValue = "0.1.0-beta.2"
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

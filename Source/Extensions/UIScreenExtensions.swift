@@ -28,6 +28,7 @@ import UIKit
 
 internal protocol UIScreenProtocol: class {
     var nativeBounds: CGRect { get }
+    var scale: CGFloat { get }
 }
 
 extension UIScreen: UIScreenProtocol {}

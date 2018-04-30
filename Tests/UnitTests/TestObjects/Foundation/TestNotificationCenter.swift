@@ -28,7 +28,8 @@ import Foundation
 @testable import ButtonMerchant
 
 class TestNotificationCenter: NSObject {
-    // Test properties
+
+    // Test Properties
     var didCallPostNotification = false
     var testNotificationName: Notification.Name?
     var testObject: Any?

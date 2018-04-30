@@ -38,7 +38,7 @@ class IntegrationTests: XCTestCase {
     }
     
     func testUnattributedURLDoesNotStoreToken() {
-        ButtonMerchant.trackIncomingURL(URL(string: "http://derp.com")!)
+        ButtonMerchant.trackIncomingURL(URL(string: "http://usebutton.com")!)
 
         XCTAssertNil(ButtonMerchant.attributionToken)
     }

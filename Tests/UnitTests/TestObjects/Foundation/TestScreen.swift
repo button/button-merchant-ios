@@ -33,4 +33,9 @@ class TestScreen: UIScreenProtocol {
     var nativeBounds: CGRect {
         return CGRect(x: 0.0, y: 0.0, width: 1080.0, height: 1920.0)
     }
+
+    var scale: CGFloat {
+        return 2.0
+    }
+
 }

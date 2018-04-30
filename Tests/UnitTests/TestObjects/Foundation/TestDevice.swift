@@ -29,10 +29,18 @@ import UIKit
 
 class TestDevice: UIDeviceProtocol {
 
+    // Test Properties
     var testModel: String?
+    var testModelName: String?
 
     var model: String {
         return testModel ?? "iPhone"
+    }
+    var modelName: String {
+        return testModelName ?? "iPhone10,1"
+    }
+    func machineName(from systemInfo: utsname) -> String {
+        return modelName
     }
 
     var systemVersion: String {

@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ TestUTSName.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -23,12 +23,14 @@
  SOFTWARE.
 
 */
-
+	
 import Foundation
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+struct TestUTSName {
+    static let systemInfo: utsname = {
+        var info = utsname()
+        // swiftlint:disable:next tuple_length line_length
+        info.machine = (105, 80, 104, 111, 110, 101, 49, 48, 44, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+        return info
+    }()
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

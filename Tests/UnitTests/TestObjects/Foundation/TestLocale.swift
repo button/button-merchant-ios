@@ -28,11 +28,14 @@ import UIKit
 @testable import ButtonMerchant
 
 class TestLocale: LocaleProtocol {
+
+    static var testPreferredLanguages = ["en-US"]
     static var preferredLanguages: [String] {
-        return ["en"]
+        return testPreferredLanguages
     }
 
+    var testRegionCode: String? = "US"
     var regionCode: String? {
-        return "US"
+        return testRegionCode
     }
 }

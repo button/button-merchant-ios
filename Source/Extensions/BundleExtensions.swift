@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ BundleExtensions.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -23,12 +23,12 @@
  SOFTWARE.
 
 */
-
+	
 import Foundation
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+internal protocol BundleProtocol: class {
+    var infoDictionary: [String: Any]? { get }
+    var bundleIdentifier: String? { get }
 }
 
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+extension Bundle: BundleProtocol {}

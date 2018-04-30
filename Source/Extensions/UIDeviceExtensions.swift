@@ -21,14 +21,35 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
- 
+
 */
-	
+
 import UIKit
 
 internal protocol UIDeviceProtocol: class {
     var model: String { get }
     var systemVersion: String { get }
+    var modelName: String { get }
+    func machineName(from systemInfo: utsname) -> String
 }
 
-extension UIDevice: UIDeviceProtocol {}
+extension UIDevice: UIDeviceProtocol {
+
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        return machineName(from: systemInfo)
+    }
+    
+    func machineName(from systemInfo: utsname) -> String {
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else {
+                return identifier
+            }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+
+}

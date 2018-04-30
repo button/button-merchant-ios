@@ -1,6 +1,6 @@
 /**
 
- OrderTests.swift
+ URLSessionTests.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -27,41 +27,19 @@
 import XCTest
 @testable import ButtonMerchant
 
-class OrderTests: XCTestCase {
-
-    func testInitializatingAllValues() {
+class URLSessionTests: XCTestCase {
+    
+    func testDataTaskReturnsURLSessionDataTaskProtocol() {
         // Arrange
-        let expectedId = "derp-123"
-        let expectedAmount: Int64 = 499
-        let expectedCurrency = "USD"
-
+        let session = URLSession(configuration: .default) as URLSessionProtocol
+        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
+        
         // Act
-        let order = Order(id: expectedId, amount: expectedAmount, currencyCode: expectedCurrency)
-        let actualId = order.id
-        let actualAmount = order.amount
-        let actualCurrency = order.currencyCode
-
+        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
+        
         // Assert
-        XCTAssertEqual(expectedId, actualId)
-        XCTAssertEqual(expectedAmount, actualAmount)
-        XCTAssertEqual(expectedCurrency, actualCurrency)
-    }
-
-    func testInitializingRequiredValues() {
-        // Arrange
-        let expectedId = "derp-abc"
-        let expectedCurrency = "USD"
-
-        // Act
-        let order = Order(id: expectedId, amount: nil)
-        let actualId = order.id
-        let actualAmount = order.amount
-        let actualCurrency = order.currencyCode
-
-        // Assert
-        XCTAssertEqual(expectedId, actualId)
-        XCTAssertNil(actualAmount)
-        XCTAssertEqual(expectedCurrency, actualCurrency)
+        XCTAssertNotNil(task)
+        XCTAssertEqual(task.originalRequest, expectedRequest)
     }
     
 }

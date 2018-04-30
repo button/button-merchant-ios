@@ -16,6 +16,11 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
+### ios version
+```
+fastlane ios version
+```
+Current library version
 ### ios lint
 ```
 fastlane ios lint
@@ -26,6 +31,11 @@ Run SwiftLint on the project
 fastlane ios test
 ```
 Run the Button merchant library tests
+### ios post_install_test
+```
+fastlane ios post_install_test
+```
+Run end-to-end post install test
 
 ----
 

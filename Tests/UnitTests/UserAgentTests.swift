@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ UserAgentTests.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +24,23 @@
 
 */
 
-import Foundation
+import XCTest
+@testable import ButtonMerchant
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+class UserAgentTests: XCTestCase {
+
+    func testUserAgentStringIsCorrectOnInitialization() {
+        // Arrange
+        let expectedUserAgentString = "com.usebutton.merchant/0.1.0-test+1 (iOS 11.0; iPhone10,1; com.usebutton.app/1.0.1+1; Scale/2.00; en-US)"
+        let testAppBundle = TestBundle()
+        let testSystem = TestSystem(bundle: testAppBundle)
+        let userAgent = UserAgent(libraryVersion: "0.1.0-test", system: testSystem)
+
+        // Act
+        let actualUserAgentString = userAgent.stringRepresentation
+
+        // Assert
+        XCTAssertEqual(actualUserAgentString, expectedUserAgentString)
+    }
+
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

@@ -1,6 +1,9 @@
+// Generated using Sourcery 0.13.0 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
+
 /**
 
- URLSessionDataTaskExtensions.swift
+ VersionTests.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +27,17 @@
 
 */
 
-import Foundation
+import XCTest
+@testable import ButtonMerchant
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+class VersionTests: XCTestCase {
+
+    func testLibraryVersion() {
+        XCTAssertEqual(Version.stringValue, "0.1.0-beta.2")
+    }
+
+    func testPlistVersion() {
+      let libraryBundle = Bundle(for: ButtonMerchant.self)
+      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "0.1.0-beta.2")
+    }
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

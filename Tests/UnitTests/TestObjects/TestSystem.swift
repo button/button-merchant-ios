@@ -5,8 +5,8 @@ final class TestSystem: SystemProtocol {
 
     //Test Properties
     var testIsNewInstall = false
-    var testCurrentDate: Date = Date.ISO8601Formatter.date(from: "2018-01-23T12:00:00Z")!
-    var testSignals: Signals?
+    var testCurrentDate: Date
+    var testSignals: PostInstallBody.Signals?
 
     // SystemProtocol
     var fileManager: FileManagerProtocol
@@ -15,6 +15,7 @@ final class TestSystem: SystemProtocol {
     var device: UIDeviceProtocol
     var screen: UIScreenProtocol
     var locale: LocaleProtocol
+    var bundle: BundleProtocol
 
     var currentDate: Date {
         return testCurrentDate
@@ -29,12 +30,19 @@ final class TestSystem: SystemProtocol {
          adIdManager: ASIdentifierManagerProtocol = TestAdIdManager(),
          device: UIDeviceProtocol = TestDevice(),
          screen: UIScreenProtocol = TestScreen(),
-         locale: LocaleProtocol = TestLocale()) {
+         locale: LocaleProtocol = TestLocale(),
+         bundle: BundleProtocol = TestBundle()) {
+
+        // Fix timezone to UTC for tests.
+        Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
+        testCurrentDate = Date.ISO8601Formatter.date(from: "2018-01-23T12:00:00Z")!
+
         self.fileManager = fileManager
         self.calendar = calendar
         self.adIdManager = adIdManager
         self.device = device
         self.screen = screen
         self.locale = locale
+        self.bundle = bundle
     }
 }

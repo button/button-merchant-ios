@@ -1,6 +1,7 @@
+//
 /**
 
- PostInstallBody.swift
+ TestBundle.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -23,20 +24,29 @@
  SOFTWARE.
 
 */
-
+	
 import Foundation
+@testable import ButtonMerchant
 
-internal struct PostInstallBody: Codable {
+class TestBundle: BundleProtocol {
 
-    let applicationId: String
-    let ifa: String
-    let ifaLimited: Bool
-    let signals: Signals
+    // Test Values
+    var testReleaseVersion = "1.0.1"
+    var testBuildVersion = "1"
+    var testBundleIdentifier = "com.usebutton.app"
+    var testLibraryBundle: TestBundle?
 
-    enum CodingKeys: String, CodingKey {
-        case applicationId = "application_id"
-        case ifa
-        case ifaLimited = "ifa_limited"
-        case signals
+    var infoDictionary: [String: Any]? {
+        return [
+                "CFBundleVersion": testBuildVersion,
+                "CFBundleShortVersionString": testReleaseVersion
+                ]
     }
+
+    var bundleIdentifier: String? {
+        return testBundleIdentifier
+    }
+
+    required init() {}
+    
 }

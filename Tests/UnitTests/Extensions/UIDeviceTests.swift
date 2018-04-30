@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ UIDeviceTests.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -23,12 +23,20 @@
  SOFTWARE.
 
 */
+	
+import XCTest
+@testable import ButtonMerchant
 
-import Foundation
-
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+class UIDeviceTests: XCTestCase {
+    
+    func testModelName() {
+        let modelName = UIDevice.current.modelName
+        XCTAssertEqual(modelName, "x86_64")
+    }
+    
+    func testMachineName() {
+        let machineName = UIDevice.current.machineName(from: TestUTSName.systemInfo)
+        XCTAssertEqual(machineName, "iPhone10,6")
+    }
+    
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

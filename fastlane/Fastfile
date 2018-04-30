@@ -1,6 +1,21 @@
+fastlane_require 'timeout'
+
+@fastfile_dir = File.expand_path(File.dirname(__FILE__))
+BUNDLE_ID = "com.usebutton.merchant-example"
+TEST_URL = "https://btnmerchant.bttn.io/test?btn_ref=faketok-test"
+EXAMPLE_APP = "#{@fastfile_dir}/../build/Build/Products/Debug-iphonesimulator/Example.app"
+POST_INSTALL_PATTERN = /Example.+faketok-test/
+SIM_LOG_PREDICATE = "message == 'Post install: #{TEST_URL}&from_appstore=true'"
+
 default_platform(:ios)
 
 platform :ios do
+
+  desc "Current library version"
+  lane :version do
+    podspec = JSON.parse(`pod ipc spec ../ButtonMerchant.podspec`)
+    UI.message podspec["version"]
+  end
 
   desc "Run SwiftLint on the project"
   lane :lint do
@@ -18,7 +33,6 @@ platform :ios do
 
   desc "Run the Button merchant library tests"
   lane :test do |options|
-
     lint
     run_tests(
       workspace: "ButtonMerchant.xcworkspace",
@@ -27,4 +41,45 @@ platform :ios do
       slack_message: "button-merchant-ios"
     )
   end
+
+  desc "Run end-to-end post install test"
+  lane :post_install_test do
+    system("xcrun simctl uninstall booted #{BUNDLE_ID}")
+    system("xcrun simctl openurl booted '#{TEST_URL}&btn_direct=true'")
+    xcodebuild(
+      workspace: "ButtonMerchant.xcworkspace",
+      scheme: "Example",
+      destination: "platform=iOS Simulator,name=iPhone X",
+      sdk: "iphonesimulator",
+      configuration: "Debug",
+      derivedDataPath: "./build"
+    )
+    system("xcrun simctl install booted #{EXAMPLE_APP}")
+    system("xcrun simctl launch booted #{BUNDLE_ID}")
+    capture_simulator_log()
+    assert_post_install_url_in_log()
+  end
+
+  def capture_simulator_log()
+    begin
+      Timeout::timeout(2) {
+        system("xcrun simctl spawn booted log stream \
+          --predicate \"#{SIM_LOG_PREDICATE}\" \
+          --level=debug > test_output/sim.log")
+      }
+    rescue Timeout::Error
+    end
+  end
+
+  def assert_post_install_url_in_log()
+    File.open "#{@fastfile_dir}/test_output/sim.log" do |file|
+      result = file.find { |line| line =~ POST_INSTALL_PATTERN }
+      if result.nil? || result.empty?
+        UI.user_error!("📵  No post install url detected \n#{result}")
+      else
+        UI.message "✅  Post install url found: (#{TEST_URL})\n#{result}"
+      end
+    end
+  end
+
 end

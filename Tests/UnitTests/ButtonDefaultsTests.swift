@@ -86,7 +86,7 @@ class ButtonDefaultsTests: XCTestCase {
         let testUserDefaults = TestUserDefaults()
         let expectedToken = "srctok-123"
         testUserDefaults.values[ButtonDefaults.Keys.attributonToken.key] = expectedToken
-        testUserDefaults.values["com.usebutton.derp"] = expectedToken
+        testUserDefaults.values["com.usebutton.test"] = expectedToken
         let defaults = ButtonDefaults(userDefaults: testUserDefaults)
         
         // Act

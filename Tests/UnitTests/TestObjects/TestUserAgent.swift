@@ -1,6 +1,7 @@
+//
 /**
 
- URLSessionDataTaskExtensions.swift
+ TestUserAgent.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -25,10 +26,16 @@
 */
 
 import Foundation
+@testable import ButtonMerchant
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+class TestUserAgent: UserAgentProtocol {
+
+    var libraryVersion: String
+    var system: SystemProtocol
+    var stringRepresentation = "com.usebutton.test/1.0.0+2 (iOS 11.0; iPhone10,1; com.usebutton.fake/2.0.1+3; Scale/2.00; en-US)"
+
+    required init(libraryVersion: String = "0.1.0-test", system: SystemProtocol = TestSystem()) {
+        self.libraryVersion = libraryVersion
+        self.system = system
+    }
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

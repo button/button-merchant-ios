@@ -36,12 +36,14 @@ class SystemTests: XCTestCase {
         let device = TestDevice()
         let screen = TestScreen()
         let locale = TestLocale()
+        let bundle = TestBundle()
         let system = System(fileManager: fileManager,
                              calendar: calendar,
                              adIdManager: adIdManager,
                              device: device,
                              screen: screen,
-                             locale: locale)
+                             locale: locale,
+                             bundle: bundle)
         XCTAssertEqualReferences(system.fileManager, fileManager)
         XCTAssertEqualReferences(system.calendar as AnyObject, calendar)
         XCTAssertEqualReferences(system.adIdManager, adIdManager)
@@ -56,7 +58,8 @@ class SystemTests: XCTestCase {
                             adIdManager: TestAdIdManager(),
                             device: TestDevice(),
                             screen: TestScreen(),
-                            locale: TestLocale())
+                            locale: TestLocale(),
+                            bundle: TestBundle())
         XCTAssertEqual(system.currentDate.ISO8601String, Date().ISO8601String)
     }
 
@@ -71,7 +74,8 @@ class SystemTests: XCTestCase {
                             adIdManager: TestAdIdManager(),
                             device: TestDevice(),
                             screen: TestScreen(),
-                            locale: TestLocale())
+                            locale: TestLocale(),
+                            bundle: TestBundle())
 
         // Act
         let isNewInstall = system.isNewInstall
@@ -91,7 +95,8 @@ class SystemTests: XCTestCase {
                             adIdManager: TestAdIdManager(),
                             device: TestDevice(),
                             screen: TestScreen(),
-                            locale: TestLocale())
+                            locale: TestLocale(),
+                            bundle: TestBundle())
 
         // Act
         let isNewInstall = system.isNewInstall
@@ -111,11 +116,32 @@ class SystemTests: XCTestCase {
                             adIdManager: TestAdIdManager(),
                             device: TestDevice(),
                             screen: TestScreen(),
-                            locale: TestLocale())
+                            locale: TestLocale(),
+                            bundle: TestBundle())
 
         // Act
         let isNewInstall = system.isNewInstall
 
+        // Assert
+        XCTAssertFalse(isNewInstall)
+    }
+    
+    func testIsNewInstallFalseWithoutFileCreationDate() {
+        // Arrange
+        let testFileManager = TestFileManager()
+        let testCalendar = TestCalendar()
+        testCalendar.testCurrentDateString = "2018-01-23T23:00:00Z" // 11pm
+        let system = System(fileManager: testFileManager,
+                            calendar: testCalendar,
+                            adIdManager: TestAdIdManager(),
+                            device: TestDevice(),
+                            screen: TestScreen(),
+                            locale: TestLocale(),
+                            bundle: TestBundle())
+        
+        // Act
+        let isNewInstall = system.isNewInstall
+        
         // Assert
         XCTAssertFalse(isNewInstall)
     }

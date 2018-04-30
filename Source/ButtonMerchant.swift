@@ -27,7 +27,7 @@
 import UIKit
 import AdSupport
 
-final public class ButtonMerchant: NSObject, PublicStaticInterface {
+final public class ButtonMerchant: NSObject {
     
     // swiftlint:disable:next identifier_name
     internal static var _core: CoreProtocol?
@@ -110,6 +110,20 @@ final public class ButtonMerchant: NSObject, PublicStaticInterface {
     }
 
     /**
+     Tracks an order.
+
+     This signal is used to power the Instant Rewards feature for Publishers to notify
+     their customers as quickly as possible that their order has been correctly tracked.
+
+     - Attention:
+     This does not replace server-side order reporting to Button.
+     [See: order reporting](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api)
+     */
+    public static func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
+        core.trackOrder(order, completion)
+    }
+
+    /**
      Discards the current session and all persisted data.
      */
     public static func clearAllData() {
@@ -124,9 +138,10 @@ final public class ButtonMerchant: NSObject, PublicStaticInterface {
                             adIdManager: ASIdentifierManager.shared(),
                             device: UIDevice.current,
                             screen: UIScreen.main,
-                            locale: NSLocale.current)
+                            locale: NSLocale.current,
+                            bundle: Bundle.main)
         return Core(buttonDefaults: ButtonDefaults(userDefaults: UserDefaults.button),
-                    client: Client(session: URLSession.shared),
+                    client: Client(session: URLSession.shared, userAgent: UserAgent(libraryVersion: Version.stringValue, system: system)),
                     system: system,
                     notificationCenter: NotificationCenter.default)
     }

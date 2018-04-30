@@ -31,6 +31,7 @@ class ViewController: UITableViewController {
 
     @IBOutlet weak var attributionTokenCell: UITableViewCell!
     @IBOutlet weak var trackIncomingURLCell: UITableViewCell!
+    @IBOutlet weak var trackOrderCell: UITableViewCell!
     @IBOutlet weak var clearAllDataCell: UITableViewCell!
     
     var attributionTokenString: String? {
@@ -67,6 +68,8 @@ class ViewController: UITableViewController {
         switch cell {
         case trackIncomingURLCell:
             trackIncomingURL()
+        case trackOrderCell:
+            trackOrder()
         case clearAllDataCell:
             clearAllData()
         default: break
@@ -76,8 +79,17 @@ class ViewController: UITableViewController {
     }
 
     func trackIncomingURL() {
+        // Simulates an incoming url with a Button attribution token.
         let num = arc4random_uniform(10000)
         UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=srctok-test\(num)")!)
+    }
+
+    func trackOrder() {
+        let amount = arc4random_uniform(1000)
+        let order = Order(id: NSUUID().uuidString, amount: Int64(amount))
+        ButtonMerchant.trackOrder(order) { error in
+            print("Tracked order \(String(describing: error))")
+        }
     }
 
     func clearAllData() {

@@ -26,21 +26,22 @@
 
 import AdSupport
 
-internal protocol CoreProtocol: PublicInterface {
+internal protocol CoreProtocol {
     var applicationId: String? { get set }
     var buttonDefaults: ButtonDefaultsProtocol { get }
     var client: ClientProtocol { get }
     var system: SystemProtocol { get }
     var notificationCenter: NotificationCenterProtocol { get }
     var shouldFetchPostInstallURL: Bool { get }
+    var attributionToken: String? { get set }
+    func clearAllData()
+    func trackIncomingURL(_ url: URL)
+    func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
+    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
     init(buttonDefaults: ButtonDefaultsProtocol,
          client: ClientProtocol,
          system: SystemProtocol,
          notificationCenter: NotificationCenterProtocol)
-}
-
-public enum ConfigurationError: Error {
-    case noApplicationId
 }
 
 /**
@@ -57,6 +58,15 @@ final internal class Core: CoreProtocol {
     var shouldFetchPostInstallURL: Bool {
         return !buttonDefaults.hasFetchedPostInstallURL && system.isNewInstall
     }
+
+    var attributionToken: String? {
+        get {
+            return buttonDefaults.attributionToken
+        }
+        set {
+            buttonDefaults.attributionToken = newValue
+        }
+    }
     
     required init(buttonDefaults: ButtonDefaultsProtocol,
                   client: ClientProtocol,
@@ -66,17 +76,6 @@ final internal class Core: CoreProtocol {
         self.client = client
         self.system = system
         self.notificationCenter = notificationCenter
-    }
-
-    // MARK: - PublicInterface Protocol
-
-    var attributionToken: String? {
-        get {
-            return buttonDefaults.attributionToken
-        }
-        set {
-            buttonDefaults.attributionToken = newValue
-        }
     }
 
     /**
@@ -97,23 +96,20 @@ final internal class Core: CoreProtocol {
                 return
         }
 
-        if let queryItem = queryItems.first(where: {$0.name == "btn_ref"}) {
+        if let queryItem = queryItems.first(where: {$0.name == "btn_ref"}),
+            let newAttributionToken = queryItem.value {
             
             let oldAttributionToken = attributionToken
-            attributionToken = queryItem.value
-            
-            guard let attributionToken = attributionToken else {
-                return
-            }
+            attributionToken = newAttributionToken
             
             var isNewToken = true
             if let oldAttributionToken = oldAttributionToken {
-                isNewToken = oldAttributionToken != attributionToken
+                isNewToken = oldAttributionToken != newAttributionToken
             }
             if isNewToken {
                 notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
-                                        object: self,
-                                        userInfo: [Notification.Key.NewToken: attributionToken])
+                                        object: nil,
+                                        userInfo: [Notification.Key.NewToken: newAttributionToken])
             }
         }
     }
@@ -134,11 +130,7 @@ final internal class Core: CoreProtocol {
 
         buttonDefaults.hasFetchedPostInstallURL = true
 
-        let postInstallBody = PostInstallBody(applicationId: appId,
-                                              ifa: system.adIdManager.advertisingIdentifier.uuidString,
-                                              ifaLimited: !system.adIdManager.isAdvertisingTrackingEnabled,
-                                              signals: Signals(system: system))
-
+        let postInstallBody = PostInstallBody(system: system, applicationId: appId)
         let parameters = postInstallBody.dictionaryRepresentation
 
         client.fetchPostInstallURL(parameters: parameters) { [weak self] url, attributionToken in
@@ -148,4 +140,23 @@ final internal class Core: CoreProtocol {
             completion(url, nil)
         }
     }
+
+    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
+        guard let appId = applicationId, !appId.isEmpty else {
+            if let completion = completion {
+                completion(ConfigurationError.noApplicationId)
+            }
+            return
+        }
+
+        let trackOrderBody = TrackOrderBody(system: system,
+                                            applicationId: appId,
+                                            attributionToken: buttonDefaults.attributionToken,
+                                            order: order)
+
+        let parameters = trackOrderBody.dictionaryRepresentation
+
+        client.trackOrder(parameters: parameters, completion)
+    }
+
 }

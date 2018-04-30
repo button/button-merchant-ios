@@ -29,10 +29,10 @@ import XCTest
 
 class CoreTests: XCTestCase {
     
-    func testInitializationInjectsDependencies() {
+    func testInitialization() {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
         let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let testNotificationCenter = TestNotificationCenter()
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
@@ -50,7 +50,7 @@ class CoreTests: XCTestCase {
         let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
 
@@ -71,7 +71,7 @@ class CoreTests: XCTestCase {
         let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com/products/listing")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
 
@@ -86,13 +86,13 @@ class CoreTests: XCTestCase {
         XCTAssertNil(testNotificationCenter.testUserInfo)
     }
     
-    func testTrackIncomingURLPassesBtnRefToUserDefaults() {
+    func testTrackIncomingURLPersistsAttributionToken() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let expectedSourceToken = "srctok-123"
-        let url = URL(string: "http://usebutton.com/derp?btn_ref=\(expectedSourceToken)")!
+        let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -107,9 +107,9 @@ class CoreTests: XCTestCase {
         // Arrange
         let testNotificationCenter = TestNotificationCenter()
         let expectedSourceToken = "srctok-123"
-        let url = URL(string: "http://usebutton.com/derp?btn_ref=\(expectedSourceToken)")!
+        let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
         
@@ -118,23 +118,21 @@ class CoreTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(testNotificationCenter.didCallPostNotification)
-        XCTAssertNotNil(testNotificationCenter.testNotificationName)
-        XCTAssertNotNil(testNotificationCenter.testObject)
-        XCTAssertNotNil(testNotificationCenter.testUserInfo)
-        XCTAssertEqual(Notification.Name.Button.AttributionTokenDidChange, testNotificationCenter.testNotificationName)
-        XCTAssertEqualReferences(core, testNotificationCenter.testObject! as AnyObject)
-        let expectedUserInfo = [Notification.Key.NewToken: expectedSourceToken] as NSDictionary
-        XCTAssertEqual(expectedUserInfo, testNotificationCenter.testUserInfo! as NSDictionary)
+        XCTAssertNil(testNotificationCenter.testObject)
+        XCTAssertEqual(testNotificationCenter.testNotificationName,
+                       Notification.Name.Button.AttributionTokenDidChange)
+        XCTAssertEqual(testNotificationCenter.testUserInfo! as NSDictionary,
+                       [Notification.Key.NewToken: expectedSourceToken])
     }
     
     func testTrackIncomingURLAgainPostsNotification() {
         // Arrange
         let testNotificationCenter = TestNotificationCenter()
-        let firstURL = URL(string: "http://usebutton.com/derp?btn_ref=srctok-123")!
+        let firstURL = URL(string: "http://usebutton.com/test?btn_ref=srctok-123")!
         let expectedSourceToken = "srctok-321"
-        let secondURL = URL(string: "http://usebutton.com/derp?btn_ref=\(expectedSourceToken)")!
+        let secondURL = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
         
@@ -144,22 +142,20 @@ class CoreTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(testNotificationCenter.didCallPostNotification)
-        XCTAssertNotNil(testNotificationCenter.testNotificationName)
-        XCTAssertNotNil(testNotificationCenter.testObject)
-        XCTAssertNotNil(testNotificationCenter.testUserInfo)
-        XCTAssertEqual(Notification.Name.Button.AttributionTokenDidChange, testNotificationCenter.testNotificationName)
-        XCTAssertEqualReferences(core, testNotificationCenter.testObject! as AnyObject)
-        let expectedUserInfo = [Notification.Key.NewToken: expectedSourceToken] as NSDictionary
-        XCTAssertEqual(expectedUserInfo, testNotificationCenter.testUserInfo! as NSDictionary)
+        XCTAssertNil(testNotificationCenter.testObject)
+        XCTAssertEqual(testNotificationCenter.testNotificationName,
+                       Notification.Name.Button.AttributionTokenDidChange)
+        XCTAssertEqual(testNotificationCenter.testUserInfo! as NSDictionary,
+                       [Notification.Key.NewToken: expectedSourceToken])
     }
     
-    func testAccessingAttributionToken() {
+    func testAttributionTokenReturnsStoredToken() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let expectedToken = "srctok-123"
         testDefaults.testToken = expectedToken
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -169,12 +165,12 @@ class CoreTests: XCTestCase {
         // Assert
         XCTAssertEqual(actualToken, expectedToken)
     }
-    
+
     func testClearAllDataInvokesButtonDefaults() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -184,85 +180,13 @@ class CoreTests: XCTestCase {
         // Assert
         XCTAssertTrue(testDefaults.didCallClearAllData)
     }
-    
-    func testHandlePostInstallURLInvokesClientWhenAppIdIsSet() {
-        // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
-        core.applicationId = "app-123"
-        testDefaults.testHasFetchedPostInstallURL = false
-        testSystem.testIsNewInstall = true
 
-        // Act
-        core.handlePostInstallURL { _, _ in }
-        
-        // Assert
-        XCTAssertTrue(testClient.didCallGetPostInstallLink)
-    }
-    
-    func testHandlePostInstallURLIgnoresClientWhenAppIdIsNotSet() {
-        // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
-        testDefaults.testHasFetchedPostInstallURL = false
-        testSystem.testIsNewInstall = true
-
-        // Act
-        core.handlePostInstallURL { _, _ in }
-        
-        // Assert
-        XCTAssertFalse(testClient.didCallGetPostInstallLink)
-    }
-
-    func testHandlePostInstallURLParameters() {
-
-        // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
-        testDefaults.testHasFetchedPostInstallURL = false
-        testSystem.testIsNewInstall = true
-        core.applicationId = "app-123"
-
-        // Act
-        core.handlePostInstallURL { _, _ in }
-        let actualParameters = testClient.testParameters
-
-        //Assert
-        let expectedParameters = ["application_id": "app-123",
-                                  "ifa": "00000000-0000-0000-0000-000000000000",
-                                  "ifa_limited": false,
-                                  "signals":
-                                    ["source": "button-merchant",
-                                     "os": "ios",
-                                     "os_version": "11.0",
-                                     "device": "iPhone",
-                                     "country": "US",
-                                     "language": "en",
-                                     "screen": "1080x1920"]] as NSDictionary
-        XCTAssertEqual(expectedParameters, actualParameters as NSDictionary)
-    }
-
-    func testHandlePostInstallURLCompletionURL() {
+    func testHandlePostInstallURL() {
         // Arrange
         let expectation = XCTestExpectation(description: "handle post install url")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
         let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -273,22 +197,40 @@ class CoreTests: XCTestCase {
 
         // Act
         let expectedURL = URL(string: "http://test.com")
+        let expectedToken = "srctok-123"
         core.handlePostInstallURL { url, _ in
 
             // Assert
             XCTAssertEqual(url, expectedURL)
+            XCTAssertTrue(testDefaults.didStoreToken)
+            XCTAssertNotNil(testDefaults.attributionToken)
+            XCTAssertEqual(testDefaults.attributionToken, expectedToken)
             expectation.fulfill()
         }
-        testClient.postInstallCompletion!(expectedURL, nil)
+        XCTAssertEqual(testClient.testParameters as NSDictionary,
+                       ["application_id": "app-123",
+                        "ifa": "00000000-0000-0000-0000-000000000000",
+                        "ifa_limited": false,
+                        "signals":
+                            ["source": "button-merchant",
+                             "os": "ios",
+                             "os_version": "11.0",
+                             "device": "iPhone",
+                             "country": "US",
+                             "language": "en",
+                             "screen": "1080x1920"]])
+        testClient.postInstallCompletion!(expectedURL, expectedToken)
+
         self.wait(for: [expectation], timeout: 2.0)
     }
 
-    func testHandlePostInstallURLCompletionNoAppIdError() {
+    func testHandlePostInstallURLNoAppIdError() {
+
         // Arrange
         let expectation = XCTestExpectation(description: "handle post install error")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testClient = TestClient(session: TestURLSession())
         let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -301,9 +243,10 @@ class CoreTests: XCTestCase {
         core.handlePostInstallURL { _, error in
 
             // Assert
-            XCTAssertNotNil(error)
+            XCTAssertEqual(error as? ConfigurationError, ConfigurationError.noApplicationId)
             expectation.fulfill()
         }
+
         self.wait(for: [expectation], timeout: 2.0)
     }
 
@@ -312,7 +255,7 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
@@ -330,7 +273,7 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
@@ -342,41 +285,98 @@ class CoreTests: XCTestCase {
         // Assert
         XCTAssertFalse(core.shouldFetchPostInstallURL)
     }
-
-    func testShouldFetchPostInstallURL_hasFetched_newInstall() {
+    
+    func testTrackOrder() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let expectation = XCTestExpectation(description: "track order")
+        let order = Order(id: "order-abc", amount: 120)
         let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.testToken = "srctok-abc123"
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: testClient,
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
-        testDefaults.testHasFetchedPostInstallURL = true
-        testSystem.testIsNewInstall = true
-
+        core.applicationId = "app-abc123"
+        
         // Act
-        core.handlePostInstallURL { _, _ in }
-
-        // Assert
-        XCTAssertFalse(core.shouldFetchPostInstallURL)
+        core.trackOrder(order) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        XCTAssertEqual(testClient.testParameters as NSDictionary,
+                       ["app_id": "app-abc123",
+                        "btn_ref": "srctok-abc123",
+                        "user_local_time": "2018-01-23T12:00:00Z",
+                        "type": "order-checkout",
+                        "device": ["ifa": "00000000-0000-0000-0000-000000000000",
+                                   "ifa_limited": false],
+                        "order": ["order_id": "order-abc",
+                                  "amount": 120,
+                                  "currency_code": "USD" ]])
+        testClient.trackOrderCompletion!(nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
     }
 
-    func testShouldFetchPostInstallURL_hasFetched_oldInstall() {
+    func testTrackOrderWithoutAttributionToken() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let expectation = XCTestExpectation(description: "track order")
+        let order = Order(id: "order-abc", amount: 120)
         let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.testToken = nil
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession()),
+                        client: testClient,
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
-        testDefaults.testHasFetchedPostInstallURL = true
-        testSystem.testIsNewInstall = false
+        core.applicationId = "app-abc123"
 
         // Act
-        core.handlePostInstallURL { _, _ in }
+        core.trackOrder(order) { error in
 
-        // Assert
-        XCTAssertFalse(core.shouldFetchPostInstallURL)
+            // Assert
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        XCTAssertEqual(testClient.testParameters as NSDictionary,
+                       ["app_id": "app-abc123",
+                        "user_local_time": "2018-01-23T12:00:00Z",
+                        "type": "order-checkout",
+                        "device": ["ifa": "00000000-0000-0000-0000-000000000000",
+                                   "ifa_limited": false],
+                        "order": ["order_id": "order-abc",
+                                  "amount": 120,
+                                  "currency_code": "USD" ]])
+        testClient.trackOrderCompletion!(nil)
+
+        self.wait(for: [expectation], timeout: 2.0)
     }
 
+    func testTrackOrderError() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "track order error")
+        let order = Order(id: "test", amount: 120)
+        let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        core.applicationId = ""
+
+        // Act
+        core.trackOrder(order) { error in
+
+            // Assert
+            XCTAssertEqual(error as? ConfigurationError, ConfigurationError.noApplicationId)
+            expectation.fulfill()
+        }
+
+        self.wait(for: [expectation], timeout: 2.0)
+    }
 }

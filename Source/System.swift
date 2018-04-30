@@ -33,6 +33,7 @@ internal protocol SystemProtocol: class {
     var device: UIDeviceProtocol { get }
     var screen: UIScreenProtocol { get }
     var locale: LocaleProtocol { get }
+    var bundle: BundleProtocol { get }
     var currentDate: Date { get }
     var isNewInstall: Bool { get }
     init(fileManager: FileManagerProtocol,
@@ -40,7 +41,8 @@ internal protocol SystemProtocol: class {
          adIdManager: ASIdentifierManagerProtocol,
          device: UIDeviceProtocol,
          screen: UIScreenProtocol,
-         locale: LocaleProtocol)
+         locale: LocaleProtocol,
+         bundle: BundleProtocol)
 }
 
 internal final class System: SystemProtocol {
@@ -51,6 +53,7 @@ internal final class System: SystemProtocol {
     var device: UIDeviceProtocol
     var screen: UIScreenProtocol
     var locale: LocaleProtocol
+    var bundle: BundleProtocol
 
     var currentDate: Date {
         return Date()
@@ -72,12 +75,14 @@ internal final class System: SystemProtocol {
          adIdManager: ASIdentifierManagerProtocol,
          device: UIDeviceProtocol,
          screen: UIScreenProtocol,
-         locale: LocaleProtocol) {
+         locale: LocaleProtocol,
+         bundle: BundleProtocol) {
         self.fileManager = fileManager
         self.calendar = calendar
         self.adIdManager = adIdManager
         self.device = device
         self.screen = screen
         self.locale = locale
+        self.bundle = bundle
     }
 }

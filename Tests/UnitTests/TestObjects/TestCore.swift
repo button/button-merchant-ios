@@ -71,6 +71,10 @@ class TestCore: CoreProtocol {
         didCallFetchPostInstallURL = true
         completion(nil, nil)
     }
+
+    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
+        testOrder = order
+    }
     
     func trackIncomingURL(_ url: URL) {
         testUrl = url

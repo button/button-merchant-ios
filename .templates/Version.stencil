@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ Version.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +24,6 @@
 
 */
 
-import Foundation
-
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+public struct Version {
+    static let stringValue = "{{ argument.version }}"
 }
-
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}

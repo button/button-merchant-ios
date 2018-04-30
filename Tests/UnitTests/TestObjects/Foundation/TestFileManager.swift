@@ -29,17 +29,20 @@ import Foundation
 
 class TestFileManager: FileManagerProtocol {
 
-    // Test Values
+    // Test Properties
     var testFileCreationDateString: String?
 
     func attributesOfItem(atPath path: String) throws -> [FileAttributeKey: Any] {
+        guard let testFileCreationDateString = testFileCreationDateString else {
+            throw TestError.known
+        }
         let formatter = ISO8601DateFormatter()
-        let date = formatter.date(from: testFileCreationDateString!)!
+        let date = formatter.date(from: testFileCreationDateString)!
         return [.creationDate: date]
     }
 
     func urls(for directory: FileManager.SearchPathDirectory, in domainMask: FileManager.SearchPathDomainMask) -> [URL] {
-        return [URL(string: "file://derp/Documents")!]
+        return [URL(string: "file://test/Documents")!]
     }
 
 }

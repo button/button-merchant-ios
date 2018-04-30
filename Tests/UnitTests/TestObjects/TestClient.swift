@@ -35,12 +35,14 @@ class TestClient: ClientProtocol {
     var didCallTrackOrder = false
 
     var session: URLSessionProtocol
+    var userAgent: UserAgentProtocol
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
-    var trackOrderCompletion: ((Data?, Error?) -> Void)?
+    var trackOrderCompletion: ((Error?) -> Void)?
 
-    required init(session: URLSessionProtocol) {
+    required init(session: URLSessionProtocol, userAgent: UserAgentProtocol) {
         self.session = session
+        self.userAgent = userAgent
         self.testParameters = [:]
     }
     
@@ -50,7 +52,7 @@ class TestClient: ClientProtocol {
         postInstallCompletion = completion
     }
 
-    func trackOrder(parameters: [String: Any], _ completion: @escaping (Data?, Error?) -> Void) {
+    func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
         testParameters = parameters
         didCallTrackOrder = true
         trackOrderCompletion = completion

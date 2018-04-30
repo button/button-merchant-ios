@@ -27,10 +27,18 @@
 import UIKit
 import ButtonMerchant
 
+extension String: Error {}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    let applicationId = "app-abc123"
+
+    let yourApplicationId = { () -> String in
+        guard let appId = ApplicationId.stringValue else {
+            print("Please set your App ID from the Button Dashboard https://app.usebutton.com")
+            return ""
+        }
+        return appId
+    }()
 
     var window: UIWindow?
     var controller: ViewController? {
@@ -42,10 +50,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        ButtonMerchant.configure(applicationId: applicationId)
-        
-        controller?.navigationItem.prompt = "Application ID: \(applicationId)"
+
+        // Replace with your App ID from the Button Dashboard https://app.usebutton.com
+        ButtonMerchant.configure(applicationId: yourApplicationId)
+
+        ButtonMerchant.handlePostInstallURL { url, _ in
+            if let url = url {
+                NSLog("Post install: %@", url.absoluteString)
+            }
+        }
+
+        controller?.navigationItem.prompt = "Application ID: \(yourApplicationId)"
 
         return true
     }

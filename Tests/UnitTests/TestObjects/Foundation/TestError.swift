@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ TestError.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -26,9 +26,12 @@
 
 import Foundation
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+enum TestError: String {
+    case unknown, known
 }
 
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+extension TestError: Error, Equatable {
+    static func == (lhs: TestError, rhs: TestError) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+}

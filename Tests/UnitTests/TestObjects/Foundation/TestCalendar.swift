@@ -29,7 +29,7 @@ import Foundation
 
 class TestCalendar: CalendarProtocol {
 
-    // Test Values
+    // Test Properties
     var testCurrentDateString: String?
 
     func date(byAdding component: Calendar.Component, value: Int, to date: Date, wrappingComponents: Bool) -> Date? {

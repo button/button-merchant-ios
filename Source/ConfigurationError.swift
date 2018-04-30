@@ -1,6 +1,6 @@
 /**
 
- URLSessionDataTaskExtensions.swift
+ ConfigurationError.swift
 
  Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 
@@ -24,11 +24,25 @@
 
 */
 
-import Foundation
+public enum ConfigurationError: Error {
+    case noApplicationId
 
-internal protocol URLSessionDataTaskProtocol {
-    func resume()
-    var originalRequest: URLRequest? { get }
+    var domain: String {
+        return "com.usebutton.merchant.error"
+    }
+
+    var localizedDescription: String {
+        switch self {
+        case .noApplicationId:
+            return "Application Id is required via ButtonMerchant.configure(applicationId:)."
+        }
+    }
 }
 
-extension URLSessionDataTask: URLSessionDataTaskProtocol {}
+extension ConfigurationError: Equatable {
+
+    public static func == (lhs: ConfigurationError, rhs: ConfigurationError) -> Bool {
+        return lhs.domain == rhs.domain
+            && lhs.localizedDescription == rhs.localizedDescription
+    }
+}

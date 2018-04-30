@@ -29,10 +29,11 @@ import Foundation
 extension Encodable {
     
     var dictionaryRepresentation: [String: Any] {
-        guard let data = try? JSONEncoder().encode(self) else {
-            return [:]
+        var dictionary = [String: Any]()
+        if let data = try? JSONEncoder().encode(self) {
+            let result = try? JSONSerialization.jsonObject(with: data)
+            dictionary = result.flatMap { $0 as? [String: Any] } ?? [:]
         }
-        let result = try? JSONSerialization.jsonObject(with: data)
-        return result.flatMap { $0 as? [String: Any] } ?? [:]
+        return dictionary
     }
 }
