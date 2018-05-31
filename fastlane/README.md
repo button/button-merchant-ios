@@ -31,6 +31,16 @@ Run SwiftLint on the project
 fastlane ios test
 ```
 Run the Button merchant library tests
+### ios coverage
+```
+fastlane ios coverage
+```
+
+### ios generate_refdocs
+```
+fastlane ios generate_refdocs
+```
+
 ### ios post_install_test
 ```
 fastlane ios post_install_test

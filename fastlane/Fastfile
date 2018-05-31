@@ -13,20 +13,15 @@ platform :ios do
 
   desc "Current library version"
   lane :version do
-    podspec = JSON.parse(`pod ipc spec ../ButtonMerchant.podspec`)
-    UI.message podspec["version"]
+    UI.message library_version
   end
 
   desc "Run SwiftLint on the project"
   lane :lint do
-    swift_lint(:lint)
-  end
-
-  def swift_lint(mode)
     swiftlint(
       mode: :lint,
       config_file: ".swiftlint.yml",
-      output_file: "swiftlint.result.json",
+      output_file: "fastlane/swiftlint.result.json",
       executable: "./Pods/SwiftLint/swiftlint"
     )
   end
@@ -38,8 +33,42 @@ platform :ios do
       workspace: "ButtonMerchant.xcworkspace",
       scheme: options[:scheme],
       device: "iPhone X",
-      slack_message: "button-merchant-ios"
+      slack_message: "button-merchant-ios #{options[:scheme]}"
     )
+  end
+
+  lane :coverage do |options|
+    slather(
+      use_bundle_exec: true,
+      workspace: "ButtonMerchant.xcworkspace",
+      proj: "ButtonMerchant.xcodeproj",
+      scheme: "ButtonMerchant",
+      ignore: ["Tests/**.*", "Example/**.*"],
+      travis_pro: !options[:show],
+      coveralls: !options[:show],
+      simple_output: !options[:show],
+      html: options[:show],
+      show: options[:show],
+      output_directory: "fastlane/html"
+    )
+  end
+
+  lane :generate_refdocs do |options|
+    history_path = "#{@fastfile_dir}/../docs/history/#{library_version}"
+    latest_path = "#{@fastfile_dir}/../docs/latest"
+    FileUtils.rm_rf(latest_path)
+
+    jazzy(:config => ".jazzy.yml")
+
+    FileUtils.mkdir_p(history_path)
+    FileUtils.cp_r("#{latest_path}/.", history_path)
+    FileUtils.rm_rf(latest_path)
+
+    system("cd #{@fastfile_dir}/../docs; /bin/ln -sfh \"./history/#{library_version}\" \"./latest\"")
+    UI.message("Reference docs generated at: #{latest_path}/index.html")
+    if options[:open]
+      system("open #{latest_path}/index.html")
+    end
   end
 
   desc "Run end-to-end post install test"
@@ -80,6 +109,11 @@ platform :ios do
         UI.message "✅  Post install url found: (#{TEST_URL})\n#{result}"
       end
     end
+  end
+
+  def library_version
+    podspec = JSON.parse(`pod ipc spec ../ButtonMerchant.podspec`)
+    return podspec["version"]
   end
 
 end

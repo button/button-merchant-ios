@@ -1,14 +1,19 @@
 osx_image: xcode9.2
 language: swift
 env:
-  - TEST_SUITE=UnitTests
+  - TEST_SUITE=UnitTests COVERAGE='bundle exec fastlane coverage'
   - TEST_SUITE=IntegrationTests
 cache:
   - bundler
   - cocoapods
+branches:
+  only:
+  - master
 before_install:
   - bundle install
   - pod repo update
   - pod install
 script:
   - bundle exec fastlane test scheme:$TEST_SUITE
+after_success:
+  - $COVERAGE

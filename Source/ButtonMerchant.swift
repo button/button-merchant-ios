@@ -1,37 +1,42 @@
-/**
-
- ButtonMerchant.swift
-
- Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
-*/
+//
+// ButtonMerchant.swift
+//
+// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
 
 import UIKit
 import AdSupport
 
+/**
+ `ButtonMerchant` is the main entry point to the library.
+
+ To get started with your integration,
+ get your application Id from from the [Button Dashboard](https://app.usebutton.com).
+ and follow our simple [integration guide](https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library)
+ */
 final public class ButtonMerchant: NSObject {
     
     // swiftlint:disable:next identifier_name
-    internal static var _core: CoreProtocol?
-    private static var core: CoreProtocol {
+    internal static var _core: CoreType?
+    private static var core: CoreType {
         get {
             let core = _core ?? createCore()
             _core = core
@@ -62,7 +67,7 @@ final public class ButtonMerchant: NSObject {
      Get your application Id from from the [Button Dashboard](https://app.usebutton.com)
 
      - Parameters:
-        - applicationId: Your applicationId (required)
+        - applicationId: Your application Id (required)
 
      */
     public static func configure(applicationId: String) {
@@ -90,7 +95,6 @@ final public class ButtonMerchant: NSObject {
     /**
      Checks to see if the user visited a url prior to installing your app.
 
-     - Discussion:
      If a url is found, your completion handler will be called with the url and you are responsible
      for navigating the user to the relevant content in your app. If a url is not found or an error occurs, your
      completion handler will be called without a url and you can continue with your normal launch sequence.
@@ -132,7 +136,7 @@ final public class ButtonMerchant: NSObject {
     
     // MARK: Private
     
-    private static func createCore() -> CoreProtocol {
+    private static func createCore() -> CoreType {
         let system = System(fileManager: FileManager.default,
                             calendar: Calendar.current,
                             adIdManager: ASIdentifierManager.shared(),

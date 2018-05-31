@@ -1,5 +1,5 @@
 PODS:
-  - ButtonMerchant (0.1.0-beta.2)
+  - ButtonMerchant (0.1.0-beta3)
   - Sourcery (0.13.0)
   - SwiftLint (0.25.0)
 
@@ -8,15 +8,20 @@ DEPENDENCIES:
   - Sourcery
   - SwiftLint
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Sourcery
+    - SwiftLint
+
 EXTERNAL SOURCES:
   ButtonMerchant:
-    :path: ./
+    :path: "./"
 
 SPEC CHECKSUMS:
-  ButtonMerchant: 70de1c7e191ac8e240e3c6b7b4a103fe79d6d620
+  ButtonMerchant: 891ed14bcaad818e3385611295a9a75a8cc633d1
   Sourcery: d78d3b68aa565a7194e57ccd6995c1368fda9cb0
   SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
 
 PODFILE CHECKSUM: 70e943e420aa2b945ef427e35b9bc3a658b61f81
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
