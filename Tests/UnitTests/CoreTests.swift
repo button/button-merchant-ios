@@ -307,14 +307,12 @@ class CoreTests: XCTestCase {
         }
         XCTAssertEqual(testClient.testParameters as NSDictionary,
                        ["app_id": "app-abc123",
-                        "btn_ref": "srctok-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
-                        "type": "order-checkout",
-                        "device": ["ifa": "00000000-0000-0000-0000-000000000000",
-                                   "ifa_limited": false],
-                        "order": ["order_id": "order-abc",
-                                  "amount": 120,
-                                  "currency_code": "USD" ]])
+                        "btn_ref": "srctok-abc123",
+                        "order_id": "order-abc",
+                        "total": 120,
+                        "currency": "USD",
+                        "source": "merchant-library"])
         testClient.trackOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
@@ -344,12 +342,10 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.testParameters as NSDictionary,
                        ["app_id": "app-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
-                        "type": "order-checkout",
-                        "device": ["ifa": "00000000-0000-0000-0000-000000000000",
-                                   "ifa_limited": false],
-                        "order": ["order_id": "order-abc",
-                                  "amount": 120,
-                                  "currency_code": "USD" ]])
+                        "order_id": "order-abc",
+                        "total": 120,
+                        "currency": "USD",
+                        "source": "merchant-library"])
         testClient.trackOrderCompletion!(nil)
 
         self.wait(for: [expectation], timeout: 2.0)

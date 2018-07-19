@@ -27,19 +27,21 @@ import Foundation
 internal struct TrackOrderBody: Codable {
 
     let applicationId: String
-    let attributionToken: String?
-    let device: Device
     let userLocalTime: String
-    let type: String = "order-checkout"
-    let order: Order
+    let attributionToken: String?
+    let orderId: String
+    let total: Int64
+    let currency: String
+    let source: String = "merchant-library"
 
     enum CodingKeys: String, CodingKey {
         case applicationId = "app_id"
-        case attributionToken = "btn_ref"
         case userLocalTime = "user_local_time"
-        case device
-        case type
-        case order
+        case attributionToken = "btn_ref"
+        case orderId = "order_id"
+        case total
+        case currency
+        case source
     }
 
     init(system: SystemType,
@@ -47,26 +49,11 @@ internal struct TrackOrderBody: Codable {
          attributionToken: String?,
          order: Order) {
 
-        device = Device(system: system)
-        userLocalTime = system.currentDate.ISO8601String
         self.applicationId = applicationId
+        userLocalTime = system.currentDate.ISO8601String
         self.attributionToken = attributionToken
-        self.order = order
-    }
-
-    internal struct Device: Codable {
-
-        let ifa: String
-        let ifaLimited: Bool
-
-        enum CodingKeys: String, CodingKey {
-            case ifa
-            case ifaLimited = "ifa_limited"
-        }
-
-        init(system: SystemType) {
-            ifa = system.adIdManager.advertisingIdentifier.uuidString
-            ifaLimited = !system.adIdManager.isAdvertisingTrackingEnabled
-        }
+        self.orderId = order.id
+        self.total = order.amount
+        self.currency = order.currencyCode
     }
 }
