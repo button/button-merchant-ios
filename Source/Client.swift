@@ -28,7 +28,7 @@ import UIKit
 internal enum Service: String {
     
     case postInstall = "v1/web/deferred-deeplink"
-    case activity = "v2/session/useractivity"
+    case activity = "v1/activity/order"
     
     static var baseURL = "https://api.usebutton.com/"
     

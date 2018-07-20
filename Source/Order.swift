@@ -38,7 +38,7 @@ final public class Order: NSObject, Codable {
      The total order value in pennies (e.g. 3999 for $39.99)
      or the smallest decimal unit of the currency.
      */
-    private(set) var amount: Int64?
+    private(set) var amount: Int64
 
     /**
      The ISO 4217 currency code (default is USD).
@@ -54,7 +54,7 @@ final public class Order: NSObject, Codable {
                   smallest decimal unit of the currency (e.g. 3999 for $39.99).
         - currencyCode: The ISO 4217 currency code (default is USD).
      */
-    public init(id: String, amount: Int64?, currencyCode: String = "USD") {
+    public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
