@@ -93,6 +93,26 @@ final public class ButtonMerchant: NSObject {
     }
     
     /**
+     Checks the URL in the passed NSUserActivity for a Button attribution and if present stores the token.
+     
+     - Attention:
+     To correctly attribute customers, you must call this method with every
+     incoming `userActivity` from the following `UIApplicationDelegate` method:
+     
+     - `application(_:userActivity:restorationHandler:)`
+     
+     - Parameters:
+     - activity: A NSUserActivity with which your app has been continued.
+     
+     */
+    public static func trackIncomingActivity(_ activity: NSUserActivity) {
+        guard let url = activity.webpageURL else {
+            return
+        }
+        core.trackIncomingURL(url)
+    }
+    
+    /**
      Checks to see if the user visited a url prior to installing your app.
 
      If a url is found, your completion handler will be called with the url and you are responsible
