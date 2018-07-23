@@ -72,9 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
-        if let url = userActivity.webpageURL {
-            ButtonMerchant.trackIncomingURL(url)
-        }
+        ButtonMerchant.trackIncomingUserActivity(userActivity)
         
         return true
     }
