@@ -102,11 +102,11 @@ final public class ButtonMerchant: NSObject {
      - `application(_:userActivity:restorationHandler:)`
      
      - Parameters:
-     - activity: A NSUserActivity with which your app has been continued.
+     - userActivity: A NSUserActivity with which your app has been continued.
      
      */
-    public static func trackIncomingActivity(_ activity: NSUserActivity) {
-        guard let url = activity.webpageURL else {
+    public static func trackIncomingUserActivity(_ userActivity: NSUserActivity) {
+        guard let url = userActivity.webpageURL else {
             return
         }
         core.trackIncomingURL(url)

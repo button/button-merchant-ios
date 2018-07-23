@@ -77,7 +77,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(actualUrl, expectedUrl)
     }
     
-    func testTrackIncomingActivityInvokesCore() {
+    func testTrackIncomingUserActivityInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                                 client: TestClient(session: TestURLSession(),
@@ -85,12 +85,12 @@ class ButtonMerchantTests: XCTestCase {
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "https://usebutton.com")!
-        let activity = NSUserActivity(activityType: "com.usebutton.web_activity")
-        activity.webpageURL = expectedUrl
+        let userActivity = NSUserActivity(activityType: "com.usebutton.web_activity")
+        userActivity.webpageURL = expectedUrl
         
         // Act
         ButtonMerchant._core = testCore
-        ButtonMerchant.trackIncomingActivity(activity)
+        ButtonMerchant.trackIncomingUserActivity(userActivity)
         let actualUrl = testCore.testUrl
         
         // Assert

@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         
-        ButtonMerchant.trackIncomingActivity(userActivity)
+        ButtonMerchant.trackIncomingUserActivity(userActivity)
         
         return true
     }
