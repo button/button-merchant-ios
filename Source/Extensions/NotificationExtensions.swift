@@ -24,25 +24,31 @@
 
 import Foundation
 
+@objc extension ButtonMerchant {
+    /// Posted when the stored `attributionToken` is updated from an inbound Button attributed URL.
+    public static let AttributionTokenDidChangeNotification: NSString = "com.usebutton.merchant.notification.name.button.AttributionTokenDidChange"
+    /// User info dictionary key representing the new `attributionToken` associated with the notification.
+    public static let AttributionTokenKey: NSString = "com.usebutton.merchant.notification.key.newToken"
+}
+
 extension Notification {
-    
+
     /// Used as a namespace for all Button related `Notification` user info dictionary keys.
     public struct Key {
         
         /// User info dictionary key representing the new `attributionToken` associated with the notification.
-        public static let NewToken = "com.usebutton.merchant.notification.key.newToken"
+        public static let NewToken = ButtonMerchant.AttributionTokenKey as String
     }
 }
 
 extension Notification.Name {
     
-    // Used as a namespace for all Button related notifications.
+    /// Used as a namespace for all Button related notifications.
     public struct Button {
         
-        // Posted when the stored `attributionToken` is updated from an inbound Button attributed URL.
+        /// Posted when the stored `attributionToken` is updated from an inbound Button attributed URL.
         public static let AttributionTokenDidChange: Notification.Name = {
-            let name = "com.usebutton.merchant.notification.name.button.AttributionTokenDidChange"
-            return Notification.Name(rawValue: name)
+            return Notification.Name(rawValue: ButtonMerchant.AttributionTokenDidChangeNotification as String)
         }()
     }
 }
