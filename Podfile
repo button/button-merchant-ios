@@ -8,6 +8,10 @@ target 'Example' do
   pod 'Sourcery'
 end
 
+target 'Example-ObjC' do
+    pod 'ButtonMerchant', :path => './'
+end
+
 target 'ButtonMerchant' do
 end
 

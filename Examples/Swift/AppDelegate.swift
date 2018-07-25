@@ -32,7 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let yourApplicationId = { () -> String in
         guard let appId = ApplicationId.stringValue else {
-            print("Please set your App ID from the Button Dashboard https://app.usebutton.com")
+            print("""
+To get started and get an App ID, please see
+https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration-guide
+""")
             return ""
         }
         return appId

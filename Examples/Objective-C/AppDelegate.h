@@ -1,5 +1,5 @@
 //
-// ApplicationId.swift
+// AppDelegate.h
 //
 // Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -21,9 +21,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-public class ApplicationId: NSObject {
-    @objc static let stringValue: String? = {% if argument.application_id != 1 %}"{{ argument.application_id }}"{% else %}nil{% endif %}
-}
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+
+@end
+
