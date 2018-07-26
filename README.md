@@ -2,8 +2,8 @@
 [![Build Status](https://travis-ci.com/button/button-merchant-ios.svg?token=8JzszbFQzEAxm2tqrxeg&branch=master)](https://travis-ci.com/button/button-merchant-ios)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Coverage Status](https://coveralls.io/repos/github/button/button-merchant-ios-private/badge.svg?t=Nu4idN)](https://coveralls.io/github/button/button-merchant-ios-private)
-<!-- [![Version](https://img.shields.io/cocoapods/v/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant)
-[![Platform](https://img.shields.io/cocoapods/p/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant) -->
+[![Version](https://img.shields.io/cocoapods/v/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant)
+[![Platform](https://img.shields.io/cocoapods/p/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant)
 
 
 ## Documentation
