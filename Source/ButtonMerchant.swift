@@ -56,7 +56,7 @@ final public class ButtonMerchant: NSObject {
      - Always include this value when reporting orders to your order API
 
     */
-    public static var attributionToken: String? {
+    @objc public static var attributionToken: String? {
         return core.attributionToken
     }
 
@@ -70,7 +70,7 @@ final public class ButtonMerchant: NSObject {
         - applicationId: Your application Id (required)
 
      */
-    public static func configure(applicationId: String) {
+    @objc public static func configure(applicationId: String) {
         core.applicationId = applicationId
     }
     
@@ -88,7 +88,7 @@ final public class ButtonMerchant: NSObject {
         - url: A URL that has entered your app from a third party source.
 
      */
-    public static func trackIncomingURL(_ url: URL) {
+    @objc public static func trackIncomingURL(_ url: URL) {
         core.trackIncomingURL(url)
     }
     
@@ -105,7 +105,7 @@ final public class ButtonMerchant: NSObject {
      - userActivity: A NSUserActivity with which your app has been continued.
      
      */
-    public static func trackIncomingUserActivity(_ userActivity: NSUserActivity) {
+    @objc public static func trackIncomingUserActivity(_ userActivity: NSUserActivity) {
         guard let url = userActivity.webpageURL else {
             return
         }
@@ -129,7 +129,7 @@ final public class ButtonMerchant: NSObject {
      - Parameters:
         - completion: A completion block taking an optional url and optional error.
      */
-    public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
+    @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
         core.handlePostInstallURL(completion)
     }
 
@@ -143,14 +143,14 @@ final public class ButtonMerchant: NSObject {
      This does not replace server-side order reporting to Button.
      [See: order reporting](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api)
      */
-    public static func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
+    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.trackOrder(order, completion)
     }
 
     /**
      Discards the current session and all persisted data.
      */
-    public static func clearAllData() {
+    @objc public static func clearAllData() {
         core.clearAllData()
     }
     

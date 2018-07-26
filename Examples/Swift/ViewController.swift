@@ -44,10 +44,6 @@ class ViewController: UITableViewController {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -78,14 +74,14 @@ class ViewController: UITableViewController {
 
     func trackIncomingURL() {
         // Simulates an incoming url with a Button attribution token.
-        let num = arc4random_uniform(10000)
-        UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=srctok-test\(num)")!)
+        let n = arc4random_uniform(10000)
+        UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=srctok-test\(n)")!)
     }
 
     func trackOrder() {
         let amount = arc4random_uniform(1000)
         let order = Order(id: NSUUID().uuidString, amount: Int64(amount))
-        ButtonMerchant.trackOrder(order, nil)
+        ButtonMerchant.trackOrder(order)
     }
 
     func clearAllData() {

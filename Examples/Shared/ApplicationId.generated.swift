@@ -1,3 +1,6 @@
+// Generated using Sourcery 0.13.0 — https://github.com/krzysztofzablocki/Sourcery
+// DO NOT EDIT
+
 //
 // ApplicationId.swift
 //
@@ -25,5 +28,5 @@
 import Foundation
 
 public class ApplicationId: NSObject {
-    @objc static let stringValue: String? = {% if argument.application_id != 1 %}"{{ argument.application_id }}"{% else %}nil{% endif %}
+    @objc static let stringValue: String? = "app-37309f18f5a33a16"
 }

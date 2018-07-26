@@ -31,7 +31,7 @@ class MessageView: UIView {
     
     private var visibilityConstraint: NSLayoutConstraint?
     
-    class func showWithTitle(_ title: String, body: String, in view: UIView) {
+    @objc class func showWithTitle(_ title: String, body: String, in view: UIView) {
         let messageView = (Bundle.main.loadNibNamed("MessageView", owner: self, options: nil)?.first as? MessageView)!
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.titleLabel.text = title
