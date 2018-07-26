@@ -21,7 +21,7 @@ ButtonMerchant is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'ButtonMerchant', :git => 'https://github.com/button/button-merchant-ios.git', :tag => '0.1.0-beta3'
+pod 'ButtonMerchant'
 ```
 
 ## Author
