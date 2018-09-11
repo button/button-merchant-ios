@@ -12,9 +12,6 @@ target 'Example-ObjC' do
     pod 'ButtonMerchant', :path => './'
 end
 
-target 'ButtonMerchant' do
-end
-
 target 'UnitTests' do
 end
 
