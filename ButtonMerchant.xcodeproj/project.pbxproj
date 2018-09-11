@@ -856,7 +856,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" && -z \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
 		};
 		DA0FA2C82062EF38008296A6 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -870,7 +870,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"Pods/SwiftLint/swiftlint\"\nfi";
 		};
 		DE0E7C29209B7F38001A5EE0 /* Environment Vars */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -914,7 +914,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
 		};
 		DECF9F28206B01F0009F3930 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -928,7 +928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
 		};
 		E8730FA8780FE86FBE23AF57 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
