@@ -21,14 +21,14 @@ ButtonMerchant is available through [CocoaPods](http://cocoapods.org) and [Carth
 
 ### CocoaPods
 
-Add this line to your Podfile.
+Add this line to your Podfile:
 ```ruby
 pod 'ButtonMerchant'
 ```
 
-Or, add this to your Cartfile.
 ### Carthage
 
+Or, add this to your Cartfile:
 ```
 github "button/button-merchant-ios" ~> 1.0
 ```
