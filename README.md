@@ -17,11 +17,20 @@ To run the example project, clone the repo, run `pod install`, and run the Examp
 
 ## Installation
 
-ButtonMerchant is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+ButtonMerchant is available through [CocoaPods](http://cocoapods.org) and [Carthage](https://github.com/Carthage/Carthage). 
 
+### CocoaPods
+
+Add this line to your Podfile.
 ```ruby
 pod 'ButtonMerchant'
+```
+
+Or, add this to your Cartfile.
+### Carthage
+
+```
+github "button/button-merchant-ios" ~> 1.0
 ```
 
 ## Author
