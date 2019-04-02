@@ -143,4 +143,11 @@ class IntegrationTests: XCTestCase {
         
         XCTAssertNil(ButtonMerchant.attributionToken)
     }
+
+    func testConfigurePassesApplicationIdThroughToClient() {
+        let expectedApplicationId = "app-abc123"
+        ButtonMerchant.configure(applicationId: expectedApplicationId)
+
+        XCTAssertEqual(ButtonMerchant._core?.client.applicationId, expectedApplicationId)
+    }
 }

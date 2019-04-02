@@ -30,16 +30,21 @@ internal enum Service: String {
     case postInstall = "v1/web/deferred-deeplink"
     case activity = "v1/activity/order"
     
-    static var baseURL = "https://api.usebutton.com/"
+    static var baseURL = "https://%@.mobileapi.usebutton.com/%@"
     
-    var url: URL {
-        return URL(string: Service.baseURL + self.rawValue)!
+    func url(applicationId: String?) throws -> URL {
+        guard let appId = applicationId else {
+            throw ConfigurationError.noApplicationId
+        }
+        let fullUrl = String(format: Service.baseURL, appId, self.rawValue)
+        return URL(string: fullUrl)!
     }
 }
 
 internal protocol ClientType: class {
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
+    var applicationId: String? { get set }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType)
@@ -49,6 +54,7 @@ internal final class Client: ClientType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
+    var applicationId: String?
     
     init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
@@ -56,26 +62,34 @@ internal final class Client: ClientType {
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        let request = urlRequest(url: Service.postInstall.url, parameters: parameters)
-        enqueueRequest(request: request, completion: { data, _ in
-            guard let data = data,
-                let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                let object = responseDict?["object"] as? [String: Any],
-                let action = object["action"] as? String,
-                let attributionObject = object["attribution"] as? [String: Any] else {
-                    completion(nil, nil)
-                    return
-            }
-            completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
-        })
+        do {
+            let request = try urlRequest(url: Service.postInstall.url(applicationId: applicationId), parameters: parameters)
+            enqueueRequest(request: request, completion: { data, _ in
+                guard let data = data,
+                    let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                    let object = responseDict?["object"] as? [String: Any],
+                    let action = object["action"] as? String,
+                    let attributionObject = object["attribution"] as? [String: Any] else {
+                        completion(nil, nil)
+                        return
+                }
+                completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
+            })
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
-        let request = urlRequest(url: Service.activity.url, parameters: parameters)
-        enqueueRequest(request: request) { _, error in
-            if let completion = completion {
-                completion(error)
+        do {
+            let request = try urlRequest(url: Service.activity.url(applicationId: applicationId), parameters: parameters)
+            enqueueRequest(request: request) { _, error in
+                if let completion = completion {
+                    completion(error)
+                }
             }
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

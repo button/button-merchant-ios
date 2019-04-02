@@ -45,6 +45,7 @@ final public class ButtonMerchant: NSObject {
         // This should never be set directly
         set { }
     }
+    private static var applicationIdRegex = "^app-[0-9a-zA-Z-]+$"
     
     /**
      The last tracked `attributionToken` from an inbound Button attributed URL.
@@ -71,7 +72,9 @@ final public class ButtonMerchant: NSObject {
 
      */
     @objc public static func configure(applicationId: String) {
-        core.applicationId = applicationId
+        if applicationId.range(of: applicationIdRegex, options: .regularExpression) != nil {
+            core.applicationId = applicationId
+        }
     }
     
     /**
