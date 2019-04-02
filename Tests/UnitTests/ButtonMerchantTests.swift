@@ -53,7 +53,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(testCore.applicationId, applicationId)
     }
 
-    func testConfigureApplicationIdDoesNotSetApplicationIdOnCore() {
+    func testConfigureApplicationIdDoesNotSetInvalidApplicationIdOnCore() {
         // Arrange
         let applicationId = "invalid-app-id"
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
