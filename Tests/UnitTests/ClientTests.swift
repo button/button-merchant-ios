@@ -164,12 +164,26 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 
+    func testFetchPostInstallURLDoesNothingWhenApplicationIdIsNotSet() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+
+        // Act
+        client.fetchPostInstallURL(parameters: ["blargh": "blergh"]) { _, _ in }
+
+        // Assert
+        XCTAssertFalse(testURLSession.didCallDataTaskWithRequest)
+        XCTAssertNil(testURLSession.lastDataTask)
+    }
+
     func testFetchPostInstallURLEnqueuesRequest() {
         // Arrange
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/web/deferred-deeplink")!
+        let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/web/deferred-deeplink")!
 
         // Act
         client.fetchPostInstallURL(parameters: expectedParameters) { _, _ in }
@@ -191,6 +205,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "fetch post install url success")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let expectedURL = URL(string: "https://usebutton.com")!
         let expectedToken = "srctok-abc123"
         let responseDict: [String: Any] = ["object": ["action": expectedURL.absoluteString,
@@ -218,6 +233,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "fetch post install url fails bad response")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let url = URL(string: "https://usebutton.com")!
         let responseDict = ["blargh": "blergh"]
         let data = try? JSONSerialization.data(withJSONObject: responseDict)
@@ -238,12 +254,26 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 
+    func testTrackOrderThrowsError() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+
+        // Act
+        client.trackOrder(parameters: ["blargh": "blergh"]) { _ in }
+
+        // Assert
+        XCTAssertFalse(testURLSession.didCallDataTaskWithRequest)
+        XCTAssertNil(testURLSession.lastDataTask)
+    }
+
     func testTrackOrderEnqueuesRequest() {
         // Arrange
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/activity/order")!
+        let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/activity/order")!
         
         // Act
         client.trackOrder(parameters: expectedParameters) { _ in }
@@ -265,6 +295,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "track order success")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
         
         // Act
@@ -286,6 +317,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "track order fails")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        client.applicationId = "app-abc123"
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
         let expectedError = TestError.known
         

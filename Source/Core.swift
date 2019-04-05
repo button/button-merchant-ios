@@ -47,7 +47,11 @@ internal protocol CoreType {
  */
 final internal class Core: CoreType {
 
-    var applicationId: String?
+    var applicationId: String? {
+        didSet {
+            client.applicationId = self.applicationId
+        }
+    }
     var buttonDefaults: ButtonDefaultsType
     var client: ClientType
     var system: SystemType
