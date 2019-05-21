@@ -832,7 +832,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ButtonMerchant/ButtonMerchant.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -841,7 +841,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DA0FA2BC2061AAD8008296A6 /* Swift Lint */ = {
@@ -954,7 +954,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Example-ObjC/Pods-Example-ObjC-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Example-ObjC/Pods-Example-ObjC-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ButtonMerchant/ButtonMerchant.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -963,7 +963,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example-ObjC/Pods-Example-ObjC-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example-ObjC/Pods-Example-ObjC-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
