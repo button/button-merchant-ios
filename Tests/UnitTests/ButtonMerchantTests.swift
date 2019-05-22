@@ -36,7 +36,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(ButtonMerchantVersionNumber, 1)
     }
 
-    func testConfigureApplicationIdSetsApplicationIdOnCore() {
+    func testConfigureApplicationId() {
         // Arrange
         let applicationId = "app-test"
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -51,23 +51,6 @@ class ButtonMerchantTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(testCore.applicationId, applicationId)
-    }
-
-    func testConfigureApplicationIdDoesNotSetInvalidApplicationIdOnCore() {
-        // Arrange
-        let applicationId = "invalid-app-id"
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
-
-        // Act
-        ButtonMerchant._core = testCore
-        ButtonMerchant.configure(applicationId: applicationId)
-
-        // Assert
-        XCTAssertNil(testCore.applicationId)
     }
 
     func testCreateCoreCreatesCoreWhenCoreSetToNil() {

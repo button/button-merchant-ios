@@ -34,8 +34,7 @@ class TestClient: ClientType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
-    var applicationId: String?
-    
+
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
 
