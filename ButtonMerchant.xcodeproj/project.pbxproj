@@ -83,6 +83,7 @@
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
+		DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4AAD4322B13CD3005CE460 /* OrderTests.swift */; };
 		DE0E7C2B209B915E001A5EE0 /* ApplicationId.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */; };
 		DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DA20855B06009FF30B /* UIDeviceExtensions.swift */; };
 		DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DC20855B22009FF30B /* UIScreenExtensions.swift */; };
@@ -215,6 +216,7 @@
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
+		DC4AAD4322B13CD3005CE460 /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
 		DDA5C34AC9410445D780EB22 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationId.generated.swift; sourceTree = "<group>"; };
 		DE153DA4FDE6DCF451A438B1 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -377,6 +379,7 @@
 				9EDED10F208FA3930049A56A /* UserAgentTests.swift */,
 				9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */,
 				9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */,
+				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
 				DE175A2320A0EF12005C97B9 /* Extensions */,
 				DEE61B2B206569EA0039E47A /* TestExtensions */,
 				DA0FA2A1205C1EE8008296A6 /* TestObjects */,
@@ -1171,6 +1174,7 @@
 				DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */,
 				DE1706E32085633A009FF30B /* TestDevice.swift in Sources */,
 				DE1706E7208563F1009FF30B /* TestScreen.swift in Sources */,
+				DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,7 +1270,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1278,7 +1282,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 			};
 			name = Debug;
 		};
@@ -1316,7 +1320,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1327,7 +1331,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

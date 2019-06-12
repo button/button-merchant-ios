@@ -36,9 +36,10 @@ final public class Order: NSObject, Codable {
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)
-     or the smallest decimal unit of the currency.
+     or the smallest decimal unit of the currency. (default is 0)
      */
-    private(set) var amount: Int64
+    @available(*, deprecated)
+    let amount: Int64
 
     /**
      The ISO 4217 currency code (default is USD).
@@ -91,12 +92,21 @@ final public class Order: NSObject, Codable {
         - id: The order identifier (required).
         - amount: The total order value in pennies or the
                   smallest decimal unit of the currency (e.g. 3999 for $39.99).
+                  Deprecated
         - currencyCode: The ISO 4217 currency code (default is USD).
      */
+    @available(*, deprecated, message: "No longer supported")
     @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
+        self.purchaseDate = nil
+        self.sourceToken = nil
+        self.customerOrderId = nil
+        self.lineItems = nil
+        self.customer = nil
+    }
+    
     /**
      Initializes an order object with the passed parameters.
      
