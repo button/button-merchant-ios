@@ -49,7 +49,7 @@ final public class Order: NSObject, Codable {
     /**
      The purchase date for the order.
      */
-    let purchaseDate: Date?
+    let purchaseDate: Date
     
     /**
      The button source token
@@ -64,7 +64,7 @@ final public class Order: NSObject, Codable {
     /**
      A list of the line item details that comprise the order
      */
-    let lineItems: [LineItems]?
+    let lineItems: [LineItem]
 
     /**
      The customer related to the order
@@ -74,7 +74,7 @@ final public class Order: NSObject, Codable {
     /**
      Represents a line item in the order
      */
-    public class LineItems: NSObject, Codable {
+    public class LineItem: NSObject, Codable {
         
     }
     
@@ -92,7 +92,6 @@ final public class Order: NSObject, Codable {
         - id: The order identifier (required).
         - amount: The total order value in pennies or the
                   smallest decimal unit of the currency (e.g. 3999 for $39.99).
-                  Deprecated
         - currencyCode: The ISO 4217 currency code (default is USD).
      */
     @available(*, deprecated, message: "No longer supported")
@@ -100,10 +99,10 @@ final public class Order: NSObject, Codable {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
-        self.purchaseDate = nil
+        self.purchaseDate = Date()
         self.sourceToken = nil
         self.customerOrderId = nil
-        self.lineItems = nil
+        self.lineItems = []
         self.customer = nil
     }
     
@@ -114,7 +113,6 @@ final public class Order: NSObject, Codable {
      - id: The order identifier (required).
      - amount: The total order value in pennies or the
                smallest decimal unit of the currency (e.g. 3999 for $39.99).
-               Deprecated
      - currencyCode: The ISO 4217 currency code (default is USD).
      - purchaseDate: The date of the purchase for the order.
      - sourceToken: The customer-facing order identifer.
@@ -122,15 +120,16 @@ final public class Order: NSObject, Codable {
      - lineItems: A list of the line item details that comprise the order.
      - customer: Customer field
      */
-    @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD", purchaseDate: Date? = nil, sourceToken: String? = nil, customerOrderId: String? = nil, lineItems: [LineItems]? = nil, customer: Customer? = nil) {
+    @objc public init(id: String, currencyCode: String = "USD", purchaseDate: Date,
+                      sourceToken: String? = nil, customerOrderId: String? = nil, lineItems: [LineItem], customer: Customer? = nil) {
         self.id = id
-        self.amount = amount
         self.currencyCode = currencyCode
         self.purchaseDate = purchaseDate
         self.sourceToken = sourceToken
         self.customerOrderId = customerOrderId
         self.lineItems = lineItems
         self.customer = customer
+        self.amount = 0
     }
 
     enum CodingKeys: String, CodingKey {
@@ -141,7 +140,7 @@ final public class Order: NSObject, Codable {
         case sourceToken = "btn_ref"
         case customerOrderId = "customer_order_id"
         case lineItems = "line_items"
-        case customer = "customer"
+        case customer
     }
 
 }

@@ -27,92 +27,46 @@ import XCTest
 
 class OrderTests: XCTestCase {
     
-    func testInitialization() {
+    func testInitialization_requiredProperties() {
+        let date = Date()
+        let lineItem = [Order.LineItem()]
+        
         let order = Order(id: "order-abc",
-                          amount: 99,
                           currencyCode: "USD",
-                          purchaseDate: nil,
+                          purchaseDate: date,
                           sourceToken: nil,
                           customerOrderId: nil,
-                          lineItems: nil,
+                          lineItems: lineItem,
                           customer: nil)
+        
         XCTAssertEqual(order.id, "order-abc")
-        XCTAssertEqual(order.amount, 99)
         XCTAssertEqual(order.currencyCode, "USD")
-        XCTAssertEqual(order.purchaseDate, nil)
-        XCTAssertEqual(order.sourceToken, nil)
-        XCTAssertEqual(order.lineItems, nil)
-        XCTAssertEqual(order.customer, nil)
-    }
-    
-    func testAmountInitialization() {
-        let amount: Int64 = 99
-        
-        let order = Order(id: "order-abc", amount: amount, currencyCode: "USD", purchaseDate: nil)
-        XCTAssertEqual(order.amount, amount)
-    }
-    
-    func testCurrencyCodeInitialization() {
-        let currency = "USD"
-        
-        let order = Order(id: "order-abc", amount: 99, currencyCode: currency, purchaseDate: nil)
-        XCTAssertEqual(order.currencyCode, currency)
-    }
-    
-    func testDateInitialization() {
-        let date = Date()
-        
-        let order = Order(id: "order-abc", purchaseDate: date)
         XCTAssertEqual(order.purchaseDate, date)
-    }
-    
-    func testSourceTokenInitialization() {
-        let token = "valid_source_token"
-        
-        let order = Order(id: "order-abc", sourceToken: token)
-        XCTAssertEqual(order.sourceToken, token)
-    }
-    
-    func testCustomerOrderIdInitialization() {
-        let customerOrderId = "123"
-        
-        let order = Order(id: "order-abc", customerOrderId: customerOrderId)
-        XCTAssertEqual(order.customerOrderId, customerOrderId)
-    }
-    
-    func testLineItemsInitialization() {
-        let lineItem = [Order.LineItems]()
-        
-        let order = Order(id: "order-abc", lineItems: lineItem)
         XCTAssertEqual(order.lineItems, lineItem)
+        XCTAssertNil(order.sourceToken)
+        XCTAssertNil(order.customerOrderId)
+        XCTAssertNil(order.customer)
     }
     
-    func testCustomerInitialization() {
-        let customer = Order.Customer()
-        let order = Order(id: "order-abc", customer: customer)
-        XCTAssertEqual(order.customer, customer)
-    }
-    
-    func testAllParametersWhenInitializing() {
+    func testInitialization_allProperties() {
         let id = "order-abc"
-        let amount: Int64 = 99
         let currency = "USD"
         let date = Date()
         let token = "valid_source_token"
         let customerOrderId = "123"
-        let lineItem = [Order.LineItems]()
+        let lineItem = [Order.LineItem()]
+        let customerId = "123"
         let customer = Order.Customer()
         
         let order = Order(id: id,
-                          amount: amount,
                           currencyCode: currency,
                           purchaseDate: date,
                           sourceToken: token,
                           customerOrderId: customerOrderId,
                           lineItems: lineItem,
                           customer: customer)
+        
         XCTAssertEqual(order.id, id)
-        XCTAssertEqual(order.amount, amount)
         XCTAssertEqual(order.currencyCode, currency)
         XCTAssertEqual(order.purchaseDate, date)
         XCTAssertEqual(order.sourceToken, token)
@@ -121,34 +75,21 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.customer, customer)
     }
     
-    func testDeprecatedInit() {
+    func testDeprecatedInit_requiredProperties() {
         let id = "order-abc"
         let amount: Int64 = 99
         let currency = "USD"
         
         let order  = Order(id: id, amount: amount, currencyCode: currency)
+        
         XCTAssertEqual(order.id, id)
         XCTAssertEqual(order.amount, amount)
         XCTAssertEqual(order.currencyCode, currency)
-        XCTAssertEqual(order.purchaseDate, nil)
-        XCTAssertEqual(order.sourceToken, nil)
-        XCTAssertEqual(order.customerOrderId, nil)
-        XCTAssertEqual(order.lineItems, nil)
-        XCTAssertEqual(order.customer, nil)
+        XCTAssertNil(order.sourceToken)
+        XCTAssertNil(order.customerOrderId)
+        XCTAssertNil(order.customer)
+        XCTAssertNotNil(order.lineItems)
+        XCTAssertNotNil(order.purchaseDate)
     }
-    
-    func testDeprecatedInitOnlyId() {
-        let id = "order-abc"
-        
-        let order = Order(id: id)
-        XCTAssertEqual(order.id, id)
-        XCTAssertEqual(order.amount, 0)
-        XCTAssertEqual(order.currencyCode, "currency")
-        XCTAssertEqual(order.purchaseDate, nil)
-        XCTAssertEqual(order.sourceToken, nil)
-        XCTAssertEqual(order.customerOrderId, nil)
-        XCTAssertEqual(order.lineItems, nil)
-        XCTAssertEqual(order.customer, nil)
-    }
-    
+
 }
