@@ -67,31 +67,10 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     private(set) var amount: Int64 = 0
 
     /**
-     Represents a line item in the order
+     Represents a line item in the order.
      */
     public class LineItem: NSObject, Codable {
         
-    }
-    
-    /**
-     Represents a customer in the order
-     */
-    public class Customer: NSObject, Codable {
-        let id: String
-        let email: String?
-        let advertisingId: String?
-        
-        @objc public init(id: String, email: String? = nil, advertisingId: String? = nil) {
-            self.id = id
-            self.email = email
-            self.advertisingId = advertisingId
-        }
-        
-        enum CodingKeys: String, CodingKey {
-            case id
-            case email = "email_sha256"
-            case advertisingId = "advertising_id"
-        }
     }
     
     /**
@@ -135,6 +114,73 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
         case customerOrderId = "customer_order_id"
         case lineItems = "line_items"
         case customer
+    }
+    
+    /**
+     Represents a customer in the order.
+     */
+    public class Customer: NSObject, Codable {
+        
+        /**
+         The id for the transacting customer in your system (required).
+         */
+        let id: String
+        
+        /**
+         The email of the transacting customer.
+         */
+        let email: String?
+        
+        /**
+         The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.
+         The value of the e-mail address must be converted to lowercase before computing the hash.
+         The hash itself may use uppercase or lowercase hex characters.
+         */
+        let emailSha256: String?
+        
+        /**
+         The customer’s IDFA.
+         */
+        let advertisingId: String?
+        
+        /**
+         Initializes a customer object with the passed parameters.
+         
+         - Parameters:
+         - id: The id for the transacting customer in your system (required).
+         - email: The email of the transacting customer.
+         - advertisingId: The customer’s IDFA.
+         */
+        @objc public init(id: String, email: String?, advertisingId: String? = nil) {
+            self.id = id
+            self.email = email?.lowercased()
+            self.advertisingId = advertisingId
+            self.emailSha256 = nil
+        }
+        
+        /**
+         Initializes a customer object with the passed parameters.
+         
+         - Parameters:
+         - id: The id for the transacting customer in your system (required).
+         - emailSha256: The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.
+                        The value of the e-mail address must be converted to lowercase before computing the hash.
+                        The hash itself may use uppercase or lowercase hex characters.
+         - advertisingId: The customer’s IDFA.
+         */
+        @objc public init(id: String, emailSha256: String?, advertisingId: String? = nil) {
+            self.id = id
+            self.emailSha256 = emailSha256
+            self.advertisingId = advertisingId
+            self.email = nil
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case email
+            case emailSha256 = "email_sha256"
+            case advertisingId = "advertising_id"
+        }
     }
 
 }

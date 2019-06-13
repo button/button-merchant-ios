@@ -54,7 +54,9 @@ class OrderTests: XCTestCase {
         let currencyCode = "EUR"
         let lineItems = [Order.LineItem()]
         let customerOrderId = "123"
-        let customer = Order.Customer(id: "123")
+        let customerId = "123"
+        let email = "betty@usebutton.com"
+        let customer = Order.Customer(id: customerId, email: email)
         
         let order = Order(id: id,
                           purchaseDate: date,
@@ -86,7 +88,7 @@ class OrderTests: XCTestCase {
 
         let currencyCode = "EUR"
         let customerOrderId = "123"
-        let customer = Order.Customer(id: "123")
+        let customer = Order.Customer(id: "123", email: nil)
 
         // Act
         order.currencyCode = currencyCode
@@ -129,26 +131,30 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
     }
     
-    func testCustomerInitialization_requiredProperties() {
-        let id = "123"
-        
-        let customer = Order.Customer(id: id)
-
-        XCTAssertEqual(customer.id, id)
-        XCTAssertNil(customer.email)
-        XCTAssertNil(customer.advertisingId)
-    }
-    
-    func testCustomerInitialization_allProperties() {
+    func testCustomerInitialization_email() {
         let id = "123"
         let email = "betty@usebutton.com"
         let advertisingId = "123"
         
         let customer = Order.Customer(id: id, email: email, advertisingId: advertisingId)
-        
+
         XCTAssertEqual(customer.id, id)
         XCTAssertEqual(customer.email, email)
         XCTAssertEqual(customer.advertisingId, advertisingId)
+        XCTAssertNil(customer.emailSha256)
+    }
+    
+    func testCustomerInitialization_emailSHA() {
+        let id = "123"
+        let emailSha256 = "1234567"
+        let advertisingId = "123"
+        
+        let customer = Order.Customer(id: id, emailSha256: emailSha256, advertisingId: advertisingId)
+        
+        XCTAssertEqual(customer.id, id)
+        XCTAssertEqual(customer.emailSha256, emailSha256)
+        XCTAssertEqual(customer.advertisingId, advertisingId)
+        XCTAssertNil(customer.email)
     }
 
 }
