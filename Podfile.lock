@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  ButtonMerchant: 78266b85d896d15f61e0584143ae647871ad542f
+  ButtonMerchant: 3e11a69d014d1ef7b553cb15bcacf1e1ddc4c024
   Sourcery: d78d3b68aa565a7194e57ccd6995c1368fda9cb0
   SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
 

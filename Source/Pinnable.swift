@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import Security
 
 protocol Pinnable {
     func isEqualTo(_ other: Pinnable) -> Bool

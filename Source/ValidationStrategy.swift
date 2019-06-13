@@ -36,7 +36,7 @@ internal enum ValidationStrategy: Int {
                 return []
             }
         case .certificates:
-            return certificates
+            return certificates.compactMap { $0 }
         }
     }
 }

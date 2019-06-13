@@ -18,7 +18,6 @@ and join the Button Marketplace.
   s.swift_version = '4.1'
 
   s.source_files = 'Source/**/*.swift'
-  s.resources = 'Source/**/*.cer'
 
   s.pod_target_xcconfig = { "SWIFT_VERSION" => 4.1 }
 end

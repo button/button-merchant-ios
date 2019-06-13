@@ -165,19 +165,10 @@ final public class ButtonMerchant: NSObject {
                             locale: NSLocale.current,
                             bundle: Bundle.main)
         
-        let certPaths = Bundle.init(for: self).paths(forResourcesOfType: "cer", inDirectory: nil)
-        let certificates: [SecCertificate] = certPaths.compactMap {
-            let url = URL(fileURLWithPath: $0)
-            if let data = try? Data(contentsOf: url) {
-                return SecCertificateCreateWithData(nil, data as CFData)
-            }
-            return nil
-        }
-        let evaluator = TrustEvaluator(certificates: certificates, strategy: .publicKeys)
-        
-        let session = URLSession(configuration: .default, delegate: SessionDelegate(evaluator: evaluator), delegateQueue: nil)
+        let session = URLSession(configuration: .default, delegate: SessionDelegate(evaluator: TrustEvaluator(system: system)), delegateQueue: nil)
+        let client = Client(session: session, userAgent: UserAgent(libraryVersion: Version.stringValue, system: system))
         return Core(buttonDefaults: ButtonDefaults(userDefaults: UserDefaults.button),
-                    client: Client(session: session, userAgent: UserAgent(libraryVersion: Version.stringValue, system: system)),
+                    client: client,
                     system: system,
                     notificationCenter: NotificationCenter.default)
     }

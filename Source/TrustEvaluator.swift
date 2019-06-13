@@ -35,12 +35,19 @@ internal protocol TrustEvaluatorType: class {
 }
 
 final internal class TrustEvaluator: TrustEvaluatorType {
-    var pinnables: [Pinnable]
-    var strategy: ValidationStrategy
     
-    required init(certificates: [SecCertificate], strategy: ValidationStrategy) {
-        self.strategy = strategy
-        pinnables = strategy.pinnables(from: certificates)
+    var strategy: ValidationStrategy
+    lazy var pinnables: [Pinnable] = {
+        return self.strategy.pinnables(from: PEMCertificate.pinnedCertificates)
+    }()
+    
+    required init(system: SystemType) {
+        switch system.device.systemVersion.compare("10.3", options: .numeric) {
+        case .orderedAscending:
+            strategy = .certificates
+        default:
+            strategy = .publicKeys
+        }
     }
     
     func shouldPinChallenge(_ challenge: URLAuthenticationChallenge) -> Bool {
@@ -78,7 +85,6 @@ final internal class TrustEvaluator: TrustEvaluatorType {
                 }
             }
         }
-        
         return .cancelAuthenticationChallenge
     }
 }
