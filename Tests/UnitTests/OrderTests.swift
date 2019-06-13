@@ -34,7 +34,6 @@ class OrderTests: XCTestCase {
         let order = Order(id: "order-abc",
                           currencyCode: "USD",
                           purchaseDate: date,
-                          sourceToken: nil,
                           customerOrderId: nil,
                           lineItems: lineItem,
                           customer: nil)
@@ -43,7 +42,6 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.currencyCode, "USD")
         XCTAssertEqual(order.purchaseDate, date)
         XCTAssertEqual(order.lineItems, lineItem)
-        XCTAssertNil(order.sourceToken)
         XCTAssertNil(order.customerOrderId)
         XCTAssertNil(order.customer)
     }
@@ -52,7 +50,6 @@ class OrderTests: XCTestCase {
         let id = "order-abc"
         let currency = "USD"
         let date = Date()
-        let token = "valid_source_token"
         let customerOrderId = "123"
         let lineItem = [Order.LineItem()]
         let customerId = "123"
@@ -61,7 +58,6 @@ class OrderTests: XCTestCase {
         let order = Order(id: id,
                           currencyCode: currency,
                           purchaseDate: date,
-                          sourceToken: token,
                           customerOrderId: customerOrderId,
                           lineItems: lineItem,
                           customer: customer)
@@ -69,7 +65,6 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.id, id)
         XCTAssertEqual(order.currencyCode, currency)
         XCTAssertEqual(order.purchaseDate, date)
-        XCTAssertEqual(order.sourceToken, token)
         XCTAssertEqual(order.customerOrderId, customerOrderId)
         XCTAssertEqual(order.lineItems, lineItem)
         XCTAssertEqual(order.customer, customer)
@@ -85,7 +80,6 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.id, id)
         XCTAssertEqual(order.amount, amount)
         XCTAssertEqual(order.currencyCode, currency)
-        XCTAssertNil(order.sourceToken)
         XCTAssertNil(order.customerOrderId)
         XCTAssertNil(order.customer)
         XCTAssertNil(order.lineItems)

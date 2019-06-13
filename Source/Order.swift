@@ -52,11 +52,6 @@ final public class Order: NSObject, Codable {
     let purchaseDate: Date?
     
     /**
-     The button source token
-     */
-    let sourceToken: String?
-    
-    /**
      The customer-facing order id
      */
     let customerOrderId: String?
@@ -100,7 +95,6 @@ final public class Order: NSObject, Codable {
         self.amount = amount
         self.currencyCode = currencyCode
         self.purchaseDate = nil
-        self.sourceToken = nil
         self.customerOrderId = nil
         self.lineItems = nil
         self.customer = nil
@@ -115,17 +109,15 @@ final public class Order: NSObject, Codable {
                smallest decimal unit of the currency (e.g. 3999 for $39.99).
      - currencyCode: The ISO 4217 currency code (default is USD).
      - purchaseDate: The date of the purchase for the order.
-     - sourceToken: The customer-facing order identifer.
      - customerOrderId: The customer-face order Id.
      - lineItems: A list of the line item details that comprise the order.
      - customer: Customer field
      */
     @objc public init(id: String, currencyCode: String = "USD", purchaseDate: Date,
-                      sourceToken: String? = nil, customerOrderId: String? = nil, lineItems: [LineItem], customer: Customer? = nil) {
+                      customerOrderId: String? = nil, lineItems: [LineItem], customer: Customer? = nil) {
         self.id = id
         self.currencyCode = currencyCode
         self.purchaseDate = purchaseDate
-        self.sourceToken = sourceToken
         self.customerOrderId = customerOrderId
         self.lineItems = lineItems
         self.customer = customer
@@ -137,7 +129,6 @@ final public class Order: NSObject, Codable {
         case amount
         case currencyCode = "currency"
         case purchaseDate = "purchase_date"
-        case sourceToken = "btn_ref"
         case customerOrderId = "customer_order_id"
         case lineItems = "line_items"
         case customer
