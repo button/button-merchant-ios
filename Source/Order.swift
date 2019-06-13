@@ -77,7 +77,21 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
      Represents a customer in the order
      */
     public class Customer: NSObject, Codable {
+        let id: String
+        let email: String?
+        let advertisingId: String?
         
+        @objc public init(id: String, email: String? = nil, advertisingId: String? = nil) {
+            self.id = id
+            self.email = email
+            self.advertisingId = advertisingId
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case email = "email_sha256"
+            case advertisingId = "advertising_id"
+        }
     }
     
     /**

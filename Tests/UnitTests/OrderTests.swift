@@ -129,5 +129,45 @@ class OrderTests: XCTestCase {
         // Assert
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
     }
+    
+    func testCustomerInitClass() {
+        let id = "123"
+        let lineItem = [Order.LineItem]()
+        let date = Date()
+        
+        let customer = Order.Customer(id: id)
+        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItem, customer: customer)
+        let testOrder = order
+        let testCustomer = testOrder.customer
+        let testId = testCustomer?.id
+        let testEmail = testCustomer!.email
+        let testAdvertisingId = testCustomer!.advertisingId
+        
+        XCTAssertEqual(order.customer, customer)
+        XCTAssertEqual(testId, id)
+        XCTAssertNil(testEmail)
+        XCTAssertNil(testAdvertisingId)
+    }
+    
+    func testAllParametersWithCustomerInitClass() {
+        let id = "123"
+        let email = "test@button.com"
+        let advertisingId = "1234"
+        let lineItem = [Order.LineItem]()
+        let date = Date()
+        
+        let customer = Order.Customer(id: id, email: email, advertisingId: advertisingId)
+        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItem, customer: customer)
+        let testOrder = order
+        let testCustomer = testOrder.customer
+        let testId = testCustomer!.id
+        let testEmail = testCustomer!.email
+        let testAdvertisingId = testCustomer!.advertisingId
+        
+        XCTAssertEqual(order.customer, customer)
+        XCTAssertEqual(testId, id)
+        XCTAssertEqual(testEmail, email)
+        XCTAssertEqual(testAdvertisingId, advertisingId)
+    }
 
 }
