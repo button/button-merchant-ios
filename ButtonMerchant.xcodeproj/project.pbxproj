@@ -55,12 +55,20 @@
 		DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D891209CDC3100537806 /* URLSessionTests.swift */; };
 		DA29D894209CF34D00537806 /* UIDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D893209CF34D00537806 /* UIDeviceTests.swift */; };
 		DA29D896209CF38800537806 /* TestUTSName.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D895209CF38800537806 /* TestUTSName.swift */; };
+		DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2F911F22A710E3000054D6 /* SessionDelegate.swift */; };
 		DA4AF05320867FFB002C3E0E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05220867FFB002C3E0E /* MessageView.swift */; };
 		DA4AF05520868015002C3E0E /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA4AF05420868015002C3E0E /* MessageView.xib */; };
 		DA4AF05720869966002C3E0E /* NotificationCenterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05620869966002C3E0E /* NotificationCenterExtensions.swift */; };
 		DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF058208699CA002C3E0E /* NotificationExtensions.swift */; };
 		DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */; };
+		DA98BFEF22B26580002D1823 /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFED22B26554002D1823 /* Pinnable.swift */; };
+		DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */; };
+		DA98BFF922B2671E002D1823 /* AmazonRootCA4.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA98BFF522B2671E002D1823 /* AmazonRootCA4.cer */; };
+		DA98BFFA22B2671E002D1823 /* AmazonRootCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA98BFF622B2671E002D1823 /* AmazonRootCA2.cer */; };
+		DA98BFFB22B2671E002D1823 /* AmazonRootCA3.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA98BFF722B2671E002D1823 /* AmazonRootCA3.cer */; };
+		DA98BFFC22B2671E002D1823 /* AmazonRootCA1.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA98BFF822B2671E002D1823 /* AmazonRootCA1.cer */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
+		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
 		DE0E7C2B209B915E001A5EE0 /* ApplicationId.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */; };
 		DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DA20855B06009FF30B /* UIDeviceExtensions.swift */; };
 		DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DC20855B22009FF30B /* UIScreenExtensions.swift */; };
@@ -165,12 +173,20 @@
 		DA29D891209CDC3100537806 /* URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTests.swift; sourceTree = "<group>"; };
 		DA29D893209CF34D00537806 /* UIDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceTests.swift; sourceTree = "<group>"; };
 		DA29D895209CF38800537806 /* TestUTSName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUTSName.swift; sourceTree = "<group>"; };
+		DA2F911F22A710E3000054D6 /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		DA4AF05220867FFB002C3E0E /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		DA4AF05420868015002C3E0E /* MessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageView.xib; sourceTree = "<group>"; };
 		DA4AF05620869966002C3E0E /* NotificationCenterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtensions.swift; sourceTree = "<group>"; };
 		DA4AF058208699CA002C3E0E /* NotificationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNotificationCenter.swift; sourceTree = "<group>"; };
+		DA98BFED22B26554002D1823 /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
+		DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStrategy.swift; sourceTree = "<group>"; };
+		DA98BFF522B2671E002D1823 /* AmazonRootCA4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA4.cer; sourceTree = "<group>"; };
+		DA98BFF622B2671E002D1823 /* AmazonRootCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA2.cer; sourceTree = "<group>"; };
+		DA98BFF722B2671E002D1823 /* AmazonRootCA3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA3.cer; sourceTree = "<group>"; };
+		DA98BFF822B2671E002D1823 /* AmazonRootCA1.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA1.cer; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
+		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
 		DDA5C34AC9410445D780EB22 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationId.generated.swift; sourceTree = "<group>"; };
 		DE153DA4FDE6DCF451A438B1 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -276,6 +292,7 @@
 				607FACF51AFB993E008FA782 /* Deployment */,
 				DE5464FB2107D734001809F3 /* Examples */,
 				DE865F762052F90600F4054D /* Source */,
+				DA98BFF322B2671E002D1823 /* Resources */,
 				9E77154A206AACEA0051728C /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				50D6E3CC979FCE372E4339F9 /* Pods */,
@@ -440,6 +457,25 @@
 			path = TestObjects;
 			sourceTree = "<group>";
 		};
+		DA98BFF322B2671E002D1823 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DA98BFF422B2671E002D1823 /* Certificates */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DA98BFF422B2671E002D1823 /* Certificates */ = {
+			isa = PBXGroup;
+			children = (
+				DA98BFF522B2671E002D1823 /* AmazonRootCA4.cer */,
+				DA98BFF622B2671E002D1823 /* AmazonRootCA2.cer */,
+				DA98BFF722B2671E002D1823 /* AmazonRootCA3.cer */,
+				DA98BFF822B2671E002D1823 /* AmazonRootCA1.cer */,
+			);
+			path = Certificates;
+			sourceTree = "<group>";
+		};
 		DE175A1920A09BB1005C97B9 /* Version */ = {
 			isa = PBXGroup;
 			children = (
@@ -497,6 +533,10 @@
 				9E77202120605506005F740B /* ButtonDefaults.swift */,
 				9EB1B09F207AB43E00BE0A1A /* System.swift */,
 				9E2B4310206C1275009F2886 /* Client.swift */,
+				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
+				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
+				DA98BFED22B26554002D1823 /* Pinnable.swift */,
+				DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */,
 				9ED488D4208F75C7000DA7FC /* UserAgent.swift */,
 				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
 				9E976B84207D10D500783F1A /* TrackOrderBody.swift */,
@@ -708,6 +748,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -759,6 +800,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA98BFF922B2671E002D1823 /* AmazonRootCA4.cer in Resources */,
+				DA98BFFC22B2671E002D1823 /* AmazonRootCA1.cer in Resources */,
+				DA98BFFB22B2671E002D1823 /* AmazonRootCA3.cer in Resources */,
+				DA98BFFA22B2671E002D1823 /* AmazonRootCA2.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,7 +901,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" && -z \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" && -z \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
 		};
 		DA0FA2C82062EF38008296A6 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -870,7 +915,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"Pods/SwiftLint/swiftlint\"\nfi";
+			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"Pods/SwiftLint/swiftlint\"\nfi\n";
 		};
 		DE0E7C29209B7F38001A5EE0 /* Environment Vars */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1007,9 +1052,11 @@
 				9E976B85207D10D500783F1A /* TrackOrderBody.swift in Sources */,
 				DE175A1C20A09DEA005C97B9 /* Version.generated.swift in Sources */,
 				9EB1B0A0207AB43E00BE0A1A /* System.swift in Sources */,
+				DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */,
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
 				DE865FA620530BCE00F4054D /* ButtonMerchant.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
+				DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */,
 				9E2B431B206C134A009F2886 /* PostInstallBody.swift in Sources */,
 				9EB1B0A4207AB68100BE0A1A /* CalendarExtensions.swift in Sources */,
 				DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */,
@@ -1021,9 +1068,11 @@
 				9E2B4315206C12BC009F2886 /* URLSessionExtensions.swift in Sources */,
 				9E9CDEA72076BD7900A1424C /* Order.swift in Sources */,
 				DA4AF05720869966002C3E0E /* NotificationCenterExtensions.swift in Sources */,
+				DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
+				DA98BFEF22B26580002D1823 /* Pinnable.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
