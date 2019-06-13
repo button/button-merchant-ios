@@ -1,4 +1,4 @@
-osx_image: xcode9.2
+osx_image: xcode10
 language: swift
 env:
   - TEST_SUITE=UnitTests COVERAGE='bundle exec fastlane coverage'
