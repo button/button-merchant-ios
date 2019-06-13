@@ -54,9 +54,8 @@ class OrderTests: XCTestCase {
         let currencyCode = "EUR"
         let lineItems = [Order.LineItem()]
         let customerOrderId = "123"
-        let customer = Order.Customer()
-
-        // Act
+        let customer = Order.Customer(id: "123")
+        
         let order = Order(id: id,
                           purchaseDate: date,
                           lineItems: lineItems)
@@ -87,7 +86,7 @@ class OrderTests: XCTestCase {
 
         let currencyCode = "EUR"
         let customerOrderId = "123"
-        let customer = Order.Customer()
+        let customer = Order.Customer(id: "123")
 
         // Act
         order.currencyCode = currencyCode
@@ -130,44 +129,26 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
     }
     
-    func testCustomerInitClass() {
+    func testCustomerInitialization_requiredProperties() {
         let id = "123"
-        let lineItem = [Order.LineItem]()
-        let date = Date()
         
         let customer = Order.Customer(id: id)
-        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItem, customer: customer)
-        let testOrder = order
-        let testCustomer = testOrder.customer
-        let testId = testCustomer?.id
-        let testEmail = testCustomer!.email
-        let testAdvertisingId = testCustomer!.advertisingId
-        
-        XCTAssertEqual(order.customer, customer)
-        XCTAssertEqual(testId, id)
-        XCTAssertNil(testEmail)
-        XCTAssertNil(testAdvertisingId)
+
+        XCTAssertEqual(customer.id, id)
+        XCTAssertNil(customer.email)
+        XCTAssertNil(customer.advertisingId)
     }
     
-    func testAllParametersWithCustomerInitClass() {
+    func testCustomerInitialization_allProperties() {
         let id = "123"
-        let email = "test@button.com"
-        let advertisingId = "1234"
-        let lineItem = [Order.LineItem]()
-        let date = Date()
+        let email = "betty@usebutton.com"
+        let advertisingId = "123"
         
         let customer = Order.Customer(id: id, email: email, advertisingId: advertisingId)
-        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItem, customer: customer)
-        let testOrder = order
-        let testCustomer = testOrder.customer
-        let testId = testCustomer!.id
-        let testEmail = testCustomer!.email
-        let testAdvertisingId = testCustomer!.advertisingId
         
-        XCTAssertEqual(order.customer, customer)
-        XCTAssertEqual(testId, id)
-        XCTAssertEqual(testEmail, email)
-        XCTAssertEqual(testAdvertisingId, advertisingId)
+        XCTAssertEqual(customer.id, id)
+        XCTAssertEqual(customer.email, email)
+        XCTAssertEqual(customer.advertisingId, advertisingId)
     }
 
 }
