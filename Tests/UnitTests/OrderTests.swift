@@ -31,7 +31,7 @@ class OrderTests: XCTestCase {
         // Arrange
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
-        let lineItems = [Order.LineItem()]
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400, quantity: 2)]
 
         // Act
         let order = Order(id: id,
@@ -52,7 +52,7 @@ class OrderTests: XCTestCase {
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let currencyCode = "EUR"
-        let lineItems = [Order.LineItem()]
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400, quantity: 2)]
         let customerOrderId = "123"
         let customer = Order.Customer()
         
@@ -168,6 +168,52 @@ class OrderTests: XCTestCase {
         customer.advertisingId = advertisingId
         
         XCTAssertEqual(customer.emailSha256, emailSha256)
+    }
+
+    func testLineItemInitialization_requiredPropertiesOnly() {
+        let identifier = "unique-id-123"
+        let total: Int64 = 4000
+        let quantity = 2
+
+        let lineItem = Order.LineItem(identifier: identifier, total: total, quantity: quantity)
+
+        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.total, total)
+        XCTAssertEqual(lineItem.quantity, quantity)
+        XCTAssertNil(lineItem.itemDescription)
+        XCTAssertNil(lineItem.sku)
+        XCTAssertNil(lineItem.upc)
+        XCTAssertNil(lineItem.category)
+        XCTAssertNil(lineItem.attributes)
+    }
+
+    func testLineItemInitialization_allProperties() {
+        let identifier = "unique-id-123"
+        let total: Int64 = 4000
+        let quantity = 2
+        let itemDescription = "laptop"
+        let sku = "1234"
+        let upc = "0987654321"
+        let category = ["Electronics", "Computers"]
+        let attributes = ["Model": "MacBook Pro"]
+
+        let lineItem = Order.LineItem(identifier: identifier,
+                                       total: total,
+                                       quantity: quantity,
+                                       itemDescription: itemDescription,
+                                       sku: sku,
+                                       upc: upc,
+                                       category: category,
+                                       attributes: attributes)
+
+        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.total, total)
+        XCTAssertEqual(lineItem.quantity, quantity)
+        XCTAssertEqual(lineItem.itemDescription, itemDescription)
+        XCTAssertEqual(lineItem.sku, sku)
+        XCTAssertEqual(lineItem.upc, upc)
+        XCTAssertEqual(lineItem.category, category)
+        XCTAssertEqual(lineItem.attributes, attributes)
     }
 
 }
