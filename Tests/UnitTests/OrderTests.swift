@@ -88,8 +88,8 @@ class OrderTests: XCTestCase {
         XCTAssertNil(order.sourceToken)
         XCTAssertNil(order.customerOrderId)
         XCTAssertNil(order.customer)
-        XCTAssertNotNil(order.lineItems)
-        XCTAssertNotNil(order.purchaseDate)
+        XCTAssertNil(order.lineItems)
+        XCTAssertNil(order.purchaseDate)
     }
 
 }

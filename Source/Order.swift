@@ -49,7 +49,7 @@ final public class Order: NSObject, Codable {
     /**
      The purchase date for the order.
      */
-    let purchaseDate: Date
+    let purchaseDate: Date?
     
     /**
      The button source token
@@ -64,7 +64,7 @@ final public class Order: NSObject, Codable {
     /**
      A list of the line item details that comprise the order
      */
-    let lineItems: [LineItem]
+    let lineItems: [LineItem]?
 
     /**
      The customer related to the order
@@ -99,10 +99,10 @@ final public class Order: NSObject, Codable {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
-        self.purchaseDate = Date()
+        self.purchaseDate = nil
         self.sourceToken = nil
         self.customerOrderId = nil
-        self.lineItems = []
+        self.lineItems = nil
         self.customer = nil
     }
     
