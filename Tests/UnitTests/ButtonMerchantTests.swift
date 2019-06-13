@@ -163,4 +163,21 @@ class ButtonMerchantTests: XCTestCase {
         // Assert
         XCTAssertEqual(testCore.testOrder, expectedOrder)
     }
+    
+    func testReportOrderInvokesCoreWithOrder() {
+        // Arrange
+        let testSystem = TestSystem()
+        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                system: testSystem,
+                                notificationCenter: TestNotificationCenter())
+        let expectedOrder = Order(id: "test", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 400, quantity: 2)])
+        
+        // Act
+        ButtonMerchant._core = testCore
+        ButtonMerchant.reportOrder(expectedOrder) { _ in }
+        
+        // Assert
+        XCTAssertEqual(testCore.testOrder, expectedOrder)
+    }
 }

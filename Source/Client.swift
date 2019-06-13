@@ -42,6 +42,7 @@ internal protocol ClientType: class {
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
+    func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType)
 }
 
@@ -69,7 +70,8 @@ internal final class Client: ClientType {
             completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
         })
     }
-
+    
+    @available(*, deprecated, message: "Use reportOrder() instead")
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
         let request = urlRequest(url: Service.activity.url, parameters: parameters)
         enqueueRequest(request: request) { _, error in
@@ -78,6 +80,16 @@ internal final class Client: ClientType {
             }
         }
     }
+    
+    func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
+        let request = urlRequest(url: Service.activity.url, parameters: parameters)
+        enqueueRequest(request: request) { _, error in
+            if let completion = completion {
+                completion(error)
+            }
+        }
+    }
+    
 }
 
 internal extension Client {

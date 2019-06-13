@@ -59,7 +59,7 @@ final public class Order: NSObject, Codable {
     /**
      The customer related to the order
      */
-    public var customer: Customer?
+    public var customer: Customer = Customer()
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)

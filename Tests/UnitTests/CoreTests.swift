@@ -376,4 +376,95 @@ class CoreTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 2.0)
     }
+    
+    func testReportOrder() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "track order")
+        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.testToken = "srctok-abc123"
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        core.applicationId = "app-abc123"
+        // Act
+        core.reportOrder(order) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        print(testClient.testParameters)
+        XCTAssertEqual(testClient.testParameters as NSDictionary,
+                       ["app_id": "app-abc123",
+                        "user_local_time": "2018-01-23T12:00:00Z",
+                        "btn_ref": "srctok-abc123",
+                        "order_id": "order-abc",
+                        "total": 0,
+                        "currency": "USD",
+                        "source": "merchant-library"])
+        testClient.trackOrderCompletion!(nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testReportOrderWithoutAttributionToken() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "track order")
+        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.testToken = nil
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        core.applicationId = "app-abc123"
+        
+        // Act
+        core.reportOrder(order) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        XCTAssertEqual(testClient.testParameters as NSDictionary,
+                       ["app_id": "app-abc123",
+                        "user_local_time": "2018-01-23T12:00:00Z",
+                        "order_id": "order-abc",
+                        "total": 0,
+                        "currency": "USD",
+                        "source": "merchant-library"])
+        testClient.trackOrderCompletion!(nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+        
+    }
+    
+    func testReportOrderError() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "tracker order error")
+        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        let testSystem = TestSystem()
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        core.applicationId = ""
+        
+        // Act
+        core.reportOrder(order) { error in
+            
+            // Assert
+            XCTAssertEqual(error as? ConfigurationError, ConfigurationError.noApplicationId)
+            expectation.fulfill()
+        }
+        self.wait(for: [expectation], timeout: 2.0)
+    }
 }

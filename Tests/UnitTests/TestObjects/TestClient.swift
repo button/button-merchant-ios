@@ -55,4 +55,10 @@ class TestClient: ClientType {
         didCallTrackOrder = true
         trackOrderCompletion = completion
     }
+    
+    func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
+        testParameters = parameters
+        didCallTrackOrder = true
+        trackOrderCompletion = completion
+    }
 }
