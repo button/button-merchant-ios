@@ -156,5 +156,14 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(customer.advertisingId, advertisingId)
         XCTAssertNil(customer.email)
     }
+    
+    func testCustomerInitialization_capitalEmail() {
+        let id = "123"
+        let email = "BETTY@usebutton.com"
+        
+        let customer = Order.Customer(id: id, email: email)
+        
+        XCTAssertEqual(customer.email, "betty@usebutton.com")
+    }
 
 }
