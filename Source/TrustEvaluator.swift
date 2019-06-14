@@ -28,10 +28,7 @@ internal protocol TrustEvaluatorType: class {
     var pinnables: [Pinnable] { get set }
     var strategy: ValidationStrategy { get set }
     
-    func shouldPinChallenge(_ challenge: URLAuthenticationChallenge) -> Bool
-    func validate(_ trust: SecTrust, host: String) -> Bool
-    
-    func evaluate(_ trust: SecTrust) -> URLSession.AuthChallengeDisposition
+    func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 }
 
 final internal class TrustEvaluator: TrustEvaluatorType {
@@ -50,17 +47,32 @@ final internal class TrustEvaluator: TrustEvaluatorType {
         }
     }
     
-    func shouldPinChallenge(_ challenge: URLAuthenticationChallenge) -> Bool {
-        let space = challenge.protectionSpace
-        guard pinnables.count > 0,
-            space.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+    func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let space = challenge.getProtectionSpace()
+        guard shouldPinChallenge(challenge),
+            let trust = space.serverTrust else {
+            completion(.performDefaultHandling, nil)
+            return
+        }
+        
+        guard validate(trust, host: space.host) else {
+            completion(.cancelAuthenticationChallenge, nil)
+            return
+        }
+        
+        completion(evaluate(trust), nil)
+    }
+    
+    private func shouldPinChallenge(_ challenge: URLAuthenticationChallengeType) -> Bool {
+        let space = challenge.getProtectionSpace()
+        guard space.authenticationMethod == NSURLAuthenticationMethodServerTrust,
             space.host.contains(".usebutton.com") else {
                 return false
         }
         return true
     }
     
-    func validate(_ trust: SecTrust, host: String) -> Bool {
+    private func validate(_ trust: SecTrust, host: String) -> Bool {
         let policy = SecPolicyCreateSSL(true, host as CFString)
         SecTrustSetPolicies(trust, policy)
         
@@ -73,7 +85,7 @@ final internal class TrustEvaluator: TrustEvaluatorType {
         return true
     }
     
-    func evaluate(_ trust: SecTrust) -> URLSession.AuthChallengeDisposition {
+    private func evaluate(_ trust: SecTrust) -> URLSession.AuthChallengeDisposition {
         let count = SecTrustGetCertificateCount(trust)
         let trustCertificates = [Int](0..<count).compactMap { SecTrustGetCertificateAtIndex(trust, $0) }
         let serverPinnables = strategy.pinnables(from: trustCertificates)

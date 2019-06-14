@@ -1,5 +1,5 @@
 //
-// SessionDelegate.swift
+// TestURLAuthenticationChallenge.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,16 +23,16 @@
 //
 
 import Foundation
+@testable import ButtonMerchant
 
-final internal class SessionDelegate: NSObject, URLSessionDelegate {
-    
-    var evaluator: TrustEvaluatorType
-    
-    required init(evaluator: TrustEvaluatorType) {
-        self.evaluator = evaluator
-    }
-    
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        evaluator.handleChallenge(challenge, completion: completionHandler)
-    }
-}
+//class TestURLAuthenticationChallenge: NSObject {
+//    var protectionSpace
+//}
+//
+//class TestURLProtectionSpace: NSObject {
+//    
+//}
+//
+//class TestTrust: NSObject {
+//    
+//}

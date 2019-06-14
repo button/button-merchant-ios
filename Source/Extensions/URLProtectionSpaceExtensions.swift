@@ -1,5 +1,5 @@
 //
-// SessionDelegate.swift
+// URLProtectionSpaceExtensions.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -24,15 +24,10 @@
 
 import Foundation
 
-final internal class SessionDelegate: NSObject, URLSessionDelegate {
-    
-    var evaluator: TrustEvaluatorType
-    
-    required init(evaluator: TrustEvaluatorType) {
-        self.evaluator = evaluator
-    }
-    
-    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        evaluator.handleChallenge(challenge, completion: completionHandler)
-    }
+internal protocol URLProtectionSpaceType {
+    var serverTrust: SecTrust? { get }
+    var host: String { get }
+    var authenticationMethod: String { get }
 }
+
+extension URLProtectionSpace: URLProtectionSpaceType {}
