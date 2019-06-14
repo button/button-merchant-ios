@@ -119,23 +119,6 @@ class OrderTests: XCTestCase {
     }
 
     @available(*, deprecated)
-    func testDeprecatedInit_requiredProperties() {
-        let id = "order-abc"
-        let amount: Int64 = 99
-        let currency = "USD"
-        
-        let order  = Order(id: id, amount: amount, currencyCode: currency)
-        
-        XCTAssertEqual(order.id, id)
-        XCTAssertEqual(order.amount, amount)
-        XCTAssertEqual(order.currencyCode, currency)
-        XCTAssertNil(order.customerOrderId)
-        XCTAssertNil(order.customer)
-        XCTAssertNil(order.lineItems)
-        XCTAssertNil(order.purchaseDate)
-    }
-
-    @available(*, deprecated)
     func testDictionaryRepresentationIsCorrect_deprecatedInit() {
         // Arrange
         let id = "derp123"
@@ -150,9 +133,6 @@ class OrderTests: XCTestCase {
             XCTFail("malformed dictionary")
             return
         }
-
-        print(expectedOrderDictionary)
-        print(actualOrderDictionary)
 
         // Assert
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
