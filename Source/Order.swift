@@ -27,12 +27,12 @@ import Foundation
 /**
 Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
  */
-final public class Order: NSObject, Codable {
+@objcMembers final public class Order: NSObject, Codable {
 
     /**
      The order identifier (required).
      */
-    let id: String
+    public var id: String
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)
@@ -44,27 +44,27 @@ final public class Order: NSObject, Codable {
     /**
      The ISO 4217 currency code (default is USD).
      */
-    let currencyCode: String
+    public var currencyCode: String
 
     /**
      The purchase date for the order.
      */
-    let purchaseDate: Date?
+    public var purchaseDate: Date?
 
     /**
      The customer-facing order id
      */
-    let customerOrderId: String?
+    public var customerOrderId: String?
 
     /**
      A list of the line item details that comprise the order
      */
-    let lineItems: [LineItem]?
+    public var lineItems: [LineItem]?
 
     /**
      The customer related to the order
      */
-    let customer: Customer?
+    public var customer: Customer?
 
     /**
      Represents a line item in the order
@@ -94,10 +94,6 @@ final public class Order: NSObject, Codable {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
-        self.purchaseDate = nil
-        self.customerOrderId = nil
-        self.lineItems = nil
-        self.customer = nil
     }
     
     /**
@@ -107,18 +103,13 @@ final public class Order: NSObject, Codable {
      - id: The order identifier (required).
      - currencyCode: The ISO 4217 currency code (default is USD).
      - purchaseDate: The date of the purchase for the order.
-     - customerOrderId: The customer-face order Id.
      - lineItems: A list of the line item details that comprise the order.
-     - customer: Customer field
      */
-    @objc public init(id: String, currencyCode: String = "USD", purchaseDate: Date,
-                      customerOrderId: String? = nil, lineItems: [LineItem], customer: Customer? = nil) {
+    @objc public init(id: String, currencyCode: String = "USD", purchaseDate: Date, lineItems: [LineItem]) {
         self.id = id
         self.currencyCode = currencyCode
         self.purchaseDate = purchaseDate
-        self.customerOrderId = customerOrderId
         self.lineItems = lineItems
-        self.customer = customer
     }
 
     enum CodingKeys: String, CodingKey {

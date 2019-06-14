@@ -29,39 +29,92 @@ class OrderTests: XCTestCase {
     
     func testInitialization_requiredProperties() {
         let id = "order-abc"
+        let currencyCode = "EUR"
         let date = Date()
-        let lineItem = [Order.LineItem()]
+        let lineItems = [Order.LineItem()]
         
-        let order = Order(id: id, purchaseDate: date, lineItems: lineItem)
+        let order = Order(id: id,
+                          currencyCode: currencyCode,
+                          purchaseDate: date,
+                          lineItems: lineItems)
         
+        XCTAssertEqual(order.id, id)
+        XCTAssertEqual(order.currencyCode, currencyCode)
+        XCTAssertEqual(order.purchaseDate, date)
+        XCTAssertEqual(order.lineItems, lineItems)
+        XCTAssertNil(order.customerOrderId)
+        XCTAssertNil(order.customer)
+    }
+
+    func testInitialization_defaultCurrency() {
+        let id = "order-abc"
+        let date = Date()
+        let lineItems = [Order.LineItem()]
+
+        let order = Order(id: id,
+                          purchaseDate: date,
+                          lineItems: lineItems)
+
         XCTAssertEqual(order.id, id)
         XCTAssertEqual(order.currencyCode, "USD")
         XCTAssertEqual(order.purchaseDate, date)
-        XCTAssertEqual(order.lineItems, lineItem)
+        XCTAssertEqual(order.lineItems, lineItems)
         XCTAssertNil(order.customerOrderId)
         XCTAssertNil(order.customer)
     }
 
     func testInitialization_allProperties() {
         let id = "order-abc"
-        let currency = "USD"
+        let currencyCode = "USD"
         let date = Date()
+        let lineItems = [Order.LineItem()]
         let customerOrderId = "123"
-        let lineItem = [Order.LineItem()]
         let customer = Order.Customer()
         
         let order = Order(id: id,
-                          currencyCode: currency,
+                          currencyCode: currencyCode,
                           purchaseDate: date,
-                          customerOrderId: customerOrderId,
-                          lineItems: lineItem,
-                          customer: customer)
+                          lineItems: lineItems)
+
+        order.customerOrderId = customerOrderId
+        order.customer = customer
         
         XCTAssertEqual(order.id, id)
-        XCTAssertEqual(order.currencyCode, currency)
+        XCTAssertEqual(order.currencyCode, currencyCode)
         XCTAssertEqual(order.purchaseDate, date)
         XCTAssertEqual(order.customerOrderId, customerOrderId)
-        XCTAssertEqual(order.lineItems, lineItem)
+        XCTAssertEqual(order.lineItems, lineItems)
+        XCTAssertEqual(order.customer, customer)
+    }
+
+    func testSettingProperties_afterInitialization() {
+        let order = Order(id: "valid_id",
+                          purchaseDate: Date(),
+                          lineItems: [])
+
+        XCTAssertEqual(order.id, "valid_id")
+        XCTAssertNotNil(order.purchaseDate)
+        XCTAssertNotNil(order.lineItems)
+
+        let id = "order-abc"
+        let currencyCode = "EUR"
+        let date = Date()
+        let lineItems = [Order.LineItem()]
+        let customerOrderId = "123"
+        let customer = Order.Customer()
+
+        order.id = id
+        order.currencyCode = currencyCode
+        order.purchaseDate = date
+        order.lineItems = lineItems
+        order.customerOrderId = customerOrderId
+        order.customer = customer
+
+        XCTAssertEqual(order.id, id)
+        XCTAssertEqual(order.currencyCode, currencyCode)
+        XCTAssertEqual(order.purchaseDate, date)
+        XCTAssertEqual(order.customerOrderId, customerOrderId)
+        XCTAssertEqual(order.lineItems, lineItems)
         XCTAssertEqual(order.customer, customer)
     }
 
@@ -80,6 +133,29 @@ class OrderTests: XCTestCase {
         XCTAssertNil(order.customer)
         XCTAssertNil(order.lineItems)
         XCTAssertNil(order.purchaseDate)
+    }
+
+    @available(*, deprecated)
+    func testDictionaryRepresentationIsCorrect_deprecatedInit() {
+        // Arrange
+        let id = "derp123"
+        let amount: Int64 = 499
+        let expectedOrderDictionary: [String: AnyHashable] = ["order_id": id,
+                                                              "amount": amount,
+                                                              "currency": "USD"]
+        let order = Order(id: id, amount: amount)
+
+        // Act
+        guard let actualOrderDictionary = order.dictionaryRepresentation as? [String: AnyHashable] else {
+            XCTFail("malformed dictionary")
+            return
+        }
+
+        print(expectedOrderDictionary)
+        print(actualOrderDictionary)
+
+        // Assert
+        XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
     }
 
 }
