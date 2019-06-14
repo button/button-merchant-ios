@@ -34,6 +34,18 @@ struct TestCertificates {
         return rootCAs.compactMap { publicKeyFrom($0) }
     }()
     
+    static let validCertChain: [SecCertificate] = {
+        return ["*.usebutton.com", "AmazonIntermediate", "AmazonRootCA1"].map { certNamed($0) }
+    }()
+    
+    static let invalidCertChain: [SecCertificate] = {
+        return ["AmazonIntermediate", "AmazonRootCA1"].map { certNamed($0) }
+    }()
+    
+    static let unpinnedCertChain: [SecCertificate] = {
+        return [certNamed("*.usebutton.com")]
+    }()
+    
     static func certNamed(_ name: String) -> SecCertificate {
         class TestBundle {}
         let bundle = Bundle.init(for: TestBundle.self)

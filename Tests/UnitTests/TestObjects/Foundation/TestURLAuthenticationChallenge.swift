@@ -25,14 +25,14 @@
 import Foundation
 @testable import ButtonMerchant
 
-//class TestURLAuthenticationChallenge: NSObject {
-//    var protectionSpace
-//}
-//
-//class TestURLProtectionSpace: NSObject {
-//    
-//}
-//
-//class TestTrust: NSObject {
-//    
-//}
+class TestURLAuthenticationChallenge: NSObject, URLAuthenticationChallengeType {
+    var space: URLProtectionSpaceType
+    
+    required init(_ space: URLProtectionSpaceType) {
+        self.space = space
+    }
+    
+    func getProtectionSpace() -> URLProtectionSpaceType {
+        return space
+    }
+}

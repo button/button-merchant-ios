@@ -76,6 +76,8 @@
 		DA756B8122B2E03E003397E3 /* TestURLAuthenticationChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8022B2E03E003397E3 /* TestURLAuthenticationChallenge.swift */; };
 		DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */; };
 		DA756B8522B3378B003397E3 /* URLProtectionSpaceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */; };
+		DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */; };
+		DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */; };
 		DA98BFEF22B26580002D1823 /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFED22B26554002D1823 /* Pinnable.swift */; };
 		DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */; };
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
@@ -206,6 +208,8 @@
 		DA756B8022B2E03E003397E3 /* TestURLAuthenticationChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLAuthenticationChallenge.swift; sourceTree = "<group>"; };
 		DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAuthenticationChallengeExtensions.swift; sourceTree = "<group>"; };
 		DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtectionSpaceExtensions.swift; sourceTree = "<group>"; };
+		DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustEvaluatorTests.swift; sourceTree = "<group>"; };
+		DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLProtectionSpace.swift; sourceTree = "<group>"; };
 		DA98BFED22B26554002D1823 /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
 		DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStrategy.swift; sourceTree = "<group>"; };
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
@@ -366,6 +370,7 @@
 				9E0DBB1B207BB55A0066A35D /* SystemTests.swift */,
 				9E5475E1206D7E0C00947A1C /* ClientTests.swift */,
 				DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */,
+				DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */,
 				DA756B7422B2C824003397E3 /* PinnableTests.swift */,
 				DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */,
 				DA756B7022B2BB3A003397E3 /* ValidationStrategyTests.swift */,
@@ -459,6 +464,7 @@
 				DADE90C1209B9A630073144B /* TestError.swift */,
 				DA29D895209CF38800537806 /* TestUTSName.swift */,
 				DA756B8022B2E03E003397E3 /* TestURLAuthenticationChallenge.swift */,
+				DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1128,6 +1134,7 @@
 			files = (
 				9E4C496B20616B130053E4CA /* TestUserDefaults.swift in Sources */,
 				9EAA60C3207AC92B00D21601 /* TestSystem.swift in Sources */,
+				DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */,
 				DA756B7522B2C824003397E3 /* PinnableTests.swift in Sources */,
 				9E0DBB1C207BB55A0066A35D /* SystemTests.swift in Sources */,
 				9EC44528207D4F180032B1EF /* TrackOrderBodyTests.swift in Sources */,
@@ -1146,6 +1153,7 @@
 				DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */,
 				9E77202520607331005F740B /* ButtonMerchantTests.swift in Sources */,
 				9EDEB859206ECE3000D58FE2 /* PostInstallBodyTests.swift in Sources */,
+				DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */,
 				9E76FEB32090EEC700BDC844 /* TestUserAgent.swift in Sources */,
 				9EAA60C5207AC9AC00D21601 /* TestFileManager.swift in Sources */,
 				9E5475E2206D7E0C00947A1C /* ClientTests.swift in Sources */,
