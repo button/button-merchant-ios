@@ -39,23 +39,23 @@ final public class Order: NSObject, Codable {
      or the smallest decimal unit of the currency. (default is 0)
      */
     @available(*, deprecated)
-    let amount: Int64
+    private(set) var amount: Int64 = 0
 
     /**
      The ISO 4217 currency code (default is USD).
      */
     let currencyCode: String
-    
+
     /**
      The purchase date for the order.
      */
     let purchaseDate: Date?
-    
+
     /**
      The customer-facing order id
      */
     let customerOrderId: String?
-    
+
     /**
      A list of the line item details that comprise the order
      */
@@ -65,7 +65,7 @@ final public class Order: NSObject, Codable {
      The customer related to the order
      */
     let customer: Customer?
-    
+
     /**
      Represents a line item in the order
      */
@@ -89,7 +89,7 @@ final public class Order: NSObject, Codable {
                   smallest decimal unit of the currency (e.g. 3999 for $39.99).
         - currencyCode: The ISO 4217 currency code (default is USD).
      */
-    @available(*, deprecated, message: "No longer supported")
+    @available(*, deprecated, message: "Use init(id:currencyCode:purchaseDate:customerOrderId:lineItems:customer:) instead")
     @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount
@@ -105,8 +105,6 @@ final public class Order: NSObject, Codable {
      
      - Parameters:
      - id: The order identifier (required).
-     - amount: The total order value in pennies or the
-               smallest decimal unit of the currency (e.g. 3999 for $39.99).
      - currencyCode: The ISO 4217 currency code (default is USD).
      - purchaseDate: The date of the purchase for the order.
      - customerOrderId: The customer-face order Id.
@@ -121,7 +119,6 @@ final public class Order: NSObject, Codable {
         self.customerOrderId = customerOrderId
         self.lineItems = lineItems
         self.customer = customer
-        self.amount = 0
     }
 
     enum CodingKeys: String, CodingKey {

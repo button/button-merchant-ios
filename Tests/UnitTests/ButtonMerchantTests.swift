@@ -146,6 +146,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertTrue(testCore.didCallFetchPostInstallURL)
     }
 
+    @available(*, deprecated)
     func testTrackOrderInvokesCoreWithOrder() {
         // Arrange
         let testSystem = TestSystem()

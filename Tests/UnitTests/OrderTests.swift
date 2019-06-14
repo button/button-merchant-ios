@@ -28,31 +28,26 @@ import XCTest
 class OrderTests: XCTestCase {
     
     func testInitialization_requiredProperties() {
+        let id = "order-abc"
         let date = Date()
         let lineItem = [Order.LineItem()]
         
-        let order = Order(id: "order-abc",
-                          currencyCode: "USD",
-                          purchaseDate: date,
-                          customerOrderId: nil,
-                          lineItems: lineItem,
-                          customer: nil)
+        let order = Order(id: id, purchaseDate: date, lineItems: lineItem)
         
-        XCTAssertEqual(order.id, "order-abc")
+        XCTAssertEqual(order.id, id)
         XCTAssertEqual(order.currencyCode, "USD")
         XCTAssertEqual(order.purchaseDate, date)
         XCTAssertEqual(order.lineItems, lineItem)
         XCTAssertNil(order.customerOrderId)
         XCTAssertNil(order.customer)
     }
-    
+
     func testInitialization_allProperties() {
         let id = "order-abc"
         let currency = "USD"
         let date = Date()
         let customerOrderId = "123"
         let lineItem = [Order.LineItem()]
-        let customerId = "123"
         let customer = Order.Customer()
         
         let order = Order(id: id,
@@ -69,7 +64,8 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.lineItems, lineItem)
         XCTAssertEqual(order.customer, customer)
     }
-    
+
+    @available(*, deprecated)
     func testDeprecatedInit_requiredProperties() {
         let id = "order-abc"
         let amount: Int64 = 99

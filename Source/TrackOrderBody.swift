@@ -44,6 +44,7 @@ internal struct TrackOrderBody: Codable {
         case source
     }
 
+    @available(*, deprecated)
     init(system: SystemType,
          applicationId: String,
          attributionToken: String?,
