@@ -90,6 +90,7 @@ class TrustEvaluatorTests: XCTestCase {
     
     func testHandleChallenge_basicAuthMethod_performsDefaultHandling() {
         // Arrange
+        let exp = expectation(description: "basic auth")
         let space = TestURLProtectionSpace()
         space.authenticationMethod = NSURLAuthenticationMethodHTTPBasic
         let challenge = TestURLAuthenticationChallenge(space)
@@ -99,11 +100,14 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
     
     func testHandleChallenge_differentHost_performsDefaultHandling() {
         // Arrange
+        let exp = expectation(description: "different host")
         let space = TestURLProtectionSpace()
         space.host = "example.com"
         let challenge = TestURLAuthenticationChallenge(space)
@@ -113,11 +117,14 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
     
     func testHandleChallenge_invalidTrust_cancelsChallenge() {
         // Arrange
+        let exp = expectation(description: "invalid trust")
         let space = TestURLProtectionSpace()
         space.serverTrust = invalidTrust
         let challenge = TestURLAuthenticationChallenge(space)
@@ -127,11 +134,14 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
     
     func testHandleChallenge_unpinnedChain_cancelsChallenge() {
         // Arrange
+        let exp = expectation(description: "unpinned chain")
         let space = TestURLProtectionSpace()
         space.serverTrust = unpinnedTrust
         let challenge = TestURLAuthenticationChallenge(space)
@@ -141,11 +151,14 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
 
     func testHandleChallenge_iOS12_performsDefaultHandling() {
         // Arrange
+        let exp = expectation(description: "valid pinning iOS 12")
         let space = TestURLProtectionSpace()
         let challenge = TestURLAuthenticationChallenge(space)
         
@@ -154,11 +167,14 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
     
     func testHandleChallenge_iOS10_performsDefaultHandling() {
         // Arrange
+        let exp = expectation(description: "valid pinning iOS 10")
         device.testSystemVersion = "10.0"
         evaluator = TrustEvaluator(system: system)
         let space = TestURLProtectionSpace()
@@ -169,6 +185,8 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
         }
+        wait(for: [exp], timeout: 2.0)
     }
 }
