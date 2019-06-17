@@ -128,7 +128,7 @@ class OrderTests: XCTestCase {
     func testCustomerInitialization_hashingEmail() {
         let id = "123"
         let email = "betty@usebutton.com"
-        let emailSha256 = email.lowercased().sha256
+        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
         let advertisingId = "123"
         
         let customer = Order.Customer()
@@ -159,7 +159,7 @@ class OrderTests: XCTestCase {
     func testCustomerInitialization_hashingCapitalizedEmail() {
         let id = "123"
         let email = "BETTY@usebutton.com"
-        let emailSha256 = email.lowercased().sha256
+        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
         let advertisingId = "123"
 
         let customer = Order.Customer()
