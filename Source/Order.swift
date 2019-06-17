@@ -32,24 +32,22 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     /**
      The order identifier (required).
      */
-    public var id: String
+    let id: String
 
     /**
-     The total order value in pennies (e.g. 3999 for $39.99)
-     or the smallest decimal unit of the currency. (default is 0)
+     The purchase date for the order (ISO-8601 string).
      */
-    @available(*, deprecated)
-    private(set) var amount: Int64 = 0
+    let purchaseDate: String
+
+    /**
+     A list of the line item details that comprise the order
+     */
+    let lineItems: [LineItem]
 
     /**
      The ISO 4217 currency code (default is USD).
      */
-    public var currencyCode: String
-
-    /**
-     The purchase date for the order.
-     */
-    public var purchaseDate: Date?
+    public var currencyCode: String = "USD"
 
     /**
      The customer-facing order id
@@ -57,14 +55,16 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     public var customerOrderId: String?
 
     /**
-     A list of the line item details that comprise the order
-     */
-    public var lineItems: [LineItem]?
-
-    /**
      The customer related to the order
      */
     public var customer: Customer?
+
+    /**
+     The total order value in pennies (e.g. 3999 for $39.99)
+     or the smallest decimal unit of the currency. (default is 0)
+     */
+    @available(*, deprecated)
+    private(set) var amount: Int64 = 0
 
     /**
      Represents a line item in the order
@@ -94,6 +94,9 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
+        // Declare default values to keep a consistent API for the new interface.
+        self.purchaseDate = Date().ISO8601String
+        self.lineItems = []
     }
     
     /**
@@ -101,14 +104,12 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
      
      - Parameters:
      - id: The order identifier (required).
-     - currencyCode: The ISO 4217 currency code (default is USD).
      - purchaseDate: The date of the purchase for the order.
      - lineItems: A list of the line item details that comprise the order.
      */
-    @objc public init(id: String, currencyCode: String = "USD", purchaseDate: Date, lineItems: [LineItem]) {
+    @objc public init(id: String, purchaseDate: Date, lineItems: [LineItem]) {
         self.id = id
-        self.currencyCode = currencyCode
-        self.purchaseDate = purchaseDate
+        self.purchaseDate = purchaseDate.ISO8601String
         self.lineItems = lineItems
     }
 
