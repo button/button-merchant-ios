@@ -139,6 +139,7 @@ final internal class Core: CoreType {
         }
     }
 
+    @available(*, deprecated)
     func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
         guard let appId = applicationId, !appId.isEmpty else {
             if let completion = completion {

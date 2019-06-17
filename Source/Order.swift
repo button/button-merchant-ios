@@ -27,7 +27,7 @@ import Foundation
 /**
 Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
  */
-final public class Order: NSObject, Codable {
+@objcMembers final public class Order: NSObject, Codable {
 
     /**
      The order identifier (required).
@@ -35,16 +35,51 @@ final public class Order: NSObject, Codable {
     let id: String
 
     /**
-     The total order value in pennies (e.g. 3999 for $39.99)
-     or the smallest decimal unit of the currency.
+     The purchase date for the order (ISO-8601 string).
      */
-    private(set) var amount: Int64
+    let purchaseDate: String
+
+    /**
+     A list of the line item details that comprise the order
+     */
+    let lineItems: [LineItem]
 
     /**
      The ISO 4217 currency code (default is USD).
      */
-    private(set) var currencyCode: String
+    public var currencyCode: String = "USD"
 
+    /**
+     The customer-facing order id
+     */
+    public var customerOrderId: String?
+
+    /**
+     The customer related to the order
+     */
+    public var customer: Customer?
+
+    /**
+     The total order value in pennies (e.g. 3999 for $39.99)
+     or the smallest decimal unit of the currency. (default is 0)
+     */
+    @available(*, deprecated)
+    private(set) var amount: Int64 = 0
+
+    /**
+     Represents a line item in the order
+     */
+    public class LineItem: NSObject, Codable {
+        
+    }
+    
+    /**
+     Represents a customer in the order
+     */
+    public class Customer: NSObject, Codable {
+        
+    }
+    
     /**
      Initializes an order object with the passed parameters.
 
@@ -54,16 +89,38 @@ final public class Order: NSObject, Codable {
                   smallest decimal unit of the currency (e.g. 3999 for $39.99).
         - currencyCode: The ISO 4217 currency code (default is USD).
      */
+    @available(*, deprecated, message: "Use init(id:currencyCode:purchaseDate:customerOrderId:lineItems:customer:) instead")
     @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount
         self.currencyCode = currencyCode
+        // Declare default values to keep a consistent API for the new interface.
+        self.purchaseDate = Date().ISO8601String
+        self.lineItems = []
+    }
+    
+    /**
+     Initializes an order object with the passed parameters.
+     
+     - Parameters:
+     - id: The order identifier (required).
+     - purchaseDate: The date of the purchase for the order.
+     - lineItems: A list of the line item details that comprise the order.
+     */
+    @objc public init(id: String, purchaseDate: Date, lineItems: [LineItem]) {
+        self.id = id
+        self.purchaseDate = purchaseDate.ISO8601String
+        self.lineItems = lineItems
     }
 
     enum CodingKeys: String, CodingKey {
         case id = "order_id"
         case amount
-        case currencyCode = "currency_code"
+        case currencyCode = "currency"
+        case purchaseDate = "purchase_date"
+        case customerOrderId = "customer_order_id"
+        case lineItems = "line_items"
+        case customer
     }
 
 }

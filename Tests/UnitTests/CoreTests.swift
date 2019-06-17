@@ -283,7 +283,8 @@ class CoreTests: XCTestCase {
         // Assert
         XCTAssertFalse(core.shouldFetchPostInstallURL)
     }
-    
+
+    @available(*, deprecated)
     func testTrackOrder() {
         // Arrange
         let expectation = XCTestExpectation(description: "track order")
@@ -318,6 +319,7 @@ class CoreTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 
+    @available(*, deprecated)
     func testTrackOrderWithoutAttributionToken() {
         // Arrange
         let expectation = XCTestExpectation(description: "track order")
@@ -351,6 +353,7 @@ class CoreTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 
+    @available(*, deprecated)
     func testTrackOrderError() {
         // Arrange
         let expectation = XCTestExpectation(description: "track order error")
