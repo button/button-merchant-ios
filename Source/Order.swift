@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import CommonCrypto
 
 /**
 Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
@@ -57,7 +58,7 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     /**
      The customer related to the order
      */
-    public var customer: Customer?
+    public var customer: Customer = Customer()
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)
@@ -67,16 +68,9 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     private(set) var amount: Int64 = 0
 
     /**
-     Represents a line item in the order
+     Represents a line item in the order.
      */
     public class LineItem: NSObject, Codable {
-        
-    }
-    
-    /**
-     Represents a customer in the order
-     */
-    public class Customer: NSObject, Codable {
         
     }
     
@@ -122,5 +116,47 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
         case lineItems = "line_items"
         case customer
     }
+    
+    /**
+     Represents a customer in the order.
+     */
+    @objcMembers public class Customer: NSObject, Codable {
+        
+        /**
+         The id for the transacting customer in your system (required).
+         */
+        public var id: String?
+        
+        /**
+         If you prefer to provide your own hashed email, you can set it here following the below instructions,
+         otherwise, use **setEmail(email:)** and we will hash it for you.
 
+         The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.
+         The value of the e-mail address must be converted to lowercase before computing the hash.
+         The hash itself may use uppercase or lowercase hex characters.
+         */
+        public var emailSha256: String?
+
+        /**
+         The email of the transacting customer.
+         Providing a value for this field will generate a SHA-256 hash
+         and populate the **emailSha256** field for you.
+
+         - Parameter email: the plain-text email to be converted to SHA-256 hash.
+         */
+        public func setEmail(_ email: String) {
+            emailSha256 = email.lowercased().sha256
+        }
+        
+        /**
+         The customer’s IDFA.
+         */
+        public var advertisingId: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case emailSha256 = "email_sha256"
+            case advertisingId = "advertising_id"
+        }
+    }
 }
