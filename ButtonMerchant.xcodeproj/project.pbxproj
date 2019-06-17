@@ -28,6 +28,7 @@
 		9E4C496C20616B130053E4CA /* TestButtonDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C496A20616B130053E4CA /* TestButtonDefaults.swift */; };
 		9E5475E2206D7E0C00947A1C /* ClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5475E1206D7E0C00947A1C /* ClientTests.swift */; };
 		9E5475E4206D91A900947A1C /* TestURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5475E3206D91A900947A1C /* TestURLSessionDataTask.swift */; };
+		9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E56CE5822B8049C00E75884 /* StringExtensions.swift */; };
 		9E6F4341206C160C004242A1 /* TestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6F4340206C160C004242A1 /* TestClient.swift */; };
 		9E6F4343206C171F004242A1 /* TestURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6F4342206C171F004242A1 /* TestURLSession.swift */; };
 		9E76FEB32090EEC700BDC844 /* TestUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E76FEB22090EEC700BDC844 /* TestUserAgent.swift */; };
@@ -156,6 +157,7 @@
 		9E4C496A20616B130053E4CA /* TestButtonDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestButtonDefaults.swift; sourceTree = "<group>"; };
 		9E5475E1206D7E0C00947A1C /* ClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientTests.swift; sourceTree = "<group>"; };
 		9E5475E3206D91A900947A1C /* TestURLSessionDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLSessionDataTask.swift; sourceTree = "<group>"; };
+		9E56CE5822B8049C00E75884 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		9E6F4340206C160C004242A1 /* TestClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClient.swift; sourceTree = "<group>"; };
 		9E6F4342206C171F004242A1 /* TestURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLSession.swift; sourceTree = "<group>"; };
 		9E76FEB22090EEC700BDC844 /* TestUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserAgent.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				9EF66C35208F851100D73AB1 /* BundleExtensions.swift */,
 				DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */,
 				DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */,
+				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1102,6 +1105,7 @@
 				DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */,
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
 				DE865FA620530BCE00F4054D /* ButtonMerchant.swift in Sources */,
+				9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
 				DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */,
 				9E2B431B206C134A009F2886 /* PostInstallBody.swift in Sources */,
