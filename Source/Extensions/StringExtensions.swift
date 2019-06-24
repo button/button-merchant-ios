@@ -25,7 +25,7 @@
 import Foundation
 import CommonCrypto
 
-extension String {
+public extension String {
 
     var sha256: String {
         guard let stringData = self.data(using: .utf8) else {
@@ -41,7 +41,7 @@ extension String {
         return NSData(bytes: hash, length: digestLength)
     }
 
-    private  func hexStringFromData(input: NSData) -> String {
+    private func hexStringFromData(input: NSData) -> String {
         var bytes = [UInt8](repeating: 0, count: input.length)
         input.getBytes(&bytes, length: input.length)
 

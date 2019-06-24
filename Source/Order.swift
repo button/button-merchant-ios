@@ -28,7 +28,8 @@ import CommonCrypto
 /**
 Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
  */
-@objcMembers final public class Order: NSObject, Codable {
+@objcMembers
+final public class Order: NSObject, Codable {
 
     /**
      The order identifier (required).
@@ -113,7 +114,8 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     /**
      Represents a customer in the order.
      */
-    @objcMembers public class Customer: NSObject, Codable {
+    @objcMembers
+    @objc(Customer) final public class Customer: NSObject, Codable {
         
         /**
          The id for the transacting customer in your system (required).
@@ -156,7 +158,8 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     /**
      Represents a line item in the order.
      */
-    final public class LineItem: NSObject, Codable {
+    @objcMembers
+    @objc(LineItem) final public class LineItem: NSObject, Codable {
 
         /**
          The unique identifier for this line item,
@@ -171,35 +174,35 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
         let total: Int64
 
         /**
-         The number of unique units represented by this line item.
+         The number of unique units represented by this line item (default is 1).
          */
-        let quantity: Int
+        public var quantity: Int
 
         /**
          Text describing the line item.
          */
-        let itemDescription: String?
+        public var itemDescription: String?
 
         /**
          The Stock Keeping Unit of the line item.
          */
-        let sku: String?
+        public var sku: String?
 
         /**
          The Universal Product Code of the line item.
          */
-        let upc: String?
+        public var upc: String?
 
         /**
          The category of the line item.
          An ordered list of strings, starting with the topmost (or most general) category.
          */
-        let category: [String]?
+        public var category: [String]?
 
         /**
          A key/value store for strings to specify additional information about a line item.
          */
-        let attributes: [String: String]?
+        public var attributes: [String: String]?
 
         /**
          An array of the line item details that comprise the order
@@ -209,24 +212,11 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
                           This must be unique across all line-items within the order.
                           We suggest using the SKU or UPC of the product. (required)
             - total: The total price of all items bought in a particular line item. (required)
-            - quantity: The number of unique units represented by this line item. (required)
-            - itemDescription: Text describing the line item.
-            - sku: The Stock Keeping Unit of the line item.
-            - upc: The Universal Product Code of the line item.
-            - category: The category of the line item.
-            - attributes: A key/value store for strings to specify additional information about a line item.
          */
-        @objc public init(identifier: String, total: Int64, quantity: Int,
-                          itemDescription: String? = nil, sku: String? = nil, upc: String? = nil,
-                          category: [String]? = nil, attributes: [String: String]? = nil) {
+        @objc public init(identifier: String, total: Int64) {
             self.identifier = identifier
             self.total = total
-            self.quantity = quantity
-            self.itemDescription = itemDescription
-            self.sku = sku
-            self.upc = upc
-            self.category = category
-            self.attributes = attributes
+            self.quantity = 1
         }
 
         enum CodingKeys: String, CodingKey {
