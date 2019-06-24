@@ -28,7 +28,8 @@ import CommonCrypto
 /**
 Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
  */
-@objcMembers final public class Order: NSObject, Codable {
+@objcMembers
+final public class Order: NSObject, Codable {
 
     /**
      The order identifier (required).
@@ -51,7 +52,7 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     public var currencyCode: String = "USD"
 
     /**
-     The customer-facing order id
+     The customer-facing order id.
      */
     public var customerOrderId: String?
 
@@ -67,13 +68,6 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     @available(*, deprecated)
     private(set) var amount: Int64 = 0
 
-    /**
-     Represents a line item in the order.
-     */
-    public class LineItem: NSObject, Codable {
-        
-    }
-    
     /**
      Initializes an order object with the passed parameters.
 
@@ -120,7 +114,8 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
     /**
      Represents a customer in the order.
      */
-    @objcMembers public class Customer: NSObject, Codable {
+    @objcMembers
+    @objc(Customer) final public class Customer: NSObject, Codable {
         
         /**
          The id for the transacting customer in your system (required).
@@ -159,4 +154,81 @@ Represents an order placed by the user to be tracked using `ButtonMerchant.track
             case advertisingId = "advertising_id"
         }
     }
+
+    /**
+     Represents a line item in the order.
+     */
+    @objcMembers
+    @objc(LineItem) final public class LineItem: NSObject, Codable {
+
+        /**
+         The unique identifier for this line item,
+         within the scope of this order. (required).
+         */
+        let identifier: String
+
+        /**
+         The total price of all items bought in a particular line item (required).
+         (e.g. if 3 bananas were purchased for $3.00 each, total would be 900).
+         */
+        let total: Int64
+
+        /**
+         The number of unique units represented by this line item (default is 1).
+         */
+        public var quantity: Int
+
+        /**
+         Text describing the line item.
+         */
+        public var itemDescription: String?
+
+        /**
+         The Stock Keeping Unit of the line item.
+         */
+        public var sku: String?
+
+        /**
+         The Universal Product Code of the line item.
+         */
+        public var upc: String?
+
+        /**
+         The category of the line item.
+         An ordered list of strings, starting with the topmost (or most general) category.
+         */
+        public var category: [String]?
+
+        /**
+         A key/value store for strings to specify additional information about a line item.
+         */
+        public var attributes: [String: String]?
+
+        /**
+         An array of the line item details that comprise the order
+
+         - Parameters:
+            - identifier: The unique identifier for this line item, within the scope of this order.
+                          This must be unique across all line-items within the order.
+                          We suggest using the SKU or UPC of the product. (required)
+            - total: The total price of all items bought in a particular line item. (required)
+         */
+        @objc public init(identifier: String, total: Int64) {
+            self.identifier = identifier
+            self.total = total
+            self.quantity = 1
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case identifier
+            case total
+            case quantity
+            case itemDescription = "description"
+            case sku
+            case upc
+            case category
+            case attributes
+        }
+    }
+
 }

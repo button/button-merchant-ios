@@ -31,7 +31,7 @@ class OrderTests: XCTestCase {
         // Arrange
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
-        let lineItems = [Order.LineItem()]
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400)]
 
         // Act
         let order = Order(id: id,
@@ -52,7 +52,7 @@ class OrderTests: XCTestCase {
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let currencyCode = "EUR"
-        let lineItems = [Order.LineItem()]
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400)]
         let customerOrderId = "123"
         let customer = Order.Customer()
         
@@ -126,48 +126,108 @@ class OrderTests: XCTestCase {
     }
     
     func testCustomerInitialization_hashingEmail() {
+        // Arrange
         let id = "123"
         let email = "betty@usebutton.com"
         let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
         let advertisingId = "123"
-        
+
+        // Act
         let customer = Order.Customer()
         customer.id = id
         customer.setEmail(email)
         customer.advertisingId = advertisingId
 
+        // Assert
         XCTAssertEqual(customer.id, id)
         XCTAssertEqual(customer.emailSha256, emailSha256)
         XCTAssertEqual(customer.advertisingId, advertisingId)
     }
     
     func testCustomerInitialization_providingHashedEmail() {
+        // Arrange
         let id = "123"
         let emailSha256 = "1234567"
         let advertisingId = "123"
-        
+
+        // Act
         let customer = Order.Customer()
         customer.id = id
         customer.emailSha256 = emailSha256
         customer.advertisingId = advertisingId
-        
+
+        // Assert
         XCTAssertEqual(customer.id, id)
         XCTAssertEqual(customer.emailSha256, emailSha256)
         XCTAssertEqual(customer.advertisingId, advertisingId)
     }
     
     func testCustomerInitialization_hashingCapitalizedEmail() {
+        // Arrange
         let id = "123"
         let email = "BETTY@usebutton.com"
         let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
         let advertisingId = "123"
 
+        // Act
         let customer = Order.Customer()
         customer.id = id
         customer.setEmail(email)
         customer.advertisingId = advertisingId
-        
+
+        // Assert
         XCTAssertEqual(customer.emailSha256, emailSha256)
+    }
+
+    func testLineItemInitialization_requiredPropertiesOnly() {
+        // Arrange
+        let identifier = "unique-id-123"
+        let total: Int64 = 4000
+
+        // Act
+        let lineItem = Order.LineItem(identifier: identifier, total: total)
+
+        // Assert
+        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.total, total)
+        XCTAssertEqual(lineItem.quantity, 1)
+        XCTAssertNil(lineItem.itemDescription)
+        XCTAssertNil(lineItem.sku)
+        XCTAssertNil(lineItem.upc)
+        XCTAssertNil(lineItem.category)
+        XCTAssertNil(lineItem.attributes)
+    }
+
+    func testLineItemInitialization_allProperties() {
+        // Arrange
+        let identifier = "unique-id-123"
+        let total: Int64 = 4000
+        let quantity = 2
+        let itemDescription = "laptop"
+        let sku = "1234"
+        let upc = "0987654321"
+        let category = ["Electronics", "Computers"]
+        let attributes = ["Model": "MacBook Pro"]
+
+        // Act
+        let lineItem = Order.LineItem(identifier: identifier,
+                                       total: total)
+        lineItem.quantity = quantity
+        lineItem.itemDescription = itemDescription
+        lineItem.sku = sku
+        lineItem.upc = upc
+        lineItem.category = category
+        lineItem.attributes = attributes
+
+        // Assert
+        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.total, total)
+        XCTAssertEqual(lineItem.quantity, quantity)
+        XCTAssertEqual(lineItem.itemDescription, itemDescription)
+        XCTAssertEqual(lineItem.sku, sku)
+        XCTAssertEqual(lineItem.upc, upc)
+        XCTAssertEqual(lineItem.category, category)
+        XCTAssertEqual(lineItem.attributes, attributes)
     }
 
 }
