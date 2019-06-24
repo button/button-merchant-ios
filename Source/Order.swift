@@ -59,7 +59,7 @@ final public class Order: NSObject, Codable {
     /**
      The customer related to the order
      */
-    public var customer: Customer = Customer()
+    public var customer: Customer?
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)
@@ -120,38 +120,23 @@ final public class Order: NSObject, Codable {
         /**
          The id for the transacting customer in your system (required).
          */
-        public var id: String?
-        
-        /**
-         If you prefer to provide your own hashed email, you can set it here following the below instructions,
-         otherwise, use **setEmail(email:)** and we will hash it for you.
+        let id: String
 
+        /**
          The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.
-         The value of the e-mail address must be converted to lowercase before computing the hash.
-         The hash itself may use uppercase or lowercase hex characters.
-         */
-        public var emailSha256: String?
 
-        /**
-         The email of the transacting customer.
-         Providing a value for this field will generate a SHA-256 hash
-         and populate the **emailSha256** field for you.
+         **Note**: The value of the e-mail address must be converted to lowercase before
+         computing the hash. The hash itself may use uppercase or lowercase hex characters.
+        */
+        var email: String?
 
-         - Parameter email: the plain-text email to be converted to SHA-256 hash.
-         */
-        public func setEmail(_ email: String) {
-            emailSha256 = email.lowercased().sha256
+        @objc public init(id: String) {
+            self.id = id
         }
-        
-        /**
-         The customer’s IDFA.
-         */
-        public var advertisingId: String?
-        
+
         enum CodingKeys: String, CodingKey {
+            case email
             case id
-            case emailSha256 = "email_sha256"
-            case advertisingId = "advertising_id"
         }
     }
 
