@@ -319,10 +319,7 @@ class ClientTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
-        XCTAssertNotNil(testURLSession.lastDataTask)
-        XCTAssertNotNil(testURLSession.lastDataTask?.originalRequest!.url)
         XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
-        XCTAssertNotNil(parameters)
         XCTAssertEqual(parameters!, expectedParameters)
     }
     
