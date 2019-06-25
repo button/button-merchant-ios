@@ -25,26 +25,30 @@
 import Foundation
 
 internal protocol TrustEvaluatorType: class {
-    var pinnables: [Pinnable] { get set }
-    var strategy: ValidationStrategy { get set }
+    
+    var publicKeys: [SecKey] { get }
     
     func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
 }
 
+final internal class ImplicitTrustEvaluator: TrustEvaluatorType {
+    var publicKeys: [SecKey]
+    
+    required init() {
+        publicKeys = []
+    }
+    
+    func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        completion(.performDefaultHandling, nil)
+    }
+}
+
 final internal class TrustEvaluator: TrustEvaluatorType {
     
-    var strategy: ValidationStrategy
-    lazy var pinnables: [Pinnable] = {
-        return self.strategy.pinnables(from: PEMCertificate.pinnedCertificates)
-    }()
+    var publicKeys: [SecKey]
     
-    required init(system: SystemType) {
-        switch system.device.systemVersion.compare("10.3", options: .numeric) {
-        case .orderedAscending:
-            strategy = .certificates
-        default:
-            strategy = .publicKeys
-        }
+    required init(publicKeys: [SecKey]) {
+        self.publicKeys = publicKeys
     }
     
     func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -87,14 +91,15 @@ final internal class TrustEvaluator: TrustEvaluatorType {
     
     private func evaluate(_ trust: SecTrust) -> URLSession.AuthChallengeDisposition {
         let count = SecTrustGetCertificateCount(trust)
-        let trustCertificates = [Int](0..<count).compactMap { SecTrustGetCertificateAtIndex(trust, $0) }
-        let serverPinnables = strategy.pinnables(from: trustCertificates)
+        let serverCerts = [Int](0..<count).compactMap { SecTrustGetCertificateAtIndex(trust, $0) }
+        var serverKeys = [SecKey]()
+        if #available(iOS 10.3, *) {
+            serverKeys = serverCerts.compactMap { SecCertificateCopyPublicKey($0) }
+        }
         
-        for serverPinnable in serverPinnables.reversed() {
-            for pinnable in pinnables {
-                if pinnable.isEqualTo(serverPinnable) {
-                    return .performDefaultHandling
-                }
+        for serverKey in serverKeys.reversed() {
+            for key in publicKeys where key == serverKey {
+                return .performDefaultHandling
             }
         }
         return .cancelAuthenticationChallenge

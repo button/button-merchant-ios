@@ -27,14 +27,12 @@ import Foundation
 
 class TestTrustEvaluator: TrustEvaluatorType {
     
-    var pinnables: [Pinnable]
-    var strategy: ValidationStrategy
+    var publicKeys: [SecKey]
     
     var actualChallenge: URLAuthenticationChallengeType?
     
-    required init(pinnables: [Pinnable] = [], strategy: ValidationStrategy = ValidationStrategy.publicKeys) {
-        self.pinnables = pinnables
-        self.strategy = strategy
+    required init(publicKeys: [SecKey] = []) {
+        self.publicKeys = publicKeys
     }
     
     func handleChallenge(_ challenge: URLAuthenticationChallengeType, completion: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

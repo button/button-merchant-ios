@@ -128,4 +128,13 @@ internal enum PEMCertificate: String {
     static var pinnedCertificates: [SecCertificate] {
         return all.compactMap { $0.certificate }
     }
+    
+    static var pinnedPublicKeys: [SecKey] {
+        var keys = [SecKey]()
+        if #available(iOS 10.3, *) {
+            let certs = all.compactMap { $0.certificate }
+            keys += certs.compactMap { SecCertificateCopyPublicKey($0) }
+        }
+        return keys
+    }
 }

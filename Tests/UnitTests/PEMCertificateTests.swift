@@ -29,7 +29,7 @@ class PEMCertificateTests: XCTestCase {
     
     func testCertificateCreation() {
         // Arrange
-        var expectedCerts = TestCertificates.rootCAs
+        let expectedCerts = TestCertificates.rootCAs
         
         // Act
         let pinnedCerts = PEMCertificate.pinnedCertificates
@@ -37,6 +37,21 @@ class PEMCertificateTests: XCTestCase {
         // Assert
         for (index, cert) in pinnedCerts.enumerated() {
             XCTAssertEqual(cert, expectedCerts[index])
+        }
+    }
+    
+    @available(iOS 10.3, *)
+    func testPublicKeyCreation() {
+        // Arrange
+        let certs = TestCertificates.rootCAs
+        let expectedKeys = certs.map { SecCertificateCopyPublicKey($0)! }
+        
+        // Act
+        let pinnedKeys = PEMCertificate.pinnedPublicKeys
+        
+        // Assert
+        for (index, key) in pinnedKeys.enumerated() {
+            XCTAssertEqual(key, expectedKeys[index])
         }
     }
     

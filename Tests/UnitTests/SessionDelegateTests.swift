@@ -41,22 +41,34 @@ class TestURLAuthenticationChallengeSender: NSObject, URLAuthenticationChallenge
 
 class SessionDelegateTests: XCTestCase {
     
-    func testInitialization() {
-        // Arrange
-        let expectedEvaluator = TestTrustEvaluator()
-        
+    func testInitialization_iOS10_createsImplicitTrustEvaluator() {
         // Act
-        let delegate = SessionDelegate(evaluator: expectedEvaluator)
+        let system = TestSystem()
+        let device = TestDevice()
+        device.testSystemVersion = "10.0"
+        system.device = device
+        let delegate = SessionDelegate(system: system)
         
         // Assert
         XCTAssertNotNil(delegate)
-        XCTAssertEqualReferences(delegate.evaluator, expectedEvaluator)
+        XCTAssertNotNil(delegate.evaluator)
+        XCTAssertTrue(delegate.evaluator is ImplicitTrustEvaluator)
+    }
+    
+    func testInitialization_iOS11_createsTrustEvaluator() {
+        // Act
+        let delegate = SessionDelegate(system: TestSystem())
+        
+        // Assert
+        XCTAssertNotNil(delegate)
+        XCTAssertTrue(delegate.evaluator is TrustEvaluator)
     }
     
     func testSessionDidRecieveChallenge_forwardsToEvaluator() {
         // Arrange
         let evaluator = TestTrustEvaluator()
-        let delegate = SessionDelegate(evaluator: evaluator)
+        let delegate = SessionDelegate(system: TestSystem())
+        delegate.evaluator = evaluator
         let space = URLProtectionSpace(host: "example.com", port: 343, protocol: nil, realm: nil, authenticationMethod: nil)
         let expectedChallenge = URLAuthenticationChallenge(protectionSpace: space,
                                                            proposedCredential: nil,
