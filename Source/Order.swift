@@ -128,7 +128,14 @@ final public class Order: NSObject, Codable {
          **Note**: The value of the e-mail address must be converted to lowercase before
          computing the hash. The hash itself may use uppercase or lowercase hex characters.
         */
-        var email: String?
+        public var email: String? {
+            didSet {
+                guard let email = self.email else { return }
+                if email.isPlainTextEmail {
+                    self.email = email.sha256
+                }
+            }
+        }
 
         @objc public init(id: String) {
             self.id = id

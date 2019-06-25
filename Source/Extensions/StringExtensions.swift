@@ -27,6 +27,10 @@ import CommonCrypto
 
 public extension String {
 
+    var isPlainTextEmail: Bool {
+        return NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}").evaluate(with: self)
+    }
+
     var sha256: String {
         guard let stringData = self.data(using: .utf8) else {
             return ""
