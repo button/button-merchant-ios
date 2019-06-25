@@ -130,9 +130,11 @@ final public class Order: NSObject, Codable {
         */
         public var email: String? {
             didSet {
-                guard let email = self.email else { return }
+                guard let email = self.email else {
+                    return
+                }
                 if email.isPlainTextEmail {
-                    self.email = email.sha256
+                    self.email = email.lowercased().sha256
                 }
             }
         }
@@ -142,8 +144,8 @@ final public class Order: NSObject, Codable {
         }
 
         enum CodingKeys: String, CodingKey {
-            case email
             case id
+            case email = "email_sha256"
         }
     }
 

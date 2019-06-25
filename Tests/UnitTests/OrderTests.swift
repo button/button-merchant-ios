@@ -106,7 +106,6 @@ class OrderTests: XCTestCase {
         let id = "derp123"
         let amount: Int64 = 499
         let lineItems: [Order.LineItem] = []
-        let customerDictionary: [String: AnyHashable] = [:]
         let order = Order(id: id, amount: amount)
         let date = order.purchaseDate
         let expectedOrderDictionary: [String: AnyHashable] = ["order_id": id,
@@ -137,10 +136,11 @@ class OrderTests: XCTestCase {
         XCTAssertNil(customer.email)
     }
 
-    func testCustomerInitialization_allProperties() {
+    func testCustomerInitialization_allProperties_plainTextEmail() {
         // Arrange
         let id = "123"
         let email = "betty@usebutton.com"
+        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
 
         // Act
         let customer = Order.Customer(id: id)
@@ -148,7 +148,21 @@ class OrderTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(customer.id, id)
-        XCTAssertEqual(customer.email, email)
+        XCTAssertEqual(customer.email, emailSha256)
+    }
+
+    func testCustomerInitialization_allProperties_nonPlainTextEmail() {
+        // Arrange
+        let id = "123"
+        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
+
+        // Act
+        let customer = Order.Customer(id: id)
+        customer.email = emailSha256
+
+        // Assert
+        XCTAssertEqual(customer.id, id)
+        XCTAssertEqual(customer.email, emailSha256)
     }
 
     func testLineItemInitialization_requiredPropertiesOnly() {
