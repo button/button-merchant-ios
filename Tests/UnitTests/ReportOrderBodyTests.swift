@@ -42,8 +42,6 @@ class ReportOrderBodyTests: XCTestCase {
                                   order: order)
         
         // Assert
-        XCTAssertEqual(body.applicationId, "app-abc123")
-        XCTAssertEqual(body.userLocalTime, "2018-01-23T12:00:00Z")
         XCTAssertEqual(body.attributionToken, "srctok-abc123")
         XCTAssertEqual(body.orderId, order.id)
         XCTAssertEqual(body.currency, order.currencyCode)
@@ -51,7 +49,6 @@ class ReportOrderBodyTests: XCTestCase {
         XCTAssertEqual(body.customerOrderId, order.customerOrderId)
         XCTAssertEqual(body.lineItems, body.lineItems)
         XCTAssertEqual(body.customer, body.customer)
-        XCTAssertEqual(body.source, "merchant-library")
     }
 
     func testSerializationToDictionary() {
@@ -74,16 +71,13 @@ class ReportOrderBodyTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
-                       ["app_id": "app-abc123",
-                        "user_local_time": "2018-01-23T12:00:00Z",
-                        "btn_ref": "srctok-abc123",
+                       ["btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
-                        "customer": ["id": "customer-id-123", "email": email],
-                        "source": "merchant-library"])
+                        "customer": ["id": "customer-id-123", "email": email]])
     }
     
 }

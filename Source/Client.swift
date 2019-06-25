@@ -29,6 +29,7 @@ internal enum Service: String {
     
     case postInstall = "v1/web/deferred-deeplink"
     case activity = "v1/activity/order"
+    case order = "v1/mobile-order"
     
     static var baseURL = "https://api.usebutton.com/"
     
@@ -81,7 +82,7 @@ internal final class Client: ClientType {
     }
     
     func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
-        let request = urlRequest(url: Service.activity.url, parameters: parameters)
+        let request = urlRequest(url: Service.order.url, parameters: parameters)
         enqueueRequest(request: request) { _, error in
             if let completion = completion {
                 completion(error)

@@ -309,7 +309,7 @@ class ClientTests: XCTestCase {
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
         let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/activity/order")!
+        let expectedURL = URL(string: "https://api.usebutton.com/v1/mobile-order")!
         
         // Act
         client.reportOrder(parameters: expectedParameters) { _ in }
@@ -328,7 +328,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report order success")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
+        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
         
         // Act
         client.reportOrder(parameters: [:]) { error in
@@ -349,7 +349,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report order fails")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
+        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
         let expectedError = TestError.known
         
         // Act

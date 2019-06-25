@@ -26,8 +26,6 @@ import Foundation
 
 internal struct ReportOrderBody: Codable {
     
-    let applicationId: String
-    let userLocalTime: String
     let attributionToken: String?
     let orderId: String
     let currency: String
@@ -35,11 +33,8 @@ internal struct ReportOrderBody: Codable {
     let customerOrderId: String?
     let lineItems: [Order.LineItem]?
     let customer: Order.Customer?
-    let source: String = "merchant-library"
     
     enum CodingKeys: String, CodingKey {
-        case applicationId = "app_id"
-        case userLocalTime = "user_local_time"
         case attributionToken = "btn_ref"
         case orderId = "order_id"
         case currency
@@ -47,16 +42,13 @@ internal struct ReportOrderBody: Codable {
         case customerOrderId = "customer_order_id"
         case lineItems = "line_items"
         case customer
-        case source
     }
     
     init(system: SystemType,
          applicationId: String,
          attributionToken: String?,
          order: Order) {
-        
-        self.applicationId = applicationId
-        userLocalTime = system.currentDate.ISO8601String
+
         self.attributionToken = attributionToken
         self.orderId = order.id
         self.currency = order.currencyCode
