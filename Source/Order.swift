@@ -146,6 +146,7 @@ final public class Order: NSObject, Codable {
         enum CodingKeys: String, CodingKey {
             case id
             case email = "email_sha256"
+            case advertisingId = "advertising_id"
         }
     }
 
