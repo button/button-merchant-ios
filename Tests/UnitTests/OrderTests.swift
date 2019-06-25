@@ -106,6 +106,7 @@ class OrderTests: XCTestCase {
         let id = "derp123"
         let amount: Int64 = 499
         let lineItems: [Order.LineItem] = []
+        let customerDictionary: [String: AnyHashable] = [:]
         let order = Order(id: id, amount: amount)
         let date = order.purchaseDate
         let expectedOrderDictionary: [String: AnyHashable] = ["order_id": id,

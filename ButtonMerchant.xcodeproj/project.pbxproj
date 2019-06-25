@@ -85,6 +85,8 @@
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
 		DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4AAD4322B13CD3005CE460 /* OrderTests.swift */; };
+		DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */; };
+		DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */; };
 		DE0E7C2B209B915E001A5EE0 /* ApplicationId.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */; };
 		DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DA20855B06009FF30B /* UIDeviceExtensions.swift */; };
 		DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DC20855B22009FF30B /* UIScreenExtensions.swift */; };
@@ -219,6 +221,8 @@
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
 		DC4AAD4322B13CD3005CE460 /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
+		DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBody.swift; sourceTree = "<group>"; };
+		DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBodyTests.swift; sourceTree = "<group>"; };
 		DDA5C34AC9410445D780EB22 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationId.generated.swift; sourceTree = "<group>"; };
 		DE153DA4FDE6DCF451A438B1 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -370,6 +374,7 @@
 				DE175A1D20A0ADF7005C97B9 /* Version */,
 				607FACEB1AFB9204008FA782 /* ButtonMerchantTests.swift */,
 				9E4C496520616B040053E4CA /* CoreTests.swift */,
+				DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */,
 				9E4C496620616B040053E4CA /* ButtonDefaultsTests.swift */,
 				9E0DBB1B207BB55A0066A35D /* SystemTests.swift */,
 				9E5475E1206D7E0C00947A1C /* ClientTests.swift */,
@@ -576,6 +581,7 @@
 			children = (
 				DE175A1920A09BB1005C97B9 /* Version */,
 				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
+				DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */,
 				DA0FA29F205C1B3A008296A6 /* Core.swift */,
 				9E77202120605506005F740B /* ButtonDefaults.swift */,
 				9EB1B09F207AB43E00BE0A1A /* System.swift */,
@@ -1104,6 +1110,7 @@
 				9EB1B0A0207AB43E00BE0A1A /* System.swift in Sources */,
 				DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */,
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
+				DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */,
 				DE865FA620530BCE00F4054D /* ButtonMerchant.swift in Sources */,
 				9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
@@ -1157,6 +1164,7 @@
 				9E4C496820616B040053E4CA /* ButtonDefaultsTests.swift in Sources */,
 				9E6F4341206C160C004242A1 /* TestClient.swift in Sources */,
 				9E4C496720616B040053E4CA /* CoreTests.swift in Sources */,
+				DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */,
 				DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */,
 				9E77202520607331005F740B /* ButtonMerchantTests.swift in Sources */,
 				9EDEB859206ECE3000D58FE2 /* PostInstallBodyTests.swift in Sources */,

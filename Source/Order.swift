@@ -26,7 +26,7 @@ import Foundation
 import CommonCrypto
 
 /**
-Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
+Represents an order placed by the user to be tracked using `ButtonMerchant.reportOrder(order)`.
  */
 @objcMembers
 final public class Order: NSObject, Codable {

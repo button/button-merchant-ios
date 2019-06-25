@@ -31,12 +31,14 @@ class TestClient: ClientType {
     var testParameters: [String: Any]
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
+    var didCallReportOrder = false
 
     var session: URLSessionType
     var userAgent: UserAgentType
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
+    var reportOrderCompletion: ((Error?) -> Void)?
 
     required init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
@@ -54,5 +56,11 @@ class TestClient: ClientType {
         testParameters = parameters
         didCallTrackOrder = true
         trackOrderCompletion = completion
+    }
+    
+    func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
+        testParameters = parameters
+        didCallReportOrder = true
+        reportOrderCompletion = completion
     }
 }
