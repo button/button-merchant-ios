@@ -71,7 +71,6 @@ internal final class Client: ClientType {
         })
     }
     
-    @available(*, deprecated, message: "Use reportOrder() instead")
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
         let request = urlRequest(url: Service.activity.url, parameters: parameters)
         enqueueRequest(request: request) { _, error in

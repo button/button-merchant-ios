@@ -143,13 +143,13 @@ final public class ButtonMerchant: NSObject {
      This does not replace server-side order reporting to Button.
      [See: order reporting](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api)
      */
-    @available(*, deprecated, message: "Use reportOrder() instead")
+    @available(*, deprecated, message: "Use ButtonMerchant.reportOrder(order:completion:) instead")
     @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.trackOrder(order, completion)
     }
     
     /**
-     Tracks an order.
+     Reports an order.
      
      This signal is used to power the Instant Rewards feature for Publishers to notify
      their customer as quickly as possible that their order has been correctly tracked.

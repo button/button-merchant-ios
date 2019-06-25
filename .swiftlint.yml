@@ -173,8 +173,8 @@ trailing_whitespace:
   ignores_comments: true
 
 type_body_length:
-  warning: 300
-  error: 350
+  warning: 400
+  error: 450
 
 unused_optional_binding:
   severity: error

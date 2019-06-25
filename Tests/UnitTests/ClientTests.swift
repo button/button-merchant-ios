@@ -328,7 +328,7 @@ class ClientTests: XCTestCase {
     
     func testReportOrderSuccess() {
         // Arrange
-        let expectation = XCTestExpectation(description: "track order success")
+        let expectation = XCTestExpectation(description: "report order success")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
@@ -349,14 +349,14 @@ class ClientTests: XCTestCase {
     
     func testReportOrderFails() {
         // Arrange
-        let expectation = XCTestExpectation(description: "track order fails")
+        let expectation = XCTestExpectation(description: "report order fails")
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
         let expectedError = TestError.known
         
         // Act
-        client.trackOrder(parameters: [:]) { error in
+        client.reportOrder(parameters: [:]) { error in
             
             // Assert
             XCTAssertNotNil(error)

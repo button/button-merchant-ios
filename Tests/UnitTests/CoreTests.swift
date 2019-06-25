@@ -380,7 +380,15 @@ class CoreTests: XCTestCase {
     func testReportOrder() {
         // Arrange
         let expectation = XCTestExpectation(description: "track order")
-        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
+        let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
+        let email = "test@button.com"
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
+        let customer = Order.Customer(id: "customer-id-123")
+        customer.email = email
+        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
+        order.customer = customer
+        order.customerOrderId = "customer-order-id-123"
         let testSystem = TestSystem()
         let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
@@ -390,6 +398,7 @@ class CoreTests: XCTestCase {
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
         core.applicationId = "app-abc123"
+        
         // Act
         core.reportOrder(order) { error in
             
@@ -397,17 +406,19 @@ class CoreTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        
-        print(testClient.testParameters)
+
         XCTAssertEqual(testClient.testParameters as NSDictionary,
                        ["app_id": "app-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
                         "btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
-                        "total": 0,
                         "currency": "USD",
+                        "purchase_date": date.ISO8601String,
+                        "customer_order_id": "customer-order-id-123",
+                        "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
+                        "customer": ["id": "customer-id-123", "email": email],
                         "source": "merchant-library"])
-        testClient.trackOrderCompletion!(nil)
+        testClient.reportOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
     }
@@ -415,7 +426,15 @@ class CoreTests: XCTestCase {
     func testReportOrderWithoutAttributionToken() {
         // Arrange
         let expectation = XCTestExpectation(description: "track order")
-        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
+        let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
+        let email = "test@button.com"
+        let customer = Order.Customer(id: "customer-id-123")
+        customer.email = email
+        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
+        let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
+        order.customer = customer
+        order.customerOrderId = "customer-order-id-123"
         let testSystem = TestSystem()
         let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
@@ -433,23 +452,26 @@ class CoreTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
+
         XCTAssertEqual(testClient.testParameters as NSDictionary,
                        ["app_id": "app-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
                         "order_id": "order-abc",
-                        "total": 0,
                         "currency": "USD",
+                        "purchase_date": date.ISO8601String,
+                        "customer_order_id": "customer-order-id-123",
+                        "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
+                        "customer": ["id": "customer-id-123", "email": email],
                         "source": "merchant-library"])
-        testClient.trackOrderCompletion!(nil)
+        testClient.reportOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
-        
     }
     
     func testReportOrderError() {
         // Arrange
         let expectation = XCTestExpectation(description: "tracker order error")
-        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 120, quantity: 2)])
+        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [])
         let testSystem = TestSystem()
         let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),

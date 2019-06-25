@@ -140,7 +140,7 @@ final internal class Core: CoreType {
         }
     }
     
-    @available(*, deprecated, message: "Use reportOrder() instead")
+    @available(*, deprecated)
     func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
         guard let appId = applicationId, !appId.isEmpty else {
             if let completion = completion {
@@ -167,10 +167,10 @@ final internal class Core: CoreType {
             return
         }
         
-        let trackOrderBody = TrackOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
+        let reportOrderBody = ReportOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
         
-        let parameters = trackOrderBody.dictionaryRepresentation
-        
+        let parameters = reportOrderBody.dictionaryRepresentation
+
         client.reportOrder(parameters: parameters, completion)
     }
 

@@ -26,7 +26,7 @@ import Foundation
 import CommonCrypto
 
 /**
-Represents an order placed by the user to be tracked using `ButtonMerchant.trackOrder(order)`.
+Represents an order placed by the user to be tracked using `ButtonMerchant.reportOrder(order)`.
  */
 @objcMembers
 final public class Order: NSObject, Codable {
@@ -59,7 +59,7 @@ final public class Order: NSObject, Codable {
     /**
      The customer related to the order
      */
-    public var customer: Customer = Customer()
+    public var customer: Customer?
 
     /**
      The total order value in pennies (e.g. 3999 for $39.99)
