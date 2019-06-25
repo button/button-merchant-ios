@@ -27,7 +27,7 @@ import XCTest
 
 class OrderTests: XCTestCase {
     
-    func testInitialization_requiredProperties() {
+    func testInitialization_requiredPropertiesOnly() {
         // Arrange
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
@@ -43,7 +43,7 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.currencyCode, "USD")
         XCTAssertEqual(order.purchaseDate, date.ISO8601String)
         XCTAssertEqual(order.lineItems, lineItems)
-        XCTAssertNotNil(order.customer)
+        XCTAssertNil(order.customer)
         XCTAssertNil(order.customerOrderId)
     }
 
@@ -54,8 +54,9 @@ class OrderTests: XCTestCase {
         let currencyCode = "EUR"
         let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400)]
         let customerOrderId = "123"
-        let customer = Order.Customer()
-        
+        let customer = Order.Customer(id: "123")
+
+        // Act
         let order = Order(id: id,
                           purchaseDate: date,
                           lineItems: lineItems)
@@ -86,7 +87,7 @@ class OrderTests: XCTestCase {
 
         let currencyCode = "EUR"
         let customerOrderId = "123"
-        let customer = Order.Customer()
+        let customer = Order.Customer(id: "123")
 
         // Act
         order.currencyCode = currencyCode
@@ -105,15 +106,13 @@ class OrderTests: XCTestCase {
         let id = "derp123"
         let amount: Int64 = 499
         let lineItems: [Order.LineItem] = []
-        let customerDictionary: [String: AnyHashable] = [:]
         let order = Order(id: id, amount: amount)
         let date = order.purchaseDate
         let expectedOrderDictionary: [String: AnyHashable] = ["order_id": id,
                                                               "amount": amount,
                                                               "currency": "USD",
                                                               "purchase_date": date,
-                                                              "line_items": lineItems,
-                                                              "customer": customerDictionary]
+                                                              "line_items": lineItems]
 
         // Act
         guard let actualOrderDictionary = order.dictionaryRepresentation as? [String: AnyHashable] else {
@@ -125,58 +124,30 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)
     }
     
-    func testCustomerInitialization_hashingEmail() {
+    func testCustomerInitialization_requiredPropertiesOnly() {
+        // Arrange
+        let id = "123"
+
+        // Act
+        let customer = Order.Customer(id: id)
+
+        // Assert
+        XCTAssertEqual(customer.id, id)
+        XCTAssertNil(customer.email)
+    }
+
+    func testCustomerInitialization_allProperties() {
         // Arrange
         let id = "123"
         let email = "betty@usebutton.com"
-        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
-        let advertisingId = "123"
 
         // Act
-        let customer = Order.Customer()
-        customer.id = id
-        customer.setEmail(email)
-        customer.advertisingId = advertisingId
+        let customer = Order.Customer(id: id)
+        customer.email = email
 
         // Assert
         XCTAssertEqual(customer.id, id)
-        XCTAssertEqual(customer.emailSha256, emailSha256)
-        XCTAssertEqual(customer.advertisingId, advertisingId)
-    }
-    
-    func testCustomerInitialization_providingHashedEmail() {
-        // Arrange
-        let id = "123"
-        let emailSha256 = "1234567"
-        let advertisingId = "123"
-
-        // Act
-        let customer = Order.Customer()
-        customer.id = id
-        customer.emailSha256 = emailSha256
-        customer.advertisingId = advertisingId
-
-        // Assert
-        XCTAssertEqual(customer.id, id)
-        XCTAssertEqual(customer.emailSha256, emailSha256)
-        XCTAssertEqual(customer.advertisingId, advertisingId)
-    }
-    
-    func testCustomerInitialization_hashingCapitalizedEmail() {
-        // Arrange
-        let id = "123"
-        let email = "BETTY@usebutton.com"
-        let emailSha256 = "c399e8d0e89e9f09aa14a36392e4cb0d058ab28b16247e80eab78ea5541a20d3"
-        let advertisingId = "123"
-
-        // Act
-        let customer = Order.Customer()
-        customer.id = id
-        customer.setEmail(email)
-        customer.advertisingId = advertisingId
-
-        // Assert
-        XCTAssertEqual(customer.emailSha256, emailSha256)
+        XCTAssertEqual(customer.email, email)
     }
 
     func testLineItemInitialization_requiredPropertiesOnly() {
