@@ -167,6 +167,8 @@ final internal class Core: CoreType {
             return
         }
         
+        order.customer?.advertisingId = system.adIdManager.advertisingIdentifier.uuidString
+
         let reportOrderBody = ReportOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
         
         let parameters = reportOrderBody.dictionaryRepresentation

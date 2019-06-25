@@ -481,4 +481,30 @@ class CoreTests: XCTestCase {
         }
         self.wait(for: [expectation], timeout: 2.0)
     }
+    
+    func testAdvertisingId() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "tracker order error")
+        let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [])
+        let customer = Order.Customer(id: "customer-id-123")
+        order.customer = customer
+        let testSystem = TestSystem(adIdManager: TestAdIdManager())
+        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.testToken = "srctok-abc123"
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        core.applicationId = "app-abc123"
+        
+        // Act
+        core.reportOrder(order) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        XCTAssertEqual(order.customer?.advertisingId, TestAdIdManager().advertisingIdentifier.uuidString)
+    }
 }
