@@ -179,8 +179,7 @@ final public class ButtonMerchant: NSObject {
                             screen: UIScreen.main,
                             locale: NSLocale.current,
                             bundle: Bundle.main)
-        
-        let session = URLSession(configuration: .default, delegate: SessionDelegate(evaluator: TrustEvaluator(system: system)), delegateQueue: nil)
+        let session = URLSession(configuration: .default, delegate: SessionDelegate(system: system), delegateQueue: nil)
         let client = Client(session: session, userAgent: UserAgent(libraryVersion: Version.stringValue, system: system))
         return Core(buttonDefaults: ButtonDefaults(userDefaults: UserDefaults.button),
                     client: client,

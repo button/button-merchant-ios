@@ -26,10 +26,16 @@ import Foundation
 
 final internal class SessionDelegate: NSObject, URLSessionDelegate {
     
+    var system: SystemType
     var evaluator: TrustEvaluatorType
     
-    required init(evaluator: TrustEvaluatorType) {
-        self.evaluator = evaluator
+    required init(system: SystemType) {
+        self.system = system
+        if system.device.systemVersion.compare("10.3", options: .numeric) != .orderedAscending {
+            evaluator = TrustEvaluator(publicKeys: PEMCertificate.pinnedPublicKeys)
+        } else {
+            evaluator = ImplicitTrustEvaluator()
+        }
     }
     
     public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {

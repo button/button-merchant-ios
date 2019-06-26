@@ -68,9 +68,7 @@
 		DA756B6C22B2B6DF003397E3 /* AmazonRootCA3.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */; };
 		DA756B6D22B2B6DF003397E3 /* AmazonRootCA1.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6922B2B6DF003397E3 /* AmazonRootCA1.cer */; };
 		DA756B6F22B2B717003397E3 /* PEMCertificateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */; };
-		DA756B7122B2BB3A003397E3 /* ValidationStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7022B2BB3A003397E3 /* ValidationStrategyTests.swift */; };
 		DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7222B2C3D1003397E3 /* TestCertificates.swift */; };
-		DA756B7522B2C824003397E3 /* PinnableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7422B2C824003397E3 /* PinnableTests.swift */; };
 		DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */; };
 		DA756B7B22B2DB72003397E3 /* TestTrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */; };
 		DA756B7E22B2E017003397E3 /* *.usebutton.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B7C22B2E016003397E3 /* *.usebutton.com.cer */; };
@@ -80,8 +78,6 @@
 		DA756B8522B3378B003397E3 /* URLProtectionSpaceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */; };
 		DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */; };
 		DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */; };
-		DA98BFEF22B26580002D1823 /* Pinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFED22B26554002D1823 /* Pinnable.swift */; };
-		DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */; };
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
@@ -205,9 +201,7 @@
 		DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA3.cer; sourceTree = "<group>"; };
 		DA756B6922B2B6DF003397E3 /* AmazonRootCA1.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA1.cer; sourceTree = "<group>"; };
 		DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificateTests.swift; sourceTree = "<group>"; };
-		DA756B7022B2BB3A003397E3 /* ValidationStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStrategyTests.swift; sourceTree = "<group>"; };
 		DA756B7222B2C3D1003397E3 /* TestCertificates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCertificates.swift; sourceTree = "<group>"; };
-		DA756B7422B2C824003397E3 /* PinnableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableTests.swift; sourceTree = "<group>"; };
 		DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegateTests.swift; sourceTree = "<group>"; };
 		DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTrustEvaluator.swift; sourceTree = "<group>"; };
 		DA756B7C22B2E016003397E3 /* *.usebutton.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "*.usebutton.com.cer"; sourceTree = "<group>"; };
@@ -217,8 +211,6 @@
 		DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLProtectionSpaceExtensions.swift; sourceTree = "<group>"; };
 		DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustEvaluatorTests.swift; sourceTree = "<group>"; };
 		DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLProtectionSpace.swift; sourceTree = "<group>"; };
-		DA98BFED22B26554002D1823 /* Pinnable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pinnable.swift; sourceTree = "<group>"; };
-		DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationStrategy.swift; sourceTree = "<group>"; };
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
@@ -382,9 +374,7 @@
 				9E5475E1206D7E0C00947A1C /* ClientTests.swift */,
 				DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */,
 				DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */,
-				DA756B7422B2C824003397E3 /* PinnableTests.swift */,
 				DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */,
-				DA756B7022B2BB3A003397E3 /* ValidationStrategyTests.swift */,
 				9EDED10F208FA3930049A56A /* UserAgentTests.swift */,
 				9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */,
 				9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */,
@@ -591,9 +581,7 @@
 				9E2B4310206C1275009F2886 /* Client.swift */,
 				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
 				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
-				DA98BFED22B26554002D1823 /* Pinnable.swift */,
 				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
-				DA98BFF022B265A0002D1823 /* ValidationStrategy.swift */,
 				9ED488D4208F75C7000DA7FC /* UserAgent.swift */,
 				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
 				9E976B84207D10D500783F1A /* TrackOrderBody.swift */,
@@ -1117,7 +1105,6 @@
 				DE865FA620530BCE00F4054D /* ButtonMerchant.swift in Sources */,
 				9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
-				DA98BFF222B265B6002D1823 /* ValidationStrategy.swift in Sources */,
 				9E2B431B206C134A009F2886 /* PostInstallBody.swift in Sources */,
 				9EB1B0A4207AB68100BE0A1A /* CalendarExtensions.swift in Sources */,
 				DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */,
@@ -1135,7 +1122,6 @@
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
-				DA98BFEF22B26580002D1823 /* Pinnable.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
@@ -1152,11 +1138,9 @@
 				9E4C496B20616B130053E4CA /* TestUserDefaults.swift in Sources */,
 				9EAA60C3207AC92B00D21601 /* TestSystem.swift in Sources */,
 				DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */,
-				DA756B7522B2C824003397E3 /* PinnableTests.swift in Sources */,
 				9E0DBB1C207BB55A0066A35D /* SystemTests.swift in Sources */,
 				9EC44528207D4F180032B1EF /* TrackOrderBodyTests.swift in Sources */,
 				DA29D896209CF38800537806 /* TestUTSName.swift in Sources */,
-				DA756B7122B2BB3A003397E3 /* ValidationStrategyTests.swift in Sources */,
 				9E4C496C20616B130053E4CA /* TestButtonDefaults.swift in Sources */,
 				9EDED110208FA3930049A56A /* UserAgentTests.swift in Sources */,
 				9E334DB822C2A62300F697DE /* StringTests.swift in Sources */,
