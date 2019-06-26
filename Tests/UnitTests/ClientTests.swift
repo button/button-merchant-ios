@@ -310,17 +310,32 @@ class ClientTests: XCTestCase {
         let client = Client(session: testURLSession, userAgent: TestUserAgent())
         let expectedParameters = ["blargh": "blergh"]
         let expectedURL = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-        
+
         // Act
-        client.reportOrder(parameters: expectedParameters) { _ in }
+        client.reportOrder(parameters: expectedParameters, encodedApplicationId: "") { _ in }
         let request = (testURLSession.lastDataTask?.originalRequest)!
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
         let parameters = requestParameters as? [String: String]
-        
+
         // Assert
         XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
         XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
         XCTAssertEqual(parameters!, expectedParameters)
+    }
+
+    func testReportOrder_addsAuthorizationHeader() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let expectedAuthHeader = "Basic encoded_app_id:"
+
+        // Act
+        client.reportOrder(parameters: ["blargh": "blergh"], encodedApplicationId: "encoded_app_id") { _ in }
+        let request = (testURLSession.lastDataTask?.originalRequest)!
+        let authHeaders = request.allHTTPHeaderFields
+
+        // Assert
+        XCTAssertEqual(authHeaders?["Authorization"], expectedAuthHeader)
     }
     
     func testReportOrderSuccess() {
@@ -331,7 +346,7 @@ class ClientTests: XCTestCase {
         let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
         
         // Act
-        client.reportOrder(parameters: [:]) { error in
+        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
             
             // Assert
             XCTAssertNil(error)
@@ -353,7 +368,7 @@ class ClientTests: XCTestCase {
         let expectedError = TestError.known
         
         // Act
-        client.reportOrder(parameters: [:]) { error in
+        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
             
             // Assert
             XCTAssertNotNil(error)

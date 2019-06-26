@@ -160,7 +160,8 @@ final internal class Core: CoreType {
     }
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-        guard let appId = applicationId, !appId.isEmpty else {
+        guard let appId = applicationId, !appId.isEmpty,
+            let encodedAppId = appId.data(using: .utf8)?.base64EncodedString() else {
             if let completion = completion {
                 completion(ConfigurationError.noApplicationId)
             }
@@ -171,7 +172,7 @@ final internal class Core: CoreType {
         
         let parameters = reportOrderBody.dictionaryRepresentation
 
-        client.reportOrder(parameters: parameters, completion)
+        client.reportOrder(parameters: parameters, encodedApplicationId: encodedAppId, completion)
     }
 
 }

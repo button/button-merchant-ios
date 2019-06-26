@@ -29,6 +29,7 @@ class TestClient: ClientType {
 
     // Test properties
     var testParameters: [String: Any]
+    var testEncodedApplicationId: String?
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
     var didCallReportOrder = false
@@ -58,8 +59,9 @@ class TestClient: ClientType {
         trackOrderCompletion = completion
     }
     
-    func reportOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
+    func reportOrder(parameters: [String: Any], encodedApplicationId: String, _ completion: ((Error?) -> Void)?) {
         testParameters = parameters
+        testEncodedApplicationId = encodedApplicationId
         didCallReportOrder = true
         reportOrderCompletion = completion
     }

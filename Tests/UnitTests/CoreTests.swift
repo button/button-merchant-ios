@@ -379,7 +379,7 @@ class CoreTests: XCTestCase {
     
     func testReportOrder() {
         // Arrange
-        let expectation = XCTestExpectation(description: "track order")
+        let expectation = XCTestExpectation(description: "report order")
         Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
@@ -414,6 +414,7 @@ class CoreTests: XCTestCase {
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
                         "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
+        XCTAssertEqual(testClient.testEncodedApplicationId, "YXBwLWFiYzEyMw==")
         testClient.reportOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
@@ -421,7 +422,7 @@ class CoreTests: XCTestCase {
     
     func testReportOrderWithoutAttributionToken() {
         // Arrange
-        let expectation = XCTestExpectation(description: "track order")
+        let expectation = XCTestExpectation(description: "report order")
         Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let customer = Order.Customer(id: "customer-id-123")
@@ -456,13 +457,13 @@ class CoreTests: XCTestCase {
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
                         "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
         testClient.reportOrderCompletion!(nil)
-        
+        XCTAssertEqual(testClient.testEncodedApplicationId, "YXBwLWFiYzEyMw==")
         self.wait(for: [expectation], timeout: 2.0)
     }
     
     func testReportOrderError() {
         // Arrange
-        let expectation = XCTestExpectation(description: "tracker order error")
+        let expectation = XCTestExpectation(description: "report order error")
         let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [])
         let testSystem = TestSystem()
         let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
