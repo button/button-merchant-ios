@@ -1,5 +1,5 @@
 //
-// StringExtensions.swift
+// StringTests.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -21,39 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
+import XCTest
 
-import Foundation
-import CommonCrypto
+class StringTests: XCTestCase {
 
-public extension String {
+    func testIsPlainTextEmail_arbitraryString_returnsFalse() {
+        let email = "not_an_email"
 
-    var isPlainTextEmail: Bool {
-        return NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}").evaluate(with: self)
+        XCTAssertFalse(email.isPlainTextEmail)
     }
 
-    var sha256: String {
-        guard let stringData = self.data(using: .utf8) else {
-            return ""
-        }
-        return hexStringFromData(input: digest(input: stringData as NSData))
+    func testIsPlainTextEmail_hexString_returnsFalse() {
+        let email = "314c70b69a726ae7934806b2a0621a0eb193139e38d9bf6134191faa61b7bb29"
+
+        XCTAssertFalse(email.isPlainTextEmail)
     }
 
-    private func digest(input: NSData) -> NSData {
-        let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
-        var hash = [UInt8](repeating: 0, count: digestLength)
-        CC_SHA256(input.bytes, UInt32(input.length), &hash)
-        return NSData(bytes: hash, length: digestLength)
-    }
+    func testIsPlainTextEmail_returnsTrue() {
+        let email = "betty@usebutton.com"
 
-    private func hexStringFromData(input: NSData) -> String {
-        var bytes = [UInt8](repeating: 0, count: input.length)
-        input.getBytes(&bytes, length: input.length)
-
-        var hexString = ""
-        for byte in bytes {
-            hexString += String(format: "%02x", UInt8(byte))
-        }
-        return hexString
+        XCTAssertTrue(email.isPlainTextEmail)
     }
 
 }
