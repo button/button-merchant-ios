@@ -74,25 +74,8 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="RdR-1O-DfS" style="IBUITableViewCellStyleDefault" id="Z22-BK-Xgp">
-                                        <rect key="frame" x="0.0" y="179.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z22-BK-Xgp" id="wjZ-YN-IrY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Track order" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RdR-1O-DfS">
-                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="tDQ-kV-9ZW" style="IBUITableViewCellStyleDefault" id="vAf-e0-0WA">
-                                        <rect key="frame" x="0.0" y="223.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="179.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vAf-e0-0WA" id="clo-Jb-LJG">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -109,7 +92,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="tkr-SY-yfY" style="IBUITableViewCellStyleDefault" id="J8m-FK-GmU">
-                                        <rect key="frame" x="0.0" y="267.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="223.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="J8m-FK-GmU" id="Lut-6e-qwT">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -139,7 +122,6 @@
                         <outlet property="clearAllDataCell" destination="J8m-FK-GmU" id="N5p-19-m8L"/>
                         <outlet property="reportOrderCell" destination="vAf-e0-0WA" id="JrT-Rn-K1X"/>
                         <outlet property="trackIncomingURLCell" destination="h6B-es-1Cs" id="njy-JH-FMu"/>
-                        <outlet property="trackOrderCell" destination="Z22-BK-Xgp" id="HJG-ct-s3N"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qur-dv-1uE" userLabel="First Responder" sceneMemberID="firstResponder"/>
