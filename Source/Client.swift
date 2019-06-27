@@ -43,8 +43,26 @@ internal protocol ClientType: class {
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
-    func reportOrder(parameters: [String: Any], encodedApplicationId: String, _ completion: ((Error?) -> Void)?)
+    func reportOrder(parameters: [String: Any],
+                     encodedApplicationId: String,
+                     maxRetries: Int,
+                     retryIntervalInMs: Int,
+                     _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType)
+}
+
+extension ClientType {
+    func reportOrder(parameters: [String: Any],
+                     encodedApplicationId: String,
+                     maxRetries: Int = 3,
+                     retryIntervalInMs: Int = 100,
+                     _ completion: ((Error?) -> Void)?) {
+        reportOrder(parameters: parameters,
+                    encodedApplicationId: encodedApplicationId,
+                    maxRetries: maxRetries,
+                    retryIntervalInMs: retryIntervalInMs,
+                    completion)
+    }
 }
 
 internal final class Client: ClientType {
@@ -81,10 +99,14 @@ internal final class Client: ClientType {
         }
     }
     
-    func reportOrder(parameters: [String: Any], encodedApplicationId: String, _ completion: ((Error?) -> Void)?) {
+    func reportOrder(parameters: [String: Any],
+                     encodedApplicationId: String,
+                     maxRetries: Int = 3,
+                     retryIntervalInMs: Int = 100,
+                     _ completion: ((Error?) -> Void)?) {
         var request = urlRequest(url: Service.order.url, parameters: parameters)
         request.setValue("Basic \(encodedApplicationId):", forHTTPHeaderField: "Authorization")
-        enqueueRequest(request: request) { _, error in
+        enqueueRetriableRequest(request: request, attempt: 0, maxRetries: maxRetries, retryIntervalInMS: retryIntervalInMs) { _, error in
             if let completion = completion {
                 completion(error)
             }
@@ -114,6 +136,41 @@ internal extension Client {
                     return
             }
             completion(data, nil)
+        }
+        task.resume()
+    }
+    
+    func enqueueRetriableRequest(request: URLRequest,
+                                 attempt: Int = 0,
+                                 maxRetries: Int = 3,
+                                 retryIntervalInMS: Int = 100,
+                                 completion: @escaping (Data?, Error?) -> Void) {
+        let task = session.dataTask(with: request) { data, response, error  in
+            
+            var shouldRetry = true
+            if let response = response as? HTTPURLResponse, data != nil {
+                switch response.statusCode {
+                case 429, 500...599:
+                    shouldRetry = true
+                default:
+                    shouldRetry = false
+                }
+            }
+            
+            guard shouldRetry, attempt + 1 <= maxRetries else {
+                completion(data, error)
+                return
+            }
+            
+            var delay = retryIntervalInMS
+            delay *= attempt == 0 ? 1 : 2 << (attempt - 1)
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay) / 1000.0, execute: {
+                self.enqueueRetriableRequest(request: request,
+                                             attempt: attempt + 1,
+                                             maxRetries: maxRetries,
+                                             retryIntervalInMS: retryIntervalInMS,
+                                             completion: completion)
+            })
         }
         task.resume()
     }
