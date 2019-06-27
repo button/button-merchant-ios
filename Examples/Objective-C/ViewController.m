@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *attributionTokenCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *trackIncomingURLCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *trackOrderCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *reportOrderCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *clearAllDataCell;
 
 @end
@@ -72,6 +73,9 @@
     else if (cell == _trackOrderCell) {
         [self trackOrder];
     }
+    else if (cell == _reportOrderCell) {
+        [self reportOrder];
+    }
     else if (cell == _clearAllDataCell) {
         [self clearAllData];
     }
@@ -92,6 +96,13 @@
                                       amount:arc4random_uniform(1000)
                                 currencyCode:@"USD"];
     [ButtonMerchant trackOrder:order completion:NULL];
+}
+
+
+- (void)reportOrder {
+    LineItem *lineitem = [[LineItem alloc] initWithIdentifier:NSUUID.UUID.UUIDString total:arc4random_uniform(1000)];
+    Order *order = [[Order alloc] initWithId:NSUUID.UUID.UUIDString purchaseDate:[NSDate date] lineItems: @[lineitem]];
+    [ButtonMerchant reportOrder:order completion:NULL];
 }
 
 

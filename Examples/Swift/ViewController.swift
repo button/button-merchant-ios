@@ -30,6 +30,7 @@ class ViewController: UITableViewController {
     @IBOutlet weak var attributionTokenCell: UITableViewCell!
     @IBOutlet weak var trackIncomingURLCell: UITableViewCell!
     @IBOutlet weak var trackOrderCell: UITableViewCell!
+    @IBOutlet weak var reportOrderCell: UITableViewCell!
     @IBOutlet weak var clearAllDataCell: UITableViewCell!
     
     var attributionTokenString: String? {
@@ -64,6 +65,8 @@ class ViewController: UITableViewController {
             trackIncomingURL()
         case trackOrderCell:
             trackOrder()
+        case reportOrderCell:
+            reportOrder()
         case clearAllDataCell:
             clearAllData()
         default: break
@@ -82,6 +85,13 @@ class ViewController: UITableViewController {
         let amount = arc4random_uniform(1000)
         let order = Order(id: NSUUID().uuidString, amount: Int64(amount))
         ButtonMerchant.trackOrder(order)
+    }
+    
+    func reportOrder() {
+        let order = Order(id: NSUUID().uuidString,
+                          purchaseDate: Date(),
+                          lineItems: [Order.LineItem(identifier: NSUUID().uuidString, total: Int64(arc4random_uniform(1000)))])
+        ButtonMerchant.reportOrder(order)
     }
 
     func clearAllData() {
