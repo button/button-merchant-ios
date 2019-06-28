@@ -29,7 +29,7 @@ class ViewController: UITableViewController {
 
     @IBOutlet weak var attributionTokenCell: UITableViewCell!
     @IBOutlet weak var trackIncomingURLCell: UITableViewCell!
-    @IBOutlet weak var trackOrderCell: UITableViewCell!
+    @IBOutlet weak var reportOrderCell: UITableViewCell!
     @IBOutlet weak var clearAllDataCell: UITableViewCell!
     
     var attributionTokenString: String? {
@@ -62,8 +62,8 @@ class ViewController: UITableViewController {
         switch cell {
         case trackIncomingURLCell:
             trackIncomingURL()
-        case trackOrderCell:
-            trackOrder()
+        case reportOrderCell:
+            reportOrder()
         case clearAllDataCell:
             clearAllData()
         default: break
@@ -78,10 +78,18 @@ class ViewController: UITableViewController {
         UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=srctok-test\(n)")!)
     }
 
-    func trackOrder() {
-        let amount = arc4random_uniform(1000)
-        let order = Order(id: NSUUID().uuidString, amount: Int64(amount))
-        ButtonMerchant.trackOrder(order)
+    func reportOrder() {
+        let id = NSUUID().uuidString
+        let customer = Order.Customer(id: NSUUID().uuidString)
+        let order = Order(id: id,
+                          purchaseDate: Date(),
+                          lineItems: [Order.LineItem(identifier: NSUUID().uuidString, total: Int64(arc4random_uniform(1000)))])
+        order.customer = customer
+        ButtonMerchant.reportOrder(order) { (error) in
+            DispatchQueue.main.async {
+                MessageView.showWithTitle("Order Created", body: "Id: \(id)", in: self.navigationController!.view)
+            }
+        }
     }
 
     func clearAllData() {

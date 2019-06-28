@@ -32,7 +32,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *attributionTokenCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *trackIncomingURLCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *trackOrderCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *reportOrderCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *clearAllDataCell;
 
 @end
@@ -69,8 +69,8 @@
     if (cell == _trackIncomingURLCell) {
         [self trackIncomingURL];
     }
-    else if (cell == _trackOrderCell) {
-        [self trackOrder];
+    else if (cell == _reportOrderCell) {
+        [self reportOrder];
     }
     else if (cell == _clearAllDataCell) {
         [self clearAllData];
@@ -87,11 +87,17 @@
 }
 
 
-- (void)trackOrder {
-    Order *order = [[Order alloc] initWithId:NSUUID.UUID.UUIDString
-                                      amount:arc4random_uniform(1000)
-                                currencyCode:@"USD"];
-    [ButtonMerchant trackOrder:order completion:NULL];
+- (void)reportOrder {
+    NSString *id = NSUUID.UUID.UUIDString;
+    LineItem *lineitem = [[LineItem alloc] initWithIdentifier:id total:arc4random_uniform(1000)];
+    Customer *customer = [[Customer alloc] initWithId:NSUUID.UUID.UUIDString];
+    Order *order = [[Order alloc] initWithId:NSUUID.UUID.UUIDString purchaseDate:[NSDate date] lineItems: @[lineitem]];
+    order.customer = customer;
+    [ButtonMerchant reportOrder:order completion:^(NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [MessageView showWithTitle:@"Order Created" body:[NSString stringWithFormat:@"Id: %@", id] in:self.navigationController.view];
+        });
+    }];
 }
 
 
