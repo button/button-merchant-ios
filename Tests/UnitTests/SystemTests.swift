@@ -143,4 +143,16 @@ class SystemTests: XCTestCase {
         // Assert
         XCTAssertFalse(isNewInstall)
     }
+    
+    func testIFADefaultValue() {
+        let system = System(fileManager: TestFileManager(),
+                            calendar: TestCalendar(),
+                            adIdManager: TestAdIdManager(),
+                            device: TestDevice(),
+                            screen: TestScreen(),
+                            locale: TestLocale(),
+                            bundle: TestBundle())
+        
+        XCTAssertTrue(system.includesIFA)
+    }
 }

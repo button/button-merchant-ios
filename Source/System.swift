@@ -24,7 +24,7 @@
 
 import UIKit
 
-internal protocol SystemType: class {
+internal protocol SystemType: Configurable {
     var fileManager: FileManagerType { get }
     var calendar: CalendarType { get }
     var adIdManager: ASIdentifierManagerType { get }
@@ -44,7 +44,8 @@ internal protocol SystemType: class {
 }
 
 internal final class System: SystemType {
-
+    
+    var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
     var adIdManager: ASIdentifierManagerType
@@ -82,5 +83,6 @@ internal final class System: SystemType {
         self.screen = screen
         self.locale = locale
         self.bundle = bundle
+        self.includesIFA = true
     }
 }

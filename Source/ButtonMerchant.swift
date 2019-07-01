@@ -32,7 +32,12 @@ import AdSupport
  get your application Id from from the [Button Dashboard](https://app.usebutton.com).
  and follow our simple [integration guide](https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library)
  */
+@objcMembers
 final public class ButtonMerchant: NSObject {
+    
+    public static var features: Configurable {
+        return core.system
+    }
     
     // swiftlint:disable:next identifier_name
     internal static var _core: CoreType?
