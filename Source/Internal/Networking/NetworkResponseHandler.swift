@@ -1,5 +1,5 @@
 //
-// Result.swift
+// NetworkResponseHandler.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,28 +22,24 @@
 // SOFTWARE.
 //
 
-//swiftlint:disable identifier_name
-
 import Foundation
 
-internal enum Result<Failure> where Failure: Error {
-    case success
-    case failure(Failure)
+protocol NetworkResponseHandlerType: class {
+    func handleResponse(_ response: HTTPURLResponseType) -> Result<Error>
 }
 
-extension Result: Equatable where Failure: Error {
+internal final class NetworkResponseHandler: NetworkResponseHandlerType {
 
-    static func == (lhs: Result, rhs: Result) -> Bool {
-        switch (lhs, rhs) {
-        case (.success, .success):
-            return true
-        case (.success, .failure):
-            return false
-        case (.failure, .success):
-            return false
-        case (let .failure(error1), let.failure(error2)):
-            return error1.isEqual(to: error2)
+    func handleResponse(_ response: HTTPURLResponseType) -> Result<Error> {
+        switch response.statusCode {
+        case 200...299:
+            return .success
+        case 429:
+            return .failure(ClientError.rateLimited)
+        case 501...599:
+            return .failure(ClientError.badRequest)
+        default:
+            return .failure(ClientError.failed)
         }
     }
-
 }

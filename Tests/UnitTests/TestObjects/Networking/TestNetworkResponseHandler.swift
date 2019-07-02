@@ -1,5 +1,5 @@
 //
-// Result.swift
+// TestResponseHandler.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,28 +22,22 @@
 // SOFTWARE.
 //
 
-//swiftlint:disable identifier_name
-
 import Foundation
+@testable import ButtonMerchant
 
-internal enum Result<Failure> where Failure: Error {
-    case success
-    case failure(Failure)
-}
+class TestNetworkResponseHandler: NetworkResponseHandlerType {
 
-extension Result: Equatable where Failure: Error {
+    // Test Properties
+    var result: Result<Error>
+    var actualResponse: HTTPURLResponse?
 
-    static func == (lhs: Result, rhs: Result) -> Bool {
-        switch (lhs, rhs) {
-        case (.success, .success):
-            return true
-        case (.success, .failure):
-            return false
-        case (.failure, .success):
-            return false
-        case (let .failure(error1), let.failure(error2)):
-            return error1.isEqual(to: error2)
-        }
+    init(result: Result<Error> = .success) {
+        self.result = result
+    }
+
+    func handleResponse(_ response: HTTPURLResponseType) -> Result<Error> {
+        actualResponse = response as? HTTPURLResponse
+        return result
     }
 
 }

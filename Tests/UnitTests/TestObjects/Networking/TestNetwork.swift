@@ -1,5 +1,5 @@
 //
-// Result.swift
+// TestNetwork.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,28 +22,24 @@
 // SOFTWARE.
 //
 
-//swiftlint:disable identifier_name
-
 import Foundation
+@testable import ButtonMerchant
 
-internal enum Result<Failure> where Failure: Error {
-    case success
-    case failure(Failure)
-}
+class TestNetwork: Network<API> {
 
-extension Result: Equatable where Failure: Error {
+    // MARK: - Test Properties
 
-    static func == (lhs: Result, rhs: Result) -> Bool {
-        switch (lhs, rhs) {
-        case (.success, .success):
-            return true
-        case (.success, .failure):
-            return false
-        case (.failure, .success):
-            return false
-        case (let .failure(error1), let.failure(error2)):
-            return error1.isEqual(to: error2)
-        }
+    var actualEndpoint: API?
+    var actualCompletion: ((Data?, URLResponse?, Error?) -> Void)?
+
+    // MARK: - Protocol Requirements
+
+    required init(session: URLSessionType = TestURLSession(), userAgent: UserAgentType = TestUserAgent()) {
+        super.init(session: session, userAgent: userAgent)
     }
 
+    override func request(_ endPoint: API, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        actualEndpoint = endPoint
+        actualCompletion = completion
+    }
 }

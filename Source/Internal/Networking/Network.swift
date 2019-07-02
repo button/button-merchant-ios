@@ -24,11 +24,12 @@
 
 import Foundation
 
-internal protocol NetworkType: class {
+internal protocol NetworkType {
     associatedtype EndPoint: APIType
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
-    func request(_ route: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void)
+    var task: URLSessionDataTaskType? { get }
+    func request(_ endPoint: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void)
     init(session: URLSessionType, userAgent: UserAgentType)
 }
 
@@ -36,34 +37,35 @@ internal class Network<EndPoint: APIType>: NetworkType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
+    var task: URLSessionDataTaskType?
 
     required init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
         self.userAgent = userAgent
     }
 
-    func request(_ route: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        let request = urlRequest(from: route)
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+    func request(_ endPoint: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+        let request = urlRequest(from: endPoint)
+        task = session.dataTask(with: request, completionHandler: { data, response, error in
             completion(data, response, error)
         })
-        task.resume()
+        task?.resume()
     }
 }
 
 internal extension Network {
 
-    func urlRequest(from route: EndPoint) -> URLRequest {
-        var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path))
-        request.httpMethod = route.httpMethod.rawValue
+    func urlRequest(from endPoint: EndPoint) -> URLRequest {
+        var request = URLRequest(url: endPoint.baseURL.appendingPathComponent(endPoint.path))
+        request.httpMethod = endPoint.httpMethod.rawValue
         request.setValue(userAgent.stringRepresentation, forHTTPHeaderField: "User-Agent")
 
-        switch route.task {
+        switch endPoint.task {
         case .request(let parameters, let headers):
             if let parameters = parameters {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
             }
-            var httpHeaders = route.headers
+            var httpHeaders = endPoint.headers
             if let additionalHeaders = headers {
                 httpHeaders += additionalHeaders
             }
