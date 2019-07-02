@@ -189,7 +189,7 @@ final public class ButtonMerchant: NSObject {
                             bundle: Bundle.main)
         let session = URLSession(configuration: .default, delegate: SessionDelegate(system: system), delegateQueue: nil)
         let network = Network<API>(session: session, userAgent: UserAgent(libraryVersion: Version.stringValue, system: system))
-        let client = Client(network: network)
+        let client = Client(network: network, responseHandler: NetworkResponseHandler())
         return Core(buttonDefaults: ButtonDefaults(userDefaults: UserDefaults.button),
                     client: client,
                     system: system,

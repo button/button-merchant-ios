@@ -1,7 +1,7 @@
 //
-// EncodableExtensions.swift
+// ErrorExtensions.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-
+	
 import Foundation
 
-extension Encodable {
-    
-    var dictionaryRepresentation: [String: AnyHashable] {
-        var dictionary = [String: AnyHashable]()
-        if let data = try? JSONEncoder().encode(self) {
-            let result = try? JSONSerialization.jsonObject(with: data)
-            dictionary = result.flatMap { $0 as? [String: AnyHashable] } ?? [:]
-        }
-        return dictionary
+internal extension Error {
+
+    var reflectedString: String {
+        return String(reflecting: self)
+    }
+
+    func isEqual(to: Self) -> Bool {
+        return self.reflectedString == to.reflectedString
     }
 }

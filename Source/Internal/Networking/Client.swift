@@ -27,39 +27,45 @@ import UIKit
 
 internal protocol ClientType: class {
     var network: Network<API> { get }
+    var responseHandler: NetworkResponseHandlerType { get }
     func fetchPostInstallURL(parameters: Parameters, _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: Parameters, _ completion: ((Error?) -> Void)?)
     func reportOrder(parameters: Parameters, encodedApplicationId: String, _ completion: ((Error?) -> Void)?)
-    init(network: Network<API>)
+    init(network: Network<API>, responseHandler: NetworkResponseHandlerType)
 }
 
 internal final class Client: ClientType {
 
     var network: Network<API>
+    var responseHandler: NetworkResponseHandlerType
 
-    init(network: Network<API>) {
+    init(network: Network<API>, responseHandler: NetworkResponseHandlerType) {
         self.network = network
+        self.responseHandler = responseHandler
     }
 
     func fetchPostInstallURL(parameters: Parameters, _ completion: @escaping (URL?, String?) -> Void) {
         network.request(.postInstall(parameters: parameters)) { [weakSelf = self] data, response, error in
 
             if let response = response as? HTTPURLResponse {
-                let result = weakSelf.handleNetworkResponse(response)
+                let result = weakSelf.responseHandler.handleResponse(response)
                 switch result {
                 case .success:
                     guard let data = data,
                         let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                         let object = responseDict?["object"] as? [String: Any],
                         let action = object["action"] as? String,
-                        let attributionObject = object["attribution"] as? [String: Any] else {
+                        let attributionObject = object["attribution"] as? [String: Any],
+                        let sourceToken = attributionObject["btn_ref"] as? String else {
                             completion(nil, nil)
                             return
                     }
-                    completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
+                    completion(URL(string: action)!, sourceToken)
                 case .failure:
                     completion(nil, nil)
                 }
+            } else {
+                completion(nil, nil)
             }
         }
     }
@@ -77,13 +83,15 @@ internal final class Client: ClientType {
             }
 
             if let response = response as? HTTPURLResponse {
-                let result = weakSelf.handleNetworkResponse(response)
+                let result = weakSelf.responseHandler.handleResponse(response)
                 switch result {
                 case .success:
                     completion(nil)
                 case .failure(let error):
                     completion(error)
                 }
+            } else {
+                completion(ClientError.emptyResponse)
             }
         }
     }
@@ -101,31 +109,17 @@ internal final class Client: ClientType {
             }
 
             if let response = response as? HTTPURLResponse {
-                let result = weakSelf.handleNetworkResponse(response)
+                let result = weakSelf.responseHandler.handleResponse(response)
                 switch result {
                 case .success:
                     completion(nil)
                 case .failure(let error):
                     completion(error)
                 }
+            } else {
+                completion(ClientError.emptyResponse)
             }
         }
     }
 
-}
-
-internal extension Client {
-
-    func handleNetworkResponse(_ response: HTTPURLResponse) -> Result<Error> {
-        switch response.statusCode {
-        case 200...299:
-            return .success
-        case 429:
-            return .failure(ClientError.rateLimited)
-        case 501...599:
-            return .failure(ClientError.badRequest)
-        default:
-            return .failure(ClientError.failed)
-        }
-    }
 }

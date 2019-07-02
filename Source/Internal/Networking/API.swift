@@ -42,10 +42,8 @@ internal enum API {
 
 extension API: APIType {
     var baseURL: URL {
-        guard let url = URL(string: "https://api.usebutton.com/") else {
-            fatalError("baseURL could not be configured")
-        }
-        return url
+        //swiftlint:disable force_unwrap
+        return URL(string: "https://api.usebutton.com/")!
     }
 
     var path: String {
@@ -83,6 +81,15 @@ extension API: APIType {
             return ["Content-Type": "application/json",
                     "Authorization": "Basic \(encodedAppId):"]
         }
+    }
+
+}
+
+extension API: Equatable {
+
+    static func == (lhs: API, rhs: API) -> Bool {
+        return lhs.baseURL == rhs.baseURL && lhs.path == rhs.path &&
+            lhs.httpMethod == rhs.httpMethod && lhs.task == rhs.task && lhs.headers == rhs.headers
     }
 
 }

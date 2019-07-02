@@ -26,6 +26,7 @@ import Foundation
 
 internal enum ClientError: Error {
     case failed
+    case emptyResponse
     case badRequest
     case rateLimited
 }
