@@ -71,7 +71,8 @@ class ReportOrderBodyTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
-                       ["btn_ref": "srctok-abc123",
+                       ["advertising_id": "00000000-0000-0000-0000-000000000000",
+                        "btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
