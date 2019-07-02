@@ -27,6 +27,7 @@ import UIKit
 
 final class TestSystem: SystemType {
 
+    var includesIFA = true
     //Test Properties
     var testIsNewInstall = false
     var testCurrentDate: Date

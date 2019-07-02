@@ -32,6 +32,7 @@ import AdSupport
  get your application Id from from the [Button Dashboard](https://app.usebutton.com).
  and follow our simple [integration guide](https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library)
  */
+@objcMembers
 final public class ButtonMerchant: NSObject {
     
     // swiftlint:disable:next identifier_name
@@ -132,7 +133,14 @@ final public class ButtonMerchant: NSObject {
     @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
         core.handlePostInstallURL(completion)
     }
-
+    
+    /**
+     Button ML features configuration.
+     */
+    public static var features: Configurable {
+        return core.system
+    }
+    
     /**
      Tracks an order.
 

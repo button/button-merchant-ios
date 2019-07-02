@@ -81,6 +81,7 @@
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
+		DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F008022CA85F000E789D0 /* Configurable.swift */; };
 		DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4AAD4322B13CD3005CE460 /* OrderTests.swift */; };
 		DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */; };
 		DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */; };
@@ -214,6 +215,7 @@
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
+		DC1F008022CA85F000E789D0 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
 		DC4AAD4322B13CD3005CE460 /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
 		DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBody.swift; sourceTree = "<group>"; };
 		DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBodyTests.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 			children = (
 				DE175A1920A09BB1005C97B9 /* Version */,
 				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
+				DC1F008022CA85F000E789D0 /* Configurable.swift */,
 				DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */,
 				DA0FA29F205C1B3A008296A6 /* Core.swift */,
 				9E77202120605506005F740B /* ButtonDefaults.swift */,
@@ -1122,6 +1125,7 @@
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
+				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
