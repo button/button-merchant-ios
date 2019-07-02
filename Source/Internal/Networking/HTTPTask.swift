@@ -27,8 +27,36 @@
 import Foundation
 
 internal typealias HTTPHeaders = [String: String]
-internal typealias Parameters = [String: Any]
+internal typealias Parameters = [String: AnyHashable]
 
 internal enum HTTPTask {
     case request(body: Parameters?, headers: HTTPHeaders?)
+
+    var body: Parameters? {
+        switch self {
+        case .request(let body, _):
+            return body
+        }
+    }
+
+    var headers: HTTPHeaders? {
+        switch self {
+        case .request(_, let headers):
+            return headers
+        }
+    }
+}
+
+extension HTTPTask: Equatable {
+
+    static func == (lhs: HTTPTask, rhs: HTTPTask) -> Bool {
+        if lhs.body == nil && lhs.headers == nil && rhs.body == nil && rhs.headers == nil {
+            return false
+        } else {
+            return (lhs.body == rhs.body && lhs.headers == rhs.headers)
+                || (lhs.body == rhs.body && lhs.headers == nil && rhs.headers == nil)
+                || (lhs.headers == rhs.headers && lhs.body == nil && rhs.body == nil)
+        }
+    }
+
 }

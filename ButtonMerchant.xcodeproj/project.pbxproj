@@ -39,6 +39,7 @@
 		9E771543206AAC0F0051728C /* ButtonMerchant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE865F842052FE5D00F4054D /* ButtonMerchant.framework */; };
 		9E77202220605506005F740B /* ButtonDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77202120605506005F740B /* ButtonDefaults.swift */; };
 		9E77202520607331005F740B /* ButtonMerchantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ButtonMerchantTests.swift */; };
+		9E8B0E3B22CB277E00FF9F02 /* HTTPTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8B0E3A22CB277E00FF9F02 /* HTTPTaskTests.swift */; };
 		9E976B85207D10D500783F1A /* TrackOrderBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E976B84207D10D500783F1A /* TrackOrderBody.swift */; };
 		9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E976B86207D1A3000783F1A /* DateExtensions.swift */; };
 		9E9CDEA72076BD7900A1424C /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9CDEA62076BD7900A1424C /* Order.swift */; };
@@ -175,6 +176,7 @@
 		9E771540206AAC0F0051728C /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		9E771542206AAC0F0051728C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E77202120605506005F740B /* ButtonDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonDefaults.swift; sourceTree = "<group>"; };
+		9E8B0E3A22CB277E00FF9F02 /* HTTPTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPTaskTests.swift; sourceTree = "<group>"; };
 		9E976B84207D10D500783F1A /* TrackOrderBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackOrderBody.swift; sourceTree = "<group>"; };
 		9E976B86207D1A3000783F1A /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		9E9CDEA62076BD7900A1424C /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -1241,6 +1243,7 @@
 				9E5475E4206D91A900947A1C /* TestURLSessionDataTask.swift in Sources */,
 				DE1706E5208563D7009FF30B /* TestLocale.swift in Sources */,
 				9EDED112208FA4D70049A56A /* TestBundle.swift in Sources */,
+				9E8B0E3B22CB277E00FF9F02 /* HTTPTaskTests.swift in Sources */,
 				DA756B8122B2E03E003397E3 /* TestURLAuthenticationChallenge.swift in Sources */,
 				DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */,
 				DE1706E32085633A009FF30B /* TestDevice.swift in Sources */,
