@@ -49,6 +49,7 @@
 		9EC44528207D4F180032B1EF /* TrackOrderBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */; };
 		9ED1DAA322CAA77800B6D637 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1DAA222CAA77800B6D637 /* HTTPMethod.swift */; };
 		9ED1DAAB22CAB4A300B6D637 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1DAAA22CAB4A300B6D637 /* Network.swift */; };
+		9ED1DAAD22CACC0000B6D637 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1DAAC22CACC0000B6D637 /* DictionaryExtensions.swift */; };
 		9ED1DAAF22CADF7700B6D637 /* HTTPTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1DAAE22CADF7700B6D637 /* HTTPTask.swift */; };
 		9ED1DAB122CAE08300B6D637 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED1DAB022CAE08300B6D637 /* API.swift */; };
 		9EDEB859206ECE3000D58FE2 /* PostInstallBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */; };
@@ -182,6 +183,7 @@
 		9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackOrderBodyTests.swift; sourceTree = "<group>"; };
 		9ED1DAA222CAA77800B6D637 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		9ED1DAAA22CAB4A300B6D637 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		9ED1DAAC22CACC0000B6D637 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		9ED1DAAE22CADF7700B6D637 /* HTTPTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPTask.swift; sourceTree = "<group>"; };
 		9ED1DAB022CAE08300B6D637 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		9ED488D4208F75C7000DA7FC /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */,
 				DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */,
 				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
+				9ED1DAAC22CACC0000B6D637 /* DictionaryExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -480,6 +483,18 @@
 				DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */,
 			);
 			path = Foundation;
+			sourceTree = "<group>";
+		};
+		9ED1DAA122CAA75800B6D637 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				9E2B4310206C1275009F2886 /* Client.swift */,
+				9ED1DAAA22CAB4A300B6D637 /* Network.swift */,
+				9ED1DAB022CAE08300B6D637 /* API.swift */,
+				9ED1DAAE22CADF7700B6D637 /* HTTPTask.swift */,
+				9ED1DAA222CAA77800B6D637 /* HTTPMethod.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		CBD1C029810C0BA07350C85F /* Frameworks */ = {
@@ -583,13 +598,13 @@
 			isa = PBXGroup;
 			children = (
 				DE175A1920A09BB1005C97B9 /* Version */,
+				9ED1DAA122CAA75800B6D637 /* Networking */,
 				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
 				DC1F008022CA85F000E789D0 /* Configurable.swift */,
 				DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */,
 				DA0FA29F205C1B3A008296A6 /* Core.swift */,
 				9E77202120605506005F740B /* ButtonDefaults.swift */,
 				9EB1B09F207AB43E00BE0A1A /* System.swift */,
-				9E2B4310206C1275009F2886 /* Client.swift */,
 				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
 				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
 				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
@@ -1135,6 +1150,7 @@
 				DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */,
 				DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
+				9ED1DAAD22CACC0000B6D637 /* DictionaryExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
