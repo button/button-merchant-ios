@@ -44,7 +44,6 @@ class SystemTests: XCTestCase {
                              bundle: bundle)
         XCTAssertEqualReferences(system.fileManager, fileManager)
         XCTAssertEqualReferences(system.calendar as AnyObject, calendar)
-        //XCTAssertEqualReferences(system.adIdManager, adIdManager)
         XCTAssertEqualReferences(system.device, device)
         XCTAssertEqualReferences(system.screen, screen)
         XCTAssertEqualReferences(system.locale as AnyObject, locale)
