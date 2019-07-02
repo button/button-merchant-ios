@@ -423,6 +423,50 @@
 			name = Deployment;
 			sourceTree = "<group>";
 		};
+		9E0237D322CAF537002D3C5E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
+				9E976B84207D10D500783F1A /* TrackOrderBody.swift */,
+				DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E0237D422CAF57C002D3C5E /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
+				9E9CDEA62076BD7900A1424C /* Order.swift */,
+				DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		9E0237D522CAF5B3002D3C5E /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				DA0FA29F205C1B3A008296A6 /* Core.swift */,
+				9E77202120605506005F740B /* ButtonDefaults.swift */,
+				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
+				9EB1B09F207AB43E00BE0A1A /* System.swift */,
+				9ED488D4208F75C7000DA7FC /* UserAgent.swift */,
+				9ED1DAA122CAA75800B6D637 /* Networking */,
+				9E0237D622CAF60B002D3C5E /* CertPinning */,
+				9E77202020605126005F740B /* Extensions */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		9E0237D622CAF60B002D3C5E /* CertPinning */ = {
+			isa = PBXGroup;
+			children = (
+				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
+				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
+			);
+			path = CertPinning;
+			sourceTree = "<group>";
+		};
 		9E77153F206AAC0F0051728C /* IntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,6 +536,7 @@
 		9ED1DAA122CAA75800B6D637 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9E0237D322CAF537002D3C5E /* Models */,
 				9E2B4310206C1275009F2886 /* Client.swift */,
 				9ED1DAAA22CAB4A300B6D637 /* Network.swift */,
 				9ED1DAB022CAE08300B6D637 /* API.swift */,
@@ -604,22 +649,8 @@
 			isa = PBXGroup;
 			children = (
 				DE175A1920A09BB1005C97B9 /* Version */,
-				9ED1DAA122CAA75800B6D637 /* Networking */,
-				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
-				DC1F008022CA85F000E789D0 /* Configurable.swift */,
-				DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */,
-				DA0FA29F205C1B3A008296A6 /* Core.swift */,
-				9E77202120605506005F740B /* ButtonDefaults.swift */,
-				9EB1B09F207AB43E00BE0A1A /* System.swift */,
-				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
-				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
-				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
-				9ED488D4208F75C7000DA7FC /* UserAgent.swift */,
-				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
-				9E976B84207D10D500783F1A /* TrackOrderBody.swift */,
-				9E9CDEA62076BD7900A1424C /* Order.swift */,
-				DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */,
-				9E77202020605126005F740B /* Extensions */,
+				9E0237D422CAF57C002D3C5E /* Public */,
+				9E0237D522CAF5B3002D3C5E /* Internal */,
 				DE865FA42053073B00F4054D /* Supporting Files */,
 			);
 			path = Source;
