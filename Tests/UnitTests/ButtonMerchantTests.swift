@@ -183,7 +183,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(testCore.testOrder, expectedOrder)
     }
     
-    func testIFASet() {
+    func testIFASetFalse() {
         // Arrange
         let testSystem = TestSystem()
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -197,5 +197,21 @@ class ButtonMerchantTests: XCTestCase {
         
         // Assert
         XCTAssertFalse(ButtonMerchant.features.includesIFA)
+    }
+    
+    func testIFASetTrue() {
+        // Arrange
+        let testSystem = TestSystem()
+        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                system: testSystem,
+                                notificationCenter: TestNotificationCenter())
+        
+        // Act
+        ButtonMerchant._core = testCore
+        ButtonMerchant.features.includesIFA = true
+        
+        // Assert
+        XCTAssertTrue(ButtonMerchant.features.includesIFA)
     }
 }
