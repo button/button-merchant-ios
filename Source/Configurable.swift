@@ -24,6 +24,9 @@
 
 import Foundation
 
+/**
+ Protocol that handles the features property,
+ */
 public protocol Configurable: class {
     var includesIFA: Bool { get set }
 }

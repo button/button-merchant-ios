@@ -35,10 +35,6 @@ import AdSupport
 @objcMembers
 final public class ButtonMerchant: NSObject {
     
-    public static var features: Configurable {
-        return core.system
-    }
-    
     // swiftlint:disable:next identifier_name
     internal static var _core: CoreType?
     private static var core: CoreType {
@@ -137,7 +133,14 @@ final public class ButtonMerchant: NSObject {
     @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
         core.handlePostInstallURL(completion)
     }
-
+    
+    /**
+     Button ML features configuration.
+     */
+    public static var features: Configurable {
+        return core.system
+    }
+    
     /**
      Tracks an order.
 
