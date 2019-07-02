@@ -15,6 +15,8 @@
 		64F2126DB5F1EF510385A537 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17BD78D774301269568AEED3 /* Pods_Example.framework */; };
 		7A698220663E96029C986423 /* Pods_IntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68DBE9F4142EFF985186194F /* Pods_IntegrationTests.framework */; };
 		84599F861351D17A31822AE6 /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C56FB26591C085EA0C43519A /* Pods_UnitTests.framework */; };
+		9E0237D022CAEC2F002D3C5E /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0237CF22CAEC2F002D3C5E /* ClientError.swift */; };
+		9E0237D222CAEC57002D3C5E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0237D122CAEC57002D3C5E /* Result.swift */; };
 		9E0DBB1C207BB55A0066A35D /* SystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0DBB1B207BB55A0066A35D /* SystemTests.swift */; };
 		9E145C90208F86E600B01ECD /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF66C35208F851100D73AB1 /* BundleExtensions.swift */; };
 		9E2B4311206C1275009F2886 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4310206C1275009F2886 /* Client.swift */; };
@@ -150,6 +152,8 @@
 		62DF1DB6AC59E20539F259BE /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		68DBE9F4142EFF985186194F /* Pods_IntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B26E3706FAA0AA4ED9D4CE1 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		9E0237CF22CAEC2F002D3C5E /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
+		9E0237D122CAEC57002D3C5E /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		9E0DBB1B207BB55A0066A35D /* SystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTests.swift; sourceTree = "<group>"; };
 		9E2B4310206C1275009F2886 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		9E2B4312206C12BC009F2886 /* URLSessionDataTaskExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskExtensions.swift; sourceTree = "<group>"; };
@@ -493,6 +497,8 @@
 				9ED1DAB022CAE08300B6D637 /* API.swift */,
 				9ED1DAAE22CADF7700B6D637 /* HTTPTask.swift */,
 				9ED1DAA222CAA77800B6D637 /* HTTPMethod.swift */,
+				9E0237CF22CAEC2F002D3C5E /* ClientError.swift */,
+				9E0237D122CAEC57002D3C5E /* Result.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1149,6 +1155,7 @@
 				DA4AF05720869966002C3E0E /* NotificationCenterExtensions.swift in Sources */,
 				DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */,
 				DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */,
+				9E0237D222CAEC57002D3C5E /* Result.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
 				9ED1DAAD22CACC0000B6D637 /* DictionaryExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
@@ -1156,6 +1163,7 @@
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
+				9E0237D022CAEC2F002D3C5E /* ClientError.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
 				9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */,
 				9E2B4311206C1275009F2886 /* Client.swift in Sources */,
