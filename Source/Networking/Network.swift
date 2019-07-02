@@ -27,15 +27,19 @@ import Foundation
 internal protocol NetworkType: class {
     associatedtype EndPoint: APIType
     var session: URLSessionType { get }
+    var userAgent: UserAgentType { get }
     func request(_ route: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void)
+    init(session: URLSessionType, userAgent: UserAgentType)
 }
 
 internal class Network<EndPoint: APIType>: NetworkType {
 
     var session: URLSessionType
+    var userAgent: UserAgentType
 
-    init(session: URLSessionType) {
+    required init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
+        self.userAgent = userAgent
     }
 
     func request(_ route: EndPoint, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
@@ -52,6 +56,7 @@ internal extension Network {
     func urlRequest(from route: EndPoint) -> URLRequest {
         var request = URLRequest(url: route.baseURL.appendingPathComponent(route.path))
         request.httpMethod = route.httpMethod.rawValue
+        request.setValue(userAgent.stringRepresentation, forHTTPHeaderField: "User-Agent")
 
         switch route.task {
         case .request(let parameters, let headers):

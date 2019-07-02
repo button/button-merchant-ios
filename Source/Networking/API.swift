@@ -22,6 +22,8 @@
 // SOFTWARE.
 //
 
+//swiftlint:disable identifier_name
+
 import Foundation
 
 internal protocol APIType {
@@ -33,9 +35,8 @@ internal protocol APIType {
 }
 
 internal enum API {
-    case postInstall
-    case activity
-    //swiftlint:disable:next identifier_name
+    case postInstall(parameters: Parameters)
+    case activity(parameters: Parameters)
     case order(parameters: Parameters, encodedAppId: String)
 }
 
