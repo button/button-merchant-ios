@@ -43,13 +43,7 @@ final class TestSystem: SystemType {
     var locale: LocaleType
     var bundle: BundleType
     
-    var advertisingId: String? {
-        if self.includesIFA && self.adIdManager.isAdvertisingTrackingEnabled {
-            return self.adIdManager.advertisingIdentifier.uuidString
-        } else {
-            return nil
-        }
-    }
+    var advertisingId: String? = TestAdIdManager().advertisingIdentifier.uuidString
     
     var currentDate: Date {
         return testCurrentDate

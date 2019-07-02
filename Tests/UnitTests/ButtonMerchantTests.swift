@@ -197,7 +197,6 @@ class ButtonMerchantTests: XCTestCase {
         
         // Assert
         XCTAssertFalse(ButtonMerchant.features.includesIFA)
-        XCTAssertNil(testCore.system.advertisingId)
     }
     
     func testIFASetTrue() {
@@ -214,6 +213,5 @@ class ButtonMerchantTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(ButtonMerchant.features.includesIFA)
-        XCTAssertEqual(testCore.system.advertisingId!, "00000000-0000-0000-0000-000000000000")
     }
 }
