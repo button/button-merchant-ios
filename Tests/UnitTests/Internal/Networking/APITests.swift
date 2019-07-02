@@ -87,4 +87,78 @@ class APITests: XCTestCase {
         XCTAssertEqual(postInstall.headers, expectedHeaders)
     }
 
+    // MARK: - Equatable Tests
+
+    func testAPIEquality_postInstall_equalParameters_returnsTrue() {
+        // Arrange
+        let lhsAPI: API = .postInstall(parameters: ["foo": "bar"])
+        let rhsAPI: API = .postInstall(parameters: ["foo": "bar"])
+
+        // Act && Assert
+        XCTAssertTrue(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_postInstall_unequalParameters_returnsFalse() {
+        // Arrange
+        let lhsAPI: API = .postInstall(parameters: ["foo": "bar"])
+        let rhsAPI: API = .postInstall(parameters: ["bar": "baz"])
+
+        // Act && Assert
+        XCTAssertFalse(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_activity_equalParameters_returnsTrue() {
+        // Arrange
+        let lhsAPI: API = .activity(parameters: ["foo": "bar"])
+        let rhsAPI: API = .activity(parameters: ["foo": "bar"])
+
+        // Act && Assert
+        XCTAssertTrue(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_activity_unequalParameters_returnsFalse() {
+        // Arrange
+        let lhsAPI: API = .activity(parameters: ["foo": "bar"])
+        let rhsAPI: API = .activity(parameters: ["bar": "baz"])
+
+        // Act && Assert
+        XCTAssertFalse(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_order_allPropertiesEqual_returnsTrue() {
+        // Arrange
+        let lhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "app-id")
+        let rhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "app-id")
+
+        // Act && Assert
+        XCTAssertTrue(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_order_allPropertiesUnequal_returnsFalse() {
+        // Arrange
+        let lhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "app-id")
+        let rhsAPI: API = .order(parameters: ["bar": "baz"], encodedAppId: "id-app")
+
+        // Act && Assert
+        XCTAssertFalse(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_order_unequalEncodedAppId_returnsFalse() {
+        // Arrange
+        let lhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "app-id")
+        let rhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "id-app")
+
+        // Act && Assert
+        XCTAssertFalse(lhsAPI == rhsAPI)
+    }
+
+    func testAPIEquality_order_unequalParameters_returnsFalse() {
+        // Arrange
+        let lhsAPI: API = .order(parameters: ["foo": "bar"], encodedAppId: "app-id")
+        let rhsAPI: API = .order(parameters: ["bar": "baz"], encodedAppId: "app-id")
+
+        // Act && Assert
+        XCTAssertFalse(lhsAPI == rhsAPI)
+    }
+
 }

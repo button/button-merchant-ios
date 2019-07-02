@@ -115,10 +115,7 @@ class OrderTests: XCTestCase {
                                                               "line_items": lineItems]
 
         // Act
-        guard let actualOrderDictionary = order.dictionaryRepresentation as? [String: AnyHashable] else {
-            XCTFail("malformed dictionary")
-            return
-        }
+        let actualOrderDictionary = order.dictionaryRepresentation
 
         // Assert
         XCTAssertEqual(expectedOrderDictionary, actualOrderDictionary)

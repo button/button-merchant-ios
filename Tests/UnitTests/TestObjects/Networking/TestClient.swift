@@ -27,42 +27,43 @@ import Foundation
 
 class TestClient: ClientType {
 
-    // Test properties
-    var testParameters: [String: Any]
-    var testEncodedApplicationId: String?
+    // MARK: - Test properties
+
+    var actualParameters: Parameters = [:]
+    var actualEncodedApplicationId: String?
+    var actualPostInstallCompletion: ((URL?, String?) -> Void)?
+    var actualTrackOrderCompletion: ((Error?) -> Void)?
+    var actualReportOrderCompletion: ((Error?) -> Void)?
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
     var didCallReportOrder = false
 
-    var session: URLSessionType
-    var userAgent: UserAgentType
+    // MARK: - Protocol Requirements
 
-    var postInstallCompletion: ((URL?, String?) -> Void)?
-    var trackOrderCompletion: ((Error?) -> Void)?
-    var reportOrderCompletion: ((Error?) -> Void)?
+    var network: Network<API>
+    var responseHandler: NetworkResponseHandlerType
 
-    required init(session: URLSessionType, userAgent: UserAgentType) {
-        self.session = session
-        self.userAgent = userAgent
-        self.testParameters = [:]
+    required init(network: Network<API> = TestNetwork(), responseHandler: NetworkResponseHandlerType = TestNetworkResponseHandler()) {
+        self.network = network
+        self.responseHandler = responseHandler
     }
     
-    func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        testParameters = parameters
+    func fetchPostInstallURL(parameters: Parameters, _ completion: @escaping (URL?, String?) -> Void) {
+        actualParameters = parameters
         didCallGetPostInstallLink = true
-        postInstallCompletion = completion
+        actualPostInstallCompletion = completion
     }
 
-    func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
-        testParameters = parameters
+    func trackOrder(parameters: Parameters, _ completion: ((Error?) -> Void)?) {
+        actualParameters = parameters
         didCallTrackOrder = true
-        trackOrderCompletion = completion
+        actualTrackOrderCompletion = completion
     }
     
-    func reportOrder(parameters: [String: Any], encodedApplicationId: String, _ completion: ((Error?) -> Void)?) {
-        testParameters = parameters
-        testEncodedApplicationId = encodedApplicationId
+    func reportOrder(parameters: Parameters, encodedApplicationId: String, _ completion: ((Error?) -> Void)?) {
+        actualParameters = parameters
+        actualEncodedApplicationId = encodedApplicationId
         didCallReportOrder = true
-        reportOrderCompletion = completion
+        actualReportOrderCompletion = completion
     }
 }

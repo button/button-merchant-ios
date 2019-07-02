@@ -22,6 +22,8 @@
 // SOFTWARE.
 //
 
+//swiftlint:disable file_length
+
 import XCTest
 @testable import ButtonMerchant
 
@@ -30,7 +32,9 @@ class CoreTests: XCTestCase {
     func testInitialization() {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let testNotificationCenter = TestNotificationCenter()
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
@@ -48,7 +52,9 @@ class CoreTests: XCTestCase {
         let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
 
@@ -69,7 +75,9 @@ class CoreTests: XCTestCase {
         let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com/products/listing")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
 
@@ -90,7 +98,9 @@ class CoreTests: XCTestCase {
         let expectedSourceToken = "srctok-123"
         let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -107,7 +117,9 @@ class CoreTests: XCTestCase {
         let expectedSourceToken = "srctok-123"
         let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
         
@@ -130,7 +142,9 @@ class CoreTests: XCTestCase {
         let expectedSourceToken = "srctok-321"
         let secondURL = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: testNotificationCenter)
         
@@ -153,7 +167,9 @@ class CoreTests: XCTestCase {
         let expectedToken = "srctok-123"
         testDefaults.testToken = expectedToken
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -168,7 +184,9 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
 
@@ -184,7 +202,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "handle post install url")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -205,7 +225,7 @@ class CoreTests: XCTestCase {
             XCTAssertEqual(testDefaults.attributionToken, expectedToken)
             expectation.fulfill()
         }
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
+        XCTAssertEqual(testClient.actualParameters as NSDictionary,
                        ["application_id": "app-123",
                         "ifa": "00000000-0000-0000-0000-000000000000",
                         "ifa_limited": false,
@@ -217,7 +237,7 @@ class CoreTests: XCTestCase {
                              "country": "US",
                              "language": "en",
                              "screen": "1080x1920"]])
-        testClient.postInstallCompletion!(expectedURL, expectedToken)
+        testClient.actualPostInstallCompletion!(expectedURL, expectedToken)
 
         self.wait(for: [expectation], timeout: 2.0)
     }
@@ -228,7 +248,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "handle post install error")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -253,7 +275,9 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
@@ -271,7 +295,9 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
         let core = Core(buttonDefaults: testDefaults,
-                        client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: TestSystem())),
+                        client: TestClient(network: TestNetwork(session: TestURLSession(),
+                                                                userAgent: TestUserAgent()),
+                                           responseHandler: TestNetworkResponseHandler()),
                         system: testSystem,
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
@@ -290,7 +316,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "track order")
         let order = Order(id: "order-abc", amount: 120)
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.testToken = "srctok-abc123"
         let core = Core(buttonDefaults: testDefaults,
@@ -306,7 +334,7 @@ class CoreTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
+        XCTAssertEqual(testClient.actualParameters as NSDictionary,
                        ["app_id": "app-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
                         "btn_ref": "srctok-abc123",
@@ -314,7 +342,7 @@ class CoreTests: XCTestCase {
                         "total": 120,
                         "currency": "USD",
                         "source": "merchant-library"])
-        testClient.trackOrderCompletion!(nil)
+        testClient.actualTrackOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
     }
@@ -325,7 +353,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "track order")
         let order = Order(id: "order-abc", amount: 120)
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.testToken = nil
         let core = Core(buttonDefaults: testDefaults,
@@ -341,14 +371,14 @@ class CoreTests: XCTestCase {
             XCTAssertNil(error)
             expectation.fulfill()
         }
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
+        XCTAssertEqual(testClient.actualParameters as NSDictionary,
                        ["app_id": "app-abc123",
                         "user_local_time": "2018-01-23T12:00:00Z",
                         "order_id": "order-abc",
                         "total": 120,
                         "currency": "USD",
                         "source": "merchant-library"])
-        testClient.trackOrderCompletion!(nil)
+        testClient.actualTrackOrderCompletion!(nil)
 
         self.wait(for: [expectation], timeout: 2.0)
     }
@@ -359,7 +389,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "track order error")
         let order = Order(id: "test", amount: 120)
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                         client: testClient,
                         system: testSystem,
@@ -389,7 +421,9 @@ class CoreTests: XCTestCase {
         order.customer = customer
         order.customerOrderId = "customer-order-id-123"
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.testToken = "srctok-abc123"
         let core = Core(buttonDefaults: testDefaults,
@@ -406,7 +440,7 @@ class CoreTests: XCTestCase {
             expectation.fulfill()
         }
 
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
+        XCTAssertEqual(testClient.actualParameters as NSDictionary,
                        ["btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
@@ -414,8 +448,8 @@ class CoreTests: XCTestCase {
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
                         "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
-        XCTAssertEqual(testClient.testEncodedApplicationId, "YXBwLWFiYzEyMw==")
-        testClient.reportOrderCompletion!(nil)
+        XCTAssertEqual(testClient.actualEncodedApplicationId, "YXBwLWFiYzEyMw==")
+        testClient.actualReportOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)
     }
@@ -432,7 +466,9 @@ class CoreTests: XCTestCase {
         order.customer = customer
         order.customerOrderId = "customer-order-id-123"
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.testToken = nil
         let core = Core(buttonDefaults: testDefaults,
@@ -449,15 +485,15 @@ class CoreTests: XCTestCase {
             expectation.fulfill()
         }
 
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
+        XCTAssertEqual(testClient.actualParameters as NSDictionary,
                        ["order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
                         "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
-        testClient.reportOrderCompletion!(nil)
-        XCTAssertEqual(testClient.testEncodedApplicationId, "YXBwLWFiYzEyMw==")
+        testClient.actualReportOrderCompletion!(nil)
+        XCTAssertEqual(testClient.actualEncodedApplicationId, "YXBwLWFiYzEyMw==")
         self.wait(for: [expectation], timeout: 2.0)
     }
     
@@ -466,7 +502,9 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report order error")
         let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [])
         let testSystem = TestSystem()
-        let testClient = TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem))
+        let testClient = TestClient(network: TestNetwork(session: TestURLSession(),
+                                                         userAgent: TestUserAgent()),
+                                    responseHandler: TestNetworkResponseHandler())
         let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                         client: testClient,
                         system: testSystem,

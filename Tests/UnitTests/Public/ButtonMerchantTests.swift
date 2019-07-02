@@ -40,8 +40,7 @@ class ButtonMerchantTests: XCTestCase {
         // Arrange
         let applicationId = "app-test"
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
@@ -62,8 +61,7 @@ class ButtonMerchantTests: XCTestCase {
     func testTrackIncomingURLInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "usebutton.com")!
@@ -80,8 +78,7 @@ class ButtonMerchantTests: XCTestCase {
     func testTrackIncomingUserActivityInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "https://usebutton.com")!
@@ -100,8 +97,7 @@ class ButtonMerchantTests: XCTestCase {
     func testAccessingAttributionToken() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
         testCore.testToken = "srctok-123"
@@ -118,8 +114,7 @@ class ButtonMerchantTests: XCTestCase {
     func testClearAllDataInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
@@ -134,8 +129,7 @@ class ButtonMerchantTests: XCTestCase {
     func testHandlePostInstallURLInvokesCore() {
         // Arrange
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: TestSystem(),
                                 notificationCenter: TestNotificationCenter())
 
@@ -151,7 +145,7 @@ class ButtonMerchantTests: XCTestCase {
         // Arrange
         let testSystem = TestSystem()
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: testSystem,
                                 notificationCenter: TestNotificationCenter())
         let expectedOrder = Order(id: "test", amount: Int64(12))
@@ -168,7 +162,7 @@ class ButtonMerchantTests: XCTestCase {
         // Arrange
         let testSystem = TestSystem()
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: testSystem,
                                 notificationCenter: TestNotificationCenter())
         let expectedOrder = Order(id: "test",
