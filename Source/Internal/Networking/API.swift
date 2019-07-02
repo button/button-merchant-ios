@@ -68,18 +68,20 @@ extension API: APIType {
 
     var task: HTTPTask {
         switch self {
-        case .order(let parameters,
-                    let encodedAppId):
-            return .request(body: parameters, headers: ["Authorization": "Basic \(encodedAppId):"])
-        default:
-            return .request(body: nil, headers: nil)
+        case let .postInstall(parameters), let .activity(parameters):
+            return .request(body: parameters, headers: nil)
+        case .order(let parameters, _):
+            return .request(body: parameters, headers: self.headers)
         }
     }
 
     var headers: HTTPHeaders {
         switch self {
-        default:
+        case .postInstall, .activity:
             return ["Content-Type": "application/json"]
+        case .order(_, let encodedAppId):
+            return ["Content-Type": "application/json",
+                    "Authorization": "Basic \(encodedAppId):"]
         }
     }
 

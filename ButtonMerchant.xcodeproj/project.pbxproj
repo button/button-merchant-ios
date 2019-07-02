@@ -17,6 +17,7 @@
 		84599F861351D17A31822AE6 /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C56FB26591C085EA0C43519A /* Pods_UnitTests.framework */; };
 		9E0237D022CAEC2F002D3C5E /* ClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0237CF22CAEC2F002D3C5E /* ClientError.swift */; };
 		9E0237D222CAEC57002D3C5E /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0237D122CAEC57002D3C5E /* Result.swift */; };
+		9E0237E422CAFCEA002D3C5E /* APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0237E322CAFCEA002D3C5E /* APITests.swift */; };
 		9E0DBB1C207BB55A0066A35D /* SystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0DBB1B207BB55A0066A35D /* SystemTests.swift */; };
 		9E145C90208F86E600B01ECD /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF66C35208F851100D73AB1 /* BundleExtensions.swift */; };
 		9E2B4311206C1275009F2886 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4310206C1275009F2886 /* Client.swift */; };
@@ -155,6 +156,7 @@
 		8B26E3706FAA0AA4ED9D4CE1 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9E0237CF22CAEC2F002D3C5E /* ClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientError.swift; sourceTree = "<group>"; };
 		9E0237D122CAEC57002D3C5E /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		9E0237E322CAFCEA002D3C5E /* APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITests.swift; sourceTree = "<group>"; };
 		9E0DBB1B207BB55A0066A35D /* SystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemTests.swift; sourceTree = "<group>"; };
 		9E2B4310206C1275009F2886 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		9E2B4312206C12BC009F2886 /* URLSessionDataTaskExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskExtensions.swift; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 				DE1706E920856417009FF30B /* TestAdIdManager.swift in Sources */,
 				DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */,
 				DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */,
+				9E0237E422CAFCEA002D3C5E /* APITests.swift in Sources */,
 				9E4C496820616B040053E4CA /* ButtonDefaultsTests.swift in Sources */,
 				9E6F4341206C160C004242A1 /* TestClient.swift in Sources */,
 				9E4C496720616B040053E4CA /* CoreTests.swift in Sources */,
