@@ -181,7 +181,7 @@ class ButtonMerchantTests: XCTestCase {
         // Arrange
         let testSystem = TestSystem()
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: testSystem,
                                 notificationCenter: TestNotificationCenter())
         
@@ -197,7 +197,7 @@ class ButtonMerchantTests: XCTestCase {
         // Arrange
         let testSystem = TestSystem()
         let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
+                                client: TestClient(network: TestNetwork(session: TestURLSession(), userAgent: TestUserAgent())),
                                 system: testSystem,
                                 notificationCenter: TestNotificationCenter())
         
