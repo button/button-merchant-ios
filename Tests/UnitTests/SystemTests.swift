@@ -166,4 +166,39 @@ class SystemTests: XCTestCase {
         
         XCTAssertEqual(system.advertisingId, "00000000-0000-0000-0000-000000000000")
     }
+    
+    func testAdManagerTrackingSetToFalse() {
+        // Arrange
+        let adManager = TestAdIdManager()
+        adManager.isAdvertisingTrackingEnabled = false
+        
+        // Act
+        let system = System(fileManager: TestFileManager(),
+                            calendar: TestCalendar(),
+                            adIdManager: adManager,
+                            device: TestDevice(),
+                            screen: TestScreen(),
+                            locale: TestLocale(),
+                            bundle: TestBundle())
+        
+        // Assert
+        XCTAssertNil(system.advertisingId)
+    }
+    
+    func testincludesIFASetToFalse() {
+        // Arrange
+        let system = System(fileManager: TestFileManager(),
+                            calendar: TestCalendar(),
+                            adIdManager: TestAdIdManager(),
+                            device: TestDevice(),
+                            screen: TestScreen(),
+                            locale: TestLocale(),
+                            bundle: TestBundle())
+        
+        // Act
+        system.includesIFA = false
+        
+        // Assert
+        XCTAssertNil(system.advertisingId)
+    }
 }
