@@ -304,38 +304,46 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testReportOrderEnqueuesRequests() {
+    func testReportOrder_enqueuesRequestWithCoordinator() {
         // Arrange
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let expectedParameters = ["blargh": "blergh"]
+        let testCoordinator = TestRequestCoordinator()
+        let client = Client(session: TestURLSession(), userAgent: TestUserAgent())
+        client.requestCoordinator = testCoordinator
+        let expectedParameters = ["key": "value"]
         let expectedURL = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-
+        let expectedAuthHeader = "Basic encoded_app_id:"
+        
         // Act
-        client.reportOrder(parameters: expectedParameters, encodedApplicationId: "") { _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
+        client.reportOrder(parameters: expectedParameters,
+                           encodedApplicationId: expectedAuthHeader) { _ in }
+        
+        let request = testCoordinator.actualRequest!
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
         let parameters = requestParameters as? [String: String]
-
+        let headers = request.allHTTPHeaderFields!
+        
         // Assert
-        XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
-        XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
+        XCTAssertTrue(testCoordinator.didCallEnqueueRetriableRequest)
+        XCTAssertEqual(request.url!, expectedURL)
         XCTAssertEqual(parameters!, expectedParameters)
+        XCTAssertEqual(headers["Authorization"], expectedAuthHeader)
     }
-
-    func testReportOrder_addsAuthorizationHeader() {
+    
+    func testReportOrder_enqueuesRequestWithCoordinator_withProperRetryParameters() {
         // Arrange
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let expectedAuthHeader = "Basic encoded_app_id:"
-
+        let testCoordinator = TestRequestCoordinator()
+        let client = Client(session: TestURLSession(), userAgent: TestUserAgent())
+        client.requestCoordinator = testCoordinator
+        
         // Act
-        client.reportOrder(parameters: ["blargh": "blergh"], encodedApplicationId: "encoded_app_id") { _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let authHeaders = request.allHTTPHeaderFields
-
+        client.reportOrder(parameters: [:], encodedApplicationId: "") { _ in }
+        
         // Assert
-        XCTAssertEqual(authHeaders?["Authorization"], expectedAuthHeader)
+        XCTAssertTrue(testCoordinator.didCallEnqueueRetriableRequest)
+        XCTAssertEqual(testCoordinator.actualAttempt, 0)
+        XCTAssertEqual(testCoordinator.actualMaxRetries, 3)
+        XCTAssertEqual(testCoordinator.actualRetryIntervalInMS, 100)
+        XCTAssertNotNil(testCoordinator.actualCompletion)
     }
     
     func testReportOrderSuccess() {

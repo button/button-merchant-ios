@@ -63,6 +63,8 @@
 		DA4AF05720869966002C3E0E /* NotificationCenterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05620869966002C3E0E /* NotificationCenterExtensions.swift */; };
 		DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF058208699CA002C3E0E /* NotificationExtensions.swift */; };
 		DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */; };
+		DA4C8C7322CD093F000E15A9 /* RequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */; };
+		DA4C8C7522CD0C48000E15A9 /* TestRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */; };
 		DA756B6A22B2B6DF003397E3 /* AmazonRootCA4.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */; };
 		DA756B6B22B2B6DF003397E3 /* AmazonRootCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */; };
 		DA756B6C22B2B6DF003397E3 /* AmazonRootCA3.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */; };
@@ -197,6 +199,8 @@
 		DA4AF05620869966002C3E0E /* NotificationCenterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenterExtensions.swift; sourceTree = "<group>"; };
 		DA4AF058208699CA002C3E0E /* NotificationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNotificationCenter.swift; sourceTree = "<group>"; };
+		DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinator.swift; sourceTree = "<group>"; };
+		DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequestCoordinator.swift; sourceTree = "<group>"; };
 		DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA4.cer; sourceTree = "<group>"; };
 		DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA2.cer; sourceTree = "<group>"; };
 		DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA3.cer; sourceTree = "<group>"; };
@@ -494,6 +498,7 @@
 				9EAA60C2207AC92B00D21601 /* TestSystem.swift */,
 				9E4C496A20616B130053E4CA /* TestButtonDefaults.swift */,
 				9E6F4340206C160C004242A1 /* TestClient.swift */,
+				DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */,
 				9E76FEB22090EEC700BDC844 /* TestUserAgent.swift */,
 				DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */,
 				9EAA60C8207ACA3800D21601 /* Foundation */,
@@ -582,6 +587,7 @@
 				9E77202120605506005F740B /* ButtonDefaults.swift */,
 				9EB1B09F207AB43E00BE0A1A /* System.swift */,
 				9E2B4310206C1275009F2886 /* Client.swift */,
+				DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */,
 				DA2F911F22A710E3000054D6 /* SessionDelegate.swift */,
 				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
 				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
@@ -1123,6 +1129,7 @@
 				DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */,
 				DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
+				DA4C8C7322CD093F000E15A9 /* RequestCoordinator.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
@@ -1171,6 +1178,7 @@
 				DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */,
 				DADE90C2209B9A630073144B /* TestError.swift in Sources */,
 				DE175A2120A0AFF6005C97B9 /* VersionTests.generated.swift in Sources */,
+				DA4C8C7522CD0C48000E15A9 /* TestRequestCoordinator.swift in Sources */,
 				9E5475E4206D91A900947A1C /* TestURLSessionDataTask.swift in Sources */,
 				DE1706E5208563D7009FF30B /* TestLocale.swift in Sources */,
 				9EDED112208FA4D70049A56A /* TestBundle.swift in Sources */,

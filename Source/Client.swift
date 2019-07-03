@@ -45,34 +45,20 @@ internal protocol ClientType: class {
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     func reportOrder(parameters: [String: Any],
                      encodedApplicationId: String,
-                     maxRetries: Int,
-                     retryIntervalInMs: Int,
                      _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType)
-}
-
-extension ClientType {
-    func reportOrder(parameters: [String: Any],
-                     encodedApplicationId: String,
-                     maxRetries: Int = 3,
-                     retryIntervalInMs: Int = 100,
-                     _ completion: ((Error?) -> Void)?) {
-        reportOrder(parameters: parameters,
-                    encodedApplicationId: encodedApplicationId,
-                    maxRetries: maxRetries,
-                    retryIntervalInMs: retryIntervalInMs,
-                    completion)
-    }
 }
 
 internal final class Client: ClientType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
+    var requestCoordinator: RequestCoordinatorType
     
     init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
         self.userAgent = userAgent
+        requestCoordinator = RequestCoordinator(session: session)
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
@@ -101,15 +87,16 @@ internal final class Client: ClientType {
     
     func reportOrder(parameters: [String: Any],
                      encodedApplicationId: String,
-                     maxRetries: Int = 3,
-                     retryIntervalInMs: Int = 100,
                      _ completion: ((Error?) -> Void)?) {
         var request = urlRequest(url: Service.order.url, parameters: parameters)
         request.setValue("Basic \(encodedApplicationId):", forHTTPHeaderField: "Authorization")
-        enqueueRetriableRequest(request: request, attempt: 0, maxRetries: maxRetries, retryIntervalInMS: retryIntervalInMs) { _, error in
-            if let completion = completion {
-                completion(error)
-            }
+        requestCoordinator.enqueueRetriableRequest(request: request,
+                                                   attempt: 0,
+                                                   maxRetries: 3,
+                                                   retryIntervalInMS: 100) { _, error in
+                                                    if let completion = completion {
+                                                        completion(error)
+                                                    }
         }
     }
     
