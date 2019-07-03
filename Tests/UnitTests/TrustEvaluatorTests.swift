@@ -233,4 +233,36 @@ class TrustEvaluatorTests: XCTestCase {
         }
         wait(for: [exp], timeout: 2.0)
     }
+    
+    func testHandleChallenge_invalidHost_performsDefaultHandling() {
+        // Arrange
+        let exp = expectation(description: "invalid host")
+        let space = TestURLProtectionSpace(host: "derp.usebutton.com.foo.com")
+        let challenge = TestURLAuthenticationChallenge(space)
+        
+        // Act
+        evaluator.handleChallenge(challenge) { disposition, _ in
+            
+            // Assert
+            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 2.0)
+    }
+    
+    func testHandleChallenge_validHost_performsDefaultHandling() {
+        // Arrange
+        let exp = expectation(description: "valid host")
+        let space = TestURLProtectionSpace(host: "api.usebutton.com")
+        let challenge = TestURLAuthenticationChallenge(space)
+        
+        // Act
+        evaluator.handleChallenge(challenge) { disposition, _ in
+            
+            // Assert
+            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 2.0)
+    }
 }
