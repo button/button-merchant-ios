@@ -70,4 +70,35 @@ class PostInstallBodyTests: XCTestCase {
                                     "language": "en",
                                     "screen": "1080x1920"]])
     }
+    
+    func testDisableIFA() {
+        let testSystem = TestSystem()
+        testSystem.advertisingId = nil
+        let body = PostInstallBody(system: testSystem, applicationId: "app-abc123")
+        XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
+                       ["application_id": "app-abc123",
+                        "signals": ["source": "button-merchant",
+                                    "os": "ios",
+                                    "os_version": "11.0",
+                                    "device": "iPhone",
+                                    "country": "US",
+                                    "language": "en",
+                                    "screen": "1080x1920"]])
+    }
+    
+    func testEnableIFA() {
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "123456008-1234-1234-1234-123456789000"
+        let body = PostInstallBody(system: testSystem, applicationId: "app-abc123")
+        XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
+                       ["application_id": "app-abc123",
+                        "ifa": "123456008-1234-1234-1234-123456789000",
+                        "signals": ["source": "button-merchant",
+                                    "os": "ios",
+                                    "os_version": "11.0",
+                                    "device": "iPhone",
+                                    "country": "US",
+                                    "language": "en",
+                                    "screen": "1080x1920"]])
+    }
 }

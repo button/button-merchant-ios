@@ -43,7 +43,7 @@ final class TestSystem: SystemType {
     var locale: LocaleType
     var bundle: BundleType
     
-    var advertisingId: String? = TestAdIdManager().advertisingIdentifier.uuidString
+    var advertisingId: String? = "00000000-0000-0000-0000-000000000000"
     
     var currentDate: Date {
         return testCurrentDate
