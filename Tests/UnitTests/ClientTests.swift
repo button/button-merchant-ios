@@ -316,7 +316,7 @@ class ClientTests: XCTestCase {
         
         // Act
         client.reportOrder(parameters: expectedParameters,
-                           encodedApplicationId: "encoded_app_id:") { _ in }
+                           encodedApplicationId: "encoded_app_id") { _ in }
         
         let request = testCoordinator.actualRequest!
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
@@ -364,29 +364,6 @@ class ClientTests: XCTestCase {
         }
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         testURLSession.lastDataTask?.completion(Data(), response, nil)
-        
-        self.wait(for: [expectation], timeout: 2.0)
-    }
-    
-    func testReportOrderFails() {
-        // Arrange
-        let expectation = XCTestExpectation(description: "report order fails")
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-        let expectedError = TestError.known
-        
-        // Act
-        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
-            
-            // Assert
-            XCTAssertNotNil(error)
-            XCTAssertEqual(error as? TestError, expectedError)
-            
-            expectation.fulfill()
-        }
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        testURLSession.lastDataTask?.completion(nil, response, expectedError)
         
         self.wait(for: [expectation], timeout: 2.0)
     }
