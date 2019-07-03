@@ -208,7 +208,6 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.testParameters as NSDictionary,
                        ["application_id": "app-123",
                         "ifa": "00000000-0000-0000-0000-000000000000",
-                        "ifa_limited": false,
                         "signals":
                             ["source": "button-merchant",
                              "os": "ios",
@@ -407,7 +406,8 @@ class CoreTests: XCTestCase {
         }
 
         XCTAssertEqual(testClient.testParameters as NSDictionary,
-                       ["btn_ref": "srctok-abc123",
+                       ["advertising_id": "00000000-0000-0000-0000-000000000000",
+                        "btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
@@ -450,7 +450,8 @@ class CoreTests: XCTestCase {
         }
 
         XCTAssertEqual(testClient.testParameters as NSDictionary,
-                       ["order_id": "order-abc",
+                       ["advertising_id": "00000000-0000-0000-0000-000000000000",
+                        "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
                         "customer_order_id": "customer-order-id-123",

@@ -27,21 +27,18 @@ import Foundation
 internal struct PostInstallBody: Codable {
 
     let applicationId: String
-    let ifa: String
-    let ifaLimited: Bool
+    let ifa: String?
     let signals: Signals
 
     enum CodingKeys: String, CodingKey {
         case applicationId = "application_id"
         case ifa
-        case ifaLimited = "ifa_limited"
         case signals
     }
 
     init(system: SystemType, applicationId: String) {
         self.applicationId = applicationId
-        ifa = system.adIdManager.advertisingIdentifier.uuidString
-        ifaLimited = !system.adIdManager.isAdvertisingTrackingEnabled
+        ifa = system.advertisingId
         signals = Signals(system: system)
     }
 

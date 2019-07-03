@@ -26,8 +26,10 @@ import UIKit
 @testable import ButtonMerchant
 
 final class TestSystem: SystemType {
+    
+    private var adIdManager: ASIdentifierManagerType
 
-    var includesIFA = true
+    var includesIFA: Bool
     //Test Properties
     var testIsNewInstall = false
     var testCurrentDate: Date
@@ -36,12 +38,13 @@ final class TestSystem: SystemType {
     // SystemType
     var fileManager: FileManagerType
     var calendar: CalendarType
-    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
     var bundle: BundleType
-
+    
+    var advertisingId: String? = "00000000-0000-0000-0000-000000000000"
+    
     var currentDate: Date {
         return testCurrentDate
     }
@@ -61,7 +64,7 @@ final class TestSystem: SystemType {
         // Fix timezone to UTC for tests.
         Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
         testCurrentDate = Date.ISO8601Formatter.date(from: "2018-01-23T12:00:00Z")!
-
+        
         self.fileManager = fileManager
         self.calendar = calendar
         self.adIdManager = adIdManager
@@ -69,5 +72,6 @@ final class TestSystem: SystemType {
         self.screen = screen
         self.locale = locale
         self.bundle = bundle
+        self.includesIFA = true
     }
 }

@@ -35,7 +35,6 @@ class PostInstallBodyTests: XCTestCase {
         let body = PostInstallBody(system: TestSystem(), applicationId: "app-abc123")
         XCTAssertEqual(body.applicationId, "app-abc123")
         XCTAssertEqual(body.ifa, "00000000-0000-0000-0000-000000000000")
-        XCTAssertFalse(body.ifaLimited)
         XCTAssertEqual(body.signals.source, "button-merchant")
         XCTAssertEqual(body.signals.os, "ios")
         XCTAssertEqual(body.signals.osVersion, "11.0")
@@ -63,7 +62,37 @@ class PostInstallBodyTests: XCTestCase {
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        ["application_id": "app-abc123",
                         "ifa": "00000000-0000-0000-0000-000000000000",
-                        "ifa_limited": false,
+                        "signals": ["source": "button-merchant",
+                                    "os": "ios",
+                                    "os_version": "11.0",
+                                    "device": "iPhone",
+                                    "country": "US",
+                                    "language": "en",
+                                    "screen": "1080x1920"]])
+    }
+    
+    func testDisableIFA() {
+        let testSystem = TestSystem()
+        testSystem.advertisingId = nil
+        let body = PostInstallBody(system: testSystem, applicationId: "app-abc123")
+        XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
+                       ["application_id": "app-abc123",
+                        "signals": ["source": "button-merchant",
+                                    "os": "ios",
+                                    "os_version": "11.0",
+                                    "device": "iPhone",
+                                    "country": "US",
+                                    "language": "en",
+                                    "screen": "1080x1920"]])
+    }
+    
+    func testEnableIFA() {
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "123456008-1234-1234-1234-123456789000"
+        let body = PostInstallBody(system: testSystem, applicationId: "app-abc123")
+        XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
+                       ["application_id": "app-abc123",
+                        "ifa": "123456008-1234-1234-1234-123456789000",
                         "signals": ["source": "button-merchant",
                                     "os": "ios",
                                     "os_version": "11.0",

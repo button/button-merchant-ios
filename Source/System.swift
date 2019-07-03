@@ -27,7 +27,7 @@ import UIKit
 internal protocol SystemType: Configurable {
     var fileManager: FileManagerType { get }
     var calendar: CalendarType { get }
-    var adIdManager: ASIdentifierManagerType { get }
+    var advertisingId: String? { get }
     var device: UIDeviceType { get }
     var screen: UIScreenType { get }
     var locale: LocaleType { get }
@@ -45,15 +45,24 @@ internal protocol SystemType: Configurable {
 
 internal final class System: SystemType {
     
+    private var adIdManager: ASIdentifierManagerType
+    
     var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
-    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
     var bundle: BundleType
 
+    var advertisingId: String? {
+        if self.includesIFA && self.adIdManager.isAdvertisingTrackingEnabled {
+            return self.adIdManager.advertisingIdentifier.uuidString
+        } else {
+            return nil
+        }
+    }
+    
     var currentDate: Date {
         return Date()
     }

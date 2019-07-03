@@ -31,7 +31,5 @@ class TestAdIdManager: ASIdentifierManagerType {
         return UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
     }
 
-    var isAdvertisingTrackingEnabled: Bool {
-        return true
-    }
+    var isAdvertisingTrackingEnabled: Bool = true
 }
