@@ -126,39 +126,4 @@ internal extension Client {
         }
         task.resume()
     }
-    
-    func enqueueRetriableRequest(request: URLRequest,
-                                 attempt: Int = 0,
-                                 maxRetries: Int = 3,
-                                 retryIntervalInMS: Int = 100,
-                                 completion: @escaping (Data?, Error?) -> Void) {
-        let task = session.dataTask(with: request) { data, response, error  in
-            
-            var shouldRetry = true
-            if let response = response as? HTTPURLResponse, data != nil {
-                switch response.statusCode {
-                case 429, 500...599:
-                    shouldRetry = true
-                default:
-                    shouldRetry = false
-                }
-            }
-            
-            guard shouldRetry, attempt + 1 <= maxRetries else {
-                completion(data, error)
-                return
-            }
-            
-            var delay = retryIntervalInMS
-            delay *= attempt == 0 ? 1 : 2 << (attempt - 1)
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay) / 1000.0, execute: {
-                self.enqueueRetriableRequest(request: request,
-                                             attempt: attempt + 1,
-                                             maxRetries: maxRetries,
-                                             retryIntervalInMS: retryIntervalInMS,
-                                             completion: completion)
-            })
-        }
-        task.resume()
-    }
 }

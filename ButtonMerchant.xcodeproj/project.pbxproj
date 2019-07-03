@@ -65,6 +65,7 @@
 		DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */; };
 		DA4C8C7322CD093F000E15A9 /* RequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */; };
 		DA4C8C7522CD0C48000E15A9 /* TestRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */; };
+		DA4C8C7722CD1654000E15A9 /* RequestCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7622CD1654000E15A9 /* RequestCoordinatorTests.swift */; };
 		DA756B6A22B2B6DF003397E3 /* AmazonRootCA4.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */; };
 		DA756B6B22B2B6DF003397E3 /* AmazonRootCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */; };
 		DA756B6C22B2B6DF003397E3 /* AmazonRootCA3.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */; };
@@ -201,6 +202,7 @@
 		DA4AF05A20869E34002C3E0E /* TestNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestNotificationCenter.swift; sourceTree = "<group>"; };
 		DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinator.swift; sourceTree = "<group>"; };
 		DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequestCoordinator.swift; sourceTree = "<group>"; };
+		DA4C8C7622CD1654000E15A9 /* RequestCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinatorTests.swift; sourceTree = "<group>"; };
 		DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA4.cer; sourceTree = "<group>"; };
 		DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA2.cer; sourceTree = "<group>"; };
 		DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA3.cer; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				9E4C496620616B040053E4CA /* ButtonDefaultsTests.swift */,
 				9E0DBB1B207BB55A0066A35D /* SystemTests.swift */,
 				9E5475E1206D7E0C00947A1C /* ClientTests.swift */,
+				DA4C8C7622CD1654000E15A9 /* RequestCoordinatorTests.swift */,
 				DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */,
 				DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */,
 				DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */,
@@ -1174,6 +1177,7 @@
 				DA756B6F22B2B717003397E3 /* PEMCertificateTests.swift in Sources */,
 				DA756B7B22B2DB72003397E3 /* TestTrustEvaluator.swift in Sources */,
 				9E6F4343206C171F004242A1 /* TestURLSession.swift in Sources */,
+				DA4C8C7722CD1654000E15A9 /* RequestCoordinatorTests.swift in Sources */,
 				9EAA60C7207AC9FF00D21601 /* TestCalendar.swift in Sources */,
 				DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */,
 				DADE90C2209B9A630073144B /* TestError.swift in Sources */,

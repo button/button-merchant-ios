@@ -30,10 +30,12 @@ class TestURLSession: URLSessionType {
     // Test Properties
     var didCallDataTaskWithRequest = false
     var lastDataTask: TestURLSessionDataTask?
+    var allDataTasks = [TestURLSessionDataTask]()
     
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskType {
         didCallDataTaskWithRequest = true
         lastDataTask = TestURLSessionDataTask(request: request, completion: completionHandler)
+        allDataTasks.append(lastDataTask!)
         return lastDataTask!
     }
 

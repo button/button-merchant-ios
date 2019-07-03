@@ -38,6 +38,7 @@ class ClientTests: XCTestCase {
         // Assert
         XCTAssertEqualReferences(client.session as AnyObject, expectedURLSession)
         XCTAssertEqualReferences(client.userAgent as AnyObject, expectedUserAgent)
+        XCTAssertNotNil(client.requestCoordinator as? RequestCoordinator)
     }
 
     func testURLRequestCreatedWithParameters() {
@@ -315,7 +316,7 @@ class ClientTests: XCTestCase {
         
         // Act
         client.reportOrder(parameters: expectedParameters,
-                           encodedApplicationId: expectedAuthHeader) { _ in }
+                           encodedApplicationId: "encoded_app_id:") { _ in }
         
         let request = testCoordinator.actualRequest!
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
