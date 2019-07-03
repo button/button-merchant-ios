@@ -70,7 +70,7 @@ final internal class TrustEvaluator: TrustEvaluatorType {
     private func shouldPinChallenge(_ challenge: URLAuthenticationChallengeType) -> Bool {
         let space = challenge.getProtectionSpace()
         guard space.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-            space.host.contains(".usebutton.com") else {
+            space.host.hasSuffix(".usebutton.com") else {
                 return false
         }
         return true
