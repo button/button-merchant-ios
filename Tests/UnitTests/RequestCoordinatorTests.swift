@@ -51,7 +51,6 @@ class RequestCoordinatorTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(session.didCallDataTaskWithRequest)
-        XCTAssertNotNil(session.lastDataTask)
         XCTAssertEqual(session.lastDataTask?.originalRequest, request)
         XCTAssertTrue(session.lastDataTask!.didCallResume)
         XCTAssertEqual(session.allDataTasks.count, 1)
@@ -103,35 +102,6 @@ class RequestCoordinatorTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testEnqueueRetriableRequest_noData_retries() {
-        // Arrange
-        let expectation = self.expectation(description: "no data retry")
-        let url = URL(string: "https://usebutton.com")!
-        let request = URLRequest(url: url)
-        
-        // Act
-        coordinator.enqueueRetriableRequest(request: request,
-                                            attempt: 0,
-                                            maxRetries: 1,
-                                            retryIntervalInMS: 0) { _, _ in }
-        
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        session.lastDataTask?.completion(nil, response, nil)
-        
-        DispatchQueue.main.async {
-            // Assert
-            XCTAssertEqual(self.session.allDataTasks.count, 2)
-            XCTAssertTrue(self.session.didCallDataTaskWithRequest)
-            XCTAssertNotNil(self.session.lastDataTask)
-            XCTAssertEqual(self.session.lastDataTask?.originalRequest, request)
-            XCTAssertTrue(self.session.lastDataTask!.didCallResume)
-            
-            expectation.fulfill()
-        }
-        
-        self.wait(for: [expectation], timeout: 2.0)
-    }
-    
     func testEnqueueRetriableRequest_400_doesNotRetry() {
         // Arrange
         let expectation = self.expectation(description: "400 no retry")
@@ -151,7 +121,6 @@ class RequestCoordinatorTests: XCTestCase {
             // Assert
             XCTAssertEqual(self.session.allDataTasks.count, 1)
             XCTAssertTrue(self.session.didCallDataTaskWithRequest)
-            XCTAssertNotNil(self.session.lastDataTask)
             XCTAssertEqual(self.session.lastDataTask?.originalRequest, request)
             XCTAssertTrue(self.session.lastDataTask!.didCallResume)
             
@@ -180,7 +149,6 @@ class RequestCoordinatorTests: XCTestCase {
             // Assert
             XCTAssertEqual(self.session.allDataTasks.count, 2)
             XCTAssertTrue(self.session.didCallDataTaskWithRequest)
-            XCTAssertNotNil(self.session.lastDataTask)
             XCTAssertEqual(self.session.lastDataTask?.originalRequest, request)
             XCTAssertTrue(self.session.lastDataTask!.didCallResume)
             

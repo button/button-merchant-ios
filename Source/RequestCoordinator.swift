@@ -48,8 +48,7 @@ internal final class RequestCoordinator: RequestCoordinatorType {
         let task = session.dataTask(with: request) { data, response, error  in
             
             var shouldRetry = true
-            if let response = response as? HTTPURLResponse,
-                data != nil {
+            if let response = response as? HTTPURLResponse {
                 switch response.statusCode {
                 case 500...599:
                     shouldRetry = true
