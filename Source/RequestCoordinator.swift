@@ -63,9 +63,9 @@ internal final class RequestCoordinator: RequestCoordinatorType {
                 return
             }
             
-            var delay = retryIntervalInMS
-            delay *= attempt == 0 ? 1 : 2 << (attempt - 1)
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay) / 1000.0, execute: {
+            var delay = Double(retryIntervalInMS)
+            delay *= exp2(Double(attempt))
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay / 1000.0, execute: {
                 self.enqueueRetriableRequest(request: request,
                                              attempt: attempt + 1,
                                              maxRetries: maxRetries,

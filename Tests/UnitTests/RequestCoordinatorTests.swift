@@ -219,7 +219,7 @@ class RequestCoordinatorTests: XCTestCase {
     
     func testEnqueueRetriableRequest_500_retries_200_succeeds() {
         // Arrange
-        let expectation = self.expectation(description: "500 -> 500 succeeds")
+        let expectation = self.expectation(description: "500 -> 200 succeeds")
         let url = URL(string: "https://usebutton.com")!
         let request = URLRequest(url: url)
         let expectedData = Data()
@@ -239,6 +239,89 @@ class RequestCoordinatorTests: XCTestCase {
         session.lastDataTask?.completion(Data(), response, nil)
         
         DispatchQueue.main.async {
+            let successfulResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            self.session.lastDataTask?.completion(expectedData, successfulResponse, nil)
+        }
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testEnqueueRetriableRequest_backsOff_succeeds() {
+        // Arrange
+        let expectation = self.expectation(description: "500 -> 500 succeeds")
+        let url = URL(string: "https://usebutton.com")!
+        let request = URLRequest(url: url)
+        let expectedData = Data()
+        
+        // Act
+        coordinator.enqueueRetriableRequest(request: request, attempt: 0, maxRetries: 3, retryIntervalInMS: 10) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(data, expectedData)
+            XCTAssertEqual(self.session.allDataTasks.count, 2)
+            
+            expectation.fulfill()
+        }
+        
+        session.lastDataTask?.completion(nil, nil, nil)
+        XCTAssertEqual(self.session.allDataTasks.count, 1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.020) {
+            let successfulResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            self.session.lastDataTask?.completion(expectedData, successfulResponse, nil)
+        }
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testEnqueueRetriableRequest_backsOff_multipleTimes_succeeds() {
+        // Arrange
+        let expectation = self.expectation(description: "500 -> 500 succeeds")
+        let url = URL(string: "https://usebutton.com")!
+        let request = URLRequest(url: url)
+        let expectedData = Data()
+        
+        // Act
+        coordinator.enqueueRetriableRequest(request: request, attempt: 0, maxRetries: 3, retryIntervalInMS: 100) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(data, expectedData)
+            XCTAssertEqual(self.session.allDataTasks.count, 4)
+            
+            expectation.fulfill()
+        }
+        
+        XCTAssertEqual(session.allDataTasks.count, 1)
+        session.lastDataTask?.completion(nil, nil, nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.09) {
+            XCTAssertEqual(self.session.allDataTasks.count, 1)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.11) {
+            XCTAssertEqual(self.session.allDataTasks.count, 2)
+            let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
+            self.session.lastDataTask?.completion(nil, response, nil)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
+            XCTAssertEqual(self.session.allDataTasks.count, 2)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.33) {
+            XCTAssertEqual(self.session.allDataTasks.count, 3)
+            let response = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
+            self.session.lastDataTask?.completion(nil, response, nil)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.69) {
+            XCTAssertEqual(self.session.allDataTasks.count, 3)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            XCTAssertEqual(self.session.allDataTasks.count, 4)
             let successfulResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
             self.session.lastDataTask?.completion(expectedData, successfulResponse, nil)
         }
