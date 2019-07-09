@@ -159,7 +159,7 @@ final public class Order: NSObject, Codable {
          The unique identifier for this line item,
          within the scope of this order. (required).
          */
-        let identifier: String
+        let id: String
 
         /**
          The total price of all items bought in a particular line item (required).
@@ -202,19 +202,19 @@ final public class Order: NSObject, Codable {
          An array of the line item details that comprise the order
 
          - Parameters:
-            - identifier: The unique identifier for this line item, within the scope of this order.
+            - id: The unique identifier for this line item, within the scope of this order.
                           This must be unique across all line-items within the order.
                           We suggest using the SKU or UPC of the product. (required)
             - total: The total price of all items bought in a particular line item. (required)
          */
-        @objc public init(identifier: String, total: Int64) {
-            self.identifier = identifier
+        @objc public init(id: String, total: Int64) {
+            self.id = id
             self.total = total
             self.quantity = 1
         }
 
         enum CodingKeys: String, CodingKey {
-            case identifier
+            case id = "identifier"
             case total
             case quantity
             case itemDescription = "description"
