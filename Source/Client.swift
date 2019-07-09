@@ -51,12 +51,10 @@ internal final class Client: ClientType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
-    var requestCoordinator: RequestCoordinatorType
     
     init(session: URLSessionType, userAgent: UserAgentType) {
         self.session = session
         self.userAgent = userAgent
-        requestCoordinator = RequestCoordinator(session: session)
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {

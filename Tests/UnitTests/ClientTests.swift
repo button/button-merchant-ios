@@ -38,7 +38,6 @@ class ClientTests: XCTestCase {
         // Assert
         XCTAssertEqualReferences(client.session as AnyObject, expectedURLSession)
         XCTAssertEqualReferences(client.userAgent as AnyObject, expectedUserAgent)
-        XCTAssertNotNil(client.requestCoordinator as? RequestCoordinator)
     }
 
     func testURLRequestCreatedWithParameters() {
