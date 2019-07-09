@@ -135,13 +135,6 @@ final public class ButtonMerchant: NSObject {
     }
     
     /**
-     Button ML features configuration.
-     */
-    public static var features: Configurable {
-        return core.system
-    }
-    
-    /**
      Tracks an order.
 
      This signal is used to power the Instant Rewards feature for Publishers to notify
@@ -175,6 +168,13 @@ final public class ButtonMerchant: NSObject {
      */
     @objc public static func clearAllData() {
         core.clearAllData()
+    }
+
+    /**
+     An interface through which library features can be enabled/disabled.
+     */
+    @objc public static var features: Configurable {
+        return core.system
     }
     
     // MARK: Private

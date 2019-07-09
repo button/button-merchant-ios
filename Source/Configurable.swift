@@ -1,5 +1,5 @@
 //
-// Config.swift
+// Configurable.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -27,6 +27,6 @@ import Foundation
 /**
  Protocol that handles the features property,
  */
-public protocol Configurable: class {
+@objc public protocol Configurable: class {
     var includesIFA: Bool { get set }
 }
