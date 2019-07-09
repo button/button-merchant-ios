@@ -45,7 +45,38 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
     }
     
     func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
+        let task = session.dataTask(with: request) { data, response, error in
+            var nextAttempt = true
+            if let response = response as? HTTPURLResponse {
+                switch response.statusCode {
+                case 500...599:
+                    nextAttempt = true
+                default:
+                    nextAttempt = false
+                }
+            }
+            guard nextAttempt else {
+                if let completion = completion {
+                    completion(error)
+                }
+                return
+            }
+            
+            self.retryPolicy.next()
+            
+            guard self.retryPolicy.shouldRetry else {
+                if let completion = completion {
+                    completion(error)
+                }
+                return
+            }
+            
+            self.report(request, with: session, completion)
+        }
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + retryPolicy.delay) {
+            task.resume()
+        }
     }
     
 }

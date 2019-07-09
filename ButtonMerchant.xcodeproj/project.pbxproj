@@ -55,6 +55,8 @@
 		DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA29F205C1B3A008296A6 /* Core.swift */; };
 		DA0FA2A3205C1EF2008296A6 /* TestCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA2A2205C1EF2008296A6 /* TestCore.swift */; };
 		DA191A2422D4F75C00ED88B9 /* TestReportOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */; };
+		DA191A2622D5261100ED88B9 /* TestRetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA191A2522D5261100ED88B9 /* TestRetryPolicy.swift */; };
+		DA191A2822D530CC00ED88B9 /* ReportOrderRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */; };
 		DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D891209CDC3100537806 /* URLSessionTests.swift */; };
 		DA29D894209CF34D00537806 /* UIDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D893209CF34D00537806 /* UIDeviceTests.swift */; };
 		DA29D896209CF38800537806 /* TestUTSName.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D895209CF38800537806 /* TestUTSName.swift */; };
@@ -196,6 +198,8 @@
 		DA0FA29F205C1B3A008296A6 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		DA0FA2A2205C1EF2008296A6 /* TestCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCore.swift; sourceTree = "<group>"; };
 		DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestReportOrderRequest.swift; sourceTree = "<group>"; };
+		DA191A2522D5261100ED88B9 /* TestRetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRetryPolicy.swift; sourceTree = "<group>"; };
+		DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderRequestTests.swift; sourceTree = "<group>"; };
 		DA29D891209CDC3100537806 /* URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTests.swift; sourceTree = "<group>"; };
 		DA29D893209CF34D00537806 /* UIDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceTests.swift; sourceTree = "<group>"; };
 		DA29D895209CF38800537806 /* TestUTSName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUTSName.swift; sourceTree = "<group>"; };
@@ -396,6 +400,7 @@
 				9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */,
 				9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */,
 				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
+				DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */,
 				DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */,
 				DE175A2320A0EF12005C97B9 /* Extensions */,
 				DEE61B2B206569EA0039E47A /* TestExtensions */,
@@ -514,6 +519,7 @@
 				9E76FEB22090EEC700BDC844 /* TestUserAgent.swift */,
 				DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */,
 				DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */,
+				DA191A2522D5261100ED88B9 /* TestRetryPolicy.swift */,
 				9EAA60C8207ACA3800D21601 /* Foundation */,
 			);
 			path = TestObjects;
@@ -1195,11 +1201,13 @@
 				DA4C8C7722CD1654000E15A9 /* RequestCoordinatorTests.swift in Sources */,
 				9EAA60C7207AC9FF00D21601 /* TestCalendar.swift in Sources */,
 				DA4AF05B20869E34002C3E0E /* TestNotificationCenter.swift in Sources */,
+				DA191A2622D5261100ED88B9 /* TestRetryPolicy.swift in Sources */,
 				DADE90C2209B9A630073144B /* TestError.swift in Sources */,
 				DE175A2120A0AFF6005C97B9 /* VersionTests.generated.swift in Sources */,
 				DA4C8C7522CD0C48000E15A9 /* TestRequestCoordinator.swift in Sources */,
 				9E5475E4206D91A900947A1C /* TestURLSessionDataTask.swift in Sources */,
 				DE1706E5208563D7009FF30B /* TestLocale.swift in Sources */,
+				DA191A2822D530CC00ED88B9 /* ReportOrderRequestTests.swift in Sources */,
 				9EDED112208FA4D70049A56A /* TestBundle.swift in Sources */,
 				DA756B8122B2E03E003397E3 /* TestURLAuthenticationChallenge.swift in Sources */,
 				DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */,
