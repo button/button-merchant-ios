@@ -133,31 +133,16 @@ final public class ButtonMerchant: NSObject {
     @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
         core.handlePostInstallURL(completion)
     }
-    
-    /**
-     Tracks an order.
 
-     This signal is used to power the Instant Rewards feature for Publishers to notify
-     their customers as quickly as possible that their order has been correctly tracked.
-
-     - Attention:
-     This does not replace server-side order reporting to Button.
-     [See: order reporting](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api)
-     */
-    @available(*, deprecated, message: "Use ButtonMerchant.reportOrder(order:completion:) instead")
-    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
-        core.trackOrder(order, completion)
-    }
-    
     /**
-     Reports an order.
-     
-     This signal is used to power the Instant Rewards feature for Publishers to notify
-     their customer as quickly as possible that their order has been correctly tracked.
-     
-     - Attention:
-     This does not replace server-side order reporting to Button.
-     [See: order reporting](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api)
+     Reports an order to Button.
+
+     - Parameters:
+       - order: Your order object to be reported.
+       - completion: An optional completion block taking an optional error.
+
+     See also: Reporting Orders to Button
+     ([docs](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api))
     */
     @objc public static func reportOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.reportOrder(order, completion)
@@ -193,5 +178,19 @@ final public class ButtonMerchant: NSObject {
                     client: client,
                     system: system,
                     notificationCenter: NotificationCenter.default)
+    }
+}
+
+// MARK: - Deprecations
+
+extension ButtonMerchant {
+    /**
+     Deprecated.
+
+     This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.
+     */
+    @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
+    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
+        core.trackOrder(order, completion)
     }
 }

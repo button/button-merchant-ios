@@ -24,9 +24,12 @@
 
 import Foundation
 
-/**
- Protocol that handles the features property,
- */
 @objc public protocol Configurable: class {
+
+    /**
+     Indicates whether or not the library will attach IFA to outgoing requests.
+
+     The default value is `true`. If set to `false`, or if the user has limited IFA usage in their device settings, the IFA will not be attached.
+    */
     var includesIFA: Bool { get set }
 }
