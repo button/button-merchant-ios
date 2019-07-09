@@ -43,9 +43,7 @@ internal protocol ClientType: class {
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
-    func reportOrder(parameters: [String: Any],
-                     encodedApplicationId: String,
-                     _ completion: ((Error?) -> Void)?)
+    func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType)
 }
 
@@ -85,19 +83,9 @@ internal final class Client: ClientType {
         }
     }
     
-    func reportOrder(parameters: [String: Any],
-                     encodedApplicationId: String,
-                     _ completion: ((Error?) -> Void)?) {
-        var request = urlRequest(url: Service.order.url, parameters: parameters)
-        request.setValue("Basic \(encodedApplicationId):", forHTTPHeaderField: "Authorization")
-        requestCoordinator.enqueueRetriableRequest(request: request,
-                                                   attempt: 0,
-                                                   maxRetries: 3,
-                                                   retryIntervalInMS: 100) { _, error in
-                                                    if let completion = completion {
-                                                        completion(error)
-                                                    }
-        }
+    func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
+        var request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
+        request.setValue("Basic \(orderRequest.encodedApplicationId):", forHTTPHeaderField: "Authorization")
     }
     
 }

@@ -28,8 +28,8 @@ import Foundation
 class TestClient: ClientType {
 
     // Test properties
+    var testReportOrderRequest: ReportOrderRequestType?
     var testParameters: [String: Any]
-    var testEncodedApplicationId: String?
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
     var didCallReportOrder = false
@@ -59,10 +59,9 @@ class TestClient: ClientType {
         trackOrderCompletion = completion
     }
     
-    func reportOrder(parameters: [String: Any], encodedApplicationId: String, _ completion: ((Error?) -> Void)?) {
-        testParameters = parameters
-        testEncodedApplicationId = encodedApplicationId
+    func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
         didCallReportOrder = true
+        testReportOrderRequest = orderRequest
         reportOrderCompletion = completion
     }
 }

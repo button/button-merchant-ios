@@ -169,10 +169,8 @@ final internal class Core: CoreType {
         }
         
         let reportOrderBody = ReportOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
-        
-        let parameters = reportOrderBody.dictionaryRepresentation
-
-        client.reportOrder(parameters: parameters, encodedApplicationId: encodedAppId, completion)
+        let request = ReportOrderRequest(parameters: reportOrderBody.dictionaryRepresentation, encodedApplicationId: encodedAppId)
+        client.reportOrder(orderRequest: request, completion)
     }
 
 }

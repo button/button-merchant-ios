@@ -216,7 +216,7 @@ class RequestCoordinatorTests: XCTestCase {
     
     func testEnqueueRetriableRequest_backsOff_succeeds() {
         // Arrange
-        let expectation = self.expectation(description: "500 -> 500 succeeds")
+        let expectation = self.expectation(description: "500 -> 200 succeeds")
         let url = URL(string: "https://usebutton.com")!
         let request = URLRequest(url: url)
         let expectedData = Data()

@@ -66,6 +66,9 @@
 		DA4C8C7322CD093F000E15A9 /* RequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */; };
 		DA4C8C7522CD0C48000E15A9 /* TestRequestCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */; };
 		DA4C8C7722CD1654000E15A9 /* RequestCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7622CD1654000E15A9 /* RequestCoordinatorTests.swift */; };
+		DA4C8C7922D3D909000E15A9 /* ReportOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7822D3D909000E15A9 /* ReportOrderRequest.swift */; };
+		DA4C8C7B22D3D956000E15A9 /* RetryPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7A22D3D956000E15A9 /* RetryPolicy.swift */; };
+		DA4C8C7E22D3DC65000E15A9 /* RetryPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */; };
 		DA756B6A22B2B6DF003397E3 /* AmazonRootCA4.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */; };
 		DA756B6B22B2B6DF003397E3 /* AmazonRootCA2.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */; };
 		DA756B6C22B2B6DF003397E3 /* AmazonRootCA3.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */; };
@@ -203,6 +206,9 @@
 		DA4C8C7222CD093F000E15A9 /* RequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinator.swift; sourceTree = "<group>"; };
 		DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequestCoordinator.swift; sourceTree = "<group>"; };
 		DA4C8C7622CD1654000E15A9 /* RequestCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCoordinatorTests.swift; sourceTree = "<group>"; };
+		DA4C8C7822D3D909000E15A9 /* ReportOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderRequest.swift; sourceTree = "<group>"; };
+		DA4C8C7A22D3D956000E15A9 /* RetryPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicy.swift; sourceTree = "<group>"; };
+		DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryPolicyTests.swift; sourceTree = "<group>"; };
 		DA756B6622B2B6DF003397E3 /* AmazonRootCA4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA4.cer; sourceTree = "<group>"; };
 		DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA2.cer; sourceTree = "<group>"; };
 		DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonRootCA3.cer; sourceTree = "<group>"; };
@@ -388,6 +394,7 @@
 				9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */,
 				9EC44527207D4F180032B1EF /* TrackOrderBodyTests.swift */,
 				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
+				DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */,
 				DE175A2320A0EF12005C97B9 /* Extensions */,
 				DEE61B2B206569EA0039E47A /* TestExtensions */,
 				DA0FA2A1205C1EE8008296A6 /* TestObjects */,
@@ -598,6 +605,8 @@
 				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
 				9E976B84207D10D500783F1A /* TrackOrderBody.swift */,
 				9E9CDEA62076BD7900A1424C /* Order.swift */,
+				DA4C8C7822D3D909000E15A9 /* ReportOrderRequest.swift */,
+				DA4C8C7A22D3D956000E15A9 /* RetryPolicy.swift */,
 				DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */,
 				9E77202020605126005F740B /* Extensions */,
 				DE865FA42053073B00F4054D /* Supporting Files */,
@@ -1122,6 +1131,7 @@
 				DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */,
 				DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */,
 				DE1706E020855F4C009FF30B /* LocaleExtensions.swift in Sources */,
+				DA4C8C7922D3D909000E15A9 /* ReportOrderRequest.swift in Sources */,
 				9E77202220605506005F740B /* ButtonDefaults.swift in Sources */,
 				DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */,
 				9EEF58DD208F9161009DA9B6 /* UserAgent.swift in Sources */,
@@ -1141,6 +1151,7 @@
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
 				9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */,
 				9E2B4311206C1275009F2886 /* Client.swift in Sources */,
+				DA4C8C7B22D3D956000E15A9 /* RetryPolicy.swift in Sources */,
 				DA756B8522B3378B003397E3 /* URLProtectionSpaceExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1190,6 +1201,7 @@
 				DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */,
 				DE1706E32085633A009FF30B /* TestDevice.swift in Sources */,
 				DE1706E7208563F1009FF30B /* TestScreen.swift in Sources */,
+				DA4C8C7E22D3DC65000E15A9 /* RetryPolicyTests.swift in Sources */,
 				DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
