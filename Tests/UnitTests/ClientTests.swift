@@ -305,66 +305,32 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-//    func testReportOrder_enqueuesRequestWithCoordinator() {
-//        // Arrange
-//        let testCoordinator = TestRequestCoordinator()
-//        let client = Client(session: TestURLSession(), userAgent: TestUserAgent())
-//        client.requestCoordinator = testCoordinator
-//        let expectedParameters = ["key": "value"]
-//        let expectedURL = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-//        let expectedAuthHeader = "Basic encoded_app_id:"
-//        
-//        // Act
-//        client.reportOrder(parameters: expectedParameters,
-//                           encodedApplicationId: "encoded_app_id") { _ in }
-//        
-//        let request = testCoordinator.actualRequest!
-//        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
-//        let parameters = requestParameters as? [String: String]
-//        let headers = request.allHTTPHeaderFields!
-//        
-//        // Assert
-//        XCTAssertTrue(testCoordinator.didCallEnqueueRetriableRequest)
-//        XCTAssertEqual(request.url!, expectedURL)
-//        XCTAssertEqual(parameters!, expectedParameters)
-//        XCTAssertEqual(headers["Authorization"], expectedAuthHeader)
-//    }
-//    
-//    func testReportOrder_enqueuesRequestWithCoordinator_withProperRetryParameters() {
-//        // Arrange
-//        let testCoordinator = TestRequestCoordinator()
-//        let client = Client(session: TestURLSession(), userAgent: TestUserAgent())
-//        client.requestCoordinator = testCoordinator
-//        
-//        // Act
-//        client.reportOrder(parameters: [:], encodedApplicationId: "") { _ in }
-//        
-//        // Assert
-//        XCTAssertTrue(testCoordinator.didCallEnqueueRetriableRequest)
-//        XCTAssertEqual(testCoordinator.actualAttempt, 0)
-//        XCTAssertEqual(testCoordinator.actualMaxRetries, 3)
-//        XCTAssertEqual(testCoordinator.actualRetryIntervalInMS, 100)
-//        XCTAssertNotNil(testCoordinator.actualCompletion)
-//    }
-//    
-//    func testReportOrderSuccess() {
-//        // Arrange
-//        let expectation = XCTestExpectation(description: "report order success")
-//        let testURLSession = TestURLSession()
-//        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-//        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-//        
-//        // Act
-//        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
-//            
-//            // Assert
-//            XCTAssertNil(error)
-//            
-//            expectation.fulfill()
-//        }
-//        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-//        testURLSession.lastDataTask?.completion(Data(), response, nil)
-//        
-//        self.wait(for: [expectation], timeout: 2.0)
-//    }
+    func testReportOrder_reportsRequestWithSession() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "report order")
+        let session = TestURLSession()
+        let client = Client(session: session, userAgent: TestUserAgent())
+        let request = TestReportOrderRequest(parameters: ["foo": "bar"], encodedApplicationId: "abc123")
+        
+        // Act
+        client.reportOrder(orderRequest: request) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            
+            expectation.fulfill()
+        }
+        
+        XCTAssertEqualReferences(request.testSession as AnyObject, session)
+        XCTAssertEqual(request.testRequest?.allHTTPHeaderFields!["Authorization"], "Basic abc123:")
+        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/mobile-order")!)
+        XCTAssertEqual(request.testRequest?.httpMethod, "POST")
+        let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
+        XCTAssertEqual(body, ["foo": "bar"])
+        
+        request.testCompletion!(nil)
+        
+        wait(for: [expectation], timeout: 2.0)
+    }
+    
 }

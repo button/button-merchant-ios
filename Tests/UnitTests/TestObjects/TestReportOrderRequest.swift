@@ -1,5 +1,5 @@
 //
-// ReportOrderRequest.swift
+// TestReportOrderRequest.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -21,22 +21,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-	
+
 import Foundation
+@testable import ButtonMerchant
 
-internal protocol ReportOrderRequestType {
-    var parameters: [String: Any] { get }
-    var encodedApplicationId: String { get }
-    var retryPolicy: RetryPolicyType { get }
-    
-    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?)
-}
-
-internal final class ReportOrderRequest: ReportOrderRequestType {
-    
+class TestReportOrderRequest: ReportOrderRequestType {
     var parameters: [String: Any]
     var encodedApplicationId: String
     var retryPolicy: RetryPolicyType
+    
+    var didCallReport = false
+    var testRequest: URLRequest?
+    var testSession: URLSessionType?
+    var testCompletion: ((Error?) -> Void)?
     
     required init(parameters: [String: Any], encodedApplicationId: String, retryPolicy: RetryPolicyType = RetryPolicy()) {
         self.parameters = parameters
@@ -45,7 +42,10 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
     }
     
     func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
-        
+        didCallReport = true
+        testRequest = request
+        testSession = session
+        testCompletion = completion
     }
     
 }

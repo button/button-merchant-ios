@@ -54,6 +54,7 @@
 		9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFF2B592065965000250269 /* UserDefaultsExtensions.swift */; };
 		DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA29F205C1B3A008296A6 /* Core.swift */; };
 		DA0FA2A3205C1EF2008296A6 /* TestCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA2A2205C1EF2008296A6 /* TestCore.swift */; };
+		DA191A2422D4F75C00ED88B9 /* TestReportOrderRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */; };
 		DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D891209CDC3100537806 /* URLSessionTests.swift */; };
 		DA29D894209CF34D00537806 /* UIDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D893209CF34D00537806 /* UIDeviceTests.swift */; };
 		DA29D896209CF38800537806 /* TestUTSName.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA29D895209CF38800537806 /* TestUTSName.swift */; };
@@ -194,6 +195,7 @@
 		CFBF1D501F9B477113362BEF /* Pods-IntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IntegrationTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IntegrationTests/Pods-IntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0FA29F205C1B3A008296A6 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
 		DA0FA2A2205C1EF2008296A6 /* TestCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCore.swift; sourceTree = "<group>"; };
+		DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestReportOrderRequest.swift; sourceTree = "<group>"; };
 		DA29D891209CDC3100537806 /* URLSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTests.swift; sourceTree = "<group>"; };
 		DA29D893209CF34D00537806 /* UIDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceTests.swift; sourceTree = "<group>"; };
 		DA29D895209CF38800537806 /* TestUTSName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUTSName.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				DA4C8C7422CD0C48000E15A9 /* TestRequestCoordinator.swift */,
 				9E76FEB22090EEC700BDC844 /* TestUserAgent.swift */,
 				DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */,
+				DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */,
 				9EAA60C8207ACA3800D21601 /* Foundation */,
 			);
 			path = TestObjects;
@@ -1160,6 +1163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA191A2422D4F75C00ED88B9 /* TestReportOrderRequest.swift in Sources */,
 				9E4C496B20616B130053E4CA /* TestUserDefaults.swift in Sources */,
 				9EAA60C3207AC92B00D21601 /* TestSystem.swift in Sources */,
 				DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */,

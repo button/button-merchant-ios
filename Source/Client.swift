@@ -86,6 +86,7 @@ internal final class Client: ClientType {
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
         var request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
         request.setValue("Basic \(orderRequest.encodedApplicationId):", forHTTPHeaderField: "Authorization")
+        orderRequest.report(request, with: session, completion)
     }
     
 }
