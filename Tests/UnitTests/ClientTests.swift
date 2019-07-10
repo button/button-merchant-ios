@@ -304,81 +304,32 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testReportOrderEnqueuesRequests() {
+    func testReportOrder_reportsRequestWithSession() {
         // Arrange
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-
-        // Act
-        client.reportOrder(parameters: expectedParameters, encodedApplicationId: "") { _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
-        let parameters = requestParameters as? [String: String]
-
-        // Assert
-        XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
-        XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
-        XCTAssertEqual(parameters!, expectedParameters)
-    }
-
-    func testReportOrder_addsAuthorizationHeader() {
-        // Arrange
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let expectedAuthHeader = "Basic encoded_app_id:"
-
-        // Act
-        client.reportOrder(parameters: ["blargh": "blergh"], encodedApplicationId: "encoded_app_id") { _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let authHeaders = request.allHTTPHeaderFields
-
-        // Assert
-        XCTAssertEqual(authHeaders?["Authorization"], expectedAuthHeader)
-    }
-    
-    func testReportOrderSuccess() {
-        // Arrange
-        let expectation = XCTestExpectation(description: "report order success")
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
+        let expectation = XCTestExpectation(description: "report order")
+        let session = TestURLSession()
+        let client = Client(session: session, userAgent: TestUserAgent())
+        let request = TestReportOrderRequest(parameters: ["foo": "bar"], encodedApplicationId: "abc123")
         
         // Act
-        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
+        client.reportOrder(orderRequest: request) { error in
             
             // Assert
             XCTAssertNil(error)
             
             expectation.fulfill()
         }
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        testURLSession.lastDataTask?.completion(Data(), response, nil)
         
-        self.wait(for: [expectation], timeout: 2.0)
+        XCTAssertEqualReferences(request.testSession as AnyObject, session)
+        XCTAssertEqual(request.testRequest?.allHTTPHeaderFields!["Authorization"], "Basic abc123:")
+        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/mobile-order")!)
+        XCTAssertEqual(request.testRequest?.httpMethod, "POST")
+        let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
+        XCTAssertEqual(body, ["foo": "bar"])
+        
+        request.testCompletion!(nil)
+        
+        wait(for: [expectation], timeout: 2.0)
     }
     
-    func testReportOrderFails() {
-        // Arrange
-        let expectation = XCTestExpectation(description: "report order fails")
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
-        let url = URL(string: "https://api.usebutton.com/v1/mobile-order")!
-        let expectedError = TestError.known
-        
-        // Act
-        client.reportOrder(parameters: [:], encodedApplicationId: "") { error in
-            
-            // Assert
-            XCTAssertNotNil(error)
-            XCTAssertEqual(error as? TestError, expectedError)
-            
-            expectation.fulfill()
-        }
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        testURLSession.lastDataTask?.completion(nil, response, expectedError)
-        
-        self.wait(for: [expectation], timeout: 2.0)
-    }
 }

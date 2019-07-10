@@ -1,7 +1,7 @@
 //
-// TestURLSession.swift
+// TestRetryPolicy.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,23 @@
 import Foundation
 @testable import ButtonMerchant
 
-class TestURLSession: URLSessionType {
+class TestRetryPolicy: RetryPolicyType {
+    var shouldRetry: Bool
+    var delay: Double
     
-    // Test Properties
-    var didCallDataTaskWithRequest = false
-    var lastDataTask: TestURLSessionDataTask?
-    var allDataTasks = [TestURLSessionDataTask]()
+    var didCallNext = false
+    var onDidCallNext: (() -> Void)?
     
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskType {
-        didCallDataTaskWithRequest = true
-        lastDataTask = TestURLSessionDataTask(request: request, completion: completionHandler)
-        allDataTasks.append(lastDataTask!)
-        return lastDataTask!
+    init() {
+        shouldRetry = false
+        delay = 0.0
     }
-
+    
+    func next() {
+        didCallNext = true
+        if let onDidCallNext = onDidCallNext {
+            onDidCallNext()
+        }
+    }
+    
 }

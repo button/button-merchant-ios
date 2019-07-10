@@ -1,7 +1,7 @@
 //
-// TestURLSession.swift
+// TestReportOrderRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,27 @@
 import Foundation
 @testable import ButtonMerchant
 
-class TestURLSession: URLSessionType {
+class TestReportOrderRequest: ReportOrderRequestType {
+    var parameters: [String: Any]
+    var encodedApplicationId: String
+    var retryPolicy: RetryPolicyType
     
-    // Test Properties
-    var didCallDataTaskWithRequest = false
-    var lastDataTask: TestURLSessionDataTask?
-    var allDataTasks = [TestURLSessionDataTask]()
+    var didCallReport = false
+    var testRequest: URLRequest?
+    var testSession: URLSessionType?
+    var testCompletion: ((Error?) -> Void)?
     
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskType {
-        didCallDataTaskWithRequest = true
-        lastDataTask = TestURLSessionDataTask(request: request, completion: completionHandler)
-        allDataTasks.append(lastDataTask!)
-        return lastDataTask!
+    required init(parameters: [String: Any], encodedApplicationId: String, retryPolicy: RetryPolicyType = RetryPolicy()) {
+        self.parameters = parameters
+        self.encodedApplicationId = encodedApplicationId
+        self.retryPolicy = retryPolicy
     }
-
+    
+    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
+        didCallReport = true
+        testRequest = request
+        testSession = session
+        testCompletion = completion
+    }
+    
 }
