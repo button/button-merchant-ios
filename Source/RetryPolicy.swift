@@ -46,7 +46,7 @@ internal final class RetryPolicy: RetryPolicyType {
         return exp2(Double(attempt - 1)) * Double(timeoutIntervalInMs) / 1000.0
     }
     
-    required init(retries: Int = 3, timeoutIntervalInMs: Int = 100) {
+    required init(retries: Int = 4, timeoutIntervalInMs: Int = 100) {
         self.retries = retries
         self.timeoutIntervalInMs = timeoutIntervalInMs
     }

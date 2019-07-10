@@ -30,7 +30,7 @@ class RetryPolicyTests: XCTestCase {
     func testInitialization_defaults() {
         // Arrange
         let expectedAttempt = 0
-        let expectedRetries = 3
+        let expectedRetries = 4
         let expectedTimeoutInterval = 100
         
         // Act
@@ -77,6 +77,8 @@ class RetryPolicyTests: XCTestCase {
         XCTAssertEqual(policy.delay, 0.200)
         policy.next()
         XCTAssertEqual(policy.delay, 0.400)
+        policy.next()
+        XCTAssertEqual(policy.delay, 0.800)
     }
     
     func testShouldRetry() {
@@ -84,6 +86,8 @@ class RetryPolicyTests: XCTestCase {
         let policy = RetryPolicy()
 
         // Act/Assert
+        XCTAssertTrue(policy.shouldRetry)
+        policy.next()
         XCTAssertTrue(policy.shouldRetry)
         policy.next()
         XCTAssertTrue(policy.shouldRetry)
