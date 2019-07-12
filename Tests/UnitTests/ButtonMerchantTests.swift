@@ -173,7 +173,7 @@ class ButtonMerchantTests: XCTestCase {
                                 notificationCenter: TestNotificationCenter())
         let expectedOrder = Order(id: "test",
                                   purchaseDate: Date(),
-                                  lineItems: [Order.LineItem(identifier: "unique-id-1234", total: 400)])
+                                  lineItems: [Order.LineItem(id: "unique-id-1234", total: 400)])
         
         // Act
         ButtonMerchant._core = testCore

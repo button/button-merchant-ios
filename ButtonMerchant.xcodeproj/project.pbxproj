@@ -773,7 +773,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Button, Inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -789,6 +789,7 @@
 					9E77153D206AAC0F0051728C = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 39F27QYP2C;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					DE5464D32107CB6E001809F3 = {
@@ -800,21 +801,22 @@
 					DE865F832052FE5D00F4054D = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 39F27QYP2C;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					DE865F8B2052FE5D00F4054D = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 39F27QYP2C;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ButtonMerchant" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -1261,6 +1263,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1318,6 +1321,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

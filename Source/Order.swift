@@ -23,10 +23,9 @@
 //
 
 import Foundation
-import CommonCrypto
 
 /**
-Represents an order placed by the user to be tracked using `ButtonMerchant.reportOrder(order)`.
+Represents an order placed by the user to be reported using `ButtonMerchant.reportOrder(order)`.
  */
 @objcMembers
 final public class Order: NSObject, Codable {
@@ -60,32 +59,6 @@ final public class Order: NSObject, Codable {
      The customer related to the order
      */
     public var customer: Customer?
-
-    /**
-     The total order value in pennies (e.g. 3999 for $39.99)
-     or the smallest decimal unit of the currency. (default is 0)
-     */
-    @available(*, deprecated)
-    private(set) var amount: Int64 = 0
-
-    /**
-     Initializes an order object with the passed parameters.
-
-     - Parameters:
-        - id: The order identifier (required).
-        - amount: The total order value in pennies or the
-                  smallest decimal unit of the currency (e.g. 3999 for $39.99).
-        - currencyCode: The ISO 4217 currency code (default is USD).
-     */
-    @available(*, deprecated, message: "Use init(id:currencyCode:purchaseDate:customerOrderId:lineItems:customer:) instead")
-    @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
-        self.id = id
-        self.amount = amount
-        self.currencyCode = currencyCode
-        // Declare default values to keep a consistent API for the new interface.
-        self.purchaseDate = Date().ISO8601String
-        self.lineItems = []
-    }
     
     /**
      Initializes an order object with the passed parameters.
@@ -159,7 +132,7 @@ final public class Order: NSObject, Codable {
          The unique identifier for this line item,
          within the scope of this order. (required).
          */
-        let identifier: String
+        let id: String
 
         /**
          The total price of all items bought in a particular line item (required).
@@ -202,19 +175,19 @@ final public class Order: NSObject, Codable {
          An array of the line item details that comprise the order
 
          - Parameters:
-            - identifier: The unique identifier for this line item, within the scope of this order.
+            - id: The unique identifier for this line item, within the scope of this order.
                           This must be unique across all line-items within the order.
                           We suggest using the SKU or UPC of the product. (required)
             - total: The total price of all items bought in a particular line item. (required)
          */
-        @objc public init(identifier: String, total: Int64) {
-            self.identifier = identifier
+        @objc public init(id: String, total: Int64) {
+            self.id = id
             self.total = total
             self.quantity = 1
         }
 
         enum CodingKeys: String, CodingKey {
-            case identifier
+            case id = "identifier"
             case total
             case quantity
             case itemDescription = "description"
@@ -225,4 +198,28 @@ final public class Order: NSObject, Codable {
         }
     }
 
+    // MARK: - Deprecations
+
+    /**
+     Deprecated.
+
+     This field is no longer supported and will be removed in a future release.
+     */
+    @available(*, deprecated)
+    private(set) var amount: Int64 = 0
+
+    /**
+     Deprecated.
+
+     If you're migrating to client side order reporting, please use init(id:purchaseDate:lineItems:) instead.
+     */
+    @available(*, deprecated, message: "Use init(id:purchaseDate:lineItems:) instead")
+    @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
+        self.id = id
+        self.amount = amount
+        self.currencyCode = currencyCode
+        // Declare default values to keep a consistent API for the new interface.
+        self.purchaseDate = Date().ISO8601String
+        self.lineItems = []
+    }
 }

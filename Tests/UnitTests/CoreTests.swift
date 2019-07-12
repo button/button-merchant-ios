@@ -381,7 +381,7 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report order")
         Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
-        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
+        let lineItems = [Order.LineItem(id: "unique-id-1234", total: 120)]
         let customer = Order.Customer(id: "customer-id-123")
         customer.email = "test@button.com"
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)

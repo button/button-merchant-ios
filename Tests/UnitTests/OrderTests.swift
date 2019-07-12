@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-	
+
 import XCTest
 @testable import ButtonMerchant
 
@@ -31,7 +31,7 @@ class OrderTests: XCTestCase {
         // Arrange
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
-        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400)]
+        let lineItems = [Order.LineItem(id: "unique-id-1234", total: 400)]
 
         // Act
         let order = Order(id: id,
@@ -52,7 +52,7 @@ class OrderTests: XCTestCase {
         let id = "order-abc"
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let currencyCode = "EUR"
-        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 400)]
+        let lineItems = [Order.LineItem(id: "unique-id-1234", total: 400)]
         let customerOrderId = "123"
         let customer = Order.Customer(id: "123")
 
@@ -171,10 +171,10 @@ class OrderTests: XCTestCase {
         let total: Int64 = 4000
 
         // Act
-        let lineItem = Order.LineItem(identifier: identifier, total: total)
+        let lineItem = Order.LineItem(id: identifier, total: total)
 
         // Assert
-        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.id, identifier)
         XCTAssertEqual(lineItem.total, total)
         XCTAssertEqual(lineItem.quantity, 1)
         XCTAssertNil(lineItem.itemDescription)
@@ -196,8 +196,8 @@ class OrderTests: XCTestCase {
         let attributes = ["Model": "MacBook Pro"]
 
         // Act
-        let lineItem = Order.LineItem(identifier: identifier,
-                                       total: total)
+        let lineItem = Order.LineItem(id: identifier,
+                                      total: total)
         lineItem.quantity = quantity
         lineItem.itemDescription = itemDescription
         lineItem.sku = sku
@@ -206,7 +206,7 @@ class OrderTests: XCTestCase {
         lineItem.attributes = attributes
 
         // Assert
-        XCTAssertEqual(lineItem.identifier, identifier)
+        XCTAssertEqual(lineItem.id, identifier)
         XCTAssertEqual(lineItem.total, total)
         XCTAssertEqual(lineItem.quantity, quantity)
         XCTAssertEqual(lineItem.itemDescription, itemDescription)

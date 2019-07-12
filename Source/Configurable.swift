@@ -1,5 +1,5 @@
 //
-// Config.swift
+// Configurable.swift
 //
 // Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -24,9 +24,12 @@
 
 import Foundation
 
-/**
- Protocol that handles the features property,
- */
-public protocol Configurable: class {
+@objc public protocol Configurable: class {
+
+    /**
+     Indicates whether or not the library will attach IFA to outgoing requests.
+
+     The default value is `true`. If set to `false`, or if the user has limited IFA usage in their device settings, the IFA will not be attached.
+    */
     var includesIFA: Bool { get set }
 }

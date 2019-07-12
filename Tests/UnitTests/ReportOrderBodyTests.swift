@@ -32,7 +32,7 @@ class ReportOrderBodyTests: XCTestCase {
         let date = Date()
         let customer = Order.Customer(id: "customer-id-123")
         customer.email = "test@button.com"
-        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
+        let lineItems = [Order.LineItem(id: "unique-id-1234", total: 120)]
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
         
         // Act
@@ -58,7 +58,7 @@ class ReportOrderBodyTests: XCTestCase {
         let email = "test@button.com"
         let customer = Order.Customer(id: "customer-id-123")
         customer.email = email
-        let lineItems = [Order.LineItem(identifier: "unique-id-1234", total: 120)]
+        let lineItems = [Order.LineItem(id: "unique-id-1234", total: 120)]
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
         order.customer = customer
         order.customerOrderId = "customer-order-id-123"
