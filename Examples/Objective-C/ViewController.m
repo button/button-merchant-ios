@@ -88,14 +88,14 @@
 
 
 - (void)reportOrder {
-    NSString *id = NSUUID.UUID.UUIDString;
-    LineItem *lineitem = [[LineItem alloc] initWithIdentifier:id total:arc4random_uniform(1000)];
+    NSString *identifier = NSUUID.UUID.UUIDString;
+    LineItem *lineitem = [[LineItem alloc] initWithId:identifier total:arc4random_uniform(1000)];
     Customer *customer = [[Customer alloc] initWithId:NSUUID.UUID.UUIDString];
     Order *order = [[Order alloc] initWithId:NSUUID.UUID.UUIDString purchaseDate:[NSDate date] lineItems: @[lineitem]];
     order.customer = customer;
     [ButtonMerchant reportOrder:order completion:^(NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^(){
-            [MessageView showWithTitle:@"Order Created" body:[NSString stringWithFormat:@"Id: %@", id] in:self.navigationController.view];
+            [MessageView showWithTitle:@"Order Created" body:[NSString stringWithFormat:@"Id: %@", identifier] in:self.navigationController.view];
         });
     }];
 }

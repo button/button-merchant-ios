@@ -83,7 +83,7 @@ class ViewController: UITableViewController {
         let customer = Order.Customer(id: NSUUID().uuidString)
         let order = Order(id: id,
                           purchaseDate: Date(),
-                          lineItems: [Order.LineItem(identifier: NSUUID().uuidString, total: Int64(arc4random_uniform(1000)))])
+                          lineItems: [Order.LineItem(id: NSUUID().uuidString, total: Int64(arc4random_uniform(1000)))])
         order.customer = customer
         ButtonMerchant.reportOrder(order) { (error) in
             DispatchQueue.main.async {
