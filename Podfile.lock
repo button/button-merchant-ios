@@ -1,5 +1,5 @@
 PODS:
-  - ButtonMerchant (1.0.1)
+  - ButtonMerchant (1.1.0)
   - Sourcery (0.16.1)
   - SwiftLint (0.25.0)
 
@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  ButtonMerchant: 3e11a69d014d1ef7b553cb15bcacf1e1ddc4c024
+  ButtonMerchant: 47b710cee56d8778e9bce9e71d45275f19f48f21
   Sourcery: 16779170d35ee204666843b09031f36721a84bcc
   SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
 
