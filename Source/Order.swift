@@ -112,6 +112,12 @@ final public class Order: NSObject, Codable {
             }
         }
 
+        /**
+         Initializes a customer object with the passed parameters.
+
+         - Parameters:
+         - id: The id for your customer (required).
+         */
         @objc public init(id: String) {
             self.id = id
         }

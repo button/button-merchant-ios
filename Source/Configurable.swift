@@ -24,6 +24,9 @@
 
 import Foundation
 
+/**
+ An interface through which library features can be enabled/disabled.
+ */
 @objc public protocol Configurable: class {
 
     /**
