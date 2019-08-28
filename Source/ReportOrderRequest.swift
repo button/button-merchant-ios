@@ -47,8 +47,12 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
     func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
         let task = session.dataTask(with: request) { data, response, error in
             var nextAttempt = true
+            var networkError: Error? = NetworkError.unknown
             if let response = response as? HTTPURLResponse {
                 switch response.statusCode {
+                case 200:
+                    networkError = nil
+                    nextAttempt = false
                 case 500...599:
                     nextAttempt = true
                 default:
@@ -57,7 +61,7 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
             }
             guard nextAttempt else {
                 if let completion = completion {
-                    completion(error)
+                    completion(networkError)
                 }
                 return
             }
@@ -66,7 +70,7 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
             
             guard self.retryPolicy.shouldRetry else {
                 if let completion = completion {
-                    completion(error)
+                    completion(networkError)
                 }
                 return
             }

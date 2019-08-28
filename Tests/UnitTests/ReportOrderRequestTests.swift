@@ -108,7 +108,7 @@ class ReportOrderRequestTests: XCTestCase {
         request.report(urlRequest, with: session) { error in
             
             // Assert
-            XCTAssertNil(error)
+            XCTAssertEqual(error as? NetworkError, NetworkError.unknown)
             XCTAssertFalse(self.policy.didCallNext)
             
             expectation.fulfill()
@@ -153,7 +153,7 @@ class ReportOrderRequestTests: XCTestCase {
         request.report(urlRequest, with: session) { error in
             
             // Assert
-            XCTAssertNil(error)
+            XCTAssertEqual(error as? NetworkError, NetworkError.unknown)
             
             expectation.fulfill()
         }
