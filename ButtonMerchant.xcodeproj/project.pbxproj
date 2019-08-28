@@ -84,6 +84,7 @@
 		DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */; };
 		DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */; };
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
+		DAB8DFC42316EB3200E16619 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB8DFC32316EB3200E16619 /* NetworkError.swift */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
 		DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F008022CA85F000E789D0 /* Configurable.swift */; };
@@ -223,6 +224,7 @@
 		DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustEvaluatorTests.swift; sourceTree = "<group>"; };
 		DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLProtectionSpace.swift; sourceTree = "<group>"; };
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
+		DAB8DFC32316EB3200E16619 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
 		DC1F008022CA85F000E789D0 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				DA4C8C7822D3D909000E15A9 /* ReportOrderRequest.swift */,
 				DA4C8C7A22D3D956000E15A9 /* RetryPolicy.swift */,
 				DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */,
+				DAB8DFC32316EB3200E16619 /* NetworkError.swift */,
 				9E77202020605126005F740B /* Extensions */,
 				DE865FA42053073B00F4054D /* Supporting Files */,
 			);
@@ -1148,6 +1151,7 @@
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
 				9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */,
 				9E2B4311206C1275009F2886 /* Client.swift in Sources */,
+				DAB8DFC42316EB3200E16619 /* NetworkError.swift in Sources */,
 				DA4C8C7B22D3D956000E15A9 /* RetryPolicy.swift in Sources */,
 				DA756B8522B3378B003397E3 /* URLProtectionSpaceExtensions.swift in Sources */,
 			);

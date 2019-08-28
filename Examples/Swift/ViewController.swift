@@ -87,6 +87,10 @@ class ViewController: UITableViewController {
         order.customer = customer
         ButtonMerchant.reportOrder(order) { (error) in
             DispatchQueue.main.async {
+                guard error == nil else {
+                    MessageView.showWithTitle("Order Reporting Failed", body: "", in: self.navigationController!.view)
+                    return;
+                }
                 MessageView.showWithTitle("Order Created", body: "Id: \(id)", in: self.navigationController!.view)
             }
         }
