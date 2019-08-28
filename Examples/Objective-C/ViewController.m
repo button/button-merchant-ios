@@ -95,7 +95,12 @@
     order.customer = customer;
     [ButtonMerchant reportOrder:order completion:^(NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^(){
-            [MessageView showWithTitle:@"Order Created" body:[NSString stringWithFormat:@"Id: %@", identifier] in:self.navigationController.view];
+            if (error) {
+                [MessageView showWithTitle:@"Order Reporting Failed" body:@"" in:self.navigationController.view];
+            }
+            else {
+                [MessageView showWithTitle:@"Order Created" body:[NSString stringWithFormat:@"Id: %@", identifier] in:self.navigationController.view];
+            }
         });
     }];
 }
