@@ -26,19 +26,9 @@ import XCTest
 @testable import ButtonMerchant
 
 struct TestTrusts {
-    static let validTrust: SecTrust = {
+    static let trust: SecTrust = {
         var trust: SecTrust?
-        SecTrustCreateWithCertificates(TestCertificates.validCertChain as CFTypeRef, nil, &trust)
-        return trust!
-    }()
-    static let invalidTrust: SecTrust = {
-        var trust: SecTrust?
-        SecTrustCreateWithCertificates(TestCertificates.invalidCertChain as CFTypeRef, nil, &trust)
-        return trust!
-    }()
-    static let unpinnedTrust: SecTrust = {
-        var trust: SecTrust?
-        SecTrustCreateWithCertificates(TestCertificates.unpinnedCertChain as CFTypeRef, nil, &trust)
+        SecTrustCreateWithCertificates(TestCertificates.certChain as CFTypeRef, nil, &trust)
         return trust!
     }()
 }
@@ -87,45 +77,11 @@ class ImplicitTrustEvaluatorTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
-    func testHandleChallenge_invalidTrust_performsDefaultHandling() {
+    func testHandleChallenge_performsDefaultHandling() {
         // Arrange
         let exp = expectation(description: "invalid trust")
         let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.invalidTrust
-        let challenge = TestURLAuthenticationChallenge(space)
-        
-        // Act
-        evaluator.handleChallenge(challenge) { disposition, _ in
-            
-            // Assert
-            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 2.0)
-    }
-    
-    func testHandleChallenge_unpinnedChain_performsDefaultHandling() {
-        // Arrange
-        let exp = expectation(description: "unpinned chain")
-        let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.unpinnedTrust
-        let challenge = TestURLAuthenticationChallenge(space)
-        
-        // Act
-        evaluator.handleChallenge(challenge) { disposition, _ in
-            
-            // Assert
-            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 2.0)
-    }
-    
-    func testHandleChallenge_validChain_performsDefaultHandling() {
-        // Arrange
-        let exp = expectation(description: "valid pinning")
-        let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.validTrust
+        space.serverTrust = TestTrusts.trust
         let challenge = TestURLAuthenticationChallenge(space)
         
         // Act
@@ -183,11 +139,11 @@ class TrustEvaluatorTests: XCTestCase {
         wait(for: [exp], timeout: 2.0)
     }
     
-    func testHandleChallenge_invalidTrust_cancelsChallenge() {
+    func testHandleChallenge_cancelsChallenge() {
         // Arrange
         let exp = expectation(description: "invalid trust")
         let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.invalidTrust
+        space.serverTrust = TestTrusts.trust
         let challenge = TestURLAuthenticationChallenge(space)
         
         // Act
@@ -195,40 +151,6 @@ class TrustEvaluatorTests: XCTestCase {
             
             // Assert
             XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 2.0)
-    }
-    
-    func testHandleChallenge_unpinnedChain_cancelsChallenge() {
-        // Arrange
-        let exp = expectation(description: "unpinned chain")
-        let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.unpinnedTrust
-        let challenge = TestURLAuthenticationChallenge(space)
-        
-        // Act
-        evaluator.handleChallenge(challenge) { disposition, _ in
-            
-            // Assert
-            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 2.0)
-    }
-
-    func testHandleChallenge_validChain_performsDefaultHandling() {
-        // Arrange
-        let exp = expectation(description: "valid pinning")
-        let space = TestURLProtectionSpace()
-        space.serverTrust = TestTrusts.validTrust
-        let challenge = TestURLAuthenticationChallenge(space)
-        
-        // Act
-        evaluator.handleChallenge(challenge) { disposition, _ in
-            
-            // Assert
-            XCTAssertEqual(disposition, URLSession.AuthChallengeDisposition.performDefaultHandling)
             exp.fulfill()
         }
         wait(for: [exp], timeout: 2.0)

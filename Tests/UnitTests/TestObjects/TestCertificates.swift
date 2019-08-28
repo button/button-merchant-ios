@@ -34,16 +34,8 @@ struct TestCertificates {
         return rootCAs.compactMap { publicKeyFrom($0) }
     }()
     
-    static let validCertChain: [SecCertificate] = {
-        return ["*.usebutton.com", "AmazonIntermediate", "AmazonRootCA1"].map { certNamed($0) }
-    }()
-    
-    static let invalidCertChain: [SecCertificate] = {
+    static let certChain: [SecCertificate] = {
         return ["AmazonIntermediate", "AmazonRootCA1"].map { certNamed($0) }
-    }()
-    
-    static let unpinnedCertChain: [SecCertificate] = {
-        return [certNamed("*.usebutton.com")]
     }()
     
     static func certNamed(_ name: String) -> SecCertificate {
