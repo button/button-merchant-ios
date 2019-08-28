@@ -77,7 +77,6 @@
 		DA756B7322B2C3D1003397E3 /* TestCertificates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7222B2C3D1003397E3 /* TestCertificates.swift */; };
 		DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */; };
 		DA756B7B22B2DB72003397E3 /* TestTrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */; };
-		DA756B7E22B2E017003397E3 /* *.usebutton.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B7C22B2E016003397E3 /* *.usebutton.com.cer */; };
 		DA756B7F22B2E017003397E3 /* AmazonIntermediate.cer in Resources */ = {isa = PBXBuildFile; fileRef = DA756B7D22B2E017003397E3 /* AmazonIntermediate.cer */; };
 		DA756B8122B2E03E003397E3 /* TestURLAuthenticationChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8022B2E03E003397E3 /* TestURLAuthenticationChallenge.swift */; };
 		DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */; };
@@ -217,7 +216,6 @@
 		DA756B7222B2C3D1003397E3 /* TestCertificates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCertificates.swift; sourceTree = "<group>"; };
 		DA756B7822B2DB67003397E3 /* SessionDelegateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegateTests.swift; sourceTree = "<group>"; };
 		DA756B7A22B2DB72003397E3 /* TestTrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTrustEvaluator.swift; sourceTree = "<group>"; };
-		DA756B7C22B2E016003397E3 /* *.usebutton.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "*.usebutton.com.cer"; sourceTree = "<group>"; };
 		DA756B7D22B2E017003397E3 /* AmazonIntermediate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AmazonIntermediate.cer; sourceTree = "<group>"; };
 		DA756B8022B2E03E003397E3 /* TestURLAuthenticationChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLAuthenticationChallenge.swift; sourceTree = "<group>"; };
 		DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLAuthenticationChallengeExtensions.swift; sourceTree = "<group>"; };
@@ -532,7 +530,6 @@
 				DA756B6722B2B6DF003397E3 /* AmazonRootCA2.cer */,
 				DA756B6822B2B6DF003397E3 /* AmazonRootCA3.cer */,
 				DA756B6922B2B6DF003397E3 /* AmazonRootCA1.cer */,
-				DA756B7C22B2E016003397E3 /* *.usebutton.com.cer */,
 				DA756B7D22B2E017003397E3 /* AmazonIntermediate.cer */,
 			);
 			path = Certificates;
@@ -880,7 +877,6 @@
 				DA756B6A22B2B6DF003397E3 /* AmazonRootCA4.cer in Resources */,
 				DA756B6B22B2B6DF003397E3 /* AmazonRootCA2.cer in Resources */,
 				DA756B6C22B2B6DF003397E3 /* AmazonRootCA3.cer in Resources */,
-				DA756B7E22B2E017003397E3 /* *.usebutton.com.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
