@@ -30,7 +30,7 @@ pod 'ButtonMerchant'
 
 Or, add this to your Cartfile:
 ```
-github "button/button-merchant-ios" ~> 1.0
+github "button/button-merchant-ios" "trainline-button"
 ```
 
 ## Author
