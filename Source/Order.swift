@@ -211,7 +211,6 @@ final public class Order: NSObject, Codable {
 
      This field is no longer supported and will be removed in a future release.
      */
-    @available(*, deprecated)
     private(set) var amount: Int64 = 0
 
     /**
@@ -219,7 +218,6 @@ final public class Order: NSObject, Codable {
 
      If you're migrating to client side order reporting, please use init(id:purchaseDate:lineItems:) instead.
      */
-    @available(*, deprecated, message: "Use init(id:purchaseDate:lineItems:) instead")
     @objc public init(id: String, amount: Int64 = 0, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount

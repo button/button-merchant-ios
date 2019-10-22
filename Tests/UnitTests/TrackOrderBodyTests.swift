@@ -27,7 +27,6 @@ import XCTest
 
 class TrackOrderBodyTests: XCTestCase {
 
-    @available(*, deprecated)
     func testInitialization() {
         let order = Order(id: "order-abc", amount: 99)
         let body = TrackOrderBody(system: TestSystem(),
@@ -43,7 +42,6 @@ class TrackOrderBodyTests: XCTestCase {
         XCTAssertEqual(body.source, "merchant-library")
     }
 
-    @available(*, deprecated)
     func testSerializationToDictionary() {
         let order = Order(id: "order-abc", amount: 99)
         let body = TrackOrderBody(system: TestSystem(),

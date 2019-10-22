@@ -100,7 +100,6 @@ class OrderTests: XCTestCase {
         XCTAssertEqual(order.customer, customer)
     }
 
-    @available(*, deprecated)
     func testDictionaryRepresentationIsCorrect_deprecatedInit() {
         // Arrange
         let id = "derp123"

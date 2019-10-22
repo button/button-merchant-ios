@@ -189,7 +189,6 @@ extension ButtonMerchant {
 
      This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.
      */
-    @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
     @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.trackOrder(order, completion)
     }
