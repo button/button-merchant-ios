@@ -61,7 +61,7 @@ internal final class Client: ClientType {
         let request = urlRequest(url: Service.postInstall.url, parameters: parameters)
         enqueueRequest(request: request, completion: { data, _ in
             guard let data = data,
-                let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                let responseDict = ((try? JSONSerialization.jsonObject(with: data) as? [String: Any]) as [String: Any]??),
                 let object = responseDict?["object"] as? [String: Any],
                 let action = object["action"] as? String,
                 let attributionObject = object["attribution"] as? [String: Any] else {
