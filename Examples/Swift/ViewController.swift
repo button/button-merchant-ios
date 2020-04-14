@@ -74,8 +74,9 @@ class ViewController: UITableViewController {
 
     func trackIncomingURL() {
         // Simulates an incoming url with a Button attribution token.
-        let n = arc4random_uniform(10000)
-        UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=srctok-test\(n)")!)
+        let srctok = NSUUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+        let index = srctok.index(srctok.startIndex, offsetBy: 16)
+        UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=fakesrctok-\(srctok[..<index])")!)
     }
 
     func reportOrder() {
