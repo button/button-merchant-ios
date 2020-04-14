@@ -82,7 +82,8 @@
 
 - (void)trackIncomingURL {
     // Simulates an incoming url with a Button attribution token.
-    NSString *urlString = [NSString stringWithFormat:@"merchant-demo-objc:///?btn_ref=srctok-test%@", @(arc4random_uniform(10000))];
+    NSString *srctok = [[[NSUUID.UUID.UUIDString stringByReplacingOccurrencesOfString:@"-" withString:@""] substringToIndex:16] lowercaseString];
+    NSString *urlString = [NSString stringWithFormat:@"merchant-demo-objc:///?btn_ref=fakesrctok-%@", srctok];
     [UIApplication.sharedApplication openURL:[NSURL URLWithString:urlString]];
 }
 
