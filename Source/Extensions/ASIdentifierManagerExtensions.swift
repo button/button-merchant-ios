@@ -26,7 +26,6 @@ import AdSupport
 
 internal protocol ASIdentifierManagerType: class {
     var advertisingIdentifier: UUID { get }
-    var isAdvertisingTrackingEnabled: Bool { get }
 }
 
 extension ASIdentifierManager: ASIdentifierManagerType {}

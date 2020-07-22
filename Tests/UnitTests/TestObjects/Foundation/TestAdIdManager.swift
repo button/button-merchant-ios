@@ -26,10 +26,22 @@ import UIKit
 @testable import ButtonMerchant
 
 class TestAdIdManager: ASIdentifierManagerType {
-
+    
+    enum AdIDType: String {
+        case validId = "11111111-1111-1111-1111-111111111111"
+        case validIdWithLeadingZeros = "00000000-0011-1111-1111-111111111111"
+        case validIdWithTrailingZeros = "11111111-1111-1111-1111-110000000000"
+        case validIdWithMidZeros = "11111111-1000-0000-0001-111111111111"
+        case invalidId = "00000000-0000-0000-0000-000000000000"
+    }
+    
+    var stubbedID: AdIDType
+    
     var advertisingIdentifier: UUID {
-        return UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
+        return UUID(uuidString: stubbedID.rawValue)!
     }
 
-    var isAdvertisingTrackingEnabled: Bool = true
+    init(_ adIDType: AdIDType = .validId) {
+        stubbedID = adIDType
+    }
 }
