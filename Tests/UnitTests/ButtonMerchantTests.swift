@@ -27,6 +27,18 @@ import XCTest
 
 class ButtonMerchantTests: XCTestCase {
 
+    var testCore: TestCore!
+    
+    override func setUp() {
+        let defaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testCore = TestCore(buttonDefaults: defaults,
+                            client: TestClient(session: TestURLSession(),
+                                               userAgent: TestUserAgent(system: TestSystem()),
+                                               defaults: defaults),
+                            system: TestSystem(),
+                            notificationCenter: TestNotificationCenter())
+    }
+    
     override func tearDown() {
         super.tearDown()
         ButtonMerchant._core = nil
@@ -39,14 +51,9 @@ class ButtonMerchantTests: XCTestCase {
     func testConfigureApplicationId() {
         // Arrange
         let applicationId = "app-test"
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
-
-        // Act
         ButtonMerchant._core = testCore
+        
+        // Act
         ButtonMerchant.configure(applicationId: applicationId)
 
         // Assert
@@ -54,22 +61,22 @@ class ButtonMerchantTests: XCTestCase {
     }
 
     func testCreateCoreCreatesCoreWhenCoreSetToNil() {
+        // Arrange
         ButtonMerchant._core = nil
+        
+        // Act
         ButtonMerchant.configure(applicationId: "app-test")
+        
+        // Assert
         XCTAssertTrue(ButtonMerchant._core is Core)
     }
 
     func testTrackIncomingURLInvokesCore() {
         // Arrange
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "usebutton.com")!
-
-        // Act
         ButtonMerchant._core = testCore
+        
+        // Act
         ButtonMerchant.trackIncomingURL(expectedUrl)
         let actualUrl = testCore.testUrl
 
@@ -79,11 +86,6 @@ class ButtonMerchantTests: XCTestCase {
     
     func testTrackIncomingUserActivityInvokesCore() {
         // Arrange
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
         let expectedUrl = URL(string: "https://usebutton.com")!
         let userActivity = NSUserActivity(activityType: "com.usebutton.web_activity")
         userActivity.webpageURL = expectedUrl
@@ -99,11 +101,6 @@ class ButtonMerchantTests: XCTestCase {
 
     func testAccessingAttributionToken() {
         // Arrange
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
         testCore.testToken = "srctok-123"
         let expectedToken = testCore.testToken
 
@@ -117,14 +114,9 @@ class ButtonMerchantTests: XCTestCase {
 
     func testClearAllDataInvokesCore() {
         // Arrange
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
-
-        // Act
         ButtonMerchant._core = testCore
+        
+        // Act
         ButtonMerchant.clearAllData()
 
         // Assert
@@ -133,31 +125,22 @@ class ButtonMerchantTests: XCTestCase {
 
     func testHandlePostInstallURLInvokesCore() {
         // Arrange
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(),
-                                                   userAgent: TestUserAgent(system: TestSystem())),
-                                system: TestSystem(),
-                                notificationCenter: TestNotificationCenter())
-
-        // Act
         ButtonMerchant._core = testCore
+        
+        // Act
         ButtonMerchant.handlePostInstallURL { _, _  in }
 
+        // Assert
         XCTAssertTrue(testCore.didCallFetchPostInstallURL)
     }
 
     @available(*, deprecated)
     func testTrackOrderInvokesCoreWithOrder() {
         // Arrange
-        let testSystem = TestSystem()
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
-                                system: testSystem,
-                                notificationCenter: TestNotificationCenter())
         let expectedOrder = Order(id: "test", amount: Int64(12))
-
-        // Act
         ButtonMerchant._core = testCore
+        
+        // Act
         ButtonMerchant.trackOrder(expectedOrder) { _ in }
 
         // Assert
@@ -166,17 +149,12 @@ class ButtonMerchantTests: XCTestCase {
     
     func testReportOrderInvokesCoreWithOrder() {
         // Arrange
-        let testSystem = TestSystem()
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
-                                system: testSystem,
-                                notificationCenter: TestNotificationCenter())
         let expectedOrder = Order(id: "test",
                                   purchaseDate: Date(),
                                   lineItems: [Order.LineItem(id: "unique-id-1234", total: 400)])
+        ButtonMerchant._core = testCore
         
         // Act
-        ButtonMerchant._core = testCore
         ButtonMerchant.reportOrder(expectedOrder) { _ in }
         
         // Assert
@@ -185,14 +163,9 @@ class ButtonMerchantTests: XCTestCase {
     
     func testIFASetFalse() {
         // Arrange
-        let testSystem = TestSystem()
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
-                                system: testSystem,
-                                notificationCenter: TestNotificationCenter())
+        ButtonMerchant._core = testCore
         
         // Act
-        ButtonMerchant._core = testCore
         ButtonMerchant.features.includesIFA = false
         
         // Assert
@@ -201,14 +174,9 @@ class ButtonMerchantTests: XCTestCase {
     
     func testIFASetTrue() {
         // Arrange
-        let testSystem = TestSystem()
-        let testCore = TestCore(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                client: TestClient(session: TestURLSession(), userAgent: TestUserAgent(system: testSystem)),
-                                system: testSystem,
-                                notificationCenter: TestNotificationCenter())
+        ButtonMerchant._core = testCore
         
         // Act
-        ButtonMerchant._core = testCore
         ButtonMerchant.features.includesIFA = true
         
         // Assert

@@ -31,13 +31,15 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectedURLSession = TestURLSession()
         let expectedUserAgent = TestUserAgent()
+        let defaults = TestButtonDefaults(userDefaults: TestUserDefaults())
 
         // Act
-        let client = Client(session: expectedURLSession, userAgent: expectedUserAgent)
+        let client = Client(session: expectedURLSession, userAgent: expectedUserAgent, defaults: defaults)
 
         // Assert
         XCTAssertEqualReferences(client.session as AnyObject, expectedURLSession)
         XCTAssertEqualReferences(client.userAgent as AnyObject, expectedUserAgent)
+        XCTAssertEqualReferences(client.defaults as AnyObject, defaults)
     }
 
     func testURLRequestCreatedWithParameters() {
@@ -46,7 +48,7 @@ class ClientTests: XCTestCase {
         let expectedURL = URL(string: "https://usebutton.com")!
         let expectedParameters = ["test": "test",
                                   "some": "value"]
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent)
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
 
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: expectedParameters)
@@ -61,12 +63,28 @@ class ClientTests: XCTestCase {
         XCTAssertNotNil(parameters)
         XCTAssertEqual(parameters!, expectedParameters)
     }
+    
+    func testURLRequest_whenSessionSet_addsSession() {
+        // Arrange
+        let testUserAgent = TestUserAgent()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        testDefaults.sessionId = "some-session-id"
+
+        // Act
+        let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: ["foo": "bar"])
+        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
+        let parameters = requestParameters as? [String: String]
+
+        // Assert
+        XCTAssertEqual(parameters!, ["foo": "bar", "session_id": "some-session-id"])
+    }
 
     func testURLRequestCreatedWithoutParameters() {
         // Arrange
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent)
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
 
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: nil)
@@ -79,10 +97,26 @@ class ClientTests: XCTestCase {
         XCTAssertNil(request.httpBody)
     }
     
+    func testURLRequestNoParams_whenSessionSet_addsSession() {
+        // Arrange
+        let testUserAgent = TestUserAgent()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        testDefaults.sessionId = "some-session-id"
+
+        // Act
+        let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: nil)
+        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
+        let parameters = requestParameters as? [String: String]
+
+        // Assert
+        XCTAssertEqual(parameters!, ["session_id": "some-session-id"])
+    }
+    
     func testEnqueueRequestCreatesDataTask() {
         // Arrange
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         
         // Act
         let request = URLRequest(url: URL(string: "https://usebutton.com")!)
@@ -98,7 +132,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let expectedData = Data()
         
         // Act
@@ -117,11 +151,128 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
+    func testEnqueueRequestSuccess_whenSession_persistsSession() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "enqueue request success set session")
+        let testURLSession = TestURLSession()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let responseData = try? JSONSerialization.data(withJSONObject:
+            ["object":
+                [ "meta":
+                    ["session_id": "some-session-id"]
+                ]])
+        
+        // Act
+        let url = URL(string: "https://usebutton.com")!
+        client.enqueueRequest(request: URLRequest(url: url)) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(testDefaults.sessionId, "some-session-id")
+            
+            expectation.fulfill()
+        }
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        testURLSession.lastDataTask?.completion(responseData, response, nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testEnqueueRequestSuccess_whenNoSession_noChange() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "enqueue request success set session")
+        let testURLSession = TestURLSession()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        
+        testDefaults.sessionId = "same-old-session"
+        let responseData = try? JSONSerialization.data(withJSONObject:
+            ["object":
+                [ "meta":
+                    ["other": "fields"]
+                ]])
+        
+        // Act
+        let url = URL(string: "https://usebutton.com")!
+        client.enqueueRequest(request: URLRequest(url: url)) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(testDefaults.sessionId, "same-old-session")
+            
+            expectation.fulfill()
+        }
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        testURLSession.lastDataTask?.completion(responseData, response, nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testEnqueueRequestSuccess_whenNewSession_persistsNewSession() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "enqueue request success set session")
+        let testURLSession = TestURLSession()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        
+        testDefaults.sessionId = "some-old-session"
+        let responseData = try? JSONSerialization.data(withJSONObject:
+            ["object":
+                [ "meta":
+                    ["session_id": "some-new-session"]
+                ]])
+        
+        // Act
+        let url = URL(string: "https://usebutton.com")!
+        client.enqueueRequest(request: URLRequest(url: url)) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(testDefaults.sessionId, "some-new-session")
+            
+            expectation.fulfill()
+        }
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        testURLSession.lastDataTask?.completion(responseData, response, nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testEnqueueRequestSuccess_whenSessionNull_clearsAllData() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "enqueue request success set session")
+        let testURLSession = TestURLSession()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        
+        let responseData = try? JSONSerialization.data(withJSONObject:
+            ["object":
+                [ "meta":
+                    ["session_id": NSNull()]
+                ]])
+        
+        // Act
+        let url = URL(string: "https://usebutton.com")!
+        client.enqueueRequest(request: URLRequest(url: url)) { data, error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertTrue(testDefaults.didCallClearAllData)
+            
+            expectation.fulfill()
+        }
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        testURLSession.lastDataTask?.completion(responseData, response, nil)
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
+    
     func testEnqueueRequestFailsNilData() {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request fails nil data")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let expectedError = TestError.known
         
         // Act
@@ -144,7 +295,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request fails bad response code")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let data = Data()
         let expectedError = TestError.known
         
@@ -167,7 +318,7 @@ class ClientTests: XCTestCase {
     func testFetchPostInstallURLEnqueuesRequest() {
         // Arrange
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let expectedParameters = ["blargh": "blergh"]
         let expectedURL = URL(string: "https://api.usebutton.com/v1/web/deferred-deeplink")!
 
@@ -190,7 +341,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "fetch post install url success")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let expectedURL = URL(string: "https://usebutton.com")!
         let expectedToken = "srctok-abc123"
         let responseDict: [String: Any] = ["object": ["action": expectedURL.absoluteString,
@@ -217,7 +368,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "fetch post install url fails bad response")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let url = URL(string: "https://usebutton.com")!
         let responseDict = ["blargh": "blergh"]
         let data = try? JSONSerialization.data(withJSONObject: responseDict)
@@ -241,7 +392,7 @@ class ClientTests: XCTestCase {
     func testTrackOrderEnqueuesRequest() {
         // Arrange
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let expectedParameters = ["blargh": "blergh"]
         let expectedURL = URL(string: "https://api.usebutton.com/v1/activity/order")!
         
@@ -264,7 +415,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "track order success")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
         
         // Act
@@ -285,7 +436,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "track order fails")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
         let expectedError = TestError.known
         
@@ -308,7 +459,7 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "report order")
         let session = TestURLSession()
-        let client = Client(session: session, userAgent: TestUserAgent())
+        let client = Client(session: session, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let request = TestReportOrderRequest(parameters: ["foo": "bar"], encodedApplicationId: "abc123")
         
         // Act

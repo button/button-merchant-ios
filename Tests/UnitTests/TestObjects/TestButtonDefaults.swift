@@ -34,6 +34,7 @@ class TestButtonDefaults: ButtonDefaultsType {
     var didStoreToken = false
     
     var userDefaults: UserDefaultsType
+    var sessionId: String?
     var attributionToken: String? {
         get {
             return testToken

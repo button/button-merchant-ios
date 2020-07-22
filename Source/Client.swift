@@ -44,17 +44,19 @@ internal protocol ClientType: class {
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
-    init(session: URLSessionType, userAgent: UserAgentType)
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
 }
 
 internal final class Client: ClientType {
 
     var session: URLSessionType
     var userAgent: UserAgentType
+    var defaults: ButtonDefaultsType
     
-    init(session: URLSessionType, userAgent: UserAgentType) {
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
         self.userAgent = userAgent
+        self.defaults = defaults
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
@@ -95,10 +97,18 @@ internal extension Client {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue(userAgent.stringRepresentation, forHTTPHeaderField: "User-Agent")
-        if let parameters = parameters {
+        
+        var requestParameters = parameters
+        if let sessionId = defaults.sessionId {
+            requestParameters = requestParameters ?? [:]
+            requestParameters?["session_id"] = sessionId
+        }
+        
+        if let parameters = requestParameters {
             urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
+        
         return urlRequest
     }
     
@@ -109,8 +119,30 @@ internal extension Client {
                     completion(nil, error)
                     return
             }
+            
+            self.refreshSessionIfAvailable(responseData: data)
+            
             completion(data, nil)
         }
         task.resume()
+    }
+    
+    func refreshSessionIfAvailable(responseData: Data?) {
+        guard let data = responseData,
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let object = json["object"] as? [String: Any],
+            let meta = object["meta"] as? [String: Any] else {
+                return
+        }
+        
+        let value = meta["session_id"]
+        switch value {
+        case is String:
+            defaults.sessionId = value as? String
+        case is NSNull:
+            defaults.clearAllData()
+        default:
+            break
+        }
     }
 }
