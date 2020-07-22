@@ -45,6 +45,8 @@ internal protocol SystemType: Configurable {
 
 internal final class System: SystemType {
     
+    static let allZerosPattern = "^(?:[0+\\-]+){10,}$"
+    
     private var adIdManager: ASIdentifierManagerType
     
     var includesIFA: Bool
@@ -56,11 +58,11 @@ internal final class System: SystemType {
     var bundle: BundleType
 
     var advertisingId: String? {
-        if self.includesIFA && self.adIdManager.isAdvertisingTrackingEnabled {
-            return self.adIdManager.advertisingIdentifier.uuidString
-        } else {
+        let ifa = self.adIdManager.advertisingIdentifier.uuidString
+        guard self.includesIFA && !ifa.matches(System.allZerosPattern) else {
             return nil
         }
+        return ifa
     }
     
     var currentDate: Date {

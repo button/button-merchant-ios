@@ -56,4 +56,7 @@ public extension String {
         return hexString
     }
 
+    internal func matches(_ regex: String) -> Bool {
+        return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
+    }
 }

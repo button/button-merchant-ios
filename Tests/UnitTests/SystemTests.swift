@@ -155,22 +155,30 @@ class SystemTests: XCTestCase {
         XCTAssertTrue(system.includesIFA)
     }
     
-    func testAdvertisingIdInitialization() {
+    func testAdvertisingId_whenValid_returnsString() {
+        // Arrange
+        let adManager = TestAdIdManager()
         let system = System(fileManager: TestFileManager(),
                             calendar: TestCalendar(),
-                            adIdManager: TestAdIdManager(),
+                            adIdManager: adManager,
                             device: TestDevice(),
                             screen: TestScreen(),
                             locale: TestLocale(),
                             bundle: TestBundle())
         
-        XCTAssertEqual(system.advertisingId, "00000000-0000-0000-0000-000000000000")
+        adManager.stubbedID = .validId
+        XCTAssertEqual(system.advertisingId, "11111111-1111-1111-1111-111111111111")
+        adManager.stubbedID = .validIdWithLeadingZeros
+        XCTAssertEqual(system.advertisingId, "00000000-0011-1111-1111-111111111111")
+        adManager.stubbedID = .validIdWithMidZeros
+        XCTAssertEqual(system.advertisingId, "11111111-1000-0000-0001-111111111111")
+        adManager.stubbedID = .validIdWithTrailingZeros
+        XCTAssertEqual(system.advertisingId, "11111111-1111-1111-1111-110000000000")
     }
     
-    func testAdManagerTrackingSetToFalse() {
+    func testAdvertisingId_whenInvalid_returnsNil() {
         // Arrange
-        let adManager = TestAdIdManager()
-        adManager.isAdvertisingTrackingEnabled = false
+        let adManager = TestAdIdManager(.invalidId)
         
         // Act
         let system = System(fileManager: TestFileManager(),
