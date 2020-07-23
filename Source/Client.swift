@@ -29,7 +29,7 @@ internal enum Service: String {
     
     case postInstall = "v1/web/deferred-deeplink"
     case activity = "v1/activity/order"
-    case order = "v1/mobile-order"
+    case order = "v1/app/order"
     
     static var baseURL = "https://api.usebutton.com/"
     

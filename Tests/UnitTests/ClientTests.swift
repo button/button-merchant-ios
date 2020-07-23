@@ -457,7 +457,7 @@ class ClientTests: XCTestCase {
         
         XCTAssertEqualReferences(request.testSession as AnyObject, session)
         XCTAssertEqual(request.testRequest?.allHTTPHeaderFields!["Authorization"], "Basic abc123")
-        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/mobile-order")!)
+        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/app/order")!)
         XCTAssertEqual(request.testRequest?.httpMethod, "POST")
         let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
         XCTAssertEqual(body, ["foo": "bar"])
