@@ -29,7 +29,7 @@ internal enum Service: String {
     
     case postInstall = "v1/web/deferred-deeplink"
     case activity = "v1/activity/order"
-    case order = "v1/mobile-order"
+    case order = "v1/app/order"
     
     static var baseURL = "https://api.usebutton.com/"
     
@@ -39,22 +39,26 @@ internal enum Service: String {
 }
 
 internal protocol ClientType: class {
+    var applicationId: String? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
-    init(session: URLSessionType, userAgent: UserAgentType)
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
 }
 
 internal final class Client: ClientType {
-
+    
+    var applicationId: String?
     var session: URLSessionType
     var userAgent: UserAgentType
+    var defaults: ButtonDefaultsType
     
-    init(session: URLSessionType, userAgent: UserAgentType) {
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
         self.userAgent = userAgent
+        self.defaults = defaults
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
@@ -82,8 +86,7 @@ internal final class Client: ClientType {
     }
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
-        var request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
-        request.setValue("Basic \(orderRequest.encodedApplicationId)", forHTTPHeaderField: "Authorization")
+        let request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
         orderRequest.report(request, with: session, completion)
     }
     
@@ -93,12 +96,22 @@ internal extension Client {
     
     func urlRequest(url: URL, parameters: [String: Any]? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: url)
+        var requestParameters = parameters ?? [:]
+        
         urlRequest.httpMethod = "POST"
         urlRequest.setValue(userAgent.stringRepresentation, forHTTPHeaderField: "User-Agent")
-        if let parameters = parameters {
-            urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let sessionId = defaults.sessionId {
+            requestParameters["session_id"] = sessionId
         }
+        
+        if let appId = applicationId {
+            requestParameters["application_id"] = appId
+        }
+        
+        urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: requestParameters)
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
         return urlRequest
     }
     
@@ -109,8 +122,29 @@ internal extension Client {
                     completion(nil, error)
                     return
             }
+            
+            self.refreshSessionIfAvailable(responseData: data)
+            
             completion(data, nil)
         }
         task.resume()
+    }
+    
+    func refreshSessionIfAvailable(responseData: Data?) {
+        guard let data = responseData,
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let meta = json["meta"] as? [String: Any] else {
+                return
+        }
+        
+        let value = meta["session_id"]
+        switch value {
+        case is String:
+            defaults.sessionId = value as? String
+        case is NSNull:
+            defaults.clearAllData()
+        default:
+            break
+        }
     }
 }

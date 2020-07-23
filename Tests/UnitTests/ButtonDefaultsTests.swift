@@ -37,6 +37,45 @@ class ButtonDefaultsTests: XCTestCase {
         XCTAssertEqual(ButtonDefaults.Keys.attributonToken.key, "com.usebutton.attribution-token")
     }
     
+    func testSetSessionId_persistsSessionId() {
+        // Arrange
+        let testUserDefaults = TestUserDefaults()
+        let defaults = ButtonDefaults(userDefaults: testUserDefaults)
+        
+        // Act
+        defaults.sessionId = "some-session-id"
+        let actualSessionId = testUserDefaults.values[ButtonDefaults.Keys.sessionId.key]
+        
+        // Assert
+        XCTAssertEqual("some-session-id", actualSessionId as? String)
+    }
+    
+    func testGetSessionId_whenPersisted_returnsStoredSessionId() {
+        // Arrange
+        let testUserDefaults = TestUserDefaults()
+        let defaults = ButtonDefaults(userDefaults: testUserDefaults)
+        
+        // Act
+        testUserDefaults.values[ButtonDefaults.Keys.sessionId.key] = "some-session-id"
+        
+        // Assert
+        XCTAssertEqual(defaults.sessionId, "some-session-id")
+    }
+    
+    func testGetSessionId_whenUnset_returnsNil() {
+        // Arrange
+        let testUserDefaults = TestUserDefaults()
+        let defaults = ButtonDefaults(userDefaults: testUserDefaults)
+        
+        // Act
+        defaults.sessionId = nil
+        let actualSessionId = testUserDefaults.values[ButtonDefaults.Keys.sessionId.key]
+        
+        // Assert
+        XCTAssertNil(actualSessionId)
+        XCTAssertTrue(testUserDefaults.didCallSynchronize)
+    }
+    
     func testSetAttributionTokenPassesTokenToUserDefaultsAndSynchronizes() {
         // Arrange
         let testUserDefaults = TestUserDefaults()
@@ -59,9 +98,10 @@ class ButtonDefaultsTests: XCTestCase {
         
         // Act
         defaults.attributionToken = nil
+        let actualToken = testUserDefaults.values[ButtonDefaults.Keys.attributonToken.key]
         
         //Assert
-        XCTAssertNil(testUserDefaults.testValue)
+        XCTAssertNil(actualToken)
         XCTAssertTrue(testUserDefaults.didCallSynchronize)
     }
     

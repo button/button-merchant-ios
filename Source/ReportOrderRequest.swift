@@ -26,7 +26,6 @@ import Foundation
 
 internal protocol ReportOrderRequestType {
     var parameters: [String: Any] { get }
-    var encodedApplicationId: String { get }
     var retryPolicy: RetryPolicyType { get }
     
     func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?)
@@ -35,12 +34,10 @@ internal protocol ReportOrderRequestType {
 internal final class ReportOrderRequest: ReportOrderRequestType {
     
     var parameters: [String: Any]
-    var encodedApplicationId: String
     var retryPolicy: RetryPolicyType
     
-    required init(parameters: [String: Any], encodedApplicationId: String, retryPolicy: RetryPolicyType = RetryPolicy()) {
+    required init(parameters: [String: Any], retryPolicy: RetryPolicyType = RetryPolicy()) {
         self.parameters = parameters
-        self.encodedApplicationId = encodedApplicationId
         self.retryPolicy = retryPolicy
     }
     

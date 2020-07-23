@@ -34,16 +34,20 @@ class TestClient: ClientType {
     var didCallTrackOrder = false
     var didCallReportOrder = false
 
+    var applicationId: String?
+    
     var session: URLSessionType
     var userAgent: UserAgentType
+    var defaults: ButtonDefaultsType
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
     var reportOrderCompletion: ((Error?) -> Void)?
-
-    required init(session: URLSessionType, userAgent: UserAgentType) {
+    
+    required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
         self.userAgent = userAgent
+        self.defaults = defaults
         self.testParameters = [:]
     }
     

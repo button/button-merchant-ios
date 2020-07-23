@@ -26,6 +26,7 @@ import Foundation
 
 internal protocol ButtonDefaultsType: class {
     var userDefaults: UserDefaultsType { get }
+    var sessionId: String? { get set }
     var attributionToken: String? { get set }
     var hasFetchedPostInstallURL: Bool { get set }
     func clearAllData()
@@ -39,6 +40,7 @@ final internal class ButtonDefaults: ButtonDefaultsType {
 
     internal enum Keys: String {
 
+        case sessionId = "session-id"
         case attributonToken = "attribution-token"
         case postInstallFetchStatus = "post-install-fetched"
 
@@ -50,6 +52,16 @@ final internal class ButtonDefaults: ButtonDefaultsType {
     }
 
     private(set) var userDefaults: UserDefaultsType
+    
+    var sessionId: String? {
+        get {
+            return userDefaults.value(forKey: Keys.sessionId.key) as? String
+        }
+        set {
+            userDefaults.setValue(newValue, forKey: Keys.sessionId.key)
+            userDefaults.synchronize()
+        }
+    }
     
     var attributionToken: String? {
         get {
