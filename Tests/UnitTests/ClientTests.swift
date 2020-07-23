@@ -41,43 +41,48 @@ class ClientTests: XCTestCase {
         XCTAssertEqualReferences(client.userAgent as AnyObject, expectedUserAgent)
         XCTAssertEqualReferences(client.defaults as AnyObject, defaults)
     }
-
+    
     func testURLRequestCreatedWithParameters() {
         // Arrange
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
-        let expectedParameters = ["test": "test",
-                                  "some": "value"]
+        let inputParameters = ["test": "test", "some": "value"]
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-
+        client.applicationId = "app-abc123"
+        
         // Act
-        let request = client.urlRequest(url: expectedURL, parameters: expectedParameters)
+        let request = client.urlRequest(url: expectedURL, parameters: inputParameters)
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
         let parameters = requestParameters as? [String: String]
-
+        
         // Assert
         XCTAssertEqual(request.httpMethod, "POST")
         XCTAssertEqual(request.url, expectedURL)
         XCTAssertEqual(request.value(forHTTPHeaderField: "User-Agent"), testUserAgent.stringRepresentation)
         XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
         XCTAssertNotNil(parameters)
-        XCTAssertEqual(parameters!, expectedParameters)
+        XCTAssertEqual(parameters!, ["test": "test",
+                                     "some": "value",
+                                     "application_id": "app-abc123"])
     }
     
     func testURLRequest_whenSessionSet_addsSession() {
         // Arrange
         let testUserAgent = TestUserAgent()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
         testDefaults.sessionId = "some-session-id"
-
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        client.applicationId = "app-abc123"
+        
         // Act
         let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: ["foo": "bar"])
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
         let parameters = requestParameters as? [String: String]
 
         // Assert
-        XCTAssertEqual(parameters!, ["foo": "bar", "session_id": "some-session-id"])
+        XCTAssertEqual(parameters!, ["foo": "bar",
+                                     "session_id": "some-session-id",
+                                     "application_id": "app-abc123"])
     }
 
     func testURLRequestCreatedWithoutParameters() {
@@ -85,24 +90,45 @@ class ClientTests: XCTestCase {
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-
+        client.applicationId = "app-abc123"
+        
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: nil)
+        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
+        let parameters = requestParameters as? [String: String]
 
         // Assert
         XCTAssertEqual(request.httpMethod, "POST")
         XCTAssertEqual(request.url, expectedURL)
         XCTAssertEqual(request.value(forHTTPHeaderField: "User-Agent"), testUserAgent.stringRepresentation)
-        XCTAssertNil(request.value(forHTTPHeaderField: "Content-Type"))
-        XCTAssertNil(request.httpBody)
+        XCTAssertEqual(parameters!, ["application_id": "app-abc123"])
+    }
+    
+    func testURLRequestCreated_noParams_noAppId_hasEmptyParams() {
+        // Arrange
+        let testUserAgent = TestUserAgent()
+        let expectedURL = URL(string: "https://usebutton.com")!
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        
+        // Act
+        let request = client.urlRequest(url: expectedURL, parameters: nil)
+        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
+        let parameters = requestParameters as? [String: String]
+
+        // Assert
+        XCTAssertEqual(request.httpMethod, "POST")
+        XCTAssertEqual(request.url, expectedURL)
+        XCTAssertEqual(request.value(forHTTPHeaderField: "User-Agent"), testUserAgent.stringRepresentation)
+        XCTAssertEqual(parameters!, [:])
     }
     
     func testURLRequestNoParams_whenSessionSet_addsSession() {
         // Arrange
         let testUserAgent = TestUserAgent()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
         testDefaults.sessionId = "some-session-id"
+        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        client.applicationId = "app-abc123"
 
         // Act
         let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: nil)
@@ -110,7 +136,7 @@ class ClientTests: XCTestCase {
         let parameters = requestParameters as? [String: String]
 
         // Assert
-        XCTAssertEqual(parameters!, ["session_id": "some-session-id"])
+        XCTAssertEqual(parameters!, ["session_id": "some-session-id", "application_id": "app-abc123"])
     }
     
     func testEnqueueRequestCreatesDataTask() {
@@ -456,8 +482,7 @@ class ClientTests: XCTestCase {
         }
         
         XCTAssertEqualReferences(request.testSession as AnyObject, session)
-        XCTAssertEqual(request.testRequest?.allHTTPHeaderFields!["Authorization"], "Basic abc123")
-        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/mobile-order")!)
+        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/app/order")!)
         XCTAssertEqual(request.testRequest?.httpMethod, "POST")
         let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
         XCTAssertEqual(body, ["foo": "bar"])

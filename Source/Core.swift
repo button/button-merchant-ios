@@ -48,7 +48,11 @@ internal protocol CoreType {
  */
 final internal class Core: CoreType {
 
-    var applicationId: String?
+    var applicationId: String? {
+        didSet {
+            client.applicationId = applicationId
+        }
+    }
     var buttonDefaults: ButtonDefaultsType
     var client: ClientType
     var system: SystemType
@@ -160,8 +164,7 @@ final internal class Core: CoreType {
     }
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-        guard let appId = applicationId, !appId.isEmpty,
-            let encodedAppId = (appId + ":").data(using: .utf8)?.base64EncodedString() else {
+        guard let appId = applicationId, !appId.isEmpty else {
             if let completion = completion {
                 completion(ConfigurationError.noApplicationId)
             }
@@ -169,7 +172,7 @@ final internal class Core: CoreType {
         }
         
         let reportOrderBody = ReportOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
-        let request = ReportOrderRequest(parameters: reportOrderBody.dictionaryRepresentation, encodedApplicationId: encodedAppId)
+        let request = ReportOrderRequest(parameters: reportOrderBody.dictionaryRepresentation)
         client.reportOrder(orderRequest: request, completion)
     }
 
