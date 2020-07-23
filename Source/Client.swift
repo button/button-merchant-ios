@@ -130,8 +130,7 @@ internal extension Client {
     func refreshSessionIfAvailable(responseData: Data?) {
         guard let data = responseData,
             let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let object = json["object"] as? [String: Any],
-            let meta = object["meta"] as? [String: Any] else {
+            let meta = json["meta"] as? [String: Any] else {
                 return
         }
         

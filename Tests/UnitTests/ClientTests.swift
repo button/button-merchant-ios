@@ -157,11 +157,7 @@ class ClientTests: XCTestCase {
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
-        let responseData = try? JSONSerialization.data(withJSONObject:
-            ["object":
-                [ "meta":
-                    ["session_id": "some-session-id"]
-                ]])
+        let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": "some-session-id"]])
         
         // Act
         let url = URL(string: "https://usebutton.com")!
@@ -187,11 +183,7 @@ class ClientTests: XCTestCase {
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
         
         testDefaults.sessionId = "same-old-session"
-        let responseData = try? JSONSerialization.data(withJSONObject:
-            ["object":
-                [ "meta":
-                    ["other": "fields"]
-                ]])
+        let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["other": "fields"] ])
         
         // Act
         let url = URL(string: "https://usebutton.com")!
@@ -217,11 +209,7 @@ class ClientTests: XCTestCase {
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
         
         testDefaults.sessionId = "some-old-session"
-        let responseData = try? JSONSerialization.data(withJSONObject:
-            ["object":
-                [ "meta":
-                    ["session_id": "some-new-session"]
-                ]])
+        let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": "some-new-session"]])
         
         // Act
         let url = URL(string: "https://usebutton.com")!
@@ -246,11 +234,7 @@ class ClientTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
         
-        let responseData = try? JSONSerialization.data(withJSONObject:
-            ["object":
-                [ "meta":
-                    ["session_id": NSNull()]
-                ]])
+        let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": NSNull()]])
         
         // Act
         let url = URL(string: "https://usebutton.com")!
