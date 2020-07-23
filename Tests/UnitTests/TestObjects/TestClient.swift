@@ -34,6 +34,8 @@ class TestClient: ClientType {
     var didCallTrackOrder = false
     var didCallReportOrder = false
 
+    var applicationId: String?
+    
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType

@@ -39,6 +39,7 @@ internal enum Service: String {
 }
 
 internal protocol ClientType: class {
+    var applicationId: String? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
@@ -48,7 +49,8 @@ internal protocol ClientType: class {
 }
 
 internal final class Client: ClientType {
-
+    
+    var applicationId: String?
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
@@ -84,8 +86,7 @@ internal final class Client: ClientType {
     }
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
-        var request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
-        request.setValue("Basic \(orderRequest.encodedApplicationId)", forHTTPHeaderField: "Authorization")
+        let request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
         orderRequest.report(request, with: session, completion)
     }
     
@@ -95,19 +96,21 @@ internal extension Client {
     
     func urlRequest(url: URL, parameters: [String: Any]? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: url)
+        var requestParameters = parameters ?? [:]
+        
         urlRequest.httpMethod = "POST"
         urlRequest.setValue(userAgent.stringRepresentation, forHTTPHeaderField: "User-Agent")
         
-        var requestParameters = parameters
         if let sessionId = defaults.sessionId {
-            requestParameters = requestParameters ?? [:]
-            requestParameters?["session_id"] = sessionId
+            requestParameters["session_id"] = sessionId
         }
         
-        if let parameters = requestParameters {
-            urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let appId = applicationId {
+            requestParameters["application_id"] = appId
         }
+        
+        urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: requestParameters)
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         return urlRequest
     }

@@ -49,6 +49,20 @@ class CoreTests: XCTestCase {
         XCTAssertEqualReferences(core.notificationCenter, testNotificationCenter)
     }
     
+    func testSetApplicationId_setClientApplicationId() {
+        // Arrange
+        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+        
+        // Act
+        core.applicationId = "app-abc123"
+        
+        // Assert
+        XCTAssertEqual(testClient.applicationId, "app-abc123")
+    }
+    
     func testTrackIncomingURLIgnoresUnattributedURLs() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
@@ -395,7 +409,6 @@ class CoreTests: XCTestCase {
         core.applicationId = "app-abc123"
         
         // Act
-        // Act
         core.reportOrder(order) { error in
             
             // Assert
@@ -413,7 +426,6 @@ class CoreTests: XCTestCase {
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
                         "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
         
-        XCTAssertEqual(testClient.testReportOrderRequest!.encodedApplicationId, "YXBwLWFiYzEyMzo=")
         testClient.reportOrderCompletion!(nil)
         
         self.wait(for: [expectation], timeout: 2.0)

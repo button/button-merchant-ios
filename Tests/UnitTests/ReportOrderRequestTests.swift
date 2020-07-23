@@ -35,22 +35,20 @@ class ReportOrderRequestTests: XCTestCase {
     let url = URL(string: "https://example.com")!
     
     override func setUp() {
-        request = ReportOrderRequest(parameters: [:], encodedApplicationId: "", retryPolicy: policy)
+        request = ReportOrderRequest(parameters: [:], retryPolicy: policy)
         urlRequest = URLRequest(url: url)
     }
     
     func testInitialization() {
         // Arrange
         let params = ["foo": "bar"]
-        let appId = "abc123"
         let policy = TestRetryPolicy()
         
         // Act
-        let request = ReportOrderRequest(parameters: params, encodedApplicationId: appId, retryPolicy: policy)
+        let request = ReportOrderRequest(parameters: params, retryPolicy: policy)
         
         // Assert
         XCTAssertEqual(request.parameters as? [String: String], params)
-        XCTAssertEqual(request.encodedApplicationId, appId)
         XCTAssertEqualReferences(request.retryPolicy as AnyObject, policy)
     }
     
