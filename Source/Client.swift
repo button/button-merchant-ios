@@ -46,6 +46,7 @@ internal protocol ClientType: class {
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
+    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
 }
 

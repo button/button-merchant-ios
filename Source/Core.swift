@@ -90,33 +90,67 @@ final internal class Core: CoreType {
 
     /**
      Checks and persists Button attribution in all passed URLs.
-
+     
      - Parameter url: The URL to be inspected.
      */
     func trackIncomingURL(_ url: URL) {
-        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            let queryItems = urlComponents.queryItems else {
-                return
+        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return
         }
-
-        if let queryItem = queryItems.first(where: {$0.name == "btn_ref"}),
-            let newAttributionToken = queryItem.value {
-            
-            let oldAttributionToken = attributionToken
-            attributionToken = newAttributionToken
-            
-            var isNewToken = true
-            if let oldAttributionToken = oldAttributionToken {
-                isNewToken = oldAttributionToken != newAttributionToken
+        
+        let queryItems = urlComponents.queryItems
+        urlComponents.queryItems = nil
+        urlComponents.fragment = nil
+        
+        var incomingToken: String?
+        if let queryItems = queryItems {
+            var allowedQueryItems = [URLQueryItem]()
+            queryItems.forEach { item in
+                switch item.name {
+                case "btn_ref":
+                    incomingToken = item.value
+                    updateAttributionIfNeeded(token: incomingToken)
+                    allowedQueryItems.append(item)
+                case "from_landing",
+                     "from_tracking",
+                     _ where item.name.hasPrefix("btn_"):
+                    allowedQueryItems.append(item)
+                default:
+                    break
+                }
             }
-            if isNewToken {
-                notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
-                                        object: nil,
-                                        userInfo: [Notification.Key.NewToken: newAttributionToken])
-            }
+            urlComponents.queryItems = allowedQueryItems
+        }
+        
+        guard let filteredURL = urlComponents.url else {
+            return
+        }
+        
+        let event = AppEvent(name: "btn:deeplink-opened",
+                             value: [ "url": filteredURL.absoluteString],
+                             sourceToken: incomingToken)
+        client.reportEvents([event], ifa: system.advertisingId, nil)
+    }
+    
+    private func updateAttributionIfNeeded(token: String?) {
+        guard let incomingToken = token else {
+            return
+        }
+        
+        let oldAttributionToken = attributionToken
+        attributionToken = incomingToken
+        
+        var isNewToken = true
+        if let oldAttributionToken = oldAttributionToken {
+            isNewToken = oldAttributionToken != incomingToken
+        }
+        if isNewToken {
+            notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
+                                    object: nil,
+                                    userInfo: [Notification.Key.NewToken: incomingToken])
         }
     }
-
+    
     /**
      Checks *once only* for a post-install url if installed < 12 hours ago.
      */

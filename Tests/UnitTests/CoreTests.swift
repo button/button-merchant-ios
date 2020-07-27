@@ -122,6 +122,123 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(expectedSourceToken, testDefaults.testToken)
     }
     
+    func testTrackIncomingURL_withToken_tracksDeeplinkOpened() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "some ifa"
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        let url = URL(string: "http://usebutton.com/with-token?btn_ref=faketok-abc123")!
+        
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualIFA, "some ifa")
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
+    }
+    
+    func testTrackIncomingURL_withoutToken_tracksDeeplinkOpened() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
+    }
+    
+    func testTrackIncomingURL_withBTNParams_tracksDeeplinkOpened() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token/?btn_1=1&btn_2=2&btn_ref=faketok-123")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
+    }
+    
+    func testTrackIncomingURL_withFromLandingFromTrackingParams_tracksDeeplinkOpened() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token/?from_landing=true&from_tracking=false")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
+    }
+    
+    func testTrackIncomingURL_withoutButtonParams_tracksDeeplinkOpened() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token/?not_ours=param&also_not=same&utm_campaign=nope")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?")
+    }
+    
+    func testTrackIncomingURL_withMixedParams_tracksDeeplinkOpenedWith() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token/?theirs=param&from_landing=1&btn_test=0")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?from_landing=1&btn_test=0")
+    }
+    
     func testTrackIncomingURLPostsNotification() {
         // Arrange
         let testNotificationCenter = TestNotificationCenter()
