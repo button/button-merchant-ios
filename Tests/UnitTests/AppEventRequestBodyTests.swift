@@ -30,20 +30,20 @@ class AppEventsRequestBodyTests: XCTestCase {
     func testInitialization_createsInstance() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             sourceToken: "some token")
+                             attributionToken: "some token")
         let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
         
         XCTAssertEqual(body.ifa, "some ifa")
         XCTAssertEqual(body.events.count, 1)
         XCTAssertEqual(body.events.first?.name, "test-event")
         XCTAssertEqual(body.events.first?.value, ["url": "https://example.com"])
-        XCTAssertEqual(body.events.first?.sourceToken, "some token")
+        XCTAssertEqual(body.events.first?.attributionToken, "some token")
     }
     
     func testSerialization_createsDisctionary() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             sourceToken: "some token")
+                             attributionToken: "some token")
         let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
@@ -61,7 +61,7 @@ class AppEventsRequestBodyTests: XCTestCase {
     func testMissingIFA_omitsIFA() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             sourceToken: "some token")
+                             attributionToken: "some token")
         let body = AppEventsRequestBody(ifa: nil, events: [event])
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,

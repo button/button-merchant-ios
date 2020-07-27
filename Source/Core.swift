@@ -128,7 +128,7 @@ final internal class Core: CoreType {
         
         let event = AppEvent(name: "btn:deeplink-opened",
                              value: [ "url": filteredURL.absoluteString],
-                             sourceToken: incomingToken)
+                             attributionToken: incomingToken)
         client.reportEvents([event], ifa: system.advertisingId, nil)
     }
     

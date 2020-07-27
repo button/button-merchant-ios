@@ -28,14 +28,14 @@ import XCTest
 class AppEventTests: XCTestCase {
 
     func testInitialization_createsInstance() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], sourceToken: "some token")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token")
         XCTAssertEqual(event.name, "test event")
         XCTAssertEqual(event.value, ["foo": "bar"])
-        XCTAssertEqual(event.sourceToken, "some token")
+        XCTAssertEqual(event.attributionToken, "some token")
     }
     
     func testSerialization_createsDictionary() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], sourceToken: "some token")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token")
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "value": ["foo": "bar"],
@@ -44,7 +44,7 @@ class AppEventTests: XCTestCase {
     }
     
     func testMissingValue_omitsValue() {
-        let event = AppEvent(name: "test event", value: nil, sourceToken: "some token")
+        let event = AppEvent(name: "test event", value: nil, attributionToken: "some token")
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "promotion_source_token": "some token"
@@ -52,7 +52,7 @@ class AppEventTests: XCTestCase {
     }
     
     func testMissingSourceToken_omitsSourceToken() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], sourceToken: nil)
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil)
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "value": ["foo": "bar"]

@@ -500,7 +500,7 @@ class ClientTests: XCTestCase {
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        let event = AppEvent(name: "test-event", value: ["foo": "bar"], sourceToken: "some token")
+        let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token")
         
         // Act
         client.reportEvents([event], ifa: "some ifa") { error in

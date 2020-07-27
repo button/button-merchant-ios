@@ -25,6 +25,7 @@
 import XCTest
 @testable import ButtonMerchant
 
+// swiftlint:disable file_length
 class CoreTests: XCTestCase {
     
     var testClient: TestClient!
@@ -597,3 +598,4 @@ class CoreTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 }
+// swiftlint:enable file_length

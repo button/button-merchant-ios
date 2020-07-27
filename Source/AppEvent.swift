@@ -27,10 +27,10 @@ import UIKit
 internal struct AppEvent: Codable {
     let name: String
     let value: [String: String]?
-    let sourceToken: String?
+    let attributionToken: String?
     
     enum CodingKeys: String, CodingKey {
         case name, value
-        case sourceToken = "promotion_source_token"
+        case attributionToken = "promotion_source_token"
     }
 }
