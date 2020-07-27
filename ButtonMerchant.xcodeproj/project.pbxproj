@@ -121,6 +121,7 @@
 		FB70030B24CF46260050E021 /* AppEventRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */; };
 		FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030E24CF48A90050E021 /* AppEvent.swift */; };
 		FB70031224CF4BDE0050E021 /* AppEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70031024CF4BC60050E021 /* AppEventTests.swift */; };
+		FB70031424CF5EA50050E021 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70031324CF5EA50050E021 /* String+Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +277,7 @@
 		FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventRequestBodyTests.swift; sourceTree = "<group>"; };
 		FB70030E24CF48A90050E021 /* AppEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvent.swift; sourceTree = "<group>"; };
 		FB70031024CF4BC60050E021 /* AppEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventTests.swift; sourceTree = "<group>"; };
+		FB70031324CF5EA50050E021 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,6 +474,7 @@
 				DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */,
 				DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */,
 				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
+				FB70031324CF5EA50050E021 /* String+Error.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1134,6 +1137,7 @@
 				DE175A1C20A09DEA005C97B9 /* Version.generated.swift in Sources */,
 				9EB1B0A0207AB43E00BE0A1A /* System.swift in Sources */,
 				DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */,
+				FB70031424CF5EA50050E021 /* String+Error.swift in Sources */,
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
 				DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */,
 				FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */,

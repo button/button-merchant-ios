@@ -30,6 +30,7 @@ internal enum Service: String {
     case postInstall = "v1/web/deferred-deeplink"
     case activity = "v1/activity/order"
     case order = "v1/app/order"
+    case appEvents = "v1/app/events"
     
     static var baseURL = "https://api.usebutton.com/"
     
@@ -90,6 +91,21 @@ internal final class Client: ClientType {
         orderRequest.report(request, with: session, completion)
     }
     
+    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
+        guard events.count > 0 else {
+            if let completion = completion {
+                completion("No events to report")
+            }
+            return
+        }
+        let body = AppEventsRequestBody(ifa: ifa, events: events)
+        let request = urlRequest(url: Service.appEvents.url, parameters: body.dictionaryRepresentation)
+        enqueueRequest(request: request) { _, error in
+            if let completion = completion {
+                completion(error)
+            }
+        }
+    }
 }
 
 internal extension Client {
