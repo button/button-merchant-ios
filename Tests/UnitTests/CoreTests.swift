@@ -202,7 +202,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
     }
     
-    func testTrackIncomingURL_withoutButtonParams_tracksDeeplinkOpened() {
+    func testTrackIncomingURL_withoutButtonParams_tracksNoParams() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let url = URL(string: "http://usebutton.com/no-token/?not_ours=param&also_not=same&utm_campaign=nope")!
@@ -221,7 +221,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?")
     }
     
-    func testTrackIncomingURL_withMixedParams_tracksDeeplinkOpenedWith() {
+    func testTrackIncomingURL_withMixedParams_tracksWithButtonParams() {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let url = URL(string: "http://usebutton.com/no-token/?theirs=param&from_landing=1&btn_test=0")!
