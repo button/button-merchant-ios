@@ -265,6 +265,35 @@ class CoreTests: XCTestCase {
 
         self.wait(for: [expectation], timeout: 2.0)
     }
+    
+    func testHandlePostInstall_existingToken_callsBackNil() {
+
+        // Arrange
+        let expectation = XCTestExpectation(description: "handle post install error")
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testDefaults.attributionToken = "existing token"
+        let testSystem = TestSystem()
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: testSystem,
+                        notificationCenter: TestNotificationCenter())
+        testDefaults.testHasFetchedPostInstallURL = false
+        testSystem.testIsNewInstall = true
+        core.applicationId = "app-123"
+
+        // Act
+        core.handlePostInstallURL { url, error in
+
+            // Assert
+            XCTAssertNil(url)
+            XCTAssertNil(error)
+            
+            expectation.fulfill()
+        }
+        testClient.postInstallCompletion!(URL(string: "https://example.com")!, "faketok-abc123")
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
 
     func testShouldFetchPostInstallURL_neverFetched_newInstall() {
         // Arrange
