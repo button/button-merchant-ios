@@ -347,6 +347,30 @@ class ClientTests: XCTestCase {
         
         self.wait(for: [expectation], timeout: 2.0)
     }
+    
+    func testEnqueueRequest_completion_isOnMainQueue() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "enqueue request completes on main")
+        let testURLSession = TestURLSession()
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let url = URL(string: "https://usebutton.com")!
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        
+        // Act
+        client.enqueueRequest(request: URLRequest(url: url)) { data, error in
+            
+            // Assert
+            XCTAssertTrue(Thread.isMainThread)
+            
+            expectation.fulfill()
+        }
+        DispatchQueue.global(qos: .background).async {
+            testURLSession.lastDataTask?.completion(Data(), response, nil)
+        }
+        
+        self.wait(for: [expectation], timeout: 2.0)
+    }
 
     func testFetchPostInstallURLEnqueuesRequest() {
         // Arrange
@@ -488,13 +512,14 @@ class ClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
     
-    func testReportEvents_empty_events_doesNothing() {
+    func testReportEvents_emptyEvents_doesNothing() {
         // Arrange
         let expectation = XCTestExpectation(description: "report empty events fails")
         let testSession = TestURLSession()
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        client.applicationId = ApplicationId("app-abc123")
         
         // Act
         client.reportEvents([], ifa: "some ifa") { error in
@@ -507,6 +532,46 @@ class ClientTests: XCTestCase {
         }
         
         wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testAnyRequest_noAppId_collectsAsPendingTasks() {
+        // Arrange
+        let client = Client(session: TestURLSession(),
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
+        client.applicationId = nil
+        
+        // Act
+        client.fetchPostInstallURL(parameters: [:]) { _, _  in }
+        client.reportEvents([event], ifa: "some ifa") { _ in }
+        
+        // Assert
+        XCTAssertEqual(client.pendingTasks.count, 2)
+        XCTAssertEqual(client.pendingTasks[0].originalRequest?.url?.absoluteString, "https://mobileapi.usebutton.com/v1/app/deferred-deeplink")
+        XCTAssertEqual(client.pendingTasks[1].originalRequest?.url?.absoluteString, "https://mobileapi.usebutton.com/v1/app/events")
+    }
+    
+    func testSetApplicationId_withPendingTasks_flushesPendingTasks() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
+        client.fetchPostInstallURL(parameters: [:]) { _, _  in }
+        client.reportEvents([event], ifa: "some ifa") { _ in }
+        
+        // Act
+        client.applicationId = ApplicationId("app-test")
+        
+        // Assert
+        XCTAssertEqual(testURLSession.allDataTasks.count, 2)
+        XCTAssertEqual(testURLSession.allDataTasks[0].originalRequest?.url?.absoluteString,
+                       "https://mobileapi.usebutton.com/v1/app/deferred-deeplink")
+        XCTAssertEqual(testURLSession.allDataTasks[1].originalRequest?.url?.absoluteString,
+                       "https://mobileapi.usebutton.com/v1/app/events")
+        XCTAssertEqual(client.pendingTasks.count, 0)
     }
 }
 // swiftlint:enable file_length
