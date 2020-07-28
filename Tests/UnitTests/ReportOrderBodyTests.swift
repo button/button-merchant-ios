@@ -37,7 +37,6 @@ class ReportOrderBodyTests: XCTestCase {
         
         // Act
         let body = ReportOrderBody(system: TestSystem(),
-                                  applicationId: "app-abc123",
                                   attributionToken: "srctok-abc123",
                                   order: order)
         
@@ -65,7 +64,6 @@ class ReportOrderBodyTests: XCTestCase {
         
         // Act
         let body = ReportOrderBody(system: TestSystem(),
-                                  applicationId: "app-abc123",
                                   attributionToken: "srctok-abc123",
                                   order: order)
         
@@ -90,7 +88,6 @@ class ReportOrderBodyTests: XCTestCase {
         testSystem.advertisingId = nil
         // Act
         let body = ReportOrderBody(system: testSystem,
-                                   applicationId: "app-abc123",
                                    attributionToken: "srctok-abc123",
                                    order: order)
         

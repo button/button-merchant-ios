@@ -48,7 +48,7 @@ class ClientTests: XCTestCase {
         let expectedURL = URL(string: "https://usebutton.com")!
         let inputParameters = ["test": "test", "some": "value"]
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        client.applicationId = "app-abc123"
+        client.applicationId = ApplicationId("app-abc123")
         
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: inputParameters)
@@ -72,7 +72,7 @@ class ClientTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.sessionId = "some-session-id"
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
-        client.applicationId = "app-abc123"
+        client.applicationId = ApplicationId("app-abc123")
         
         // Act
         let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: ["foo": "bar"])
@@ -90,7 +90,7 @@ class ClientTests: XCTestCase {
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        client.applicationId = "app-abc123"
+        client.applicationId = ApplicationId("app-abc123")
         
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: nil)
@@ -128,7 +128,7 @@ class ClientTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.sessionId = "some-session-id"
         let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
-        client.applicationId = "app-abc123"
+        client.applicationId = ApplicationId("app-abc123")
 
         // Act
         let request = client.urlRequest(url: URL(string: "https://usebutton.com")!, parameters: nil)

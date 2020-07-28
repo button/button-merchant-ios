@@ -35,7 +35,7 @@ class TestClient: ClientType {
     var didCallReportOrder = false
     var didCallReportEvents = false
 
-    var applicationId: String?
+    var applicationId: ApplicationId?
     
     var session: URLSessionType
     var userAgent: UserAgentType

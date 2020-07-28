@@ -58,10 +58,10 @@ class CoreTests: XCTestCase {
                         notificationCenter: TestNotificationCenter())
         
         // Act
-        core.applicationId = "app-abc123"
+        core.applicationId = ApplicationId("app-abc123")
         
         // Assert
-        XCTAssertEqual(testClient.applicationId, "app-abc123")
+        XCTAssertEqual(testClient.applicationId?.rawValue, "app-abc123")
     }
     
     func testTrackIncomingURLIgnoresUnattributedURLs() {
@@ -348,7 +348,7 @@ class CoreTests: XCTestCase {
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
-        core.applicationId = "app-123"
+        core.applicationId = ApplicationId("app-123")
 
         // Act
         let expectedURL = URL(string: "http://test.com")
@@ -363,7 +363,7 @@ class CoreTests: XCTestCase {
             expectation.fulfill()
         }
         XCTAssertEqual(testClient.testParameters as NSDictionary,
-                       ["application_id": "app-123",
+                       [
                         "ifa": "00000000-0000-0000-0000-000000000000",
                         "signals":
                             ["source": "button-merchant",
@@ -390,7 +390,7 @@ class CoreTests: XCTestCase {
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
-        core.applicationId = ""
+        core.applicationId = ApplicationId("")
 
         // Act
         core.handlePostInstallURL { _, error in
@@ -416,7 +416,7 @@ class CoreTests: XCTestCase {
                         notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
-        core.applicationId = "app-123"
+        core.applicationId = ApplicationId("app-123")
 
         // Act
         core.handlePostInstallURL { url, error in
@@ -485,7 +485,7 @@ class CoreTests: XCTestCase {
                         client: testClient,
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
-        core.applicationId = "app-abc123"
+        core.applicationId = ApplicationId("app-abc123")
         
         // Act
         core.reportOrder(order) { error in
@@ -518,7 +518,7 @@ class CoreTests: XCTestCase {
                         client: testClient,
                         system: TestSystem(),
                         notificationCenter: TestNotificationCenter())
-        core.applicationId = ""
+        core.applicationId = ApplicationId("")
         
         // Act
         core.reportOrder(order) { error in

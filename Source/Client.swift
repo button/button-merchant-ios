@@ -39,7 +39,7 @@ internal enum Service: String {
 }
 
 internal protocol ClientType: class {
-    var applicationId: String? { get set }
+    var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
@@ -50,7 +50,7 @@ internal protocol ClientType: class {
 
 internal final class Client: ClientType {
     
-    var applicationId: String?
+    var applicationId: ApplicationId?
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
@@ -112,7 +112,7 @@ internal extension Client {
         }
         
         if let appId = applicationId {
-            requestParameters["application_id"] = appId
+            requestParameters["application_id"] = appId.rawValue
         }
         
         urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: requestParameters)

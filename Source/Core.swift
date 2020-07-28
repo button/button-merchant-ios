@@ -25,7 +25,7 @@
 import AdSupport
 
 internal protocol CoreType {
-    var applicationId: String? { get set }
+    var applicationId: ApplicationId? { get set }
     var buttonDefaults: ButtonDefaultsType { get }
     var client: ClientType { get }
     var system: SystemType { get }
@@ -47,7 +47,7 @@ internal protocol CoreType {
  */
 final internal class Core: CoreType {
 
-    var applicationId: String? {
+    var applicationId: ApplicationId? {
         didSet {
             client.applicationId = applicationId
         }
@@ -159,14 +159,14 @@ final internal class Core: CoreType {
             return
         }
 
-        guard let appId = applicationId, !appId.isEmpty else {
+        guard applicationId != nil else {
             completion(nil, ConfigurationError.noApplicationId)
             return
         }
 
         buttonDefaults.hasFetchedPostInstallURL = true
 
-        let postInstallBody = PostInstallBody(system: system, applicationId: appId)
+        let postInstallBody = PostInstallBody(system: system)
         let parameters = postInstallBody.dictionaryRepresentation
         
         client.fetchPostInstallURL(parameters: parameters) { [weak self] url, attributionToken in
@@ -181,14 +181,14 @@ final internal class Core: CoreType {
     }
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-        guard let appId = applicationId, !appId.isEmpty else {
+        guard applicationId != nil else {
             if let completion = completion {
                 completion(ConfigurationError.noApplicationId)
             }
             return
         }
         
-        let reportOrderBody = ReportOrderBody(system: system, applicationId: appId, attributionToken: buttonDefaults.attributionToken, order: order)
+        let reportOrderBody = ReportOrderBody(system: system, attributionToken: buttonDefaults.attributionToken, order: order)
         let request = ReportOrderRequest(parameters: reportOrderBody.dictionaryRepresentation)
         client.reportOrder(orderRequest: request, completion)
     }

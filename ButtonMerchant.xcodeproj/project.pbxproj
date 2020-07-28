@@ -115,6 +115,8 @@
 		DEA3F6BA2108F280009E720E /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA4AF05420868015002C3E0E /* MessageView.xib */; };
 		DEA3F6BB2108F286009E720E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05220867FFB002C3E0E /* MessageView.swift */; };
 		DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE61B2C20656A090039E47A /* XCTestExtensions.swift */; };
+		FB5AA6AB24D0A11D0057F3A0 /* ApplicationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */; };
+		FB5AA6AD24D0A19B0057F3A0 /* ApplicationIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */; };
 		FB70030824CF2FDE0050E021 /* AppEventsRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030724CF2FDE0050E021 /* AppEventsRequestBody.swift */; };
 		FB70030B24CF46260050E021 /* AppEventRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */; };
 		FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030E24CF48A90050E021 /* AppEvent.swift */; };
@@ -269,6 +271,8 @@
 		DE865FA2205304C700F4054D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		DEE61B2C20656A090039E47A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 		ECBD32D6815889EF663EBA5B /* Pods_ButtonMerchant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ButtonMerchant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationId.swift; sourceTree = "<group>"; };
+		FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationIdTests.swift; sourceTree = "<group>"; };
 		FB70030724CF2FDE0050E021 /* AppEventsRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventsRequestBody.swift; sourceTree = "<group>"; };
 		FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventRequestBodyTests.swift; sourceTree = "<group>"; };
 		FB70030E24CF48A90050E021 /* AppEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvent.swift; sourceTree = "<group>"; };
@@ -406,6 +410,7 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */,
 				FB70031024CF4BC60050E021 /* AppEventTests.swift */,
+				FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -619,6 +624,7 @@
 				DE865FA42053073B00F4054D /* Supporting Files */,
 				FB70030724CF2FDE0050E021 /* AppEventsRequestBody.swift */,
 				FB70030E24CF48A90050E021 /* AppEvent.swift */,
+				FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1155,6 +1161,7 @@
 				DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
 				9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */,
+				FB5AA6AB24D0A11D0057F3A0 /* ApplicationId.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
@@ -1189,6 +1196,7 @@
 				FB70030B24CF46260050E021 /* AppEventRequestBodyTests.swift in Sources */,
 				9E4C496820616B040053E4CA /* ButtonDefaultsTests.swift in Sources */,
 				9E6F4341206C160C004242A1 /* TestClient.swift in Sources */,
+				FB5AA6AD24D0A19B0057F3A0 /* ApplicationIdTests.swift in Sources */,
 				9E4C496720616B040053E4CA /* CoreTests.swift in Sources */,
 				DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */,
 				DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */,
