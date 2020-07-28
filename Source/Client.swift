@@ -31,15 +31,14 @@ internal enum Service: String {
     case order       = "v1/app/order"
     case appEvents   = "v1/app/events"
     
-    static let host = "mobileapi.usebutton.com"
+    static let baseURL = "https://mobileapi.usebutton.com/"
+    static let formattedBaseURL = "https://%@.mobileapi.usebutton.com/"
     
     func urlWith(_ applicationId: ApplicationId?) -> URL {
-        // Note: All entry points validate the applicationId, so a missing app Id here should not be possible.
-        var appIdComponent = ""
-        if let appId = applicationId?.rawValue {
-            appIdComponent = "\(appId)."
+        guard let appId = applicationId?.rawValue else {
+            return URL(string: Self.baseURL + rawValue)!
         }
-        return URL(string: "https://\(appIdComponent)\(Self.host)/\(self.rawValue)")!
+        return URL(string: String(format: Self.formattedBaseURL, appId) + rawValue)!
     }
 }
 
