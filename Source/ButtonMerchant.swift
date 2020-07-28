@@ -69,14 +69,12 @@ final public class ButtonMerchant: NSObject {
 
      - Parameters:
         - applicationId: Your application Id (required)
-        - completion: An optional completion block that may contain an error if the applicationId is invalid.
 
      */
-    @objc public static func configure(applicationId: String, completion: ((Error?) -> Void)? = nil) {
+    @objc public static func configure(applicationId: String) {
         guard let validAppId = ApplicationId(applicationId) else {
-            if let completion = completion {
-                completion(ConfigurationError.invalidApplicationId(appicationId: applicationId))
-            }
+            let error = ConfigurationError.invalidApplicationId(appicationId: applicationId)
+            print("⚠️ Button :: \(error.localizedDescription)")
             return
         }
         core.applicationId = validAppId

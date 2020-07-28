@@ -25,6 +25,7 @@
 import XCTest
 @testable import ButtonMerchant
 
+// swiftlint:disable file_length
 class ServiceTests: XCTestCase {
     
     let appId = ApplicationId("app-test")
@@ -352,7 +353,7 @@ class ClientTests: XCTestCase {
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         client.applicationId = ApplicationId("app-abc123")
-        let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/web/deferred-deeplink")!
+        let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/app/deferred-deeplink")!
 
         // Act
         client.fetchPostInstallURL(parameters: ["blargh": "blergh"]) { _, _ in }
@@ -508,3 +509,4 @@ class ClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 }
+// swiftlint:enable file_length

@@ -60,24 +60,6 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(testCore.applicationId?.rawValue, applicationId)
     }
     
-    func testConfigureApplicationId_invalidAppId_completesWithError() {
-        // Arrange
-        let expectation = self.expectation(description: "completes with appId error")
-        ButtonMerchant._core = testCore
-        
-        // Act
-        ButtonMerchant.configure(applicationId: "invalid app id") { error in
-            
-            // Assert
-            XCTAssertEqual(error as? ConfigurationError,
-                           ConfigurationError.invalidApplicationId(appicationId: "invalid app id"))
-            
-            expectation.fulfill()
-        }
-
-        self.wait(for: [expectation], timeout: 2.0)
-    }
-    
     func testCreateCoreCreatesCoreWhenCoreSetToNil() {
         // Arrange
         ButtonMerchant._core = nil
