@@ -35,7 +35,6 @@ internal protocol CoreType {
     func clearAllData()
     func trackIncomingURL(_ url: URL)
     func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
-    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
     init(buttonDefaults: ButtonDefaultsType,
          client: ClientType,
@@ -179,25 +178,6 @@ final internal class Core: CoreType {
             self?.buttonDefaults.attributionToken = token
             completion(url, nil)
         }
-    }
-    
-    @available(*, deprecated)
-    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-        guard let appId = applicationId, !appId.isEmpty else {
-            if let completion = completion {
-                completion(ConfigurationError.noApplicationId)
-            }
-            return
-        }
-
-        let trackOrderBody = TrackOrderBody(system: system,
-                                            applicationId: appId,
-                                            attributionToken: buttonDefaults.attributionToken,
-                                            order: order)
-
-        let parameters = trackOrderBody.dictionaryRepresentation
-
-        client.trackOrder(parameters: parameters, completion)
     }
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {

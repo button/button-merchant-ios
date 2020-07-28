@@ -194,6 +194,9 @@ extension ButtonMerchant {
      */
     @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
     @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
-        core.trackOrder(order, completion)
+        guard let completion = completion else {
+            return
+        }
+        completion("trackOrder(_:) is No longer supported. You can safely remove your usage of this method.")
     }
 }

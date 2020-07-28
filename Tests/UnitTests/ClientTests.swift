@@ -25,7 +25,6 @@
 import XCTest
 @testable import ButtonMerchant
 
-// swiftlint:disable file_length
 class ClientTests: XCTestCase {
 
     func testInitialization() {
@@ -399,72 +398,6 @@ class ClientTests: XCTestCase {
         
         self.wait(for: [expectation], timeout: 2.0)
     }
-
-    func testTrackOrderEnqueuesRequest() {
-        // Arrange
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/activity/order")!
-        
-        // Act
-        client.trackOrder(parameters: expectedParameters) { _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
-        let parameters = requestParameters as? [String: String]
-        
-        // Assert
-        XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
-        XCTAssertNotNil(testURLSession.lastDataTask)
-        XCTAssertNotNil(testURLSession.lastDataTask?.originalRequest!.url)
-        XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
-        XCTAssertNotNil(parameters)
-        XCTAssertEqual(parameters!, expectedParameters)
-    }
-    
-    func testTrackOrderSuccess() {
-        // Arrange
-        let expectation = XCTestExpectation(description: "track order success")
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
-        
-        // Act
-        client.trackOrder(parameters: [:]) { error in
-            
-            // Assert
-            XCTAssertNil(error)
-            
-            expectation.fulfill()
-        }
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        testURLSession.lastDataTask?.completion(Data(), response, nil)
-        
-        self.wait(for: [expectation], timeout: 2.0)
-    }
-    
-    func testTrackOrderFails() {
-        // Arrange
-        let expectation = XCTestExpectation(description: "track order fails")
-        let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        let url = URL(string: "https://api.usebutton.com/v1/activity/order")!
-        let expectedError = TestError.known
-        
-        // Act
-        client.trackOrder(parameters: [:]) { error in
-            
-            // Assert
-            XCTAssertNotNil(error)
-            XCTAssertEqual(error as? TestError, expectedError)
-            
-            expectation.fulfill()
-        }
-        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        testURLSession.lastDataTask?.completion(nil, response, expectedError)
-
-        self.wait(for: [expectation], timeout: 2.0)
-    }
     
     func testReportOrder_reportsRequestWithSession() {
         // Arrange
@@ -551,4 +484,3 @@ class ClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
 }
-// swiftlint:enable file_length
