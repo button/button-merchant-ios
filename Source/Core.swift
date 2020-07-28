@@ -35,7 +35,6 @@ internal protocol CoreType {
     func clearAllData()
     func trackIncomingURL(_ url: URL)
     func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
-    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
     init(buttonDefaults: ButtonDefaultsType,
          client: ClientType,
@@ -90,33 +89,67 @@ final internal class Core: CoreType {
 
     /**
      Checks and persists Button attribution in all passed URLs.
-
+     
      - Parameter url: The URL to be inspected.
      */
     func trackIncomingURL(_ url: URL) {
-        guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false),
-            let queryItems = urlComponents.queryItems else {
-                return
+        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return
         }
-
-        if let queryItem = queryItems.first(where: {$0.name == "btn_ref"}),
-            let newAttributionToken = queryItem.value {
-            
-            let oldAttributionToken = attributionToken
-            attributionToken = newAttributionToken
-            
-            var isNewToken = true
-            if let oldAttributionToken = oldAttributionToken {
-                isNewToken = oldAttributionToken != newAttributionToken
+        
+        let queryItems = urlComponents.queryItems
+        urlComponents.queryItems = nil
+        urlComponents.fragment = nil
+        
+        var incomingToken: String?
+        if let queryItems = queryItems {
+            var allowedQueryItems = [URLQueryItem]()
+            queryItems.forEach { item in
+                switch item.name.lowercased() {
+                case "btn_ref":
+                    incomingToken = item.value
+                    updateAttributionIfNeeded(token: incomingToken)
+                    allowedQueryItems.append(item)
+                case "from_landing",
+                     "from_tracking",
+                     _ where item.name.lowercased().hasPrefix("btn_"):
+                    allowedQueryItems.append(item)
+                default:
+                    break
+                }
             }
-            if isNewToken {
-                notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
-                                        object: nil,
-                                        userInfo: [Notification.Key.NewToken: newAttributionToken])
-            }
+            urlComponents.queryItems = allowedQueryItems
+        }
+        
+        guard let filteredURL = urlComponents.url else {
+            return
+        }
+        
+        let event = AppEvent(name: "btn:deeplink-opened",
+                             value: [ "url": filteredURL.absoluteString],
+                             attributionToken: incomingToken)
+        client.reportEvents([event], ifa: system.advertisingId, nil)
+    }
+    
+    private func updateAttributionIfNeeded(token: String?) {
+        guard let incomingToken = token else {
+            return
+        }
+        
+        let oldAttributionToken = attributionToken
+        attributionToken = incomingToken
+        
+        var isNewToken = true
+        if let oldAttributionToken = oldAttributionToken {
+            isNewToken = oldAttributionToken != incomingToken
+        }
+        if isNewToken {
+            notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
+                                    object: nil,
+                                    userInfo: [Notification.Key.NewToken: incomingToken])
         }
     }
-
+    
     /**
      Checks *once only* for a post-install url if installed < 12 hours ago.
      */
@@ -135,32 +168,16 @@ final internal class Core: CoreType {
 
         let postInstallBody = PostInstallBody(system: system, applicationId: appId)
         let parameters = postInstallBody.dictionaryRepresentation
-
+        
         client.fetchPostInstallURL(parameters: parameters) { [weak self] url, attributionToken in
-            if let token = attributionToken {
-                self?.buttonDefaults.attributionToken = token
+            guard self?.buttonDefaults.attributionToken == nil,
+                let token = attributionToken else {
+                    completion(nil, nil)
+                    return
             }
+            self?.buttonDefaults.attributionToken = token
             completion(url, nil)
         }
-    }
-    
-    @available(*, deprecated)
-    func trackOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-        guard let appId = applicationId, !appId.isEmpty else {
-            if let completion = completion {
-                completion(ConfigurationError.noApplicationId)
-            }
-            return
-        }
-
-        let trackOrderBody = TrackOrderBody(system: system,
-                                            applicationId: appId,
-                                            attributionToken: buttonDefaults.attributionToken,
-                                            order: order)
-
-        let parameters = trackOrderBody.dictionaryRepresentation
-
-        client.trackOrder(parameters: parameters, completion)
     }
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {

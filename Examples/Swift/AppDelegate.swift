@@ -25,8 +25,6 @@
 import UIKit
 import ButtonMerchant
 
-extension String: Error {}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

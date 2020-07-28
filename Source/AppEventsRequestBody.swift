@@ -1,7 +1,7 @@
 //
-// TrackOrderBody.swift
+// AppEventRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,37 +24,7 @@
 
 import Foundation
 
-internal struct TrackOrderBody: Codable {
-
-    let applicationId: String
-    let userLocalTime: String
-    let attributionToken: String?
-    let orderId: String
-    let total: Int64
-    let currency: String
-    let source: String = "merchant-library"
-
-    enum CodingKeys: String, CodingKey {
-        case applicationId = "app_id"
-        case userLocalTime = "user_local_time"
-        case attributionToken = "btn_ref"
-        case orderId = "order_id"
-        case total
-        case currency
-        case source
-    }
-
-    @available(*, deprecated)
-    init(system: SystemType,
-         applicationId: String,
-         attributionToken: String?,
-         order: Order) {
-
-        self.applicationId = applicationId
-        userLocalTime = system.currentDate.ISO8601String
-        self.attributionToken = attributionToken
-        self.orderId = order.id
-        self.total = order.amount
-        self.currency = order.currencyCode
-    }
+internal struct AppEventsRequestBody: Codable {
+    let ifa: String?
+    let events: [AppEvent]
 }

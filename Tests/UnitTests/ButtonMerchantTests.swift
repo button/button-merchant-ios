@@ -136,15 +136,22 @@ class ButtonMerchantTests: XCTestCase {
 
     @available(*, deprecated)
     func testTrackOrderInvokesCoreWithOrder() {
+        let expectation = self.expectation(description: "trackOrder deprecation error")
+        
         // Arrange
-        let expectedOrder = Order(id: "test", amount: Int64(12))
         ButtonMerchant._core = testCore
         
         // Act
-        ButtonMerchant.trackOrder(expectedOrder) { _ in }
-
-        // Assert
-        XCTAssertEqual(testCore.testOrder, expectedOrder)
+        ButtonMerchant.trackOrder(Order(id: "test", amount: Int64(12))) { error in
+            
+            // Assert
+            XCTAssertEqual(error as? String,
+                           "trackOrder(_:) is No longer supported. You can safely remove your usage of this method.")
+            
+            expectation.fulfill()
+        }
+        
+        self.wait(for: [expectation], timeout: 2.0)
     }
     
     func testReportOrderInvokesCoreWithOrder() {

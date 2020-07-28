@@ -33,6 +33,7 @@ class TestClient: ClientType {
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
     var didCallReportOrder = false
+    var didCallReportEvents = false
 
     var applicationId: String?
     
@@ -43,6 +44,10 @@ class TestClient: ClientType {
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
     var reportOrderCompletion: ((Error?) -> Void)?
+    
+    var actualEvents: [AppEvent]?
+    var actualIFA: String?
+    var actualReportEventsCompletion: ((Error?) -> Void)?
     
     required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
@@ -67,5 +72,12 @@ class TestClient: ClientType {
         didCallReportOrder = true
         testReportOrderRequest = orderRequest
         reportOrderCompletion = completion
+    }
+    
+    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
+        didCallReportEvents = true
+        actualEvents = events
+        actualIFA = ifa
+        actualReportEventsCompletion = completion
     }
 }
