@@ -28,9 +28,8 @@ import UIKit
 internal enum Service: String {
     
     case postInstall = "v1/web/deferred-deeplink"
-    case activity = "v1/activity/order"
-    case order = "v1/app/order"
-    case appEvents = "v1/app/events"
+    case order       = "v1/app/order"
+    case appEvents   = "v1/app/events"
     
     static var baseURL = "https://api.usebutton.com/"
     
@@ -44,7 +43,6 @@ internal protocol ClientType: class {
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
-    func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
@@ -76,15 +74,6 @@ internal final class Client: ClientType {
             }
             completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
         })
-    }
-    
-    func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
-        let request = urlRequest(url: Service.activity.url, parameters: parameters)
-        enqueueRequest(request: request) { _, error in
-            if let completion = completion {
-                completion(error)
-            }
-        }
     }
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
