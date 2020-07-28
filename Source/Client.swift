@@ -27,14 +27,19 @@ import UIKit
 
 internal enum Service: String {
     
-    case postInstall = "v1/web/deferred-deeplink"
+    case postInstall = "v1/app/deferred-deeplink"
     case order       = "v1/app/order"
     case appEvents   = "v1/app/events"
     
-    static var baseURL = "https://api.usebutton.com/"
+    static let host = "mobileapi.usebutton.com"
     
-    var url: URL {
-        return URL(string: Service.baseURL + self.rawValue)!
+    func urlWith(_ applicationId: ApplicationId?) -> URL {
+        // Note: All entry points validate the applicationId, so a missing app Id here should not be possible.
+        var appIdComponent = ""
+        if let appId = applicationId?.rawValue {
+            appIdComponent = "\(appId)."
+        }
+        return URL(string: "https://\(appIdComponent)\(Self.host)/\(self.rawValue)")!
     }
 }
 
@@ -62,7 +67,7 @@ internal final class Client: ClientType {
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        let request = urlRequest(url: Service.postInstall.url, parameters: parameters)
+        let request = urlRequest(url: Service.postInstall.urlWith(applicationId), parameters: parameters)
         enqueueRequest(request: request, completion: { data, _ in
             guard let data = data,
                 let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
@@ -77,7 +82,7 @@ internal final class Client: ClientType {
     }
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
-        let request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
+        let request = urlRequest(url: Service.order.urlWith(applicationId), parameters: orderRequest.parameters)
         orderRequest.report(request, with: session, completion)
     }
     
@@ -89,7 +94,7 @@ internal final class Client: ClientType {
             return
         }
         let body = AppEventsRequestBody(ifa: ifa, events: events)
-        let request = urlRequest(url: Service.appEvents.url, parameters: body.dictionaryRepresentation)
+        let request = urlRequest(url: Service.appEvents.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, error in
             if let completion = completion {
                 completion(error)

@@ -25,6 +25,28 @@
 import XCTest
 @testable import ButtonMerchant
 
+class ServiceTests: XCTestCase {
+    
+    let appId = ApplicationId("app-test")
+    
+    func testService_postInstallCase_urlWith_returnsPostInstallURL() {
+        XCTAssertEqual(Service.postInstall.urlWith(appId).absoluteString, "https://app-test.mobileapi.usebutton.com/v1/app/deferred-deeplink")
+    }
+    
+    func testService_orderCase_urlWith_returnsOrderURL() {
+        XCTAssertEqual(Service.order.urlWith(appId).absoluteString, "https://app-test.mobileapi.usebutton.com/v1/app/order")
+    }
+    
+    func testService_appEventsCase_urlWith_returnsAppEventsURL() {
+        XCTAssertEqual(Service.appEvents.urlWith(appId).absoluteString, "https://app-test.mobileapi.usebutton.com/v1/app/events")
+    }
+    
+    // Note: We fall back to dropping the appId though it's blocked at the external call sites.
+    func testService_urlWithInvalidAppId_returnsURLWithoutAppId() {
+        XCTAssertEqual(Service.appEvents.urlWith(ApplicationId("")).absoluteString, "https://mobileapi.usebutton.com/v1/app/events")
+    }
+}
+
 class ClientTests: XCTestCase {
 
     func testInitialization() {
@@ -329,11 +351,11 @@ class ClientTests: XCTestCase {
         // Arrange
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
-        let expectedParameters = ["blargh": "blergh"]
-        let expectedURL = URL(string: "https://api.usebutton.com/v1/web/deferred-deeplink")!
+        client.applicationId = ApplicationId("app-abc123")
+        let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/web/deferred-deeplink")!
 
         // Act
-        client.fetchPostInstallURL(parameters: expectedParameters) { _, _ in }
+        client.fetchPostInstallURL(parameters: ["blargh": "blergh"]) { _, _ in }
         let request = (testURLSession.lastDataTask?.originalRequest)!
         let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
         let parameters = requestParameters as? [String: String]
@@ -344,7 +366,7 @@ class ClientTests: XCTestCase {
         XCTAssertNotNil(testURLSession.lastDataTask?.originalRequest!.url)
         XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
         XCTAssertNotNil(parameters)
-        XCTAssertEqual(parameters!, expectedParameters)
+        XCTAssertEqual(parameters!, ["blargh": "blergh", "application_id": "app-abc123"])
     }
     
     func testFetchPostInstallURLSuccess() {
@@ -404,6 +426,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report order")
         let session = TestURLSession()
         let client = Client(session: session, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        client.applicationId = ApplicationId("app-abc123")
         let request = TestReportOrderRequest(parameters: ["foo": "bar"], encodedApplicationId: "abc123")
         
         // Act
@@ -416,10 +439,10 @@ class ClientTests: XCTestCase {
         }
         
         XCTAssertEqualReferences(request.testSession as AnyObject, session)
-        XCTAssertEqual(request.testRequest?.url, URL(string: "https://api.usebutton.com/v1/app/order")!)
+        XCTAssertEqual(request.testRequest?.url, URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/app/order")!)
         XCTAssertEqual(request.testRequest?.httpMethod, "POST")
         let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
-        XCTAssertEqual(body, ["foo": "bar"])
+        XCTAssertEqual(body, ["foo": "bar", "application_id": "app-abc123"])
         
         request.testCompletion!(nil)
         
@@ -433,6 +456,7 @@ class ClientTests: XCTestCase {
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        client.applicationId = ApplicationId("app-abc123")
         let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token")
         
         // Act
@@ -442,17 +466,17 @@ class ClientTests: XCTestCase {
             
             // Assert
             XCTAssertNil(error)
-            XCTAssertEqual(request?.url?.absoluteString, "https://api.usebutton.com/v1/app/events")
+            XCTAssertEqual(request?.url?.absoluteString, "https://app-abc123.mobileapi.usebutton.com/v1/app/events")
             XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, [
-            "ifa": "some ifa",
-            "events": [
-                [
-                    "name": "test-event",
-                    "value": ["foo": "bar"],
-                    "promotion_source_token": "some token"
-                ]
-            ]])
-
+                "ifa": "some ifa",
+                "events": [
+                    [
+                        "name": "test-event",
+                        "value": ["foo": "bar"],
+                        "promotion_source_token": "some token"
+                    ]
+                ]])
+            
             expectation.fulfill()
         }
         
