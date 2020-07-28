@@ -240,6 +240,25 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?from_landing=1&btn_test=0")
     }
     
+    func testTrackIncomingURL_withMixedCase_tracksWithButtonParams() {
+        // Arrange
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let url = URL(string: "http://usebutton.com/no-token/?theirs=param&From_landing=1&Btn_test=0")!
+        let core = Core(buttonDefaults: testDefaults,
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertTrue(testClient.didCallReportEvents)
+        XCTAssertEqual(testClient.actualEvents?.count, 1)
+        XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
+        XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?From_landing=1&Btn_test=0")
+    }
+    
     func testTrackIncomingURLPostsNotification() {
         // Arrange
         let testNotificationCenter = TestNotificationCenter()

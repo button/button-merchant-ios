@@ -105,14 +105,14 @@ final internal class Core: CoreType {
         if let queryItems = queryItems {
             var allowedQueryItems = [URLQueryItem]()
             queryItems.forEach { item in
-                switch item.name {
+                switch item.name.lowercased() {
                 case "btn_ref":
                     incomingToken = item.value
                     updateAttributionIfNeeded(token: incomingToken)
                     allowedQueryItems.append(item)
                 case "from_landing",
                      "from_tracking",
-                     _ where item.name.hasPrefix("btn_"):
+                     _ where item.name.lowercased().hasPrefix("btn_"):
                     allowedQueryItems.append(item)
                 default:
                     break
