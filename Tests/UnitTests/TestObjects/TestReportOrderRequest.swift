@@ -27,21 +27,19 @@ import Foundation
 
 class TestReportOrderRequest: ReportOrderRequestType {
     var parameters: [String: Any]
-    var encodedApplicationId: String
     var retryPolicy: RetryPolicyType
     
     var didCallReport = false
     var testRequest: URLRequest?
     var testSession: URLSessionType?
-    var testCompletion: ((Error?) -> Void)?
+    var testCompletion: ((Data?, Error?) -> Void)?
     
-    required init(parameters: [String: Any], encodedApplicationId: String, retryPolicy: RetryPolicyType = RetryPolicy()) {
+    required init(parameters: [String: Any], retryPolicy: RetryPolicyType = RetryPolicy()) {
         self.parameters = parameters
-        self.encodedApplicationId = encodedApplicationId
         self.retryPolicy = retryPolicy
     }
     
-    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
+    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Data?, Error?) -> Void)?) {
         didCallReport = true
         testRequest = request
         testSession = session

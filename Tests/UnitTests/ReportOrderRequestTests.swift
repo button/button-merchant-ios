@@ -83,7 +83,7 @@ class ReportOrderRequestTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "200")
         
-        request.report(urlRequest, with: session) { error in
+        request.report(urlRequest, with: session) { _, error in
             
             // Assert
             XCTAssertNil(error)
@@ -103,7 +103,7 @@ class ReportOrderRequestTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "400")
         
-        request.report(urlRequest, with: session) { error in
+        request.report(urlRequest, with: session) { _, error in
             
             // Assert
             XCTAssertEqual(error as? NetworkError, NetworkError.unknown)
@@ -148,7 +148,7 @@ class ReportOrderRequestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "no retry finish")
         policy.shouldRetry = false
         
-        request.report(urlRequest, with: session) { error in
+        request.report(urlRequest, with: session) { _, error in
             
             // Assert
             XCTAssertEqual(error as? NetworkError, NetworkError.unknown)

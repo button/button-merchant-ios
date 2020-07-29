@@ -204,7 +204,7 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testEnqueueRequestSuccess_whenSession_persistsSession() {
+    func testEnqueueRequestSuccess_whenSessionId_persistsSessionId() {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
@@ -229,7 +229,7 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testEnqueueRequestSuccess_whenNoSession_noChange() {
+    func testEnqueueRequestSuccess_whenNoSessionId_noChange() {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
@@ -256,7 +256,7 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testEnqueueRequestSuccess_whenNewSession_persistsNewSession() {
+    func testEnqueueRequestSuccess_whenNewSessionId_persistsNewSessionId() {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
@@ -283,7 +283,7 @@ class ClientTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testEnqueueRequestSuccess_whenSessionNull_clearsAllData() {
+    func testEnqueueRequestSuccess_whenSessionIdNull_clearsAllData() {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
@@ -465,7 +465,7 @@ class ClientTests: XCTestCase {
         let session = TestURLSession()
         let client = Client(session: session, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         client.applicationId = ApplicationId("app-abc123")
-        let request = TestReportOrderRequest(parameters: ["foo": "bar"], encodedApplicationId: "abc123")
+        let request = TestReportOrderRequest(parameters: ["foo": "bar"])
         
         // Act
         client.reportOrder(orderRequest: request) { error in
@@ -482,7 +482,30 @@ class ClientTests: XCTestCase {
         let body = try? JSONSerialization.jsonObject(with: (request.testRequest?.httpBody)!) as? [String: String]
         XCTAssertEqual(body, ["foo": "bar", "application_id": "app-abc123"])
         
-        request.testCompletion!(nil)
+        request.testCompletion!(Data(), nil)
+        
+        wait(for: [expectation], timeout: 2.0)
+    }
+    
+    func testReportOrder_whenSessionId_persistsSessionId() {
+        // Arrange
+        let expectation = XCTestExpectation(description: "report order persists session id")
+        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        let client = Client(session: TestURLSession(), userAgent: TestUserAgent(), defaults: testDefaults)
+        client.applicationId = ApplicationId("app-abc123")
+        let request = TestReportOrderRequest(parameters: ["foo": "bar"])
+        let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": "some-session-id"]])
+        
+        // Act
+        client.reportOrder(orderRequest: request) { error in
+            
+            // Assert
+            XCTAssertNil(error)
+            XCTAssertEqual(testDefaults.sessionId, "some-session-id")
+            
+            expectation.fulfill()
+        }
+        request.testCompletion!(responseData, nil)
         
         wait(for: [expectation], timeout: 2.0)
     }

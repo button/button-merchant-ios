@@ -99,7 +99,12 @@ internal final class Client: ClientType {
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
         let request = urlRequest(url: Service.order.urlWith(applicationId), parameters: orderRequest.parameters)
-        orderRequest.report(request, with: session, completion)
+        orderRequest.report(request, with: session) { data, error in
+            self.refreshSessionIfAvailable(responseData: data)
+            if let completion = completion {
+                completion(error)
+            }
+        }
     }
     
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {

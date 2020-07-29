@@ -28,7 +28,7 @@ internal protocol ReportOrderRequestType {
     var parameters: [String: Any] { get }
     var retryPolicy: RetryPolicyType { get }
     
-    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?)
+    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Data?, Error?) -> Void)?)
 }
 
 internal final class ReportOrderRequest: ReportOrderRequestType {
@@ -41,7 +41,7 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
         self.retryPolicy = retryPolicy
     }
     
-    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Error?) -> Void)?) {
+    func report(_ request: URLRequest, with session: URLSessionType, _ completion: ((Data?, Error?) -> Void)?) {
         let task = session.dataTask(with: request) { data, response, error in
             var nextAttempt = true
             var networkError: Error? = NetworkError.unknown
@@ -58,7 +58,7 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
             }
             guard nextAttempt else {
                 if let completion = completion {
-                    completion(networkError)
+                    completion(data, networkError)
                 }
                 return
             }
@@ -67,7 +67,7 @@ internal final class ReportOrderRequest: ReportOrderRequestType {
             
             guard self.retryPolicy.shouldRetry else {
                 if let completion = completion {
-                    completion(networkError)
+                    completion(data, networkError)
                 }
                 return
             }
