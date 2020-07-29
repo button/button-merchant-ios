@@ -53,7 +53,7 @@ internal protocol ClientType: class {
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     var defaults: ButtonDefaultsType { get }
-    var pendingTasks: [PendingTask] { get }
+    var pendingTasks: [PendingTask] { get set }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)

@@ -336,6 +336,23 @@ class CoreTests: XCTestCase {
         // Assert
         XCTAssertTrue(testDefaults.didCallClearAllData)
     }
+    
+    func testClearAllDataRemovesPendingTasks() {
+        // Arrange
+        let request = URLRequest(url: URL(string: "https://example.com")!)
+        let task = PendingTask(urlRequest: request) { _, _ in }
+        testClient.pendingTasks.append(task)
+        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                        client: testClient,
+                        system: TestSystem(),
+                        notificationCenter: TestNotificationCenter())
+
+        // Act
+        core.clearAllData()
+        
+        // Assert
+        XCTAssertTrue(testClient.pendingTasks.isEmpty)
+    }
 
     func testHandlePostInstallURL() {
         // Arrange
