@@ -27,21 +27,32 @@ import UIKit
 
 internal enum Service: String {
     
-    case postInstall = "v1/web/deferred-deeplink"
+    case postInstall = "v1/app/deferred-deeplink"
     case order       = "v1/app/order"
     case appEvents   = "v1/app/events"
     
-    static var baseURL = "https://api.usebutton.com/"
+    static let baseURL = "https://mobileapi.usebutton.com/"
+    static let formattedBaseURL = "https://%@.mobileapi.usebutton.com/"
     
-    var url: URL {
-        return URL(string: Service.baseURL + self.rawValue)!
+    func urlWith(_ applicationId: ApplicationId?) -> URL {
+        guard let appId = applicationId?.rawValue else {
+            return URL(string: Self.baseURL + rawValue)!
+        }
+        return URL(string: String(format: Self.formattedBaseURL, appId) + rawValue)!
     }
 }
 
+internal struct PendingTask {
+    var urlRequest: URLRequest
+    var completion: (Data?, Error?) -> Void
+}
+
 internal protocol ClientType: class {
-    var applicationId: String? { get set }
+    var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
+    var defaults: ButtonDefaultsType { get }
+    var pendingTasks: [PendingTask] { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
@@ -50,10 +61,15 @@ internal protocol ClientType: class {
 
 internal final class Client: ClientType {
     
-    var applicationId: String?
+    var applicationId: ApplicationId? {
+        didSet {
+            flushPendingRequests()
+        }
+    }
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var pendingTasks = [PendingTask]()
     
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
@@ -62,7 +78,7 @@ internal final class Client: ClientType {
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        let request = urlRequest(url: Service.postInstall.url, parameters: parameters)
+        let request = urlRequest(url: Service.postInstall.urlWith(applicationId), parameters: parameters)
         enqueueRequest(request: request, completion: { data, _ in
             guard let data = data,
                 let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
@@ -72,12 +88,14 @@ internal final class Client: ClientType {
                     completion(nil, nil)
                     return
             }
-            completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
+            DispatchQueue.main.async {
+                completion(URL(string: action)!, attributionObject["btn_ref"] as? String)
+            }
         })
     }
     
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
-        let request = urlRequest(url: Service.order.url, parameters: orderRequest.parameters)
+        let request = urlRequest(url: Service.order.urlWith(applicationId), parameters: orderRequest.parameters)
         orderRequest.report(request, with: session, completion)
     }
     
@@ -89,12 +107,30 @@ internal final class Client: ClientType {
             return
         }
         let body = AppEventsRequestBody(ifa: ifa, events: events)
-        let request = urlRequest(url: Service.appEvents.url, parameters: body.dictionaryRepresentation)
+        let request = urlRequest(url: Service.appEvents.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, error in
             if let completion = completion {
                 completion(error)
             }
         }
+    }
+    
+    private func flushPendingRequests() {
+        guard let appId = applicationId else {
+            return
+        }
+        
+        pendingTasks.forEach { pendingTask in
+            var urlRequest = pendingTask.urlRequest
+            guard let bodyData = urlRequest.httpBody,
+                var parameters = try? JSONSerialization.jsonObject(with: bodyData) as? [String: Any] else {
+                    return
+            }
+            parameters["application_id"] = appId.rawValue
+            urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+            enqueueRequest(request: urlRequest, completion: pendingTask.completion)
+        }
+        pendingTasks.removeAll()
     }
 }
 
@@ -112,7 +148,7 @@ internal extension Client {
         }
         
         if let appId = applicationId {
-            requestParameters["application_id"] = appId
+            requestParameters["application_id"] = appId.rawValue
         }
         
         urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: requestParameters)
@@ -122,17 +158,25 @@ internal extension Client {
     }
     
     func enqueueRequest(request: URLRequest, completion: @escaping (Data?, Error?) -> Void) {
-        let task = session.dataTask(with: request) { data, response, error  in
-            guard let data = data,
-                let response = response as? HTTPURLResponse, 200...299 ~= response.statusCode else {
-                    completion(nil, error)
-                    return
-            }
-            
-            self.refreshSessionIfAvailable(responseData: data)
-            
-            completion(data, nil)
+        guard applicationId != nil else {
+            pendingTasks.append(PendingTask(urlRequest: request, completion: completion))
+            return
         }
+        
+        let task = session.dataTask(with: request) { data, response, error  in
+            DispatchQueue.main.async {
+                guard let data = data,
+                    let response = response as? HTTPURLResponse, 200...299 ~= response.statusCode else {
+                        completion(nil, error)
+                        return
+                }
+                
+                self.refreshSessionIfAvailable(responseData: data)
+                
+                completion(data, nil)
+            }
+        }
+        
         task.resume()
     }
     

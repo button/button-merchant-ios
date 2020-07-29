@@ -36,7 +36,7 @@ class TestCore: CoreType {
     var didCallClearAllData = false
     var didCallFetchPostInstallURL = false
     
-    var applicationId: String?
+    var applicationId: ApplicationId?
     var buttonDefaults: ButtonDefaultsType
     var client: ClientType
     var system: SystemType

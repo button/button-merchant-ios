@@ -35,11 +35,12 @@ class TestClient: ClientType {
     var didCallReportOrder = false
     var didCallReportEvents = false
 
-    var applicationId: String?
+    var applicationId: ApplicationId?
     
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var pendingTasks = [PendingTask]()
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?

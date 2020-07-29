@@ -26,18 +26,15 @@ import Foundation
 
 internal struct PostInstallBody: Codable {
 
-    let applicationId: String
     let ifa: String?
     let signals: Signals
 
     enum CodingKeys: String, CodingKey {
-        case applicationId = "application_id"
         case ifa
         case signals
     }
 
-    init(system: SystemType, applicationId: String) {
-        self.applicationId = applicationId
+    init(system: SystemType) {
         ifa = system.advertisingId
         signals = Signals(system: system)
     }

@@ -35,7 +35,17 @@ public enum ConfigurationError: Error {
      
      */
     case noApplicationId
-
+    
+    /**
+     Library is not configured with a **valid** `applicationId`
+     
+     - Note:
+     Get your application Id from from the [Button Dashboard](https://app.usebutton.com)
+     */
+    // swiftlint:disable identifier_name
+    case invalidApplicationId(appicationId: String)
+    // swiftlint:enable identifier_name
+    
     var domain: String {
         return "com.usebutton.merchant.error"
     }
@@ -44,6 +54,9 @@ public enum ConfigurationError: Error {
         switch self {
         case .noApplicationId:
             return "Application Id is required via ButtonMerchant.configure(applicationId:)."
+        case .invalidApplicationId(let applicationId):
+            return "Application Id '\(applicationId)' is not valid. "
+                + "You can find your Application ID in the dashboard by logging in at https://app.usebutton.com/"
         }
     }
 }

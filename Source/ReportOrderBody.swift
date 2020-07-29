@@ -47,7 +47,6 @@ internal struct ReportOrderBody: Codable {
     }
     
     init(system: SystemType,
-         applicationId: String,
          attributionToken: String?,
          order: Order) {
 

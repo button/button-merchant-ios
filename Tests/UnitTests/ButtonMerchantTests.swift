@@ -57,9 +57,9 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.configure(applicationId: applicationId)
 
         // Assert
-        XCTAssertEqual(testCore.applicationId, applicationId)
+        XCTAssertEqual(testCore.applicationId?.rawValue, applicationId)
     }
-
+    
     func testCreateCoreCreatesCoreWhenCoreSetToNil() {
         // Arrange
         ButtonMerchant._core = nil
