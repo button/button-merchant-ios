@@ -63,6 +63,8 @@ class ClientTests: XCTestCase {
         XCTAssertEqualReferences(client.session as AnyObject, expectedURLSession)
         XCTAssertEqualReferences(client.userAgent as AnyObject, expectedUserAgent)
         XCTAssertEqualReferences(client.defaults as AnyObject, defaults)
+        XCTAssertNil(client.applicationId)
+        XCTAssertFalse(client.isConfigured)
     }
     
     func testURLRequestCreatedWithParameters() {
@@ -545,13 +547,12 @@ class ClientTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
     
-    func testAnyRequest_noAppId_collectsAsPendingTasks() {
+    func testAnyRequest_notConfigured_collectsAsPendingTasks() {
         // Arrange
         let client = Client(session: TestURLSession(),
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
-        client.applicationId = nil
         
         // Act
         client.fetchPostInstallURL(parameters: [:]) { _, _  in }
@@ -561,6 +562,32 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(client.pendingTasks.count, 2)
         XCTAssertEqual(client.pendingTasks[0].urlRequest.url?.absoluteString, "https://mobileapi.usebutton.com/v1/app/deferred-deeplink")
         XCTAssertEqual(client.pendingTasks[1].urlRequest.url?.absoluteString, "https://mobileapi.usebutton.com/v1/app/events")
+    }
+    
+    func testSetApplicationId_withAppId_flagsConfigured() {
+        // Arrange
+        let client = Client(session: TestURLSession(),
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        
+        // Act
+        client.applicationId = ApplicationId("app-test")
+        
+        // Assert
+        XCTAssertTrue(client.isConfigured)
+    }
+    
+    func testSetApplicationId_withNilAppId_flagsConfigured() {
+        // Arrange
+        let client = Client(session: TestURLSession(),
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        
+        // Act
+        client.applicationId = ApplicationId("bad id") // Note: we allow bad requests if configure has been called.
+        
+        // Assert
+        XCTAssertTrue(client.isConfigured)
     }
     
     func testSetApplicationId_withPendingTasks_AttachedAppIdAndflushesPendingTasks() {

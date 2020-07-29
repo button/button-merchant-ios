@@ -35,6 +35,7 @@ class TestClient: ClientType {
     var didCallReportOrder = false
     var didCallReportEvents = false
 
+    var isConfigured: Bool = true
     var applicationId: ApplicationId?
     
     var session: URLSessionType

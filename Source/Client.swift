@@ -48,6 +48,7 @@ internal struct PendingTask {
 }
 
 internal protocol ClientType: class {
+    var isConfigured: Bool { get set }
     var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
@@ -60,9 +61,10 @@ internal protocol ClientType: class {
 }
 
 internal final class Client: ClientType {
-    
+    var isConfigured: Bool = false
     var applicationId: ApplicationId? {
         didSet {
+            isConfigured = true
             flushPendingRequests()
         }
     }
@@ -72,6 +74,7 @@ internal final class Client: ClientType {
     var pendingTasks = [PendingTask]()
     
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
+        self.applicationId = nil
         self.session = session
         self.userAgent = userAgent
         self.defaults = defaults
@@ -116,17 +119,15 @@ internal final class Client: ClientType {
     }
     
     private func flushPendingRequests() {
-        guard let appId = applicationId else {
-            return
-        }
-        
         pendingTasks.forEach { pendingTask in
             var urlRequest = pendingTask.urlRequest
             guard let bodyData = urlRequest.httpBody,
                 var parameters = try? JSONSerialization.jsonObject(with: bodyData) as? [String: Any] else {
                     return
             }
-            parameters["application_id"] = appId.rawValue
+            if let appId = applicationId {
+                parameters["application_id"] = appId.rawValue
+            }
             urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
             enqueueRequest(request: urlRequest, completion: pendingTask.completion)
         }
@@ -158,7 +159,7 @@ internal extension Client {
     }
     
     func enqueueRequest(request: URLRequest, completion: @escaping (Data?, Error?) -> Void) {
-        guard applicationId != nil else {
+        guard isConfigured else {
             pendingTasks.append(PendingTask(urlRequest: request, completion: completion))
             return
         }
