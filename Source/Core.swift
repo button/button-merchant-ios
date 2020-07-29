@@ -86,6 +86,7 @@ final internal class Core: CoreType {
      */
     func clearAllData() {
         buttonDefaults.clearAllData()
+        client.pendingTasks.removeAll()
     }
 
     /**
