@@ -42,12 +42,17 @@ internal enum Service: String {
     }
 }
 
+internal struct PendingTask {
+    var urlRequest: URLRequest
+    var completion: (Data?, Error?) -> Void
+}
+
 internal protocol ClientType: class {
     var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     var defaults: ButtonDefaultsType { get }
-    var pendingTasks: [URLSessionDataTaskType] { get }
+    var pendingTasks: [PendingTask] { get }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
@@ -64,7 +69,7 @@ internal final class Client: ClientType {
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
-    var pendingTasks = [URLSessionDataTaskType]()
+    var pendingTasks = [PendingTask]()
     
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
@@ -111,12 +116,19 @@ internal final class Client: ClientType {
     }
     
     private func flushPendingRequests() {
-        guard applicationId != nil else {
+        guard let appId = applicationId else {
             return
         }
         
-        pendingTasks.forEach { task in
-            task.resume()
+        pendingTasks.forEach { pendingTask in
+            var urlRequest = pendingTask.urlRequest
+            guard let bodyData = urlRequest.httpBody,
+                var parameters = try? JSONSerialization.jsonObject(with: bodyData) as? [String: Any] else {
+                    return
+            }
+            parameters["application_id"] = appId.rawValue
+            urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+            enqueueRequest(request: urlRequest, completion: pendingTask.completion)
         }
         pendingTasks.removeAll()
     }
@@ -146,6 +158,11 @@ internal extension Client {
     }
     
     func enqueueRequest(request: URLRequest, completion: @escaping (Data?, Error?) -> Void) {
+        guard applicationId != nil else {
+            pendingTasks.append(PendingTask(urlRequest: request, completion: completion))
+            return
+        }
+        
         let task = session.dataTask(with: request) { data, response, error  in
             DispatchQueue.main.async {
                 guard let data = data,
@@ -158,11 +175,6 @@ internal extension Client {
                 
                 completion(data, nil)
             }
-        }
-        
-        guard applicationId != nil else {
-            pendingTasks.append(task)
-            return
         }
         
         task.resume()
