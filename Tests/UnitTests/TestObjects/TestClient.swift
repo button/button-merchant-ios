@@ -40,6 +40,7 @@ class TestClient: ClientType {
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var pendingTasks = [PendingTask]()
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
