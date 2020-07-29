@@ -74,6 +74,7 @@ final internal class Core: CoreType {
                   client: ClientType,
                   system: SystemType,
                   notificationCenter: NotificationCenterType) {
+        self.applicationId = nil
         self.buttonDefaults = buttonDefaults
         self.client = client
         self.system = system

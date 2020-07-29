@@ -72,12 +72,12 @@ final public class ButtonMerchant: NSObject {
 
      */
     @objc public static func configure(applicationId: String) {
-        guard let validAppId = ApplicationId(applicationId) else {
+        let appId = ApplicationId(applicationId)
+        if appId == nil {
             let error = ConfigurationError.invalidApplicationId(appicationId: applicationId)
             print("Button :: \(error.localizedDescription)")
-            return
         }
-        core.applicationId = validAppId
+        core.applicationId = appId
     }
     
     /**
