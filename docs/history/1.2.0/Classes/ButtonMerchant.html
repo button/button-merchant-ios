@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ButtonMerchant Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/ButtonMerchant" class="dashAnchor"></a>
+    <a title="ButtonMerchant Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ButtonMerchant Docs</a> (97% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ButtonMerchant Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        ButtonMerchant Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonMerchant.html">ButtonMerchant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order.html">Order</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/Customer.html">– Customer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/LineItem.html">– LineItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ConfigurationError.html">ConfigurationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NetworkError.html">NetworkError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Configurable.html">Configurable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:14ButtonMerchant7VersionV">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ButtonMerchant</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">ButtonMerchant</span> <span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p><code>ButtonMerchant</code> is the main entry point to the library.</p>
+
+<p>To get started with your integration,
+get your application Id from from the <a href="https://app.usebutton.com">Button Dashboard</a>.
+and follow our simple <a href="https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library">integration guide</a></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cpy)attributionToken"></a>
+                    <a name="//apple_ref/swift/Variable/attributionToken" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cpy)attributionToken">attributionToken</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The last tracked <code>attributionToken</code> from an inbound Button attributed URL.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    For attribution to work correctly, you must:
+
+</div><ul>
+<li>Always access this token directly—<strong>never cache it</strong>.</li>
+<li>Never manage the lifecycle of this token—Button manages the token validity window server-side.</li>
+<li>Always include this value when reporting orders to your order API</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">attributionToken</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)configureWithApplicationId:"></a>
+                    <a name="//apple_ref/swift/Method/configure(applicationId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)configureWithApplicationId:">configure(applicationId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Configures ButtonMerchant with your application Id.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Get your application Id from from the <a href="https://app.usebutton.com">Button Dashboard</a></p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">(</span><span class="nv">applicationId</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>applicationId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Your application Id (required)</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackIncomingURL:"></a>
+                    <a name="//apple_ref/swift/Method/trackIncomingURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackIncomingURL:">trackIncomingURL(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks the passed URL for a Button attribution and if present stores the token.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>To correctly attribute customers, you must call this method with every
+incoming <code>url</code> and <code>userActivity</code> from the following <code>UIApplicationDelegate</code> methods:</p>
+
+</div><ul>
+<li><p><code>application(_:open:options:)</code></p></li>
+<li><p><code>application(_:userActivity:restorationHandler:)</code></p></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">trackIncomingURL</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A URL that has entered your app from a third party source.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackIncomingUserActivity:"></a>
+                    <a name="//apple_ref/swift/Method/trackIncomingUserActivity(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackIncomingUserActivity:">trackIncomingUserActivity(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks the URL in the passed NSUserActivity for a Button attribution and if present stores the token.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>To correctly attribute customers, you must call this method with every
+incoming <code>userActivity</code> from the following <code>UIApplicationDelegate</code> method:</p>
+
+</div><ul>
+<li><p><code>application(_:userActivity:restorationHandler:)</code></p></li>
+<li><p>userActivity: A NSUserActivity with which your app has been continued.</p></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">trackIncomingUserActivity</span><span class="p">(</span><span class="n">_</span> <span class="nv">userActivity</span><span class="p">:</span> <span class="kt">NSUserActivity</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)handlePostInstallURL:"></a>
+                    <a name="//apple_ref/swift/Method/handlePostInstallURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)handlePostInstallURL:">handlePostInstallURL(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks to see if the user visited a url prior to installing your app.</p>
+
+<p>If a url is found, your completion handler will be called with the url and you are responsible
+for navigating the user to the relevant content in your app. If a url is not found or an error occurs, your
+completion handler will be called without a url and you can continue with your normal launch sequence.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>This method checks for a post-install url exactly <em>one time</em> after a user has installed your app.
+Subsequent calls will result in your completion handler being called without a url. You do not need to wait
+for the completion handler before continuing with your normal launch sequence but you should be prepared
+to handle a post-install url is one is found. All subsequent incoming urls will be routed to your
+<code>UIApplicationDelegate</code> as usual.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">handlePostInstallURL</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">URL</span><span class="p">?,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion block taking an optional url and optional error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)reportOrder:completion:"></a>
+                    <a name="//apple_ref/swift/Method/reportOrder(_:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)reportOrder:completion:">reportOrder(_:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reports an order to Button.</p>
+
+<p>See also: Reporting Orders to Button
+(<a href="https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api">docs</a>)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">reportOrder</span><span class="p">(</span><span class="n">_</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Classes/Order.html">Order</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>order</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Your order object to be reported.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An optional completion block taking an optional error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)clearAllData"></a>
+                    <a name="//apple_ref/swift/Method/clearAllData()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cm)clearAllData">clearAllData()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Discards the current session and all persisted data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">clearAllData</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cpy)features"></a>
+                    <a name="//apple_ref/swift/Variable/features" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)ButtonMerchant(cpy)features">features</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An interface through which library features can be enabled/disabled.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">features</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Configurable.html">Configurable</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecations"></a>
+                <a name="//apple_ref/swift/Section/Deprecations" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecations"></a>
+                  <h3 class="section-name"><p>Deprecations</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackOrder:completion:"></a>
+                    <a name="//apple_ref/swift/Method/trackOrder(_:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@ButtonMerchant@objc(cs)ButtonMerchant(cm)trackOrder:completion:">trackOrder(_:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deprecated.</p>
+
+<p>This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")</span>
+<span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">trackOrder</span><span class="p">(</span><span class="n">_</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Classes/Order.html">Order</a></span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018 Button, Inc. All rights reserved. (<a href="https://usebutton.com">https://usebutton.com</a>) under <a class="link" href="https://github.com/button/button-merchant-ios-private/blob/master/LICENSE" target="_blank" rel="external">MIT License</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
