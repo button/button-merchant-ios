@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Order Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Order" class="dashAnchor"></a>
+    <a title="Order Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ButtonMerchant Docs</a> (97% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ButtonMerchant Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Order Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonMerchant.html">ButtonMerchant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order.html">Order</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/Customer.html">– Customer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/LineItem.html">– LineItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ConfigurationError.html">ConfigurationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NetworkError.html">NetworkError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Configurable.html">Configurable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:14ButtonMerchant7VersionV">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Order</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Order</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Represents an order placed by the user to be reported using <code>ButtonMerchant.reportOrder(order)</code>.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)Order(py)currencyCode"></a>
+                    <a name="//apple_ref/swift/Property/currencyCode" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)Order(py)currencyCode">currencyCode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The ISO 4217 currency code (default is USD).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)Order(py)customerOrderId"></a>
+                    <a name="//apple_ref/swift/Property/customerOrderId" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)Order(py)customerOrderId">customerOrderId</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The customer-facing order id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customerOrderId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)Order(py)customer"></a>
+                    <a name="//apple_ref/swift/Property/customer" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)Order(py)customer">customer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The customer related to the order</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customer</span><span class="p">:</span> <span class="kt"><a href="../Classes/Order/Customer.html">Customer</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)Order(im)initWithId:purchaseDate:lineItems:"></a>
+                    <a name="//apple_ref/swift/Method/init(id:purchaseDate:lineItems:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)Order(im)initWithId:purchaseDate:lineItems:">init(id:<wbr>purchaseDate:<wbr>lineItems:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes an order object with the passed parameters.</p>
+
+<ul>
+<li>id: The order identifier (required).</li>
+<li>purchaseDate: The date of the purchase for the order.</li>
+<li>lineItems: A list of the line item details that comprise the order.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">purchaseDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span> <span class="nv">lineItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Order/LineItem.html">LineItem</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ButtonMerchant5OrderC8CustomerC"></a>
+                    <a name="//apple_ref/swift/Class/Customer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ButtonMerchant5OrderC8CustomerC">Customer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a customer in the order.</p>
+
+                        <a href="../Classes/Order/Customer.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">@objc(Customer)</span>
+<span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Customer</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ButtonMerchant5OrderC8LineItemC"></a>
+                    <a name="//apple_ref/swift/Class/LineItem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ButtonMerchant5OrderC8LineItemC">LineItem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a line item in the order.</p>
+
+                        <a href="../Classes/Order/LineItem.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">@objc(LineItem)</span>
+<span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">LineItem</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Deprecations"></a>
+                <a name="//apple_ref/swift/Section/Deprecations" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Deprecations"></a>
+                  <h3 class="section-name"><p>Deprecations</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(cs)Order(im)initWithId:amount:currencyCode:"></a>
+                    <a name="//apple_ref/swift/Method/init(id:amount:currencyCode:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(cs)Order(im)initWithId:amount:currencyCode:">init(id:<wbr>amount:<wbr>currencyCode:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deprecated.</p>
+
+<p>If you&rsquo;re migrating to client side order reporting, please use init(id:purchaseDate:lineItems:) instead.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Use init(id:purchaseDate:lineItems:﹚ instead")</span>
+<span class="kd">@objc</span>
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">amount</span><span class="p">:</span> <span class="kt">Int64</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">currencyCode</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"USD"</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018 Button, Inc. All rights reserved. (<a href="https://usebutton.com">https://usebutton.com</a>) under <a class="link" href="https://github.com/button/button-merchant-ios-private/blob/master/LICENSE" target="_blank" rel="external">MIT License</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
