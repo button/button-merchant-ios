@@ -36,5 +36,5 @@ public struct Version {
     /**
      Library version string.
      */
-    static let stringValue = "1.1.2"
+    static let stringValue = "1.3.0"
 }
