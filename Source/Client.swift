@@ -148,6 +148,12 @@ internal final class Client: ClientType {
             }
             if let appId = applicationId {
                 parameters["application_id"] = appId.rawValue
+                let appFormat = String(format: "https://%@.mobileapi", appId.rawValue)
+                let urlString = urlRequest.url?.absoluteString.replacingOccurrences(of: "https://mobileapi", with: appFormat)
+                if let urlString = urlString,
+                    let url = URL(string: urlString) {
+                    urlRequest.url = url
+                }
             }
             urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
             enqueueRequest(request: urlRequest, completion: pendingTask.completion)

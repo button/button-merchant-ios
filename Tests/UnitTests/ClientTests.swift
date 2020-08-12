@@ -700,9 +700,9 @@ class ClientTests: XCTestCase {
         // Assert
         XCTAssertEqual(testURLSession.allDataTasks.count, 2)
         XCTAssertEqual(testURLSession.allDataTasks[0].originalRequest?.url?.absoluteString,
-                       "https://mobileapi.usebutton.com/v1/app/deferred-deeplink")
+                       "https://app-test.mobileapi.usebutton.com/v1/app/deferred-deeplink")
         XCTAssertEqual(testURLSession.allDataTasks[1].originalRequest?.url?.absoluteString,
-                       "https://mobileapi.usebutton.com/v1/app/events")
+                       "https://app-test.mobileapi.usebutton.com/v1/app/events")
         XCTAssertEqual(client.pendingTasks.count, 0)
         testURLSession.allDataTasks.forEach { task in
             let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
