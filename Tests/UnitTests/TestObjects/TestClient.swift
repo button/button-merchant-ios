@@ -44,6 +44,7 @@ class TestClient: ClientType {
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var system: SystemType
     var pendingTasks = [PendingTask]()
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
@@ -56,10 +57,11 @@ class TestClient: ClientType {
     var actualProduct: ButtonProductCompatible?
     var actualProducts: [ButtonProductCompatible]?
     
-    required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
+    required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType) {
         self.session = session
         self.userAgent = userAgent
         self.defaults = defaults
+        self.system = system
         self.testParameters = [:]
     }
     

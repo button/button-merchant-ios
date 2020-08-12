@@ -34,7 +34,8 @@ class ButtonMerchantTests: XCTestCase {
         testCore = TestCore(buttonDefaults: defaults,
                             client: TestClient(session: TestURLSession(),
                                                userAgent: TestUserAgent(system: TestSystem()),
-                                               defaults: defaults),
+                                               defaults: defaults,
+                                               system: TestSystem()),
                             system: TestSystem(),
                             notificationCenter: TestNotificationCenter())
     }

@@ -25,7 +25,7 @@
 import XCTest
 @testable import ButtonMerchant
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length type_body_length
 class ServiceTests: XCTestCase {
     
     let appId = ApplicationId("app-test")
@@ -57,7 +57,10 @@ class ClientTests: XCTestCase {
         let defaults = TestButtonDefaults(userDefaults: TestUserDefaults())
 
         // Act
-        let client = Client(session: expectedURLSession, userAgent: expectedUserAgent, defaults: defaults)
+        let client = Client(session: expectedURLSession,
+                            userAgent: expectedUserAgent,
+                            defaults: defaults,
+                            system: TestSystem())
 
         // Assert
         XCTAssertEqualReferences(client.session as AnyObject, expectedURLSession)
@@ -72,7 +75,10 @@ class ClientTests: XCTestCase {
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
         let inputParameters = ["test": "test", "some": "value"]
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: TestURLSession(),
+                            userAgent: testUserAgent,
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         
         // Act
@@ -96,7 +102,10 @@ class ClientTests: XCTestCase {
         let testUserAgent = TestUserAgent()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.sessionId = "some-session-id"
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        let client = Client(session: TestURLSession(),
+                            userAgent: testUserAgent,
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         
         // Act
@@ -114,7 +123,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: TestURLSession(),
+                            userAgent: testUserAgent,
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         
         // Act
@@ -133,7 +145,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let testUserAgent = TestUserAgent()
         let expectedURL = URL(string: "https://usebutton.com")!
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: TestURLSession(),
+                            userAgent: testUserAgent,
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         
         // Act
         let request = client.urlRequest(url: expectedURL, parameters: nil)
@@ -152,7 +167,10 @@ class ClientTests: XCTestCase {
         let testUserAgent = TestUserAgent()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.sessionId = "some-session-id"
-        let client = Client(session: TestURLSession(), userAgent: testUserAgent, defaults: testDefaults)
+        let client = Client(session: TestURLSession(),
+                            userAgent: testUserAgent,
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
 
         // Act
@@ -167,7 +185,10 @@ class ClientTests: XCTestCase {
     func testEnqueueRequestCreatesDataTask() {
         // Arrange
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         
         // Act
@@ -184,7 +205,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request success")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let expectedData = Data()
         
@@ -209,7 +233,10 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": "some-session-id"]])
         
@@ -234,7 +261,10 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         
         testDefaults.sessionId = "same-old-session"
@@ -261,7 +291,10 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         
         testDefaults.sessionId = "some-old-session"
@@ -288,7 +321,10 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "enqueue request success set session")
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         
         let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": NSNull()]])
@@ -313,7 +349,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request fails nil data")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let expectedError = TestError.known
         
@@ -337,7 +376,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "enqueue request fails bad response code")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let data = Data()
         let expectedError = TestError.known
@@ -363,7 +405,10 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "enqueue request completes on main")
         let testURLSession = TestURLSession()
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let url = URL(string: "https://usebutton.com")!
         let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -386,7 +431,10 @@ class ClientTests: XCTestCase {
     func testFetchPostInstallURLEnqueuesRequest() {
         // Arrange
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/app/deferred-deeplink")!
 
@@ -409,7 +457,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "fetch post install url success")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let expectedURL = URL(string: "https://usebutton.com")!
         let expectedToken = "srctok-abc123"
@@ -437,7 +488,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "fetch post install url fails bad response")
         let testURLSession = TestURLSession()
-        let client = Client(session: testURLSession, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-test")
         let url = URL(string: "https://usebutton.com")!
         let responseDict = ["blargh": "blergh"]
@@ -463,7 +517,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "report order")
         let session = TestURLSession()
-        let client = Client(session: session, userAgent: TestUserAgent(), defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+        let client = Client(session: session,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         let request = TestReportOrderRequest(parameters: ["foo": "bar"])
         
@@ -491,7 +548,10 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "report order persists session id")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let client = Client(session: TestURLSession(), userAgent: TestUserAgent(), defaults: testDefaults)
+        let client = Client(session: TestURLSession(),
+                            userAgent: TestUserAgent(),
+                            defaults: testDefaults,
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         let request = TestReportOrderRequest(parameters: ["foo": "bar"])
         let responseData = try? JSONSerialization.data(withJSONObject: [ "meta": ["session_id": "some-session-id"]])
@@ -516,7 +576,8 @@ class ClientTests: XCTestCase {
         let testSession = TestURLSession()
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token")
         
@@ -554,7 +615,8 @@ class ClientTests: XCTestCase {
         let testSession = TestURLSession()
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         client.applicationId = ApplicationId("app-abc123")
         
         // Act
@@ -574,7 +636,8 @@ class ClientTests: XCTestCase {
         // Arrange
         let client = Client(session: TestURLSession(),
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
         
         // Act
@@ -591,7 +654,8 @@ class ClientTests: XCTestCase {
         // Arrange
         let client = Client(session: TestURLSession(),
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         
         // Act
         client.applicationId = ApplicationId("app-test")
@@ -604,7 +668,8 @@ class ClientTests: XCTestCase {
         // Arrange
         let client = Client(session: TestURLSession(),
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         
         // Act
         client.applicationId = ApplicationId("bad id") // Note: we allow bad requests if configure has been called.
@@ -618,7 +683,8 @@ class ClientTests: XCTestCase {
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession,
                             userAgent: TestUserAgent(),
-                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: TestSystem())
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
         client.fetchPostInstallURL(parameters: ["foo": "bar"]) { _, _  in }
         client.reportEvents([event], ifa: "some ifa") { _ in }
@@ -639,4 +705,4 @@ class ClientTests: XCTestCase {
         }
     }
 }
-// swiftlint:enable file_length
+// swiftlint:enable file_length type_body_length

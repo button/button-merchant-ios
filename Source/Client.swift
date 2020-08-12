@@ -53,11 +53,12 @@ internal protocol ClientType: Activity {
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     var defaults: ButtonDefaultsType { get }
+    var system: SystemType { get }
     var pendingTasks: [PendingTask] { get set }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
-    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType)
 }
 
 internal final class Client: ClientType {
@@ -71,13 +72,15 @@ internal final class Client: ClientType {
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var system: SystemType
     var pendingTasks = [PendingTask]()
     
-    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType) {
         self.applicationId = nil
         self.session = session
         self.userAgent = userAgent
         self.defaults = defaults
+        self.system = system
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
