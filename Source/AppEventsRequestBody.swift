@@ -27,4 +27,10 @@ import Foundation
 internal struct AppEventsRequestBody: Codable {
     let ifa: String?
     let events: [AppEvent]
+    let currentTime: String
+    
+    enum CodingKeys: String, CodingKey {
+        case ifa, events
+        case currentTime = "current_time"
+    }
 }

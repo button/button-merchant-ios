@@ -33,9 +33,10 @@ class AppEventsRequestBodyTests: XCTestCase {
                              attributionToken: "some token",
                              time: "2020-04-23T11:30:02.844-04:00",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
+        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.ifa, "some ifa")
+        XCTAssertEqual(body.currentTime, "some time")
         XCTAssertEqual(body.events.count, 1)
         XCTAssertEqual(body.events.first?.name, "test-event")
         XCTAssertEqual(body.events.first?.value, ["url": "https://example.com"])
@@ -50,11 +51,12 @@ class AppEventsRequestBodyTests: XCTestCase {
                              attributionToken: "some token",
                              time: "2020-04-23T11:30:02.844-04:00",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
+        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
                         "ifa": "some ifa",
+                        "current_time": "some time",
                         "events": [
                             [
                                 "name": "test-event",
@@ -72,10 +74,11 @@ class AppEventsRequestBodyTests: XCTestCase {
                              attributionToken: "some token",
                              time: "2020-04-23T11:30:02.844-04:00",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
-        let body = AppEventsRequestBody(ifa: nil, events: [event])
+        let body = AppEventsRequestBody(ifa: nil, events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
+                        "current_time": "some time",
                         "events": [
                             [
                                 "name": "test-event",
