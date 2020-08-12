@@ -179,7 +179,7 @@ final internal class Core: CoreType {
                     completion(nil, nil)
                     return
             }
-            self?.buttonDefaults.attributionToken = token
+            self?.updateAttributionIfNeeded(token: token)
             completion(url, nil)
         }
     }
