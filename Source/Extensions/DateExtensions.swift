@@ -24,7 +24,7 @@
 
 import Foundation
 
-internal extension Date {
+public extension Date {
 
     static let ISO8601Formatter = { () -> DateFormatter in
         let formatter = DateFormatter()

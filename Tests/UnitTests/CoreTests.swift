@@ -129,7 +129,7 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
         testSystem.advertisingId = "some ifa"
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -145,7 +145,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -154,7 +154,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -169,7 +169,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -178,7 +178,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -193,7 +193,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -202,7 +202,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -217,7 +217,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -226,7 +226,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -241,7 +241,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -250,7 +250,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -265,7 +265,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?from_landing=1&btn_test=0")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
@@ -274,7 +274,7 @@ class CoreTests: XCTestCase {
         // Arrange
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2020-04-23T11:30:02.844-04:00")!
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
@@ -289,7 +289,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?From_landing=1&Btn_test=0")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2020-04-23T11:30:02.844-04:00")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
