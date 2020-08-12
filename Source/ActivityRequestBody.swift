@@ -31,15 +31,16 @@ internal struct ActivityRequestBody {
     let products: [ButtonProductCompatible]?
     
     var dictionaryRepresentation: [String: Any] {
-        var dict: [String: Any] = ["name": name]
+        var dict = [String: Any]()
         if let ifa = ifa {
             dict["ifa"] = ifa
         }
         if let attributionToken = attributionToken {
             dict["btn_ref"] = attributionToken
         }
+        var data: [String: Any] = ["name": name]
         if let products = products {
-            dict["products"] = products.map { product -> [String: Any] in
+            data["products"] = products.map { product -> [String: Any] in
                 var productDict = [String: Any]()
                 if let id = product.id {
                     productDict["id"] = id
@@ -71,6 +72,7 @@ internal struct ActivityRequestBody {
                 return productDict
             }
         }
+        dict["activity_data"] = data
         return dict
     }
 }

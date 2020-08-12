@@ -725,8 +725,8 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["name"] as? String, "product-viewed")
         XCTAssertEqual(json?["ifa"] as? String, "some ifa")
+        XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "product-viewed")
     }
     
     func testProductAddedToCart_enqueuesRequest() {
@@ -749,8 +749,8 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["name"] as? String, "add-to-cart")
         XCTAssertEqual(json?["ifa"] as? String, "some ifa")
+        XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "add-to-cart")
     }
     
     func testCartViewed_enqueuesRequest() {
@@ -773,8 +773,8 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["name"] as? String, "cart-viewed")
         XCTAssertEqual(json?["ifa"] as? String, "some ifa")
+        XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "cart-viewed")
     }
 }
 // swiftlint:enable file_length type_body_length
