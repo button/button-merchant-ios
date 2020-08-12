@@ -95,7 +95,7 @@ class TestClient: ClientType {
         actualProduct = product
     }
     
-    func productAddedToCard(_ product: ButtonProductCompatible?) {
+    func productAddedToCart(_ product: ButtonProductCompatible?) {
         didCallProductAddedToCart = true
         actualProduct = product
     }

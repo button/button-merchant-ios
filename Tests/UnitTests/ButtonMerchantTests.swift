@@ -218,7 +218,7 @@ class ButtonMerchantTests: XCTestCase {
         product.name = "some name"
         
         // Act
-        ButtonMerchant.activity.productAddedToCard(product)
+        ButtonMerchant.activity.productAddedToCart(product)
         
         // Assert
         let client = (testCore.client as? TestClient)!

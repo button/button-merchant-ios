@@ -30,6 +30,7 @@ internal enum Service: String {
     case postInstall = "v1/app/deferred-deeplink"
     case order       = "v1/app/order"
     case appEvents   = "v1/app/events"
+    case activity    = "v1/app/activity"
     
     static let baseURL = "https://mobileapi.usebutton.com/"
     static let formattedBaseURL = "https://%@.mobileapi.usebutton.com/"
@@ -127,15 +128,15 @@ internal final class Client: ClientType {
     }
     
     func productViewed(_ product: ButtonProductCompatible?) {
-        
+        reportActivity("product-viewed", products: [product].compactMap { $0 })
     }
     
-    func productAddedToCard(_ product: ButtonProductCompatible?) {
-        
+    func productAddedToCart(_ product: ButtonProductCompatible?) {
+        reportActivity("add-to-cart", products: [product].compactMap { $0 })
     }
     
     func cartViewed(_ products: [ButtonProductCompatible]?) {
-        
+        reportActivity("cart-viewed", products: products)
     }
     
     private func flushPendingRequests() {
@@ -216,6 +217,14 @@ internal extension Client {
             defaults.clearAllData()
         default:
             break
+        }
+    }
+    
+    func reportActivity(_ name: String, products: [ButtonProductCompatible]?) {
+        let body = ActivityRequestBody(ifa: system.advertisingId, name: name, products: products)
+        let request = urlRequest(url: Service.activity.urlWith(applicationId), parameters: body.dictionaryRepresentation)
+        enqueueRequest(request: request) { _, _ in
+            
         }
     }
 }

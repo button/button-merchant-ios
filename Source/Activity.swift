@@ -40,7 +40,7 @@ import Foundation
      - Parameters:
      - product: The product added to the cart.
     */
-    func productAddedToCard(_ product: ButtonProductCompatible?)
+    func productAddedToCart(_ product: ButtonProductCompatible?)
     
     /**
      Report that the user viewed their cart.

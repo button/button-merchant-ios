@@ -678,7 +678,7 @@ class ClientTests: XCTestCase {
         XCTAssertTrue(client.isConfigured)
     }
     
-    func testSetApplicationId_withPendingTasks_AttachedAppIdAndflushesPendingTasks() {
+    func testSetApplicationId_withPendingTasks_AttachedAppIdAndFlushesPendingTasks() {
         // Arrange
         let testURLSession = TestURLSession()
         let client = Client(session: testURLSession,
@@ -703,6 +703,78 @@ class ClientTests: XCTestCase {
             let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
             XCTAssertEqual(json?["application_id"] as? String, "app-test")
         }
+    }
+    
+    func testProductViewed_enqueuesRequest() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "some ifa"
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: testSystem)
+        client.applicationId = ApplicationId("app-abc123")
+        
+        // Act
+        client.productViewed(nil)
+        
+        // Assert
+        XCTAssertEqual(testURLSession.allDataTasks.count, 1)
+        let task = testURLSession.allDataTasks.first!
+        XCTAssertEqual(task.originalRequest?.url?.absoluteString,
+                       "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
+        let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
+        XCTAssertEqual(json?["name"] as? String, "product-viewed")
+        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
+    }
+    
+    func testProductAddedToCart_enqueuesRequest() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "some ifa"
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: testSystem)
+        client.applicationId = ApplicationId("app-abc123")
+        
+        // Act
+        client.productAddedToCart(nil)
+        
+        // Assert
+        XCTAssertEqual(testURLSession.allDataTasks.count, 1)
+        let task = testURLSession.allDataTasks.first!
+        XCTAssertEqual(task.originalRequest?.url?.absoluteString,
+                       "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
+        let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
+        XCTAssertEqual(json?["name"] as? String, "add-to-cart")
+        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
+    }
+    
+    func testCartViewed_enqueuesRequest() {
+        // Arrange
+        let testURLSession = TestURLSession()
+        let testSystem = TestSystem()
+        testSystem.advertisingId = "some ifa"
+        let client = Client(session: testURLSession,
+                            userAgent: TestUserAgent(),
+                            defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                            system: testSystem)
+        client.applicationId = ApplicationId("app-abc123")
+        
+        // Act
+        client.cartViewed(nil)
+        
+        // Assert
+        XCTAssertEqual(testURLSession.allDataTasks.count, 1)
+        let task = testURLSession.allDataTasks.first!
+        XCTAssertEqual(task.originalRequest?.url?.absoluteString,
+                       "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
+        let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
+        XCTAssertEqual(json?["name"] as? String, "cart-viewed")
+        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
     }
 }
 // swiftlint:enable file_length type_body_length
