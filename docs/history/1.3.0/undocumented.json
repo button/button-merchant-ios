@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/paul/button/merchant/Source/ConfigurationError.swift",
+      "line": 46,
+      "symbol": "ConfigurationError.invalidApplicationId(appicationId:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/paul/button/merchant"
+}
