@@ -30,6 +30,7 @@ internal enum Service: String {
     case postInstall = "v1/app/deferred-deeplink"
     case order       = "v1/app/order"
     case appEvents   = "v1/app/events"
+    case activity    = "v1/app/activity"
     
     static let baseURL = "https://mobileapi.usebutton.com/"
     static let formattedBaseURL = "https://%@.mobileapi.usebutton.com/"
@@ -47,17 +48,18 @@ internal struct PendingTask {
     var completion: (Data?, Error?) -> Void
 }
 
-internal protocol ClientType: class {
+internal protocol ClientType: Activity {
     var isConfigured: Bool { get set }
     var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
     var userAgent: UserAgentType { get }
     var defaults: ButtonDefaultsType { get }
+    var system: SystemType { get }
     var pendingTasks: [PendingTask] { get set }
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
-    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType)
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType)
 }
 
 internal final class Client: ClientType {
@@ -71,13 +73,15 @@ internal final class Client: ClientType {
     var session: URLSessionType
     var userAgent: UserAgentType
     var defaults: ButtonDefaultsType
+    var system: SystemType
     var pendingTasks = [PendingTask]()
     
-    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
+    init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType) {
         self.applicationId = nil
         self.session = session
         self.userAgent = userAgent
         self.defaults = defaults
+        self.system = system
     }
     
     func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
@@ -121,6 +125,18 @@ internal final class Client: ClientType {
                 completion(error)
             }
         }
+    }
+    
+    func productViewed(_ product: ButtonProductCompatible?) {
+        reportActivity("product-viewed", products: [product].compactMap { $0 })
+    }
+    
+    func productAddedToCart(_ product: ButtonProductCompatible?) {
+        reportActivity("add-to-cart", products: [product].compactMap { $0 })
+    }
+    
+    func cartViewed(_ products: [ButtonProductCompatible]?) {
+        reportActivity("cart-viewed", products: products)
     }
     
     private func flushPendingRequests() {
@@ -201,6 +217,14 @@ internal extension Client {
             defaults.clearAllData()
         default:
             break
+        }
+    }
+    
+    func reportActivity(_ name: String, products: [ButtonProductCompatible]?) {
+        let body = ActivityRequestBody(ifa: system.advertisingId, attributionToken: ButtonMerchant.attributionToken, name: name, products: products)
+        let request = urlRequest(url: Service.activity.urlWith(applicationId), parameters: body.dictionaryRepresentation)
+        enqueueRequest(request: request) { _, _ in
+            
         }
     }
 }

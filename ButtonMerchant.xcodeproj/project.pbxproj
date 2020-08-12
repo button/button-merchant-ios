@@ -82,7 +82,12 @@
 		DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */; };
 		DA756B8922B40207003397E3 /* TestURLProtectionSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */; };
 		DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA98C00522B29BA0002D1823 /* PEMCertificate.swift */; };
+		DAA3F29924E2F7D40046DA61 /* ButtonProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3F29824E2F7D40046DA61 /* ButtonProduct.swift */; };
+		DAA3F29C24E305C60046DA61 /* ButtonProductTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3F29A24E305790046DA61 /* ButtonProductTests.swift */; };
+		DAA3F29E24E322C70046DA61 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3F29D24E322C70046DA61 /* Activity.swift */; };
+		DAA3F2A024E32EA50046DA61 /* ActivityRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA3F29F24E32EA50046DA61 /* ActivityRequestBody.swift */; };
 		DAB8DFC42316EB3200E16619 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB8DFC32316EB3200E16619 /* NetworkError.swift */; };
+		DAD885D124E41B4100E138BF /* ActivityRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD885D024E41B4100E138BF /* ActivityRequestBodyTests.swift */; };
 		DADE90C2209B9A630073144B /* TestError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE90C1209B9A630073144B /* TestError.swift */; };
 		DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */; };
 		DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F008022CA85F000E789D0 /* Configurable.swift */; };
@@ -227,7 +232,12 @@
 		DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustEvaluatorTests.swift; sourceTree = "<group>"; };
 		DA756B8822B40207003397E3 /* TestURLProtectionSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestURLProtectionSpace.swift; sourceTree = "<group>"; };
 		DA98C00522B29BA0002D1823 /* PEMCertificate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMCertificate.swift; sourceTree = "<group>"; };
+		DAA3F29824E2F7D40046DA61 /* ButtonProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonProduct.swift; sourceTree = "<group>"; };
+		DAA3F29A24E305790046DA61 /* ButtonProductTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonProductTests.swift; sourceTree = "<group>"; };
+		DAA3F29D24E322C70046DA61 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		DAA3F29F24E32EA50046DA61 /* ActivityRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRequestBody.swift; sourceTree = "<group>"; };
 		DAB8DFC32316EB3200E16619 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		DAD885D024E41B4100E138BF /* ActivityRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRequestBodyTests.swift; sourceTree = "<group>"; };
 		DADE90C1209B9A630073144B /* TestError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestError.swift; sourceTree = "<group>"; };
 		DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustEvaluator.swift; sourceTree = "<group>"; };
 		DC1F008022CA85F000E789D0 /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
@@ -404,13 +414,15 @@
 				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
 				DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */,
 				DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */,
+				FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */,
+				FB70031024CF4BC60050E021 /* AppEventTests.swift */,
+				FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */,
+				DAA3F29A24E305790046DA61 /* ButtonProductTests.swift */,
+				DAD885D024E41B4100E138BF /* ActivityRequestBodyTests.swift */,
 				DE175A2320A0EF12005C97B9 /* Extensions */,
 				DEE61B2B206569EA0039E47A /* TestExtensions */,
 				DA0FA2A1205C1EE8008296A6 /* TestObjects */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
-				FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */,
-				FB70031024CF4BC60050E021 /* AppEventTests.swift */,
-				FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -621,10 +633,13 @@
 				DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */,
 				DAB8DFC32316EB3200E16619 /* NetworkError.swift */,
 				FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */,
-				9E77202020605126005F740B /* Extensions */,
-				DE865FA42053073B00F4054D /* Supporting Files */,
 				FB70030724CF2FDE0050E021 /* AppEventsRequestBody.swift */,
 				FB70030E24CF48A90050E021 /* AppEvent.swift */,
+				DAA3F29824E2F7D40046DA61 /* ButtonProduct.swift */,
+				DAA3F29D24E322C70046DA61 /* Activity.swift */,
+				DAA3F29F24E32EA50046DA61 /* ActivityRequestBody.swift */,
+				9E77202020605126005F740B /* Extensions */,
+				DE865FA42053073B00F4054D /* Supporting Files */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -1140,6 +1155,7 @@
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
 				DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */,
 				FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */,
+				DAA3F29E24E322C70046DA61 /* Activity.swift in Sources */,
 				DE865FA620530BCE00F4054D /* ButtonMerchant.swift in Sources */,
 				9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
@@ -1164,10 +1180,12 @@
 				FB5AA6AE24D0BADD0057F3A0 /* ApplicationId.swift in Sources */,
 				DA0FA2A0205C1B3A008296A6 /* Core.swift in Sources */,
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
+				DAA3F2A024E32EA50046DA61 /* ActivityRequestBody.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
 				9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */,
+				DAA3F29924E2F7D40046DA61 /* ButtonProduct.swift in Sources */,
 				9E2B4311206C1275009F2886 /* Client.swift in Sources */,
 				DAB8DFC42316EB3200E16619 /* NetworkError.swift in Sources */,
 				DA4C8C7B22D3D956000E15A9 /* RetryPolicy.swift in Sources */,
@@ -1195,6 +1213,7 @@
 				DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */,
 				FB70030B24CF46260050E021 /* AppEventRequestBodyTests.swift in Sources */,
 				9E4C496820616B040053E4CA /* ButtonDefaultsTests.swift in Sources */,
+				DAD885D124E41B4100E138BF /* ActivityRequestBodyTests.swift in Sources */,
 				9E6F4341206C160C004242A1 /* TestClient.swift in Sources */,
 				FB5AA6AD24D0A19B0057F3A0 /* ApplicationIdTests.swift in Sources */,
 				9E4C496720616B040053E4CA /* CoreTests.swift in Sources */,
@@ -1217,6 +1236,7 @@
 				DE175A2120A0AFF6005C97B9 /* VersionTests.generated.swift in Sources */,
 				9E5475E4206D91A900947A1C /* TestURLSessionDataTask.swift in Sources */,
 				DE1706E5208563D7009FF30B /* TestLocale.swift in Sources */,
+				DAA3F29C24E305C60046DA61 /* ButtonProductTests.swift in Sources */,
 				DA191A2822D530CC00ED88B9 /* ReportOrderRequestTests.swift in Sources */,
 				9EDED112208FA4D70049A56A /* TestBundle.swift in Sources */,
 				DA756B8122B2E03E003397E3 /* TestURLAuthenticationChallenge.swift in Sources */,

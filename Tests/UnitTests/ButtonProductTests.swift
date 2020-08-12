@@ -1,5 +1,5 @@
 //
-// ApplicationIdTests.swift
+// ButtonProductTests.swift
 //
 // Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -25,19 +25,19 @@
 import XCTest
 @testable import ButtonMerchant
 
-class ApplicationIdTests: XCTestCase {
-
-    func testInit_validId_returnsInstance() {
-        XCTAssertEqual(ApplicationId("app-abc123")?.rawValue, "app-abc123")
-    }
+class ButtonProductTests: XCTestCase {
     
-    func testInit_invalidId_returnsNil() {
-        XCTAssertNil(ApplicationId(""))
-        XCTAssertNil(ApplicationId("abc123"))
-        XCTAssertNil(ApplicationId("btn-123"))
-        XCTAssertNil(ApplicationId("btn-app-123"))
-        XCTAssertNil(ApplicationId("app-123?"))
-        XCTAssertNil(ApplicationId("app 123"))
-        XCTAssertNil(ApplicationId("example.com"))
+    func testInitialization_createsInstance() {
+        let product = ButtonProduct()
+        XCTAssertNotNil(product)
+        XCTAssertNil(product.id)
+        XCTAssertNil(product.upc)
+        XCTAssertNil(product.categories)
+        XCTAssertNil(product.name)
+        XCTAssertNil(product.currency)
+        XCTAssertNil(product.url)
+        XCTAssertNil(product.attributes)
+        XCTAssertEqual(product.value, 0)
+        XCTAssertEqual(product.quantity, 0)
     }
 }

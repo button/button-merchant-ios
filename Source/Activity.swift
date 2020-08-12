@@ -1,5 +1,5 @@
 //
-// ApplicationIdTests.swift
+// Activity.swift
 //
 // Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -21,23 +21,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-	
-import XCTest
-@testable import ButtonMerchant
 
-class ApplicationIdTests: XCTestCase {
+import Foundation
 
-    func testInit_validId_returnsInstance() {
-        XCTAssertEqual(ApplicationId("app-abc123")?.rawValue, "app-abc123")
-    }
+/**
+ A protocol through which user activities can be reported.
+ */
+@objc public protocol Activity: class {
     
-    func testInit_invalidId_returnsNil() {
-        XCTAssertNil(ApplicationId(""))
-        XCTAssertNil(ApplicationId("abc123"))
-        XCTAssertNil(ApplicationId("btn-123"))
-        XCTAssertNil(ApplicationId("btn-app-123"))
-        XCTAssertNil(ApplicationId("app-123?"))
-        XCTAssertNil(ApplicationId("app 123"))
-        XCTAssertNil(ApplicationId("example.com"))
-    }
+    /**
+     Report that the user has viewed a product.
+
+     - Parameters:
+     - product: The product being viewed.
+     */
+    func productViewed(_ product: ButtonProductCompatible?)
+    
+    /**
+     Report that the user added a product to their cart.
+
+     - Parameters:
+     - product: The product added to the cart.
+    */
+    func productAddedToCart(_ product: ButtonProductCompatible?)
+    
+    /**
+     Report that the user viewed their cart.
+
+     - Parameters:
+     - products: The list of products in the cart.
+    */
+    func cartViewed(_ products: [ButtonProductCompatible]?)
 }

@@ -33,7 +33,8 @@ class CoreTests: XCTestCase {
     override func setUp() {
         testClient = TestClient(session: TestURLSession(),
                                 userAgent: TestUserAgent(system: TestSystem()),
-                                defaults: TestButtonDefaults(userDefaults: TestUserDefaults()))
+                                defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
+                                system: TestSystem())
     }
     
     func testInitialization() {
