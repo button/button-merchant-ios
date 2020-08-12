@@ -58,6 +58,11 @@ https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration
                 NSLog("Post install: %@", url.absoluteString)
             }
         }
+        let date = Date()
+        print(date.ISO8601String)
+        print(date.eventISO8601String)
+//        print(Date.eventDateFrom(date.eventISO8601String))
+        print(Date.eventDateFrom(date.eventISO8601String)!.eventISO8601String)
 
         controller?.navigationItem.prompt = "Application ID: \(yourApplicationId)"
 

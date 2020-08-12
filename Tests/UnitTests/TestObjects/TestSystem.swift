@@ -63,6 +63,7 @@ final class TestSystem: SystemType {
 
         // Fix timezone to UTC for tests.
         Date.ISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
+        Date.eventISO8601Formatter.timeZone = TimeZone(identifier: "UTC")
         testCurrentDate = Date.ISO8601Formatter.date(from: "2018-01-23T12:00:00Z")!
         
         self.fileManager = fileManager

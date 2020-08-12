@@ -60,3 +60,11 @@ public extension String {
         return self.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil
     }
 }
+
+internal extension String {
+    static let ISO8601Formatter = { () -> DateFormatter in
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return formatter
+    }()
+}

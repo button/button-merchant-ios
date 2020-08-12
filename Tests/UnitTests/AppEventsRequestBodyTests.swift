@@ -1,5 +1,5 @@
 //
-// AppEventRequestBodyTests.swift
+// AppEventsRequestBodyTests.swift
 //
 // Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -30,30 +30,40 @@ class AppEventsRequestBodyTests: XCTestCase {
     func testInitialization_createsInstance() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             attributionToken: "some token")
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
+                             attributionToken: "some token",
+                             time: "2019-07-25T21:30:02.844Z",
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.ifa, "some ifa")
+        XCTAssertEqual(body.currentTime, "some time")
         XCTAssertEqual(body.events.count, 1)
         XCTAssertEqual(body.events.first?.name, "test-event")
         XCTAssertEqual(body.events.first?.value, ["url": "https://example.com"])
         XCTAssertEqual(body.events.first?.attributionToken, "some token")
+        XCTAssertEqual(body.events.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(body.events.first?.uuid, "3b3024dc-e56f-412e-8015-5c2c308126fd")
     }
     
     func testSerialization_createsDisctionary() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             attributionToken: "some token")
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event])
+                             attributionToken: "some token",
+                             time: "2019-07-25T21:30:02.844Z",
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
                         "ifa": "some ifa",
+                        "current_time": "some time",
                         "events": [
                             [
                                 "name": "test-event",
                                 "value": ["url": "https://example.com"],
-                                "promotion_source_token": "some token"
+                                "promotion_source_token": "some token",
+                                "time": "2019-07-25T21:30:02.844Z",
+                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd"
                             ]
                         ]])
     }
@@ -61,16 +71,21 @@ class AppEventsRequestBodyTests: XCTestCase {
     func testMissingIFA_omitsIFA() {
         let event = AppEvent(name: "test-event",
                              value: ["url": "https://example.com"],
-                             attributionToken: "some token")
-        let body = AppEventsRequestBody(ifa: nil, events: [event])
+                             attributionToken: "some token",
+                             time: "2019-07-25T21:30:02.844Z",
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+        let body = AppEventsRequestBody(ifa: nil, events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
+                        "current_time": "some time",
                         "events": [
                             [
                                 "name": "test-event",
                                 "value": ["url": "https://example.com"],
-                                "promotion_source_token": "some token"
+                                "promotion_source_token": "some token",
+                                "time": "2019-07-25T21:30:02.844Z",
+                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd"
                             ]
                         ]])
     }

@@ -28,34 +28,42 @@ import XCTest
 class AppEventTests: XCTestCase {
 
     func testInitialization_createsInstance() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
         XCTAssertEqual(event.name, "test event")
         XCTAssertEqual(event.value, ["foo": "bar"])
         XCTAssertEqual(event.attributionToken, "some token")
+        XCTAssertEqual(event.time, "some time")
+        XCTAssertEqual(event.uuid, "some uuid")
     }
     
     func testSerialization_createsDictionary() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "value": ["foo": "bar"],
-            "promotion_source_token": "some token"
+            "promotion_source_token": "some token",
+            "time": "some time",
+            "uuid": "some uuid"
         ])
     }
     
     func testMissingValue_omitsValue() {
-        let event = AppEvent(name: "test event", value: nil, attributionToken: "some token")
+        let event = AppEvent(name: "test event", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
-            "promotion_source_token": "some token"
+            "promotion_source_token": "some token",
+            "time": "some time",
+            "uuid": "some uuid"
         ])
     }
     
     func testMissingSourceToken_omitsSourceToken() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil)
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil, time: "some time", uuid: "some uuid")
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
-            "value": ["foo": "bar"]
+            "value": ["foo": "bar"],
+            "time": "some time",
+            "uuid": "some uuid"
         ])
     }
 }

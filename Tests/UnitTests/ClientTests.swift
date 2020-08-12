@@ -574,12 +574,14 @@ class ClientTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "report events succeeds")
         let testSession = TestURLSession()
+        let testSystem = TestSystem()
+        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                            system: TestSystem())
+                            system: testSystem)
         client.applicationId = ApplicationId("app-abc123")
-        let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token")
+        let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
         
         // Act
         client.reportEvents([event], ifa: "some ifa") { error in
@@ -591,11 +593,14 @@ class ClientTests: XCTestCase {
             XCTAssertEqual(request?.url?.absoluteString, "https://app-abc123.mobileapi.usebutton.com/v1/app/events")
             XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, [
                 "ifa": "some ifa",
+                "current_time": "2019-07-25T21:30:02.844Z",
                 "events": [
                     [
                         "name": "test-event",
                         "value": ["foo": "bar"],
-                        "promotion_source_token": "some token"
+                        "promotion_source_token": "some token",
+                        "time": "some time",
+                        "uuid": "some uuid"
                     ]
                 ]])
             
@@ -638,7 +643,7 @@ class ClientTests: XCTestCase {
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: TestSystem())
-        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
         
         // Act
         client.fetchPostInstallURL(parameters: [:]) { _, _  in }
@@ -685,7 +690,7 @@ class ClientTests: XCTestCase {
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: TestSystem())
-        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token")
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
         client.fetchPostInstallURL(parameters: ["foo": "bar"]) { _, _  in }
         client.reportEvents([event], ifa: "some ifa") { _ in }
         
