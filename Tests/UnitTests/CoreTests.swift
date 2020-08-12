@@ -360,10 +360,11 @@ class CoreTests: XCTestCase {
         let expectation = XCTestExpectation(description: "handle post install url")
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testSystem = TestSystem()
+        let testNotificationCenter = TestNotificationCenter()
         let core = Core(buttonDefaults: testDefaults,
                         client: testClient,
                         system: testSystem,
-                        notificationCenter: TestNotificationCenter())
+                        notificationCenter: testNotificationCenter)
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
         core.applicationId = ApplicationId("app-123")
@@ -378,6 +379,13 @@ class CoreTests: XCTestCase {
             XCTAssertTrue(testDefaults.didStoreToken)
             XCTAssertNotNil(testDefaults.attributionToken)
             XCTAssertEqual(testDefaults.attributionToken, expectedToken)
+            XCTAssertEqual(core.attributionToken, expectedToken)
+            XCTAssertTrue(testNotificationCenter.didCallPostNotification)
+            XCTAssertNil(testNotificationCenter.testObject)
+            XCTAssertEqual(testNotificationCenter.testNotificationName,
+                           Notification.Name.Button.AttributionTokenDidChange)
+            XCTAssertEqual(testNotificationCenter.testUserInfo! as NSDictionary,
+                           [Notification.Key.NewToken: expectedToken])
             expectation.fulfill()
         }
         XCTAssertEqual(testClient.testParameters as NSDictionary,
