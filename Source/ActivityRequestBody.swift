@@ -31,48 +31,32 @@ internal struct ActivityRequestBody {
     let products: [ButtonProductCompatible]?
     
     var dictionaryRepresentation: [String: Any] {
-        var dict = [String: Any]()
-        if let ifa = ifa {
-            dict["ifa"] = ifa
-        }
-        if let attributionToken = attributionToken {
-            dict["btn_ref"] = attributionToken
-        }
-        var data: [String: Any] = ["name": name]
+        var dict: [String: Any?] = [
+            "ifa": ifa,
+            "btn_ref": attributionToken
+        ]
+        var data: [String: Any?] = ["name": name]
         if let products = products {
             data["products"] = products.map { product -> [String: Any] in
-                var productDict = [String: Any]()
-                if let id = product.id {
-                    productDict["id"] = id
-                }
-                if let upc = product.upc {
-                    productDict["upc"] = upc
-                }
-                if let categories = product.categories {
-                    productDict["categories"] = categories
-                }
-                if let name = product.name {
-                    productDict["name"] = name
-                }
-                if let currency = product.currency {
-                    productDict["currency"] = currency
-                }
-                if let url = product.url {
-                    productDict["url"] = url
-                }
-                if let attributes = product.attributes {
-                    productDict["attributes"] = attributes
-                }
+                var productDict: [String: Any?] = [
+                    "id": product.id,
+                    "upc": product.upc,
+                    "categories": product.categories,
+                    "name": product.name,
+                    "currency": product.currency,
+                    "url": product.url,
+                    "attributes": product.attributes
+                ]
                 if product.value != 0 {
                     productDict["value"] = product.value
                 }
                 if product.quantity != 0 {
                     productDict["quantity"] = product.quantity
                 }
-                return productDict
+                return productDict.compactMapValues { $0 }
             }
         }
         dict["activity_data"] = data
-        return dict
+        return dict.compactMapValues { $0 }
     }
 }
