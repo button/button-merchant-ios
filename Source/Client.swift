@@ -221,7 +221,7 @@ internal extension Client {
     }
     
     func reportActivity(_ name: String, products: [ButtonProductCompatible]?) {
-        let body = ActivityRequestBody(ifa: system.advertisingId, name: name, products: products)
+        let body = ActivityRequestBody(ifa: system.advertisingId, attributionToken: ButtonMerchant.attributionToken, name: name, products: products)
         let request = urlRequest(url: Service.activity.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, _ in
             

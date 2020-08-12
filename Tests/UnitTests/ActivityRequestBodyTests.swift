@@ -30,7 +30,7 @@ class ActivityRequestBodyTests: XCTestCase {
     func testInitialization_createsInstance() {
         let product = ButtonProduct()
         product.id = "some id"
-        let body = ActivityRequestBody(ifa: "some ifa", name: "some name", products: [product])
+        let body = ActivityRequestBody(ifa: "some ifa", attributionToken: "some srctok", name: "some name", products: [product])
         XCTAssertNotNil(body)
         XCTAssertEqual(body.ifa, "some ifa")
         XCTAssertEqual(body.name, "some name")
@@ -38,17 +38,22 @@ class ActivityRequestBodyTests: XCTestCase {
     }
     
     func testDictionaryRepresentation_noIFA() {
-        let body = ActivityRequestBody(ifa: nil, name: "some name", products: nil)
+        let body = ActivityRequestBody(ifa: nil, attributionToken: nil, name: "some name", products: nil)
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, ["name": "some name"])
     }
     
     func testDictionaryRepresentation_withIFA() {
-        let body = ActivityRequestBody(ifa: "some ifa", name: "some name", products: nil)
+        let body = ActivityRequestBody(ifa: "some ifa", attributionToken: nil, name: "some name", products: nil)
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, ["name": "some name", "ifa": "some ifa"])
     }
     
+    func testDictionaryRepresentation_withAttributionToken() {
+        let body = ActivityRequestBody(ifa: nil, attributionToken: "some srctok", name: "some name", products: nil)
+        XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, ["name": "some name", "btn_ref": "some srctok"])
+    }
+    
     func testDictionaryRepresentation_emptyProducts() {
-        let body = ActivityRequestBody(ifa: "some ifa", name: "some name", products: [ButtonProduct(), ButtonProduct()])
+        let body = ActivityRequestBody(ifa: "some ifa", attributionToken: nil, name: "some name", products: [ButtonProduct(), ButtonProduct()])
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
                         "name": "some name",
@@ -68,7 +73,7 @@ class ActivityRequestBodyTests: XCTestCase {
         product.quantity = 25
         product.url = "example.com"
         product.attributes = ["a": "z", "b": "y"]
-        let body = ActivityRequestBody(ifa: "some ifa", name: "some name", products: [product])
+        let body = ActivityRequestBody(ifa: "some ifa", attributionToken: nil, name: "some name", products: [product])
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
                         "name": "some name",

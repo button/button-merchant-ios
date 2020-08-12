@@ -26,6 +26,7 @@ import Foundation
 
 internal struct ActivityRequestBody {
     let ifa: String?
+    let attributionToken: String?
     let name: String
     let products: [ButtonProductCompatible]?
     
@@ -33,6 +34,9 @@ internal struct ActivityRequestBody {
         var dict: [String: Any] = ["name": name]
         if let ifa = ifa {
             dict["ifa"] = ifa
+        }
+        if let attributionToken = attributionToken {
+            dict["btn_ref"] = attributionToken
         }
         if let products = products {
             dict["products"] = products.map { product -> [String: Any] in
