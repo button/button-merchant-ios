@@ -31,7 +31,7 @@ class ApplicationIdTests: XCTestCase {
         XCTAssertEqual(ApplicationId("app-abc123")?.rawValue, "app-abc123")
     }
     
-    func testInit_invaidId_returnsNil() {
+    func testInit_invalidId_returnsNil() {
         XCTAssertNil(ApplicationId(""))
         XCTAssertNil(ApplicationId("abc123"))
         XCTAssertNil(ApplicationId("btn-123"))
