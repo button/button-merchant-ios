@@ -28,9 +28,11 @@ internal struct AppEvent: Codable {
     let name: String
     let value: [String: String]?
     let attributionToken: String?
+    let time: String
+    let uuid: String
     
     enum CodingKeys: String, CodingKey {
-        case name, value
+        case name, value, time, uuid
         case attributionToken = "promotion_source_token"
     }
 }
