@@ -167,6 +167,13 @@ final public class ButtonMerchant: NSObject {
         return core.system
     }
     
+    /**
+     An interface through which user activity can be reported.
+     */
+    @objc public static var activity: Activity {
+        return core.client
+    }
+    
     // MARK: Private
     
     private static func createCore() -> CoreType {

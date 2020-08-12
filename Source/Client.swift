@@ -47,7 +47,7 @@ internal struct PendingTask {
     var completion: (Data?, Error?) -> Void
 }
 
-internal protocol ClientType: class {
+internal protocol ClientType: Activity {
     var isConfigured: Bool { get set }
     var applicationId: ApplicationId? { get set }
     var session: URLSessionType { get }
@@ -121,6 +121,18 @@ internal final class Client: ClientType {
                 completion(error)
             }
         }
+    }
+    
+    func productViewed(_ product: ButtonProductCompatible?) {
+        
+    }
+    
+    func productAddedToCard(_ product: ButtonProductCompatible?) {
+        
+    }
+    
+    func cartViewed(_ products: [ButtonProductCompatible]?) {
+        
     }
     
     private func flushPendingRequests() {

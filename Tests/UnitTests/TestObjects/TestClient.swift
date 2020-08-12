@@ -34,6 +34,9 @@ class TestClient: ClientType {
     var didCallTrackOrder = false
     var didCallReportOrder = false
     var didCallReportEvents = false
+    var didCallProductViewed = false
+    var didCallProductAddedToCart = false
+    var didCallCartViewed = false
 
     var isConfigured: Bool = true
     var applicationId: ApplicationId?
@@ -50,6 +53,8 @@ class TestClient: ClientType {
     var actualEvents: [AppEvent]?
     var actualIFA: String?
     var actualReportEventsCompletion: ((Error?) -> Void)?
+    var actualProduct: ButtonProductCompatible?
+    var actualProducts: [ButtonProductCompatible]?
     
     required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType) {
         self.session = session
@@ -81,5 +86,20 @@ class TestClient: ClientType {
         actualEvents = events
         actualIFA = ifa
         actualReportEventsCompletion = completion
+    }
+    
+    func productViewed(_ product: ButtonProductCompatible?) {
+        didCallProductViewed = true
+        actualProduct = product
+    }
+    
+    func productAddedToCard(_ product: ButtonProductCompatible?) {
+        didCallProductAddedToCart = true
+        actualProduct = product
+    }
+    
+    func cartViewed(_ products: [ButtonProductCompatible]?) {
+        didCallCartViewed = true
+        actualProducts = products
     }
 }

@@ -189,4 +189,54 @@ class ButtonMerchantTests: XCTestCase {
         // Assert
         XCTAssertTrue(ButtonMerchant.features.includesIFA)
     }
+    
+    func testActivity_returnsClient() {
+        ButtonMerchant._core = testCore
+        XCTAssertEqualReferences(ButtonMerchant.activity, testCore.client)
+    }
+    
+    func testActivity_productViewed_invokesClient() {
+        // Arrange
+        ButtonMerchant._core = testCore
+        let product = ButtonProduct()
+        product.name = "some name"
+        
+        // Act
+        ButtonMerchant.activity.productViewed(product)
+        
+        // Assert
+        let client = (testCore.client as? TestClient)!
+        XCTAssertTrue(client.didCallProductViewed)
+        XCTAssertEqual(client.actualProduct?.name, "some name")
+    }
+    
+    func testActivity_productAddedToCart_invokesClient() {
+        // Arrange
+        ButtonMerchant._core = testCore
+        let product = ButtonProduct()
+        product.name = "some name"
+        
+        // Act
+        ButtonMerchant.activity.productAddedToCard(product)
+        
+        // Assert
+        let client = (testCore.client as? TestClient)!
+        XCTAssertTrue(client.didCallProductAddedToCart)
+        XCTAssertEqual(client.actualProduct?.name, "some name")
+    }
+    
+    func testActivity_cartViewed_invokesClient() {
+        // Arrange
+        ButtonMerchant._core = testCore
+        let product = ButtonProduct()
+        product.name = "some name"
+        
+        // Act
+        ButtonMerchant.activity.cartViewed([product])
+        
+        // Assert
+        let client = (testCore.client as? TestClient)!
+        XCTAssertTrue(client.didCallCartViewed)
+        XCTAssertEqual(client.actualProducts?.first?.name, "some name")
+    }
 }
