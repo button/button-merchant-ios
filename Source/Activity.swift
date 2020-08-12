@@ -24,6 +24,9 @@
 
 import Foundation
 
+/**
+ A protocol through which user activities can be reported.
+ */
 @objc public protocol Activity: class {
     
     /**
