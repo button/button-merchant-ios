@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Activity Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/Activity" class="dashAnchor"></a>
+    <a title="Activity Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ButtonMerchant Docs</a> (98% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ButtonMerchant Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Activity Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonMerchant.html">ButtonMerchant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonProduct.html">ButtonProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order.html">Order</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/Customer.html">– Customer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/LineItem.html">– LineItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ConfigurationError.html">ConfigurationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NetworkError.html">NetworkError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Configurable.html">Configurable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:14ButtonMerchant7VersionV">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Activity</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Activity</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>A protocol through which user activities can be reported.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(pl)Activity(im)productViewed:"></a>
+                    <a name="//apple_ref/swift/Method/productViewed(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(pl)Activity(im)productViewed:">productViewed(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Report that the user has viewed a product.</p>
+
+<ul>
+<li>product: The product being viewed.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">productViewed</span><span class="p">(</span><span class="n">_</span> <span class="nv">product</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(pl)Activity(im)productAddedToCart:"></a>
+                    <a name="//apple_ref/swift/Method/productAddedToCart(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(pl)Activity(im)productAddedToCart:">productAddedToCart(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Report that the user added a product to their cart.</p>
+
+<ul>
+<li>product: The product added to the cart.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">productAddedToCart</span><span class="p">(</span><span class="n">_</span> <span class="nv">product</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a></span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ButtonMerchant@objc(pl)Activity(im)cartViewed:"></a>
+                    <a name="//apple_ref/swift/Method/cartViewed(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ButtonMerchant@objc(pl)Activity(im)cartViewed:">cartViewed(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Report that the user viewed their cart.</p>
+
+<ul>
+<li>products: The list of products in the cart.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">cartViewed</span><span class="p">(</span><span class="n">_</span> <span class="nv">products</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a></span><span class="p">]?)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018 Button, Inc. All rights reserved. (<a href="https://usebutton.com">https://usebutton.com</a>) under <a class="link" href="https://github.com/button/button-merchant-ios-private/blob/master/LICENSE" target="_blank" rel="external">MIT License</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
