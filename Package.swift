@@ -1,3 +1,4 @@
+// swift-tools-version:5.0
 //
 // Package.swift
 //
@@ -24,4 +25,25 @@
 
 import PackageDescription
 
-let package = Package(name: "ButtonMerchant", dependencies : [], exclude: ["Tests"])
+let package = Package(
+    name: "ButtonMerchant",
+    platforms: [
+        .iOS(.v9)
+    ],
+    products: [
+        .library(
+            name: "ButtonMerchant",
+            targets: ["ButtonMerchant"]),
+    ],
+    targets: [
+        .target(
+            name: "ButtonMerchant",
+            path: "Source"),
+        .testTarget(
+            name: "UnitTests",
+            path: "Tests/UnitTests"),
+        .testTarget(
+            name: "IntegrationTests",
+            path: "Tests/IntegrationTests")
+    ]
+)
