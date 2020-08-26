@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Customer Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../../js/jquery.min.js" defer></script>
+    <script src="../../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Customer" class="dashAnchor"></a>
+    <a title="Customer Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../../index.html">ButtonMerchant Docs</a> (98% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../../index.html">ButtonMerchant Reference</a>
+        <img id="carat" src="../../img/carat.png" />
+        Customer Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Classes/ButtonMerchant.html">ButtonMerchant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/ButtonProduct.html">ButtonProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Order.html">Order</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Order/Customer.html">– Customer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Classes/Order/LineItem.html">– LineItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Enums/ConfigurationError.html">ConfigurationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Enums/NetworkError.html">NetworkError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Protocols/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../../Protocols/Configurable.html">Configurable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../../Structs.html#/s:14ButtonMerchant7VersionV">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Customer</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@objcMembers</span>
+<span class="kd">@objc</span><span class="p">(</span><span class="kt">Customer</span><span class="p">)</span>
+<span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Customer</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+
+                </div>
+              </div>
+            <p>Represents a customer in the order.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ButtonMerchant5OrderC8CustomerC5emailSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/email" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ButtonMerchant5OrderC8CustomerC5emailSSSgvp">email</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.</p>
+
+<p><strong>Note</strong>: The value of the e-mail address must be converted to lowercase before
+computing the hash. The hash itself may use uppercase or lowercase hex characters.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ButtonMerchant5OrderC8CustomerC2idAESS_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ButtonMerchant5OrderC8CustomerC2idAESS_tcfc">init(id:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes a customer object with the passed parameters.</p>
+
+<ul>
+<li>id: The id for your customer (required).</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018 Button, Inc. All rights reserved. (<a href="https://usebutton.com">https://usebutton.com</a>) under <a class="link" href="https://github.com/button/button-merchant-ios-private/blob/master/LICENSE" target="_blank" rel="external">MIT License</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
