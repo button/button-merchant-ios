@@ -7,7 +7,7 @@
 
 
 ## Documentation
-Documentation for the Merchant Library can be found on the [Button Developer site](https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library).
+Documentation for the Merchant Library can be found on the [Button Developer site](https://developer.usebutton.com/docs/ios-add-merchant-library).
 
 [Reference docs](http://building.usebutton.com/button-merchant-ios/latest/) are also available.
 
