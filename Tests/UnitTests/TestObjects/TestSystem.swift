@@ -26,18 +26,17 @@ import UIKit
 @testable import ButtonMerchant
 
 final class TestSystem: SystemType {
-    
-    private var adIdManager: ASIdentifierManagerType
 
-    var includesIFA: Bool
     //Test Properties
     var testIsNewInstall = false
     var testCurrentDate: Date
     var testSignals: PostInstallBody.Signals?
 
     // SystemType
+    var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
+    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
