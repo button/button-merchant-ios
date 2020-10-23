@@ -36,6 +36,8 @@ class MessageView: UIView {
         messageView.translatesAutoresizingMaskIntoConstraints = false
         messageView.titleLabel.text = title
         messageView.bodyLabel.text = body
+        messageView.layer.cornerRadius = 12.0
+        messageView.layer.masksToBounds = true
         messageView.showIn(view)
     }
     
@@ -43,8 +45,8 @@ class MessageView: UIView {
         view.addSubview(self)
         
         let margins = view.layoutMarginsGuide
-        leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8.0).isActive = true
-        trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8.0).isActive = true
+        leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
         let bottomConstraint = bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -64.0)
         bottomConstraint.priority = .defaultHigh
         bottomConstraint.isActive = true
