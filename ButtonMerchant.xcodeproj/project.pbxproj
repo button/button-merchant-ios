@@ -94,7 +94,6 @@
 		DC4AAD4422B13CD3005CE460 /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4AAD4322B13CD3005CE460 /* OrderTests.swift */; };
 		DCF4AD0422B421FB000DA3B2 /* ReportOrderBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */; };
 		DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */; };
-		DE0E7C2B209B915E001A5EE0 /* ApplicationId.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */; };
 		DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DA20855B06009FF30B /* UIDeviceExtensions.swift */; };
 		DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DC20855B22009FF30B /* UIScreenExtensions.swift */; };
 		DE1706E020855F4C009FF30B /* LocaleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706DE20855B31009FF30B /* LocaleExtensions.swift */; };
@@ -110,7 +109,6 @@
 		DE5464DB2107CB6E001809F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5464DA2107CB6E001809F3 /* ViewController.m */; };
 		DE5464E02107CB6F001809F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE5464DF2107CB6F001809F3 /* Assets.xcassets */; };
 		DE5464E32107CB6F001809F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5464E12107CB6F001809F3 /* LaunchScreen.storyboard */; };
-		DE5464F92107D077001809F3 /* ApplicationId.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */; };
 		DE865F722052E79A00F4054D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE865F712052E79A00F4054D /* AppDelegate.swift */; };
 		DE865F8D2052FE5D00F4054D /* ButtonMerchant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE865F842052FE5D00F4054D /* ButtonMerchant.framework */; };
 		DE865F962052FE5D00F4054D /* ButtonMerchant.h in Headers */ = {isa = PBXBuildFile; fileRef = DE865F862052FE5D00F4054D /* ButtonMerchant.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -245,7 +243,6 @@
 		DCF4AD0322B421FB000DA3B2 /* ReportOrderBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBody.swift; sourceTree = "<group>"; };
 		DCF4AD0522B7E2FF000DA3B2 /* ReportOrderBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOrderBodyTests.swift; sourceTree = "<group>"; };
 		DDA5C34AC9410445D780EB22 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationId.generated.swift; sourceTree = "<group>"; };
 		DE153DA4FDE6DCF451A438B1 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		DE1706D820855676009FF30B /* ASIdentifierManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASIdentifierManagerExtensions.swift; sourceTree = "<group>"; };
 		DE1706DA20855B06009FF30B /* UIDeviceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtensions.swift; sourceTree = "<group>"; };
@@ -414,7 +411,7 @@
 				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
 				DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */,
 				DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */,
-				FB70030924CF44620050E021 /* AppEventRequestBodyTests.swift */,
+				FB70030924CF44620050E021 /* AppEventsRequestBodyTests.swift */,
 				FB70031024CF4BC60050E021 /* AppEventTests.swift */,
 				FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */,
 				DAA3F29A24E305790046DA61 /* ButtonProductTests.swift */,
@@ -655,7 +652,6 @@
 		DEA3F6BC2108F6B9009E720E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				DE0E7C2A209B915E001A5EE0 /* ApplicationId.generated.swift */,
 				DA4AF05420868015002C3E0E /* MessageView.xib */,
 				DA4AF05220867FFB002C3E0E /* MessageView.swift */,
 			);
@@ -702,7 +698,6 @@
 			buildPhases = (
 				0DBF513C760B01B0241CCCCB /* [CP] Check Pods Manifest.lock */,
 				DA0FA2BC2061AAD8008296A6 /* Swift Lint */,
-				DE0E7C29209B7F38001A5EE0 /* Environment Vars */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -742,7 +737,6 @@
 			buildConfigurationList = DE5464E92107CB70001809F3 /* Build configuration list for PBXNativeTarget "Example-ObjC" */;
 			buildPhases = (
 				2A4B7DC1975AE2A7E042432F /* [CP] Check Pods Manifest.lock */,
-				DE5464FA2107D1B6001809F3 /* Environment Vars */,
 				DE5464D02107CB6E001809F3 /* Sources */,
 				DE5464D12107CB6E001809F3 /* Frameworks */,
 				DE5464D22107CB6E001809F3 /* Resources */,
@@ -1016,36 +1010,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ -z \"$CI\" ] && [ ! \"$CARTHAGE\" ]; then\n  \"Pods/SwiftLint/swiftlint\"\nfi\n";
 		};
-		DE0E7C29209B7F38001A5EE0 /* Environment Vars */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Environment Vars";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -f ${SRCROOT}/.env-vars.sh ] ; then\n    source ${SRCROOT}/.env-vars.sh\nfi\n\n$PODS_ROOT/Sourcery/bin/sourcery --templates .templates/ApplicationId.stencil --sources . --output ${SRCROOT}/Example --args application_id=$APPLICATION_ID";
-			showEnvVarsInLog = 0;
-		};
-		DE5464FA2107D1B6001809F3 /* Environment Vars */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Environment Vars";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -f ${SRCROOT}/.env-vars.sh ] ; then\nsource ${SRCROOT}/.env-vars.sh\nfi\n\n$PODS_ROOT/Sourcery/bin/sourcery --templates .templates/ApplicationId.stencil --sources . --output ${SRCROOT}/Example --args application_id=$APPLICATION_ID";
-			showEnvVarsInLog = 0;
-		};
 		DECAAF592065816600E2D983 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1119,7 +1083,6 @@
 			files = (
 				DA4AF05320867FFB002C3E0E /* MessageView.swift in Sources */,
 				DE865F722052E79A00F4054D /* AppDelegate.swift in Sources */,
-				DE0E7C2B209B915E001A5EE0 /* ApplicationId.generated.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1138,7 +1101,6 @@
 			files = (
 				DE38184A2108F7F900CCE1C1 /* main.m in Sources */,
 				DE5464DB2107CB6E001809F3 /* ViewController.m in Sources */,
-				DE5464F92107D077001809F3 /* ApplicationId.generated.swift in Sources */,
 				DE5464D82107CB6E001809F3 /* AppDelegate.m in Sources */,
 				DEA3F6BB2108F286009E720E /* MessageView.swift in Sources */,
 			);

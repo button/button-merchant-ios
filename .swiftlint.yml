@@ -64,7 +64,7 @@ shorthand_operator: error
 superfluous_disable_command: error
 switch_case_alignment: error
 syntactic_sugar: error
-todo: error
+todo: warn
 trailing_semicolon: error
 unneeded_break_in_switch: error
 unused_closure_parameter: error

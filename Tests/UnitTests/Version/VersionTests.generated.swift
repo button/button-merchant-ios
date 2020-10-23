@@ -1,5 +1,4 @@
-// Generated using Sourcery 0.16.1 — https://github.com/krzysztofzablocki/Sourcery
-// DO NOT EDIT
+// Generated - DO NOT EDIT
 
 //
 // VersionTests.swift
@@ -31,11 +30,11 @@ import XCTest
 class VersionTests: XCTestCase {
 
     func testLibraryVersion() {
-        XCTAssertEqual(Version.stringValue, "1.3.0")
+        XCTAssertEqual(Version.stringValue, "1.3.1")
     }
 
     func testPlistVersion() {
       let libraryBundle = Bundle(for: ButtonMerchant.self)
-      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "1.3.0")
+      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "1.3.1")
     }
 }
