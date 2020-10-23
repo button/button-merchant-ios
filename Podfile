@@ -25,4 +25,10 @@ post_install do |installer|
     File.write(version_file, File.read(version_file).gsub(/\d+.\d+.\d+/, version))
     File.write(version_test_file, File.read(version_test_file).gsub(/\d+.\d+.\d+/, version))
     `/usr/libexec/PlistBuddy -c "set :CFBundleShortVersionString '#{version}'" Source/Info.plist`
+    
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+      end
+    end
 end

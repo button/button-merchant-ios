@@ -30,7 +30,7 @@ import AdSupport
 
  To get started with your integration,
  get your application Id from from the [Button Dashboard](https://app.usebutton.com).
- and follow our simple [integration guide](https://developer.usebutton.com/guides/merchants/ios/open-source-merchant-library)
+ and follow our simple [integration guide](https://developer.usebutton.com/docs/ios-add-merchant-library)
  */
 @objcMembers
 final public class ButtonMerchant: NSObject {
