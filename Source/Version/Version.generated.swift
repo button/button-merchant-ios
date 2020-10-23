@@ -1,5 +1,4 @@
-// Generated using Sourcery 0.16.1 — https://github.com/krzysztofzablocki/Sourcery
-// DO NOT EDIT
+// Generated - DO NOT EDIT
 
 //
 // Version.swift
@@ -36,5 +35,5 @@ public struct Version {
     /**
      Library version string.
      */
-    static let stringValue = "1.3.0"
+    static let stringValue = "1.3.1"
 }

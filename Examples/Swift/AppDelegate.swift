@@ -27,18 +27,7 @@ import ButtonMerchant
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    let yourApplicationId = { () -> String in
-        guard let appId = ApplicationId.stringValue else {
-            print("""
-To get started and get an App ID, please see
-https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration-guide
-""")
-            return ""
-        }
-        return appId
-    }()
-
+    
     var window: UIWindow?
     var controller: ViewController? {
         guard let navigationController = window?.rootViewController as? UINavigationController,
@@ -49,8 +38,11 @@ https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        // Replace with your App ID from the Button Dashboard https://app.usebutton.com
+        print("To get started, please see: https://developer.usebutton.com/docs/ios-add-merchant-library")
+        
+        #error("Replace with your App ID from the Button Dashboard https://app.usebutton.com")
+        let yourApplicationId: String =  "<# Your application Id #>"
+        
         ButtonMerchant.configure(applicationId: yourApplicationId)
 
         ButtonMerchant.handlePostInstallURL { url, _ in
@@ -58,13 +50,6 @@ https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration
                 NSLog("Post install: %@", url.absoluteString)
             }
         }
-        let date = Date()
-        print(date.ISO8601String)
-        print(date.eventISO8601String)
-//        print(Date.eventDateFrom(date.eventISO8601String))
-        print(Date.eventDateFrom(date.eventISO8601String)!.eventISO8601String)
-
-        controller?.navigationItem.prompt = "Application ID: \(yourApplicationId)"
 
         return true
     }

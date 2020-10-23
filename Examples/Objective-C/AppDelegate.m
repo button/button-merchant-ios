@@ -23,7 +23,6 @@
 //
 
 #import "AppDelegate.h"
-#import "Example_ObjC-Swift.h"
 @import ButtonMerchant;
 
 @interface AppDelegate ()
@@ -33,9 +32,11 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-    /// To get started and get an App ID, please see https://developer.usebutton.com/guides/merchants/ios/button-merchant-integration-guide
-    NSString *yourApplicationId = ApplicationId.stringValue;
+    NSLog(@"To get started, please see: https://developer.usebutton.com/docs/ios-add-merchant-library");
+    
+    /// Replace with your App ID from the Button Dashboard https://app.usebutton.com
+    NSString *yourApplicationId = @"<# Your application Id #>";
+    
     [ButtonMerchant configureWithApplicationId:yourApplicationId];
 
     [ButtonMerchant handlePostInstallURL:^(NSURL * _Nullable url, NSError * _Nullable error) {
