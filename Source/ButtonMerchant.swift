@@ -210,6 +210,6 @@ extension ButtonMerchant {
         guard let completion = completion else {
             return
         }
-        completion("trackOrder(_:) is No longer supported. You can safely remove your usage of this method.")
+        completion(ButtonMerchantError.trackOrderDeprecationError)
     }
 }

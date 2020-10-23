@@ -146,8 +146,7 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.trackOrder(Order(id: "test", amount: Int64(12))) { error in
             
             // Assert
-            XCTAssertEqual(error as? String,
-                           "trackOrder(_:) is No longer supported. You can safely remove your usage of this method.")
+            XCTAssertEqual(error as? ButtonMerchantError, ButtonMerchantError.trackOrderDeprecationError)
             
             expectation.fulfill()
         }

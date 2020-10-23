@@ -114,7 +114,7 @@ internal final class Client: ClientType {
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
         guard events.count > 0 else {
             if let completion = completion {
-                completion("No events to report")
+                completion(ButtonMerchantError.noEventsError)
             }
             return
         }

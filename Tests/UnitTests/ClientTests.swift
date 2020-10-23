@@ -629,7 +629,7 @@ class ClientTests: XCTestCase {
             
             // Assert
             XCTAssertFalse(testSession.didCallDataTaskWithRequest)
-            XCTAssertEqual(error as? String, "No events to report")
+            XCTAssertEqual(error as? ButtonMerchantError, ButtonMerchantError.noEventsError)
             
             expectation.fulfill()
         }
