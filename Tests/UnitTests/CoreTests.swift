@@ -25,39 +25,41 @@
 import XCTest
 @testable import ButtonMerchant
 
-// swiftlint:disable file_length
 class CoreTests: XCTestCase {
     
+    var testSystem: TestSystem!
+    var testDefaults: TestButtonDefaults!
+    var testNotificationCenter: TestNotificationCenter!
     var testClient: TestClient!
+    var testVerifier: TestAppIntegrationVerification!
+    var core: Core!
     
     override func setUp() {
+        testSystem = TestSystem()
+        testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
+        testNotificationCenter = TestNotificationCenter()
+        testVerifier = TestAppIntegrationVerification(application: TestApplication(),
+                                                      defaults: testDefaults)
         testClient = TestClient(session: TestURLSession(),
-                                userAgent: TestUserAgent(system: TestSystem()),
-                                defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                                system: TestSystem())
+                                userAgent: TestUserAgent(system: testSystem),
+                                defaults: testDefaults,
+                                system: testSystem)
+        core = Core(buttonDefaults: testDefaults,
+                    client: testClient,
+                    system: testSystem,
+                    notificationCenter: testNotificationCenter,
+                    verifier: testVerifier)
     }
     
     func testInitialization() {
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
-        let testNotificationCenter = TestNotificationCenter()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: testNotificationCenter)
         XCTAssertEqualReferences(core.buttonDefaults, testDefaults)
         XCTAssertEqualReferences(core.client, testClient)
         XCTAssertEqualReferences(core.system, testSystem)
         XCTAssertEqualReferences(core.notificationCenter, testNotificationCenter)
+        XCTAssertEqualReferences(core.appIntegrationVerifier, testVerifier)
     }
     
     func testSetApplicationId_setClientApplicationId() {
-        // Arrange
-        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
-        
         // Act
         core.applicationId = ApplicationId("app-abc123")
         
@@ -70,10 +72,6 @@ class CoreTests: XCTestCase {
         let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: testNotificationCenter)
 
         // Act
         core.trackIncomingURL(url)
@@ -88,13 +86,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURLIgnoresURLsWithoutQueryItems() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testNotificationCenter = TestNotificationCenter()
         let url = URL(string: "http://usebutton.com/products/listing")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: testNotificationCenter)
 
         // Act
         core.trackIncomingURL(url)
@@ -109,13 +101,8 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURLPersistsAttributionToken() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let expectedSourceToken = "srctok-123"
         let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
 
         // Act
         core.trackIncomingURL(url)
@@ -126,14 +113,8 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withToken_tracksDeeplinkOpened() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.advertisingId = "some ifa"
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/with-token?btn_ref=faketok-abc123")!
         
         // Act
@@ -152,13 +133,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withoutToken_tracksDeeplinkOpened() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token")!
 
         // Act
@@ -176,13 +151,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withBTNParams_tracksDeeplinkOpened() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token/?btn_1=1&btn_2=2&btn_ref=faketok-123")!
 
         // Act
@@ -200,13 +169,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withFromLandingFromTrackingParams_tracksDeeplinkOpened() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token/?from_landing=true&from_tracking=false")!
 
         // Act
@@ -224,13 +187,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withoutButtonParams_tracksNoParams() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token/?not_ours=param&also_not=same&utm_campaign=nope")!
 
         // Act
@@ -248,13 +205,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withMixedParams_tracksWithButtonParams() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token/?theirs=param&from_landing=1&btn_test=0")!
 
         // Act
@@ -272,13 +223,7 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withMixedCase_tracksWithButtonParams() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
         testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         let url = URL(string: "http://usebutton.com/no-token/?theirs=param&From_landing=1&Btn_test=0")!
 
         // Act
@@ -296,13 +241,8 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURLPostsNotification() {
         // Arrange
-        let testNotificationCenter = TestNotificationCenter()
         let expectedSourceToken = "srctok-123"
         let url = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
-        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: testNotificationCenter)
         
         // Act
         core.trackIncomingURL(url)
@@ -318,14 +258,9 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURLAgainPostsNotification() {
         // Arrange
-        let testNotificationCenter = TestNotificationCenter()
         let firstURL = URL(string: "http://usebutton.com/test?btn_ref=srctok-123")!
         let expectedSourceToken = "srctok-321"
         let secondURL = URL(string: "http://usebutton.com/test?btn_ref=\(expectedSourceToken)")!
-        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: testNotificationCenter)
         
         // Act
         core.trackIncomingURL(firstURL)
@@ -340,15 +275,32 @@ class CoreTests: XCTestCase {
                        [Notification.Key.NewToken: expectedSourceToken])
     }
     
+    func testTrackIncomingURL_forwardsAttributedURL_toIntegrationVerifier() {
+        // Arrange
+        let url = URL(string: "https://usebutton.com/test?btn_ref=srctok-123")!
+        
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertEqual(testVerifier.actualURL, url)
+    }
+    
+    func testTrackIncomingURL_forwardsAnyURL_toIntegrationVerifier() {
+        // Arrange
+        let url = URL(string: "https://example.com")!
+        
+        // Act
+        core.trackIncomingURL(url)
+        
+        // Assert
+        XCTAssertEqual(testVerifier.actualURL, url)
+    }
+    
     func testAttributionTokenReturnsStoredToken() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         let expectedToken = "srctok-123"
         testDefaults.testToken = expectedToken
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
 
         // Act
         let actualToken = core.attributionToken
@@ -358,13 +310,6 @@ class CoreTests: XCTestCase {
     }
 
     func testClearAllDataInvokesButtonDefaults() {
-        // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
-
         // Act
         core.clearAllData()
         
@@ -377,10 +322,6 @@ class CoreTests: XCTestCase {
         let request = URLRequest(url: URL(string: "https://example.com")!)
         let task = PendingTask(urlRequest: request) { _, _ in }
         testClient.pendingTasks.append(task)
-        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
 
         // Act
         core.clearAllData()
@@ -392,13 +333,6 @@ class CoreTests: XCTestCase {
     func testHandlePostInstallURL() {
         // Arrange
         let expectation = XCTestExpectation(description: "handle post install url")
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
-        let testNotificationCenter = TestNotificationCenter()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: testNotificationCenter)
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
         core.applicationId = ApplicationId("app-123")
@@ -410,15 +344,15 @@ class CoreTests: XCTestCase {
 
             // Assert
             XCTAssertEqual(url, expectedURL)
-            XCTAssertTrue(testDefaults.didStoreToken)
-            XCTAssertNotNil(testDefaults.attributionToken)
-            XCTAssertEqual(testDefaults.attributionToken, expectedToken)
-            XCTAssertEqual(core.attributionToken, expectedToken)
-            XCTAssertTrue(testNotificationCenter.didCallPostNotification)
-            XCTAssertNil(testNotificationCenter.testObject)
-            XCTAssertEqual(testNotificationCenter.testNotificationName,
+            XCTAssertTrue(self.testDefaults.didStoreToken)
+            XCTAssertNotNil(self.testDefaults.attributionToken)
+            XCTAssertEqual(self.testDefaults.attributionToken, expectedToken)
+            XCTAssertEqual(self.core.attributionToken, expectedToken)
+            XCTAssertTrue(self.testNotificationCenter.didCallPostNotification)
+            XCTAssertNil(self.testNotificationCenter.testObject)
+            XCTAssertEqual(self.testNotificationCenter.testNotificationName,
                            Notification.Name.Button.AttributionTokenDidChange)
-            XCTAssertEqual(testNotificationCenter.testUserInfo! as NSDictionary,
+            XCTAssertEqual(self.testNotificationCenter.testUserInfo! as NSDictionary,
                            [Notification.Key.NewToken: expectedToken])
             expectation.fulfill()
         }
@@ -442,12 +376,6 @@ class CoreTests: XCTestCase {
 
         // Arrange
         let expectation = XCTestExpectation(description: "handle post install error")
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
         core.applicationId = ApplicationId("")
@@ -467,13 +395,7 @@ class CoreTests: XCTestCase {
 
         // Arrange
         let expectation = XCTestExpectation(description: "handle post install error")
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.attributionToken = "existing token"
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
         core.applicationId = ApplicationId("app-123")
@@ -494,12 +416,6 @@ class CoreTests: XCTestCase {
 
     func testShouldFetchPostInstallURL_neverFetched_newInstall() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = true
 
@@ -512,12 +428,6 @@ class CoreTests: XCTestCase {
 
     func testShouldFetchPostInstallURL_neverFetched_oldInstall() {
         // Arrange
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        let testSystem = TestSystem()
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: testSystem,
-                        notificationCenter: TestNotificationCenter())
         testDefaults.testHasFetchedPostInstallURL = false
         testSystem.testIsNewInstall = false
 
@@ -539,12 +449,7 @@ class CoreTests: XCTestCase {
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
         order.customer = customer
         order.customerOrderId = "customer-order-id-123"
-        let testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testDefaults.testToken = "srctok-abc123"
-        let core = Core(buttonDefaults: testDefaults,
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
         core.applicationId = ApplicationId("app-abc123")
         
         // Act
@@ -574,10 +479,6 @@ class CoreTests: XCTestCase {
         // Arrange
         let expectation = XCTestExpectation(description: "report order error")
         let order = Order(id: "order-abc", purchaseDate: Date(), lineItems: [])
-        let core = Core(buttonDefaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
-                        client: testClient,
-                        system: TestSystem(),
-                        notificationCenter: TestNotificationCenter())
         core.applicationId = ApplicationId("")
         
         // Act
@@ -590,4 +491,3 @@ class CoreTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
 }
-// swiftlint:enable file_length

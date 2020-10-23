@@ -26,53 +26,51 @@ import XCTest
 @testable import ButtonMerchant
 
 class SystemTests: XCTestCase {
-
+    
+    var fileManager: TestFileManager!
+    var calendar: TestCalendar!
+    var adIdManager: TestAdIdManager!
+    var device: TestDevice!
+    var screen: TestScreen!
+    var locale: TestLocale!
+    var bundle: TestBundle!
+    
+    var system: System!
+    
+    override func setUp() {
+        super.setUp()
+        fileManager = TestFileManager()
+        calendar = TestCalendar()
+        adIdManager = TestAdIdManager()
+        device = TestDevice()
+        screen = TestScreen()
+        locale = TestLocale()
+        bundle = TestBundle()
+        system = System(fileManager: fileManager,
+                        calendar: calendar,
+                        adIdManager: adIdManager,
+                        device: device,
+                        screen: screen,
+                        locale: locale,
+                        bundle: bundle)
+    }
+    
     func testInitilization() {
-        let fileManager = TestFileManager()
-        let calendar = TestCalendar()
-        let adIdManager = TestAdIdManager()
-        let device = TestDevice()
-        let screen = TestScreen()
-        let locale = TestLocale()
-        let bundle = TestBundle()
-        let system = System(fileManager: fileManager,
-                             calendar: calendar,
-                             adIdManager: adIdManager,
-                             device: device,
-                             screen: screen,
-                             locale: locale,
-                             bundle: bundle)
         XCTAssertEqualReferences(system.fileManager, fileManager)
         XCTAssertEqualReferences(system.calendar as AnyObject, calendar)
         XCTAssertEqualReferences(system.device, device)
         XCTAssertEqualReferences(system.screen, screen)
         XCTAssertEqualReferences(system.locale as AnyObject, locale)
     }
-
+    
     func testCurrentDateReturnsNow() {
-        let system = System(fileManager: TestFileManager(),
-                            calendar: TestCalendar(),
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
         XCTAssertEqual(system.currentDate.ISO8601String, Date().ISO8601String)
     }
 
     func testIsNewInstallTrueWithin12Hours() {
         // Arrange
-        let testFileManager = TestFileManager()
-        let testCalendar = TestCalendar()
-        testFileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
-        testCalendar.testCurrentDateString = "2018-01-23T21:00:00Z" // 9pm (+11)
-        let system = System(fileManager: testFileManager,
-                            calendar: testCalendar,
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
+        fileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
+        calendar.testCurrentDateString = "2018-01-23T21:00:00Z" // 9pm (+11)
 
         // Act
         let isNewInstall = system.isNewInstall
@@ -83,17 +81,8 @@ class SystemTests: XCTestCase {
 
     func testIsNewInstallFalseExactly12Hours() {
         // Arrange
-        let testFileManager = TestFileManager()
-        let testCalendar = TestCalendar()
-        testFileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
-        testCalendar.testCurrentDateString = "2018-01-23T22:00:00Z" // 10pm (+12)
-        let system = System(fileManager: testFileManager,
-                            calendar: testCalendar,
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
+        fileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
+        calendar.testCurrentDateString = "2018-01-23T22:00:00Z" // 10pm (+12)
 
         // Act
         let isNewInstall = system.isNewInstall
@@ -104,17 +93,8 @@ class SystemTests: XCTestCase {
 
     func testIsNewInstallFalseAfter12Hours() {
         // Arrange
-        let testFileManager = TestFileManager()
-        let testCalendar = TestCalendar()
-        testFileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
-        testCalendar.testCurrentDateString = "2018-01-23T23:00:00Z" // 11pm (+13)
-        let system = System(fileManager: testFileManager,
-                            calendar: testCalendar,
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
+        fileManager.testFileCreationDateString = "2018-01-23T10:00:00Z" // 10am
+        calendar.testCurrentDateString = "2018-01-23T23:00:00Z" // 11pm (+13)
 
         // Act
         let isNewInstall = system.isNewInstall
@@ -125,16 +105,7 @@ class SystemTests: XCTestCase {
     
     func testIsNewInstallFalseWithoutFileCreationDate() {
         // Arrange
-        let testFileManager = TestFileManager()
-        let testCalendar = TestCalendar()
-        testCalendar.testCurrentDateString = "2018-01-23T23:00:00Z" // 11pm
-        let system = System(fileManager: testFileManager,
-                            calendar: testCalendar,
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
+        calendar.testCurrentDateString = "2018-01-23T23:00:00Z" // 11pm
         
         // Act
         let isNewInstall = system.isNewInstall
@@ -144,69 +115,40 @@ class SystemTests: XCTestCase {
     }
     
     func testIFADefaultValue() {
-        let system = System(fileManager: TestFileManager(),
-                            calendar: TestCalendar(),
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
-        
         XCTAssertTrue(system.includesIFA)
     }
     
     func testAdvertisingId_whenValid_returnsString() {
         // Arrange
-        let adManager = TestAdIdManager()
-        let system = System(fileManager: TestFileManager(),
-                            calendar: TestCalendar(),
-                            adIdManager: adManager,
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
-        
-        adManager.stubbedID = .validId
+        adIdManager.stubbedID = .validId
         XCTAssertEqual(system.advertisingId, "11111111-1111-1111-1111-111111111111")
-        adManager.stubbedID = .validIdWithLeadingZeros
+        adIdManager.stubbedID = .validIdWithLeadingZeros
         XCTAssertEqual(system.advertisingId, "00000000-0011-1111-1111-111111111111")
-        adManager.stubbedID = .validIdWithMidZeros
+        adIdManager.stubbedID = .validIdWithMidZeros
         XCTAssertEqual(system.advertisingId, "11111111-1000-0000-0001-111111111111")
-        adManager.stubbedID = .validIdWithTrailingZeros
+        adIdManager.stubbedID = .validIdWithTrailingZeros
         XCTAssertEqual(system.advertisingId, "11111111-1111-1111-1111-110000000000")
     }
     
     func testAdvertisingId_whenInvalid_returnsNil() {
         // Arrange
-        let adManager = TestAdIdManager(.invalidId)
+        system.adIdManager = TestAdIdManager(.invalidId)
         
         // Act
-        let system = System(fileManager: TestFileManager(),
-                            calendar: TestCalendar(),
-                            adIdManager: adManager,
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
+        let advertisingId = system.advertisingId
         
         // Assert
-        XCTAssertNil(system.advertisingId)
+        XCTAssertNil(advertisingId)
     }
     
     func testincludesIFASetToFalse() {
         // Arrange
-        let system = System(fileManager: TestFileManager(),
-                            calendar: TestCalendar(),
-                            adIdManager: TestAdIdManager(),
-                            device: TestDevice(),
-                            screen: TestScreen(),
-                            locale: TestLocale(),
-                            bundle: TestBundle())
-        
-        // Act
         system.includesIFA = false
         
+        // Act
+        let advertisingId = system.advertisingId
+        
         // Assert
-        XCTAssertNil(system.advertisingId)
+        XCTAssertNil(advertisingId)
     }
 }

@@ -27,6 +27,7 @@ import UIKit
 internal protocol SystemType: Configurable {
     var fileManager: FileManagerType { get }
     var calendar: CalendarType { get }
+    var adIdManager: ASIdentifierManagerType { get }
     var advertisingId: String? { get }
     var device: UIDeviceType { get }
     var screen: UIScreenType { get }
@@ -47,11 +48,10 @@ internal final class System: SystemType {
     
     static let allZerosPattern = "^(?:[0+\\-]+){10,}$"
     
-    private var adIdManager: ASIdentifierManagerType
-    
     var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
+    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
