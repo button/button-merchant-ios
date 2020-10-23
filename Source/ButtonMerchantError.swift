@@ -1,5 +1,5 @@
 //
-// String+Error.swift
+// ButtonMerchantError.swift
 //
 // Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -21,6 +21,36 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-	
-/// Allow a String to be an error for simple use cases.
-extension String: Error {}
+
+import UIKit
+
+/**
+ Button Merchant Library Errors.
+ */
+public enum ButtonMerchantError: Error {
+    
+    case trackOrderDeprecationError
+    case noEventsError
+    
+    var domain: String {
+        return "com.usebutton.merchant.error"
+    }
+    
+    var localizedDescription: String {
+        switch self {
+        case .trackOrderDeprecationError:
+            return "trackOrder(_:) is No longer supported. You can safely remove your usage of this method."
+        case .noEventsError:
+            return "No events to report"
+        }
+    }
+}
+
+extension ButtonMerchantError: Equatable {
+    
+    /// :nodoc:
+    public static func == (lhs: ButtonMerchantError, rhs: ButtonMerchantError) -> Bool {
+        return lhs.domain == rhs.domain
+            && lhs.localizedDescription == rhs.localizedDescription
+    }
+}
