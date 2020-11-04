@@ -35,8 +35,6 @@ internal class AppIntegrationVerification: AppIntegrationVerificationType {
     
     enum Command: String {
         
-        static let testHost = "test.bttn.io"
-        
         case quit
         case echo = "btn_test_echo"
         case getToken = "get-token"
@@ -126,10 +124,13 @@ extension AppIntegrationVerification.Command {
         if isEchoCommand(url: url) {
             return Self.echo.rawValue
         }
-        
-        if url.host == Self.testHost,
-              url.path.starts(with: "/action/") {
-            return url.path.components(separatedBy: "/").last
+
+        // Must be: *://*/_bttn/action/*
+        let components = url.pathComponents
+        if components.count == 4,
+           components[1] == "_bttn",
+           components[2] == "action" {
+            return components.last
         }
         
         return nil

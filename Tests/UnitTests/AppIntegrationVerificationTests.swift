@@ -37,25 +37,27 @@ class AppIntegrationVerificationTests: XCTestCase {
         testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         verifier = AppIntegrationVerification(application: testApplication, defaults: testDefaults)
     }
-    
-    func testHandleURL_ignoresUnknownURLs() {
-        let url = URL(string: "https://example.com")!
-        
+
+    // MARK: - Commands via app scheme links
+
+    func testAppSchemeCommand_ignoresUnnamespacedAppSchemeURLs() {
+        let url = URL(string: "brandapp://example.com/action/version")!
+
         verifier.handleIncomingURL(url)
-        
+
+        XCTAssertNil(testApplication.actualURL)
+    }
+
+    func testAppSchemeCommand_unknown_doesNothing() {
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/unknown")!
+
+        verifier.handleIncomingURL(url)
+
         XCTAssertNil(testApplication.actualURL)
     }
     
-    func testCommand_unknown_doesNothing() {
-        let url = URL(string: "brandapp://test.bttn.io/action/unknown")!
-        
-        verifier.handleIncomingURL(url)
-        
-        XCTAssertNil(testApplication.actualURL)
-    }
-    
-    func testCommand_quit_quitsApp() {
-        let url = URL(string: "brandapp://test.bttn.io/action/quit")!
+    func testAppSchemeCommand_quit_quitsApp() {
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/quit")!
         
         verifier.handleIncomingURL(url)
         
@@ -63,8 +65,8 @@ class AppIntegrationVerificationTests: XCTestCase {
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/quit")
     }
     
-    func testCommand_quit_doesNotQuitWithoutTestApp() {
-        let url = URL(string: "brandapp://test.bttn.io/action/quit")!
+    func testAppSchemeCommand_quit_doesNotQuitWithoutTestApp() {
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/quit")!
         testApplication.stubbedOpenResult = false
         
         verifier.handleIncomingURL(url)
@@ -72,7 +74,7 @@ class AppIntegrationVerificationTests: XCTestCase {
         XCTAssertFalse(testApplication.didQuit)
     }
     
-    func testCommand_echo_respondsWithToken() {
+    func testAppSchemeCommand_echo_respondsWithToken() {
         testDefaults.attributionToken = "srctok-xxxxx"
         let url = URL(string: "https://www.example.com/some/product?btn_ref=srctok-xxxxx&btn_test_echo=true")!
         
@@ -81,7 +83,7 @@ class AppIntegrationVerificationTests: XCTestCase {
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/echo?btn_ref=srctok-xxxxx")
     }
     
-    func testCommand_echo_respondsWithNullToken() {
+    func testAppSchemeCommand_echo_respondsWithNullToken() {
         let url = URL(string: "https://www.example.com/some/product?btn_test_echo=true")!
         
         verifier.handleIncomingURL(url)
@@ -89,47 +91,144 @@ class AppIntegrationVerificationTests: XCTestCase {
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/echo?btn_ref=null")
     }
     
-    func testCommand_getToken_respondsWithToken() {
+    func testAppSchemeCommand_getToken_respondsWithToken() {
         testDefaults.attributionToken = "srctok-xxxxx"
-        let url = URL(string: "brandapp://test.bttn.io/action/get-token")!
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/get-token")!
         
         verifier.handleIncomingURL(url)
         
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/get-token?btn_ref=srctok-xxxxx")
     }
     
-    func testCommand_getToken_respondsWithNullToken() {
-        let url = URL(string: "brandapp://test.bttn.io/action/get-token")!
+    func testAppSchemeCommand_getToken_respondsWithNullToken() {
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/get-token")!
         
         verifier.handleIncomingURL(url)
         
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/get-token?btn_ref=null")
     }
     
-    func testCommand_testPostInstall_respondsTrue() {
+    func testAppSchemeCommand_testPostInstall_respondsTrue() {
         testDefaults.hasFetchedPostInstallURL = true
-        let url = URL(string: "brandapp://test.bttn.io/action/test-post-install")!
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/test-post-install")!
         
         verifier.handleIncomingURL(url)
         
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/test-post-install?success=true")
     }
     
-    func testCommand_testPostInstall_respondsFalse() {
+    func testAppSchemeCommand_testPostInstall_respondsFalse() {
         testDefaults.hasFetchedPostInstallURL = false
-        let url = URL(string: "brandapp://test.bttn.io/action/test-post-install")!
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/test-post-install")!
         
         verifier.handleIncomingURL(url)
         
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/test-post-install?success=false")
     }
     
-    func testCommand_version_respondsVersion() {
+    func testAppSchemeCommand_version_respondsVersion() {
         testDefaults.hasFetchedPostInstallURL = false
-        let url = URL(string: "brandapp://test.bttn.io/action/version")!
+        let url = URL(string: "brandapp://test.bttn.io/_bttn/action/version")!
         
         verifier.handleIncomingURL(url)
         
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/version?version=\(Version.stringValue)")
+    }
+
+    // MARK: - Commands via universal links
+
+    func testUniversalLinkCommand_ignoresUnnamespacedUniversaLinks() {
+        let url = URL(string: "https://example.com/action/version")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertNil(testApplication.actualURL)
+    }
+
+    func testUniversalLinkCommand_unknown_doesNothing() {
+        let url = URL(string: "https://example.com/_bttn/action/unknown")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertNil(testApplication.actualURL)
+    }
+
+    func testUniversalLinkCommand_quit_quitsApp() {
+        let url = URL(string: "https://example.com/_bttn/action/quit")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertTrue(testApplication.didQuit)
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/quit")
+    }
+
+    func testUniversalLinkCommand_quit_doesNotQuitWithoutTestApp() {
+        let url = URL(string: "https://example.com/_bttn/action/quit")!
+        testApplication.stubbedOpenResult = false
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertFalse(testApplication.didQuit)
+    }
+
+    func testUniversalLinkCommand_echo_respondsWithToken() {
+        testDefaults.attributionToken = "srctok-xxxxx"
+        let url = URL(string: "https://www.example.com/some/product?btn_ref=srctok-xxxxx&btn_test_echo=true")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/echo?btn_ref=srctok-xxxxx")
+    }
+
+    func testUniversalLinkCommand_echo_respondsWithNullToken() {
+        let url = URL(string: "https://www.example.com/some/product?btn_test_echo=true")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/echo?btn_ref=null")
+    }
+
+    func testUniversalLinkCommand_getToken_respondsWithToken() {
+        testDefaults.attributionToken = "srctok-xxxxx"
+        let url = URL(string: "https://example.com/_bttn/action/get-token")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/get-token?btn_ref=srctok-xxxxx")
+    }
+
+    func testUniversalLinkCommand_getToken_respondsWithNullToken() {
+        let url = URL(string: "https://example.com/_bttn/action/get-token")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/get-token?btn_ref=null")
+    }
+
+    func testUniversalLinkCommand_testPostInstall_respondsTrue() {
+        testDefaults.hasFetchedPostInstallURL = true
+        let url = URL(string: "https://example.com/_bttn/action/test-post-install")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/test-post-install?success=true")
+    }
+
+    func testUniversalLinkCommand_testPostInstall_respondsFalse() {
+        testDefaults.hasFetchedPostInstallURL = false
+        let url = URL(string: "https://example.com/_bttn/action/test-post-install")!
+
+        verifier.handleIncomingURL(url)
+
+        XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/test-post-install?success=false")
+    }
+
+    func testUniversalLinkCommand_version_respondsVersion() {
+        testDefaults.hasFetchedPostInstallURL = false
+        let url = URL(string: "https://example.com/_bttn/action/version")!
+
+        verifier.handleIncomingURL(url)
+
         XCTAssertEqual(testApplication.actualURL?.absoluteString, "button-brand-test://action-response/version?version=\(Version.stringValue)")
     }
 }
