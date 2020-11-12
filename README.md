@@ -18,6 +18,14 @@ To run the example project, clone the repo, run `pod install`, and run the Examp
 
 ButtonMerchant is available through [CocoaPods](http://cocoapods.org) and [Carthage](https://github.com/Carthage/Carthage). 
 
+### Swift Pacakage Manager
+In Xcode, navigate to **File → Swift Packages → Add Package Dependency**
+
+Enter the package repository URL:
+https://github.com/button/button-merchant-ios
+
+_Note: Ensure to select 'Up to Next Major' version.
+
 ### CocoaPods
 
 Add this line to your Podfile:
