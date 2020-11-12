@@ -22,7 +22,8 @@ ButtonMerchant is available through [CocoaPods](http://cocoapods.org) and [Carth
 In Xcode, navigate to **File → Swift Packages → Add Package Dependency**
 
 Enter the package repository URL:
-https://github.com/button/button-merchant-ios
+
+`https://github.com/button/button-merchant-ios`
 
 _Note: Ensure to select 'Up to Next Major' version when prompted._
 
