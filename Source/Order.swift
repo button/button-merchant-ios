@@ -115,7 +115,7 @@ final public class Order: NSObject, Codable {
         /**
          A flag indicating whether the customer is new (or not).
          */
-        var isNew: Bool?
+        public var isNew: Bool?
 
         /**
          Initializes a customer object with the passed parameters.
