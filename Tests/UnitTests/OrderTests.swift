@@ -134,6 +134,7 @@ class OrderTests: XCTestCase {
         // Assert
         XCTAssertEqual(customer.id, id)
         XCTAssertNil(customer.email)
+        XCTAssertFalse(customer.isNew)
     }
 
     func testCustomerInitialization_allProperties_plainTextEmail() {
@@ -149,6 +150,7 @@ class OrderTests: XCTestCase {
         // Assert
         XCTAssertEqual(customer.id, id)
         XCTAssertEqual(customer.email, emailSha256)
+        XCTAssertFalse(customer.isNew)
     }
 
     func testCustomerInitialization_allProperties_nonPlainTextEmail() {
@@ -163,6 +165,21 @@ class OrderTests: XCTestCase {
         // Assert
         XCTAssertEqual(customer.id, id)
         XCTAssertEqual(customer.email, emailSha256)
+        XCTAssertFalse(customer.isNew)
+    }
+    
+    func testCustomerInitialization_isNew_true() {
+        // Arrange
+        let id = "123"
+
+        // Act
+        let customer = Order.Customer(id: id)
+        customer.isNew = true
+
+        // Assert
+        XCTAssertEqual(customer.id, id)
+        XCTAssertNil(customer.email)
+        XCTAssertTrue(customer.isNew)
     }
 
     func testLineItemInitialization_requiredPropertiesOnly() {

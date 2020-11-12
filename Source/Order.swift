@@ -111,6 +111,11 @@ final public class Order: NSObject, Codable {
                 }
             }
         }
+        
+        /**
+         A flag indicating whether the customer is new (or not). Defaults to `false`.
+         */
+        var isNew = false
 
         /**
          Initializes a customer object with the passed parameters.
@@ -125,6 +130,7 @@ final public class Order: NSObject, Codable {
         enum CodingKeys: String, CodingKey {
             case id
             case email = "email_sha256"
+            case isNew = "is_new"
         }
     }
 
