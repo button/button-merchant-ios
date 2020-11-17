@@ -78,7 +78,7 @@ import Foundation
 /**
  A concrete implementation of the ButtonProductCompatible protocol.
  */
-final public class ButtonProduct: NSObject, ButtonProductCompatible {
+final public class ButtonProduct: NSObject, ButtonProductCompatible, Codable {
     public var id: String?
     public var upc: String?
     public var categories: [String]?
