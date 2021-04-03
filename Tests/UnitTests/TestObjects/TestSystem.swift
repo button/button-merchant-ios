@@ -30,7 +30,6 @@ final class TestSystem: SystemType {
     //Test Properties
     var testIsNewInstall = false
     var testCurrentDate: Date
-    var testSignals: PostInstallBody.Signals?
 
     // SystemType
     var includesIFA: Bool

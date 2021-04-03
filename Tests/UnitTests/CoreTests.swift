@@ -356,17 +356,6 @@ class CoreTests: XCTestCase {
                            [Notification.Key.NewToken: expectedToken])
             expectation.fulfill()
         }
-        XCTAssertEqual(testClient.testParameters as NSDictionary,
-                       [
-                        "ifa": "00000000-0000-0000-0000-000000000000",
-                        "signals":
-                            ["source": "button-merchant",
-                             "os": "ios",
-                             "os_version": "11.0",
-                             "device": "iPhone",
-                             "country": "US",
-                             "language": "en",
-                             "screen": "1080x1920"]])
         testClient.postInstallCompletion!(expectedURL, expectedToken)
 
         self.wait(for: [expectation], timeout: 2.0)
@@ -461,6 +450,7 @@ class CoreTests: XCTestCase {
             expectation.fulfill()
         }
 
+        // swiftlint:disable line_length
         XCTAssertEqual(testClient.testReportOrderRequest!.parameters as NSDictionary,
                        ["advertising_id": "00000000-0000-0000-0000-000000000000",
                         "btn_ref": "srctok-abc123",

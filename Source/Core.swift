@@ -177,11 +177,8 @@ final internal class Core: CoreType {
         }
 
         buttonDefaults.hasFetchedPostInstallURL = true
-
-        let postInstallBody = PostInstallBody(system: system)
-        let parameters = postInstallBody.dictionaryRepresentation
         
-        client.fetchPostInstallURL(parameters: parameters) { [weak self] url, attributionToken in
+        client.fetchPostInstallURL { [weak self] url, attributionToken in
             guard self?.buttonDefaults.attributionToken == nil,
                 let token = attributionToken else {
                     completion(nil, nil)

@@ -65,8 +65,7 @@ class TestClient: ClientType {
         self.testParameters = [:]
     }
     
-    func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        testParameters = parameters
+    func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void) {
         didCallGetPostInstallLink = true
         postInstallCompletion = completion
     }
