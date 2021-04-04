@@ -26,3 +26,5 @@
 
 FOUNDATION_EXPORT double ButtonMerchantVersionNumber;
 FOUNDATION_EXPORT const unsigned char ButtonMerchantVersionString[];
+
+#define Customer BTNCustomer

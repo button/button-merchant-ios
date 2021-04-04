@@ -88,7 +88,7 @@ final public class Order: NSObject, Codable {
      Represents a customer in the order.
      */
     @objcMembers
-    @objc(Customer) final public class Customer: NSObject, Codable {
+    @objc(BTNCustomer) final public class Customer: NSObject, Codable {
         
         /**
          The id for the transacting customer in your system (required).
