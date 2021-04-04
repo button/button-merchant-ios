@@ -440,9 +440,6 @@ class ClientTests: XCTestCase {
 
         // Act
         client.fetchPostInstallURL { _, _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
-        let parameters = requestParameters as? [String: String]
 
         // Assert
         XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)

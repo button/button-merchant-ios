@@ -122,6 +122,9 @@
 		FB70030B24CF46260050E021 /* AppEventsRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030924CF44620050E021 /* AppEventsRequestBodyTests.swift */; };
 		FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030E24CF48A90050E021 /* AppEvent.swift */; };
 		FB70031224CF4BDE0050E021 /* AppEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70031024CF4BC60050E021 /* AppEventTests.swift */; };
+		FB78CAE12618F9360076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
+		FB78CBC6261A6C110076D9C3 /* CustomerCompatibilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */; };
+		FB78CBCC261A6C4F0076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
 		FBEBC8BB25434A5700AAE9E5 /* AppIntegrationVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */; };
 		FBEBC8CD2543557D00AAE9E5 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */; };
 		FBEBC8DF2543576A00AAE9E5 /* TestApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */; };
@@ -285,6 +288,9 @@
 		FB70030924CF44620050E021 /* AppEventsRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventsRequestBodyTests.swift; sourceTree = "<group>"; };
 		FB70030E24CF48A90050E021 /* AppEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvent.swift; sourceTree = "<group>"; };
 		FB70031024CF4BC60050E021 /* AppEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventTests.swift; sourceTree = "<group>"; };
+		FB78CADF2618F9360076D9C3 /* Customer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
+		FB78CAE02618F9360076D9C3 /* Customer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
+		FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerCompatibilityTest.m; sourceTree = "<group>"; };
 		FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntegrationVerification.swift; sourceTree = "<group>"; };
 		FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplication.swift; sourceTree = "<group>"; };
@@ -454,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				9E771540206AAC0F0051728C /* IntegrationTests.swift */,
+				FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */,
 				9E771542206AAC0F0051728C /* Info.plist */,
 			);
 			path = IntegrationTests;
@@ -600,6 +607,8 @@
 				DE5464D72107CB6E001809F3 /* AppDelegate.m */,
 				DE5464D92107CB6E001809F3 /* ViewController.h */,
 				DE5464DA2107CB6E001809F3 /* ViewController.m */,
+				FB78CADF2618F9360076D9C3 /* Customer.h */,
+				FB78CAE02618F9360076D9C3 /* Customer.m */,
 				DE5464DC2107CB6E001809F3 /* Main.storyboard */,
 				DEA3F6BD2108F72B009E720E /* Supporting Files */,
 			);
@@ -822,7 +831,7 @@
 					9E77153D206AAC0F0051728C = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 39F27QYP2C;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
 					DE5464D32107CB6E001809F3 = {
@@ -1100,6 +1109,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB78CBC6261A6C110076D9C3 /* CustomerCompatibilityTest.m in Sources */,
+				FB78CBCC261A6C4F0076D9C3 /* Customer.m in Sources */,
 				9E771541206AAC0F0051728C /* IntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1112,6 +1123,7 @@
 				DE5464DB2107CB6E001809F3 /* ViewController.m in Sources */,
 				DE5464D82107CB6E001809F3 /* AppDelegate.m in Sources */,
 				DEA3F6BB2108F286009E720E /* MessageView.swift in Sources */,
+				FB78CAE12618F9360076D9C3 /* Customer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1426,6 +1438,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1439,6 +1452,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.button.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1451,6 +1465,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
