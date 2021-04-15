@@ -439,18 +439,13 @@ class ClientTests: XCTestCase {
         let expectedURL = URL(string: "https://app-abc123.mobileapi.usebutton.com/v1/app/deferred-deeplink")!
 
         // Act
-        client.fetchPostInstallURL(parameters: ["blargh": "blergh"]) { _, _ in }
-        let request = (testURLSession.lastDataTask?.originalRequest)!
-        let requestParameters = try? JSONSerialization.jsonObject(with: request.httpBody!)
-        let parameters = requestParameters as? [String: String]
+        client.fetchPostInstallURL { _, _ in }
 
         // Assert
         XCTAssertTrue(testURLSession.didCallDataTaskWithRequest)
         XCTAssertNotNil(testURLSession.lastDataTask)
         XCTAssertNotNil(testURLSession.lastDataTask?.originalRequest!.url)
         XCTAssertEqual(testURLSession.lastDataTask?.originalRequest!.url, expectedURL)
-        XCTAssertNotNil(parameters)
-        XCTAssertEqual(parameters!, ["blargh": "blergh", "application_id": "app-abc123"])
     }
     
     func testFetchPostInstallURLSuccess() {
@@ -469,7 +464,7 @@ class ClientTests: XCTestCase {
         let data = try? JSONSerialization.data(withJSONObject: responseDict)
         
         // Act
-        client.fetchPostInstallURL(parameters: [:]) { url, token in
+        client.fetchPostInstallURL { url, token in
             
             // Assert
             XCTAssertEqual(url, expectedURL)
@@ -498,7 +493,7 @@ class ClientTests: XCTestCase {
         let data = try? JSONSerialization.data(withJSONObject: responseDict)
         
         // Act
-        client.fetchPostInstallURL(parameters: [:]) { url, token in
+        client.fetchPostInstallURL { url, token in
             
             // Assert
             XCTAssertNil(url)
@@ -646,7 +641,7 @@ class ClientTests: XCTestCase {
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
         
         // Act
-        client.fetchPostInstallURL(parameters: [:]) { _, _  in }
+        client.fetchPostInstallURL { _, _  in }
         client.reportEvents([event], ifa: "some ifa") { _ in }
         
         // Assert
@@ -691,7 +686,7 @@ class ClientTests: XCTestCase {
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: TestSystem())
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
-        client.fetchPostInstallURL(parameters: ["foo": "bar"]) { _, _  in }
+        client.fetchPostInstallURL { _, _  in }
         client.reportEvents([event], ifa: "some ifa") { _ in }
         
         // Act

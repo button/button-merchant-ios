@@ -56,7 +56,7 @@ internal protocol ClientType: Activity {
     var defaults: ButtonDefaultsType { get }
     var system: SystemType { get }
     var pendingTasks: [PendingTask] { get set }
-    func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void)
+    func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
     func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType)
@@ -84,8 +84,8 @@ internal final class Client: ClientType {
         self.system = system
     }
     
-    func fetchPostInstallURL(parameters: [String: Any], _ completion: @escaping (URL?, String?) -> Void) {
-        let request = urlRequest(url: Service.postInstall.urlWith(applicationId), parameters: parameters)
+    func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void) {
+        let request = urlRequest(url: Service.postInstall.urlWith(applicationId))
         enqueueRequest(request: request, completion: { data, _ in
             guard let data = data,
                 let responseDict = try? JSONSerialization.jsonObject(with: data) as? [String: Any],

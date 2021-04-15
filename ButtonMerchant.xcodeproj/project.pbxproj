@@ -21,7 +21,6 @@
 		9E2B4314206C12BC009F2886 /* URLSessionDataTaskExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4312206C12BC009F2886 /* URLSessionDataTaskExtensions.swift */; };
 		9E2B4315206C12BC009F2886 /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4313206C12BC009F2886 /* URLSessionExtensions.swift */; };
 		9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4316206C1335009F2886 /* EncodableExtensions.swift */; };
-		9E2B431B206C134A009F2886 /* PostInstallBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B4319206C134A009F2886 /* PostInstallBody.swift */; };
 		9E334DB822C2A62300F697DE /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E334DB722C2A62300F697DE /* StringTests.swift */; };
 		9E4C496720616B040053E4CA /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C496520616B040053E4CA /* CoreTests.swift */; };
 		9E4C496820616B040053E4CA /* ButtonDefaultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4C496620616B040053E4CA /* ButtonDefaultsTests.swift */; };
@@ -45,7 +44,6 @@
 		9EB1B0A0207AB43E00BE0A1A /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1B09F207AB43E00BE0A1A /* System.swift */; };
 		9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1B0A1207AB5ED00BE0A1A /* FileManagerExtensions.swift */; };
 		9EB1B0A4207AB68100BE0A1A /* CalendarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB1B0A3207AB68100BE0A1A /* CalendarExtensions.swift */; };
-		9EDEB859206ECE3000D58FE2 /* PostInstallBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */; };
 		9EDED110208FA3930049A56A /* UserAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDED10F208FA3930049A56A /* UserAgentTests.swift */; };
 		9EDED112208FA4D70049A56A /* TestBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDED111208FA4D70049A56A /* TestBundle.swift */; };
 		9EEF58DD208F9161009DA9B6 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED488D4208F75C7000DA7FC /* UserAgent.swift */; };
@@ -124,12 +122,15 @@
 		FB70030B24CF46260050E021 /* AppEventsRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030924CF44620050E021 /* AppEventsRequestBodyTests.swift */; };
 		FB70030F24CF48A90050E021 /* AppEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70030E24CF48A90050E021 /* AppEvent.swift */; };
 		FB70031224CF4BDE0050E021 /* AppEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB70031024CF4BC60050E021 /* AppEventTests.swift */; };
-		FBEBC99625437E1700AAE9E5 /* ButtonMerchantError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */; };
+		FB78CAE12618F9360076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
+		FB78CBC6261A6C110076D9C3 /* CustomerCompatibilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */; };
+		FB78CBCC261A6C4F0076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
 		FBEBC8BB25434A5700AAE9E5 /* AppIntegrationVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */; };
 		FBEBC8CD2543557D00AAE9E5 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */; };
 		FBEBC8DF2543576A00AAE9E5 /* TestApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */; };
 		FBEBC92125435D5900AAE9E5 /* TestAppIntegrationVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC92025435D5900AAE9E5 /* TestAppIntegrationVerification.swift */; };
 		FBEBC92825436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC92725436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift */; };
+		FBEBC99625437E1700AAE9E5 /* ButtonMerchantError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,7 +170,6 @@
 		9E2B4312206C12BC009F2886 /* URLSessionDataTaskExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataTaskExtensions.swift; sourceTree = "<group>"; };
 		9E2B4313206C12BC009F2886 /* URLSessionExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
 		9E2B4316206C1335009F2886 /* EncodableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodableExtensions.swift; sourceTree = "<group>"; };
-		9E2B4319206C134A009F2886 /* PostInstallBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostInstallBody.swift; sourceTree = "<group>"; };
 		9E334DB722C2A62300F697DE /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		9E4C496520616B040053E4CA /* CoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		9E4C496620616B040053E4CA /* ButtonDefaultsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonDefaultsTests.swift; sourceTree = "<group>"; };
@@ -194,7 +194,6 @@
 		9EB1B0A1207AB5ED00BE0A1A /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		9EB1B0A3207AB68100BE0A1A /* CalendarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExtensions.swift; sourceTree = "<group>"; };
 		9ED488D4208F75C7000DA7FC /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
-		9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInstallBodyTests.swift; sourceTree = "<group>"; };
 		9EDED10F208FA3930049A56A /* UserAgentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgentTests.swift; sourceTree = "<group>"; };
 		9EDED111208FA4D70049A56A /* TestBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestBundle.swift; sourceTree = "<group>"; };
 		9EF66C35208F851100D73AB1 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
@@ -289,12 +288,15 @@
 		FB70030924CF44620050E021 /* AppEventsRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventsRequestBodyTests.swift; sourceTree = "<group>"; };
 		FB70030E24CF48A90050E021 /* AppEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEvent.swift; sourceTree = "<group>"; };
 		FB70031024CF4BC60050E021 /* AppEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEventTests.swift; sourceTree = "<group>"; };
-		FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonMerchantError.swift; sourceTree = "<group>"; };
+		FB78CADF2618F9360076D9C3 /* Customer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
+		FB78CAE02618F9360076D9C3 /* Customer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
+		FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerCompatibilityTest.m; sourceTree = "<group>"; };
 		FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntegrationVerification.swift; sourceTree = "<group>"; };
 		FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplication.swift; sourceTree = "<group>"; };
 		FBEBC92025435D5900AAE9E5 /* TestAppIntegrationVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppIntegrationVerification.swift; sourceTree = "<group>"; };
 		FBEBC92725436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntegrationVerificationTests.swift; sourceTree = "<group>"; };
+		FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonMerchantError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,7 +419,6 @@
 				DA756B8622B3ECE9003397E3 /* TrustEvaluatorTests.swift */,
 				DA756B6E22B2B717003397E3 /* PEMCertificateTests.swift */,
 				9EDED10F208FA3930049A56A /* UserAgentTests.swift */,
-				9EDEB858206ECE3000D58FE2 /* PostInstallBodyTests.swift */,
 				DC4AAD4322B13CD3005CE460 /* OrderTests.swift */,
 				DA191A2722D530CC00ED88B9 /* ReportOrderRequestTests.swift */,
 				DA4C8C7C22D3DC0D000E15A9 /* RetryPolicyTests.swift */,
@@ -459,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				9E771540206AAC0F0051728C /* IntegrationTests.swift */,
+				FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */,
 				9E771542206AAC0F0051728C /* Info.plist */,
 			);
 			path = IntegrationTests;
@@ -605,6 +607,8 @@
 				DE5464D72107CB6E001809F3 /* AppDelegate.m */,
 				DE5464D92107CB6E001809F3 /* ViewController.h */,
 				DE5464DA2107CB6E001809F3 /* ViewController.m */,
+				FB78CADF2618F9360076D9C3 /* Customer.h */,
+				FB78CAE02618F9360076D9C3 /* Customer.m */,
 				DE5464DC2107CB6E001809F3 /* Main.storyboard */,
 				DEA3F6BD2108F72B009E720E /* Supporting Files */,
 			);
@@ -638,7 +642,6 @@
 				DAE8B96D22AF5F0400D11AF9 /* TrustEvaluator.swift */,
 				DA98C00522B29BA0002D1823 /* PEMCertificate.swift */,
 				9ED488D4208F75C7000DA7FC /* UserAgent.swift */,
-				9E2B4319206C134A009F2886 /* PostInstallBody.swift */,
 				9E9CDEA62076BD7900A1424C /* Order.swift */,
 				DA4C8C7822D3D909000E15A9 /* ReportOrderRequest.swift */,
 				DA4C8C7A22D3D956000E15A9 /* RetryPolicy.swift */,
@@ -812,7 +815,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Button, Inc.";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -828,7 +831,7 @@
 					9E77153D206AAC0F0051728C = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = 39F27QYP2C;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
 					DE5464D32107CB6E001809F3 = {
@@ -1106,6 +1109,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB78CBC6261A6C110076D9C3 /* CustomerCompatibilityTest.m in Sources */,
+				FB78CBCC261A6C4F0076D9C3 /* Customer.m in Sources */,
 				9E771541206AAC0F0051728C /* IntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1118,6 +1123,7 @@
 				DE5464DB2107CB6E001809F3 /* ViewController.m in Sources */,
 				DE5464D82107CB6E001809F3 /* AppDelegate.m in Sources */,
 				DEA3F6BB2108F286009E720E /* MessageView.swift in Sources */,
+				FB78CAE12618F9360076D9C3 /* Customer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1137,7 +1143,6 @@
 				9E56CE5A22B812AE00E75884 /* StringExtensions.swift in Sources */,
 				9E2B4317206C1335009F2886 /* EncodableExtensions.swift in Sources */,
 				FBEBC99625437E1700AAE9E5 /* ButtonMerchantError.swift in Sources */,
-				9E2B431B206C134A009F2886 /* PostInstallBody.swift in Sources */,
 				9EB1B0A4207AB68100BE0A1A /* CalendarExtensions.swift in Sources */,
 				DE1706DB20855B06009FF30B /* UIDeviceExtensions.swift in Sources */,
 				DA98C00622B29BA0002D1823 /* PEMCertificate.swift in Sources */,
@@ -1200,7 +1205,6 @@
 				DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */,
 				DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */,
 				9E77202520607331005F740B /* ButtonMerchantTests.swift in Sources */,
-				9EDEB859206ECE3000D58FE2 /* PostInstallBodyTests.swift in Sources */,
 				FBEBC8DF2543576A00AAE9E5 /* TestApplication.swift in Sources */,
 				DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */,
 				9E76FEB32090EEC700BDC844 /* TestUserAgent.swift in Sources */,
@@ -1434,6 +1438,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1447,6 +1452,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.button.IntegrationTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1459,6 +1465,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

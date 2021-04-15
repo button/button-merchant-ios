@@ -1,7 +1,7 @@
 //
-// ButtonMerchant.h
+// Customer.h
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2021 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
-FOUNDATION_EXPORT double ButtonMerchantVersionNumber;
-FOUNDATION_EXPORT const unsigned char ButtonMerchantVersionString[];
+NS_ASSUME_NONNULL_BEGIN
 
-#define Customer BTNCustomer
+/**
+ Exists to create an intentional conflict with ButtonMerchant Customer class
+ */
+@interface Customer : NSObject
+
+@end
+
+NS_ASSUME_NONNULL_END

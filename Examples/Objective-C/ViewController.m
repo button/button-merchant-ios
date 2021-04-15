@@ -24,6 +24,7 @@
 
 #import "ViewController.h"
 #import "Example_ObjC-Swift.h"
+#import "Customer.h"
 @import ButtonMerchant;
 
 @interface ViewController ()
@@ -41,6 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSAssert(![NSClassFromString(@"Customer") isSubclassOfClass:BTNCustomer.class], @"Expected false");
 
     self.attributionTokenString = ButtonMerchant.attributionToken;
 
