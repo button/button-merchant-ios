@@ -27,7 +27,7 @@ import Foundation
 /**
  A protocol through which user activities can be reported.
  */
-@objc public protocol Activity: class {
+@objc public protocol Activity: AnyObject {
     
     /**
      Report that the user has viewed a product.

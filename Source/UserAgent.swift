@@ -24,7 +24,7 @@
 
 import Foundation
 
-internal protocol UserAgentType: class {
+internal protocol UserAgentType: AnyObject {
     var stringRepresentation: String { get }
     var libraryVersion: String { get }
     var system: SystemType { get }

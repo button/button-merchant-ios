@@ -24,7 +24,7 @@
 
 import Foundation
 
-internal protocol FileManagerType: class {
+internal protocol FileManagerType: AnyObject {
     func attributesOfItem(atPath path: String) throws -> [FileAttributeKey: Any]
     func urls(for directory: FileManager.SearchPathDirectory, in domainMask: FileManager.SearchPathDomainMask) -> [URL]
 }

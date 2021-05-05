@@ -27,7 +27,7 @@ import Foundation
 /**
  A protocol that defines the product properties that may be provided when reporting user activity.
  */
-@objc public protocol ButtonProductCompatible: class {
+@objc public protocol ButtonProductCompatible: AnyObject {
     
     /**
      The product identifier.

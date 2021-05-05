@@ -24,7 +24,7 @@
 
 import Foundation
 
-internal protocol ButtonDefaultsType: class {
+internal protocol ButtonDefaultsType: AnyObject {
     var userDefaults: UserDefaultsType { get }
     var sessionId: String? { get set }
     var attributionToken: String? { get set }

@@ -24,7 +24,7 @@
 
 import UIKit
 
-internal protocol UIDeviceType: class {
+internal protocol UIDeviceType: AnyObject {
     var model: String { get }
     var systemVersion: String { get }
     var modelName: String { get }

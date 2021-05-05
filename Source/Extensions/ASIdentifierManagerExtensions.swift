@@ -24,7 +24,7 @@
 
 import AdSupport
 
-internal protocol ASIdentifierManagerType: class {
+internal protocol ASIdentifierManagerType: AnyObject {
     var advertisingIdentifier: UUID { get }
 }
 
