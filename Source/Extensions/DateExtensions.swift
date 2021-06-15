@@ -28,26 +28,13 @@ public extension Date {
 
     static let ISO8601Formatter = { () -> DateFormatter in
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        return formatter
-    }()
-    
-    static let eventISO8601Formatter = { () -> DateFormatter in
-        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return formatter
     }()
     
     var ISO8601String: String {
         return Date.ISO8601Formatter.string(from: self)
-    }
-    
-    var eventISO8601String: String {
-        return Date.eventISO8601Formatter.string(from: self)
-    }
-    
-    static func eventDateFrom(_ string: String) -> Date? {
-        return Date.eventISO8601Formatter.date(from: string)
     }
 }

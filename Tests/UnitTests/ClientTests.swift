@@ -570,7 +570,7 @@ class ClientTests: XCTestCase {
         let expectation = XCTestExpectation(description: "report events succeeds")
         let testSession = TestURLSession()
         let testSystem = TestSystem()
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let client = Client(session: testSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -588,7 +588,7 @@ class ClientTests: XCTestCase {
             XCTAssertEqual(request?.url?.absoluteString, "https://app-abc123.mobileapi.usebutton.com/v1/app/events")
             XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, [
                 "ifa": "some ifa",
-                "current_time": "2019-07-25T21:30:02.844Z",
+                "current_time": "2019-07-25T21:30:02Z",
                 "events": [
                     [
                         "name": "test-event",

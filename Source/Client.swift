@@ -118,7 +118,7 @@ internal final class Client: ClientType {
             }
             return
         }
-        let body = AppEventsRequestBody(ifa: ifa, events: events, currentTime: system.currentDate.eventISO8601String)
+        let body = AppEventsRequestBody(ifa: ifa, events: events, currentTime: system.currentDate.ISO8601String)
         let request = urlRequest(url: Service.appEvents.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, error in
             if let completion = completion {
