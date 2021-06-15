@@ -1,5 +1,5 @@
 PODS:
-  - ButtonMerchant (1.4.3)
+  - ButtonMerchant (1.4.4)
   - SwiftLint (0.25.0)
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  ButtonMerchant: 47d9297cd0f7ad582e130be5a7c892716c996f14
+  ButtonMerchant: bbd1e0519215d6ce4c9a990eae51d084854cd7af
   SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
 
 PODFILE CHECKSUM: e6864df46b69637ee2822533e793512d9403dc79
