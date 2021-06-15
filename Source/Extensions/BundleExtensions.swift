@@ -24,7 +24,7 @@
 	
 import Foundation
 
-internal protocol BundleType: class {
+internal protocol BundleType: AnyObject {
     var infoDictionary: [String: Any]? { get }
     var bundleIdentifier: String? { get }
 }

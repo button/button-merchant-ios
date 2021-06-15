@@ -24,7 +24,7 @@
 	
 import UIKit
 
-internal protocol UIScreenType: class {
+internal protocol UIScreenType: AnyObject {
     var nativeBounds: CGRect { get }
     var scale: CGFloat { get }
 }

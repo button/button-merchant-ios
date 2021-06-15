@@ -24,7 +24,7 @@
 
 import UIKit
 
-internal protocol AppIntegrationVerificationType: class {
+internal protocol AppIntegrationVerificationType: AnyObject {
     var application: UIApplicationType { get }
     var buttonDefaults: ButtonDefaultsType { get }
     func handleIncomingURL(_ url: URL)

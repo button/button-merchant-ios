@@ -27,7 +27,7 @@ import Foundation
 /**
  An interface through which library features can be enabled/disabled.
  */
-@objc public protocol Configurable: class {
+@objc public protocol Configurable: AnyObject {
 
     /**
      Indicates whether or not the library will attach IFA to outgoing requests.

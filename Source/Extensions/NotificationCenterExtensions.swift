@@ -28,7 +28,7 @@ import Foundation
  The interface through which the library communicates with `NotificationCenter`.
  - Note: `NotificationCenter` methods are redeclared here as needed.
  */
-internal protocol NotificationCenterType: class {
+internal protocol NotificationCenterType: AnyObject {
     func post(name aName: NSNotification.Name, object anObject: Any?, userInfo aUserInfo: [AnyHashable: Any]?)
 }
 

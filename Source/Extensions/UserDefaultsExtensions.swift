@@ -28,7 +28,7 @@ import Foundation
  The interface through which the library communicates with `UserDefaults`.
  - Note: `UserDefaults` methods are redeclared here as needed.
  */
-internal protocol UserDefaultsType: class {
+internal protocol UserDefaultsType: AnyObject {
     func setValue(_ value: Any?, forKey key: String)
     func value(forKey: String) -> Any?
     @discardableResult func synchronize() -> Bool

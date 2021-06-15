@@ -24,7 +24,7 @@
 
 import Foundation
 
-internal protocol TrustEvaluatorType: class {
+internal protocol TrustEvaluatorType: AnyObject {
     
     var publicKeys: [SecKey] { get }
     
