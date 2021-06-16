@@ -114,7 +114,7 @@ class CoreTests: XCTestCase {
     func testTrackIncomingURL_withToken_tracksDeeplinkOpened() {
         // Arrange
         testSystem.advertisingId = "some ifa"
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/with-token?btn_ref=faketok-abc123")!
         
         // Act
@@ -126,14 +126,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withoutToken_tracksDeeplinkOpened() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token")!
 
         // Act
@@ -144,14 +144,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withBTNParams_tracksDeeplinkOpened() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token/?btn_1=1&btn_2=2&btn_ref=faketok-123")!
 
         // Act
@@ -162,14 +162,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withFromLandingFromTrackingParams_tracksDeeplinkOpened() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token/?from_landing=true&from_tracking=false")!
 
         // Act
@@ -180,14 +180,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withoutButtonParams_tracksNoParams() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token/?not_ours=param&also_not=same&utm_campaign=nope")!
 
         // Act
@@ -198,14 +198,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withMixedParams_tracksWithButtonParams() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token/?theirs=param&from_landing=1&btn_test=0")!
 
         // Act
@@ -216,14 +216,14 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?from_landing=1&btn_test=0")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }
     
     func testTrackIncomingURL_withMixedCase_tracksWithButtonParams() {
         // Arrange
-        testSystem.testCurrentDate = Date.eventDateFrom("2019-07-25T21:30:02.844Z")!
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/no-token/?theirs=param&From_landing=1&Btn_test=0")!
 
         // Act
@@ -234,7 +234,7 @@ class CoreTests: XCTestCase {
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], "http://usebutton.com/no-token/?From_landing=1&Btn_test=0")
-        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02.844Z")
+        XCTAssertEqual(testClient.actualEvents?.first?.time, "2019-07-25T21:30:02Z")
         let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
         XCTAssertTrue(predicate.evaluate(with: testClient.actualEvents?.first?.uuid))
     }

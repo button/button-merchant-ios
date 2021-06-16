@@ -62,7 +62,12 @@ class SystemTests: XCTestCase {
         XCTAssertEqualReferences(system.screen, screen)
         XCTAssertEqualReferences(system.locale as AnyObject, locale)
     }
-    
+
+    func testISO8601FormatterUsesISO8601Calendar() {
+        XCTAssertEqual(Date.ISO8601Formatter.calendar.identifier, Calendar.Identifier.iso8601)
+        XCTAssertEqual(Date.ISO8601Formatter.locale, Locale(identifier: "en_US_POSIX"))
+    }
+
     func testCurrentDateReturnsNow() {
         XCTAssertEqual(system.currentDate.ISO8601String, Date().ISO8601String)
     }
