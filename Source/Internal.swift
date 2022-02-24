@@ -1,5 +1,5 @@
 //
-// Internal.swift
+// Client.swift
 //
 // Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,186 +22,120 @@
 // SOFTWARE.
 //
 
-import AdSupport
+import Foundation
+import UIKit
 import Core
 
-internal protocol ButtonMerchantInternal {
+internal protocol ClientType: Activity {
     var applicationId: ApplicationId? { get set }
     var defaults: ButtonDefaultsType { get }
-    var client: ClientType { get }
     var system: SystemType { get }
-    var notificationCenter: NotificationCenterType { get }
-    var shouldFetchPostInstallURL: Bool { get }
-    var attributionToken: String? { get set }
-    var appIntegrationVerifier: AppIntegrationVerificationType { get }
-    func clearAllData()
-    func trackIncomingURL(_ url: URL)
-    func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
+    var network: NetworkType { get }
+    func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?)
+    func reportActivity(_ name: String, products: [ButtonProduct]?)
+    func clearAllTasks()
     init(defaults: ButtonDefaultsType,
-         client: ClientType,
          system: SystemType,
-         notificationCenter: NotificationCenterType,
-         verifier: AppIntegrationVerificationType)
+         network: NetworkType)
 }
 
+internal final class Client: ClientType {
 
-extension ButtonMerchant {
+    var defaults: ButtonDefaultsType
+    var system: SystemType
+    var network: NetworkType
 
-    /**
-     The internal instance responsible for fulfilling the public ButtonMerchant API contract.
-     */
-    final internal class Internal: ButtonMerchantInternal {
-
-        var applicationId: ApplicationId? {
-            didSet {
-                client.applicationId = applicationId
-            }
+    var applicationId: ApplicationId? {
+        didSet {
+            network.applicationId = applicationId
         }
-        var defaults: ButtonDefaultsType
-        var client: ClientType
-        var system: SystemType
-        var notificationCenter: NotificationCenterType
+    }
 
-        var shouldFetchPostInstallURL: Bool {
-            return !defaults.hasFetchedPostInstallURL && system.isNewInstall
-        }
+    init(defaults: ButtonDefaultsType,
+         system: SystemType,
+         network: NetworkType) {
+        self.defaults = defaults
+        self.system = system
+        self.network = network
+    }
 
-        var attributionToken: String? {
-            get {
-                return defaults.attributionToken
-            }
-            set {
-                defaults.attributionToken = newValue
-            }
-        }
-
-        var appIntegrationVerifier: AppIntegrationVerificationType
-
-        required init(defaults: ButtonDefaultsType,
-                      client: ClientType,
-                      system: SystemType,
-                      notificationCenter: NotificationCenterType,
-                      verifier: AppIntegrationVerificationType) {
-            self.applicationId = nil
-            self.defaults = defaults
-            self.client = client
-            self.system = system
-            self.notificationCenter = notificationCenter
-            self.appIntegrationVerifier = verifier
-        }
-
-        /**
-         Clears all session data from the custom user defaults container.
-         */
-        func clearAllData() {
-            defaults.clearAllData()
-            client.clearAllTasks()
-        }
-
-        /**
-         Checks and persists Button attribution in all passed URLs.
-
-         - Parameter url: The URL to be inspected.
-         */
-        func trackIncomingURL(_ url: URL) {
-            guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                return
-            }
-
-            let queryItems = urlComponents.queryItems
-            urlComponents.queryItems = nil
-            urlComponents.fragment = nil
-
-            var incomingToken: String?
-            if let queryItems = queryItems {
-                var allowedQueryItems = [URLQueryItem]()
-                queryItems.forEach { item in
-                    switch item.name.lowercased() {
-                    case "btn_ref":
-                        incomingToken = item.value
-                        updateAttributionIfNeeded(token: incomingToken)
-                        allowedQueryItems.append(item)
-                    case "from_landing",
-                        "from_tracking",
-                        _ where item.name.lowercased().hasPrefix("btn_"):
-                        allowedQueryItems.append(item)
-                    default:
-                        break
-                    }
-                }
-                urlComponents.queryItems = allowedQueryItems
-            }
-
-            appIntegrationVerifier.handleIncomingURL(url)
-
-            guard let filteredURL = urlComponents.url else {
-                return
-            }
-
-            let event = AppEvent("btn:deeplink-opened",
-                                 time: system.currentDate.ISO8601String,
-                                 promotionSourceToken: incomingToken,
-                                 value: [ "url": filteredURL.absoluteString])
-            client.reportEvents([event], nil)
-        }
-
-        private func updateAttributionIfNeeded(token: String?) {
-            guard let incomingToken = token else {
-                return
-            }
-
-            let oldAttributionToken = attributionToken
-            attributionToken = incomingToken
-
-            var isNewToken = true
-            if let oldAttributionToken = oldAttributionToken {
-                isNewToken = oldAttributionToken != incomingToken
-            }
-            if isNewToken {
-                notificationCenter.post(name: Notification.Name.Button.AttributionTokenDidChange,
-                                        object: nil,
-                                        userInfo: [Notification.Key.NewToken: incomingToken])
-            }
-        }
-
-        /**
-         Checks *once only* for a post-install url if installed < 12 hours ago.
-         */
-        func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
-            guard shouldFetchPostInstallURL else {
-                completion(nil, nil)
-                return
-            }
-
-            guard applicationId != nil else {
-                completion(nil, ConfigurationError.noApplicationId)
-                return
-            }
-
-            defaults.hasFetchedPostInstallURL = true
-
-            client.fetchPostInstallURL { [weak self] url, attributionToken in
-                guard self?.defaults.attributionToken == nil,
-                      let token = attributionToken else {
+    func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void) {
+        network.fetch(PostInstallRequest()) { data, _ in
+            guard let object = PostInstallResponse.from(data)?.object,
+                  let action = object.action,
+                  let token = object.attribution?.btnRef else {
+                      OperationQueue.main.addOperation {
                           completion(nil, nil)
-                          return
                       }
-                self?.updateAttributionIfNeeded(token: token)
-                completion(url, nil)
+                      return
+            }
+            OperationQueue.main.addOperation {
+                completion(action, token)
             }
         }
+    }
 
-        func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
-            guard applicationId != nil else {
-                if let completion = completion {
-                    completion(ConfigurationError.noApplicationId)
-                }
-                return
-            }
-            client.reportOrder(order, completion)
+    func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
+        let orderRequest = OrderRequest(
+            advertisingId: system.advertisingId,
+            attributionToken: defaults.attributionToken,
+            order: order
+        )
+
+        network.fetch(orderRequest, retryPolicy: RetryPolicy(retries: 4)) { _, error in
+            completion?(error)
         }
+    }
 
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?) {
+        guard events.count > 0 else {
+            return
+        }
+        network.fetch(
+            EventRequest(
+                ifa: system.advertisingId,
+                events: events, currentTime:
+                    system.currentDate.ISO8601String
+            )
+        ) { _, error in
+            completion?(error)
+        }
     }
 }
 
+// MARK: Activity
+
+extension Client {
+
+    func productViewed(_ product: ButtonProductCompatible?) {
+        reportActivity("product-viewed", products: [product?.productRepresentation()].compactMap { $0 })
+    }
+
+    func productAddedToCart(_ product: ButtonProductCompatible?) {
+        reportActivity("add-to-cart", products: [product?.productRepresentation()].compactMap { $0 })
+    }
+
+    func cartViewed(_ products: [ButtonProductCompatible]?) {
+        reportActivity("cart-viewed", products: products?.map { $0.productRepresentation() })
+    }
+
+    func reportActivity(_ name: String, products: [ButtonProduct]?) {
+        network.fetch(
+            ActivityRequest(
+                ifa: system.advertisingId,
+                btnRef: defaults.attributionToken,
+                activityData: .init(name: name, products: products)
+            )
+        )
+    }
+}
+
+// MARK: Cleanup
+
+extension Client {
+    func clearAllTasks() {
+        network.clearAllTasks()
+    }
+}
