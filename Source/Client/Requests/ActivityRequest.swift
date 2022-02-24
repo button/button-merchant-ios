@@ -1,7 +1,7 @@
 //
-// AppEventRequest.swift
+// ActivityRequest.swift
 //
-// Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,16 +21,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-
+	
 import Foundation
+import Core
 
-internal struct AppEventsRequestBody: Codable {
+struct ActivityRequest: RequestType {
+    static var httpMethod: HTTPMethod = .post
+    static var path = "/v1/app/activity"
+
     let ifa: String?
-    let events: [AppEvent]
-    let currentTime: String
-    
-    enum CodingKeys: String, CodingKey {
-        case ifa, events
-        case currentTime = "current_time"
+    let btnRef: String?
+    let activityData: ActivityData
+
+    struct ActivityData: Codable {
+        let name: String
+        let products: [ButtonProduct]?
     }
 }
