@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// PostInstallRequest.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +22,25 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
+import Core
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+struct PostInstallRequest: RequestType {
+    static var httpMethod: HTTPMethod = .post
+    static var path = "/v1/app/deferred-deeplink"
+}
+
+struct PostInstallResponse: ResponseTypeConvertible {
+   var meta: Response.Meta
+   var error: Response.APIError?
+   var object: Object?
+
+    struct Object: Decodable {
+        let action: URL?
+        let attribution: Attribution?
+
+        struct Attribution: Decodable {
+            let btnRef: String?
+        }
+    }
+}

@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// UserDefaultsExtensions.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +22,21 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+/**
+ The interface through which the library communicates with `UserDefaults`.
+ - Note: `UserDefaults` methods are redeclared here as needed.
+ */
+public protocol UserDefaultsType: AnyObject {
+    func setValue(_ value: Any?, forKey key: String)
+    func value(forKey: String) -> Any?
+    @discardableResult func synchronize() -> Bool
+    func dictionaryRepresentation() -> [String: Any]
+    func removeObject(forKey defaultName: String)
+}
+
+/**
+ Conforms the system `UserDefaults` class to the `UserDefaultsProtocol`.
+ */
+extension UserDefaults: UserDefaultsType {}

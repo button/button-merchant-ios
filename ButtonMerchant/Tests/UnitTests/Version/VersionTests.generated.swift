@@ -1,6 +1,7 @@
-// swift-tools-version:5.0
+// Generated - DO NOT EDIT
+
 //
-// Package.swift
+// VersionTests.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +24,17 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import XCTest
+@testable import ButtonMerchant
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+class VersionTests: XCTestCase {
+
+    func testLibraryVersion() {
+        XCTAssertEqual(Version.stringValue, "1.4.4")
+    }
+
+    func testPlistVersion() {
+      let libraryBundle = Bundle(for: ButtonMerchant.self)
+      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "1.4.4")
+    }
+}

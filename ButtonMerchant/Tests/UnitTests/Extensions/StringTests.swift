@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// StringTests.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,22 +21,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
+import XCTest
 
-import PackageDescription
+class StringTests: XCTestCase {
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+    func testIsPlainTextEmail_arbitraryString_returnsFalse() {
+        let email = "not_an_email"
+
+        XCTAssertFalse(email.isPlainTextEmail)
+    }
+
+    func testIsPlainTextEmail_hexString_returnsFalse() {
+        let email = "314c70b69a726ae7934806b2a0621a0eb193139e38d9bf6134191faa61b7bb29"
+
+        XCTAssertFalse(email.isPlainTextEmail)
+    }
+
+    func testIsPlainTextEmail_returnsTrue() {
+        let email = "betty@usebutton.com"
+
+        XCTAssertTrue(email.isPlainTextEmail)
+    }
+
+}

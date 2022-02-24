@@ -1,8 +1,7 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// RetryPolicy.swift
 //
-// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +22,43 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+public protocol RetryPolicyType {
+    var shouldRetry: Bool { get }
+    var delay: Double { get }
+    func next()
+    func execute(_ block: @escaping () -> Void)
+}
+
+public final class RetryPolicy: RetryPolicyType {
+    var attempt = 0
+    var retries: Int
+    var timeoutIntervalInMs: Int
+    
+    public var shouldRetry: Bool {
+        return attempt < retries
+    }
+    
+    public var delay: Double {
+        guard attempt > 0 else {
+            return 0.0
+        }
+        return exp2(Double(attempt - 1)) * Double(timeoutIntervalInMs) / 1000.0
+    }
+    
+    public required init(retries: Int = 4, timeoutIntervalInMs: Int = 100) {
+        self.retries = retries
+        self.timeoutIntervalInMs = timeoutIntervalInMs
+    }
+    
+    public func next() {
+        attempt += 1
+    }
+
+    public func execute(_ block: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            block()
+        }
+    }
+}

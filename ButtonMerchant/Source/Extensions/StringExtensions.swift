@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// StringExtensions.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +22,37 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
+import CommonCrypto
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+public extension String {
+
+    var isPlainTextEmail: Bool {
+        return NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}").evaluate(with: self)
+    }
+
+    var sha256: String {
+        guard let stringData = self.data(using: .utf8) else {
+            return ""
+        }
+        return hexStringFromData(input: digest(input: stringData as NSData))
+    }
+
+    private func digest(input: NSData) -> NSData {
+        let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+        var hash = [UInt8](repeating: 0, count: digestLength)
+        CC_SHA256(input.bytes, UInt32(input.length), &hash)
+        return NSData(bytes: hash, length: digestLength)
+    }
+
+    private func hexStringFromData(input: NSData) -> String {
+        var bytes = [UInt8](repeating: 0, count: input.length)
+        input.getBytes(&bytes, length: input.length)
+
+        var hexString = ""
+        for byte in bytes {
+            hexString += String(format: "%02x", UInt8(byte))
+        }
+        return hexString
+    }
+}

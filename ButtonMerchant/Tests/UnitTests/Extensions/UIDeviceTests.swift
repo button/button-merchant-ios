@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// UIDeviceTests.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,22 +21,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
+import XCTest
+@testable import ButtonMerchant
 
-import PackageDescription
-
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+class UIDeviceTests: XCTestCase {
+    
+    func testModelName() {
+        let modelName = UIDevice.current.modelName
+        XCTAssertEqual(modelName, "x86_64")
+    }
+    
+    func testMachineName() {
+        let machineName = UIDevice.current.machineName(from: TestUTSName.systemInfo)
+        XCTAssertEqual(machineName, "iPhone10,6")
+    }
+    
+}

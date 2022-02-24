@@ -1,8 +1,7 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// TestRetryPolicy.swift
 //
-// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +22,29 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
+@testable import Core
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+class TestRetryPolicy: RetryPolicyType {
+    var shouldRetry = true
+    var delay = 0.0
+
+    var didCallNext = false
+
+    func next() {
+        didCallNext = true
+    }
+
+    func execute(_ block: @escaping () -> Void) {
+        block()
+    }
+}
+
+class NoRetry: RetryPolicyType {
+    var shouldRetry = false
+    var delay = 0.0
+    func next() {}
+    func execute(_ block: @escaping () -> Void) {
+        block()
+    }
+}

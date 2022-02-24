@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// URLProtectionSpaceExtensions.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +22,12 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import Foundation
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+internal protocol URLProtectionSpaceType {
+    var serverTrust: SecTrust? { get }
+    var host: String { get }
+    var authenticationMethod: String { get }
+}
+
+extension URLProtectionSpace: URLProtectionSpaceType {}

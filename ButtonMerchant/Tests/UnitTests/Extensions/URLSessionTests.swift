@@ -1,6 +1,5 @@
-// swift-tools-version:5.0
 //
-// Package.swift
+// URLSessionTests.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +22,22 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+import XCTest
+@testable import Core
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+class URLSessionTests: XCTestCase {
+    
+    func testDataTaskReturnsURLSessionDataTaskProtocol() {
+        // Arrange
+        let session = URLSession(configuration: .default) as URLSessionType
+        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
+        
+        // Act
+        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
+        
+        // Assert
+        XCTAssertNotNil(task)
+        XCTAssertEqual(task.originalRequest, expectedRequest)
+    }
+    
+}

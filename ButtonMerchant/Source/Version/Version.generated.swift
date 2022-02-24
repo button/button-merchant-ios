@@ -1,6 +1,7 @@
-// swift-tools-version:5.0
+// Generated - DO NOT EDIT
+
 //
-// Package.swift
+// Version.swift
 //
 // Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -23,21 +24,16 @@
 // SOFTWARE.
 //
 
-import PackageDescription
+/**
+Button Merchant Library Version.
 
-let package = Package(
-    name: "ButtonMerchant",
-    platforms: [
-        .iOS(.v9)
-    ],
-    products: [
-        .library(
-            name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
-    ],
-    targets: [
-        .target(
-            name: "ButtonMerchant",
-            path: "ButtonMerchant/Source")
-    ]
-)
+- note:
+The Button Merchant Library follows [Semantic Versioning](https://semver.org)
+*/
+public struct Version {
+
+    /**
+     Library version string.
+     */
+    static let stringValue = "1.4.4"
+}
