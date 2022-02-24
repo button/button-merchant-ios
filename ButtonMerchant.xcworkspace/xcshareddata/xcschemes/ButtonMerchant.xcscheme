@@ -48,6 +48,20 @@
                ReferencedContainer = "container:ButtonMerchant.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FBA6FE3B27C20CDA0059E84E"
+               BuildableName = "CoreUnitTests.xctest"
+               BlueprintName = "CoreUnitTests"
+               ReferencedContainer = "container:ButtonMerchant.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -83,6 +97,16 @@
                BlueprintIdentifier = "9E77153D206AAC0F0051728C"
                BuildableName = "IntegrationTests.xctest"
                BlueprintName = "IntegrationTests"
+               ReferencedContainer = "container:ButtonMerchant.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FBA6FE3B27C20CDA0059E84E"
+               BuildableName = "CoreUnitTests.xctest"
+               BlueprintName = "CoreUnitTests"
                ReferencedContainer = "container:ButtonMerchant.xcodeproj">
             </BuildableReference>
          </TestableReference>
