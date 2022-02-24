@@ -1,5 +1,5 @@
 //
-// URLSessionTests.swift
+// URLSessionExtensions.swift
 //
 // Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,22 +22,16 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
+public protocol URLSessionType {
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskType
+}
+
+extension URLSession: URLSessionType {
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    public func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskType {
+        let task = (dataTask(with: request, completionHandler: completionHandler) as URLSessionDataTask)
+        return task as URLSessionDataTaskType
     }
-    
 }

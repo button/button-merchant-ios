@@ -1,5 +1,5 @@
 //
-// URLSessionTests.swift
+// EncodableExtensions.swift
 //
 // Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
 //
@@ -22,22 +22,25 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+public extension Encodable {
+    func toJson() -> [String: AnyHashable]? {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let data = try? encoder.encode(self)
+        return data?.toJson()
     }
-    
+}
+
+public extension Data {
+    func toJson() -> [String: AnyHashable]? {
+        return try? JSONSerialization.jsonObject(with: self) as? [String: AnyHashable]
+    }
+}
+
+public extension Dictionary where Key == String, Value: Any {
+    func toData() -> Data? {
+        return try? JSONSerialization.data(withJSONObject: self)
+    }
 }

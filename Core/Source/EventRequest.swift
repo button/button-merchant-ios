@@ -1,7 +1,7 @@
 //
-// UserDefaultsExtensions.swift
+// EventRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,37 @@
 
 import Foundation
 
-/**
- Extends `UserDefaults` with a convenience accessor for Button's
- user defaults suite.
- */
-extension UserDefaults {
-    
-    internal struct Button {
-        private static let defaultSuiteName = "com.usebutton.merchant.defaults"
-        static var suiteName: String = defaultSuiteName
-    }
+public struct AppEvent: Codable {
+    public let name: String
+    public let time: String
+    public let promotionSourceToken: String?
+    public let value: [String: String]?
+    public let uuid: String
 
-    static let button = UserDefaults(suiteName: UserDefaults.Button.suiteName)!
+    public init(_ name: String,
+                time: String,
+                promotionSourceToken: String? = nil,
+                value: [String: String]? = nil,
+                uuid: String = UUID().uuidString) {
+        self.name = name
+        self.time = time
+        self.promotionSourceToken = promotionSourceToken
+        self.value = value
+        self.uuid = uuid
+    }
+}
+
+public struct EventRequest: RequestType {
+    public static var httpMethod: HTTPMethod = .post
+    public static var path = "/v1/app/events"
+
+    public let ifa: String?
+    public let events: [AppEvent]
+    public let currentTime: String
+
+    public init(ifa: String? = nil, events: [AppEvent], currentTime: String) {
+        self.ifa = ifa
+        self.events = events
+        self.currentTime = currentTime
+    }
 }

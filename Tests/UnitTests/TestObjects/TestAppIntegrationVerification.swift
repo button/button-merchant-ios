@@ -24,10 +24,11 @@
 
 import UIKit
 @testable import ButtonMerchant
+@testable import Core
 
 class TestAppIntegrationVerification: AppIntegrationVerificationType {
     var application: UIApplicationType
-    var buttonDefaults: ButtonDefaultsType
+    var defaults: ButtonDefaultsType
     
     var actualURL: URL?
     
@@ -37,6 +38,6 @@ class TestAppIntegrationVerification: AppIntegrationVerificationType {
     
     required init(application: UIApplicationType, defaults: ButtonDefaultsType) {
         self.application = application
-        self.buttonDefaults = defaults
+        self.defaults = defaults
     }
 }

@@ -41,3 +41,21 @@ extension XCTest {
                   "Expected \(expression1) and \(expression2) to be the same reference.", file: file, line: line)
     }
 }
+
+extension XCTestCase {
+    static var waitUntilTimeout = 10.0
+    typealias Done = () -> Void
+    func waitUntil(_ name: String = #function, _ act: (@escaping Done) -> ()) {
+        let expectation = expectation(description: name)
+        act {
+            expectation.fulfill()
+        }
+        self.wait(for: [expectation], timeout: Self.waitUntilTimeout)
+    }
+}
+
+extension Data {
+    static func stubData(_ json: [String: Any] = [:]) -> Data {
+        return try! JSONSerialization.data(withJSONObject: json)
+    }
+}

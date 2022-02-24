@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// ApplicationId.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
+import UIKit
 
-import XCTest
-@testable import Core
-
-class URLSessionTests: XCTestCase {
+public struct ApplicationId {
+    static let validApplicationIdPattern = "^app-[0-9a-zA-Z]+$"
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    public var rawValue: String
+    
+    public init?(_ rawValue: String) {
+        guard rawValue.matches(Self.validApplicationIdPattern) else {
+            return nil
+        }
+        self.rawValue = rawValue
     }
-    
 }

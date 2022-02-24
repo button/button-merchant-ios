@@ -23,7 +23,7 @@
 //
 	
 import UIKit
-@testable import ButtonMerchant
+@testable import Core
 
 class TestApplication: UIApplicationType {
     

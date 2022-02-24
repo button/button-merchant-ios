@@ -24,12 +24,12 @@
 
 import Foundation
 @testable import ButtonMerchant
+@testable import Core
 
 class TestClient: ClientType {
 
     // Test properties
-    var testReportOrderRequest: ReportOrderRequestType?
-    var testParameters: [String: Any]
+    var testParameters = [String: Any]()
     var didCallGetPostInstallLink = false
     var didCallTrackOrder = false
     var didCallReportOrder = false
@@ -37,32 +37,28 @@ class TestClient: ClientType {
     var didCallProductViewed = false
     var didCallProductAddedToCart = false
     var didCallCartViewed = false
+    var didCallClearAllTasks: Bool = false
 
-    var isConfigured: Bool = true
     var applicationId: ApplicationId?
-    
-    var session: URLSessionType
-    var userAgent: UserAgentType
+
     var defaults: ButtonDefaultsType
     var system: SystemType
-    var pendingTasks = [PendingTask]()
+    var network: NetworkType
 
     var postInstallCompletion: ((URL?, String?) -> Void)?
     var trackOrderCompletion: ((Error?) -> Void)?
     var reportOrderCompletion: ((Error?) -> Void)?
     
     var actualEvents: [AppEvent]?
-    var actualIFA: String?
+    var actualOrder: Order?
     var actualReportEventsCompletion: ((Error?) -> Void)?
     var actualProduct: ButtonProductCompatible?
     var actualProducts: [ButtonProductCompatible]?
     
-    required init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType) {
-        self.session = session
-        self.userAgent = userAgent
+    required init(defaults: ButtonDefaultsType, system: SystemType, network: NetworkType) {
         self.defaults = defaults
         self.system = system
-        self.testParameters = [:]
+        self.network = network
     }
     
     func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void) {
@@ -70,25 +66,22 @@ class TestClient: ClientType {
         postInstallCompletion = completion
     }
 
-    func trackOrder(parameters: [String: Any], _ completion: ((Error?) -> Void)?) {
-        testParameters = parameters
-        didCallTrackOrder = true
-        trackOrderCompletion = completion
-    }
-    
-    func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?) {
+    func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
         didCallReportOrder = true
-        testReportOrderRequest = orderRequest
+        actualOrder = order
         reportOrderCompletion = completion
     }
-    
-    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
+
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?) {
         didCallReportEvents = true
         actualEvents = events
-        actualIFA = ifa
         actualReportEventsCompletion = completion
     }
-    
+
+    func reportActivity(_ name: String, products: [ButtonProduct]?) {
+        
+    }
+
     func productViewed(_ product: ButtonProductCompatible?) {
         didCallProductViewed = true
         actualProduct = product
@@ -102,5 +95,9 @@ class TestClient: ClientType {
     func cartViewed(_ products: [ButtonProductCompatible]?) {
         didCallCartViewed = true
         actualProducts = products
+    }
+
+    func clearAllTasks() {
+        didCallClearAllTasks = true
     }
 }

@@ -1,7 +1,7 @@
 //
-// TestButtonDefaults.swift
+// ButtonDefaultsExtensions.swift
 //
-// Copyright © 2018 Button. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,49 +22,43 @@
 // SOFTWARE.
 //
 
-import Foundation
-@testable import ButtonMerchant
-@testable import Core
+import Core
 
-class TestButtonDefaults: ButtonDefaultsType {
-    
-    // Test Properties
-    var testToken: String?
-    var testHasFetchedPostInstallURL = false
-    var didCallClearAllData = false
-    var didStoreToken = false
-    
-    var userDefaults: UserDefaultsType
-    var sessionId: String?
+extension Defaults {
+    struct Button {
+        enum Key: String {
+            case attributonToken = "attribution-token"
+            case postInstallFetchStatus = "post-install-fetched"
+
+            var prefixed: PrefixedKey {
+                return PrefixedKey(rawValue: rawValue)
+            }
+        }
+    }
+}
+
+protocol ButtonDefaultsType: CoreDefaultsType {
+    var attributionToken: String? { get set }
+    var hasFetchedPostInstallURL: Bool { get set }
+}
+
+extension Defaults: ButtonDefaultsType {
+
     var attributionToken: String? {
         get {
-            return testToken
+            return value(for: Button.Key.attributonToken.prefixed) as? String
         }
         set {
-            didStoreToken = true
-            testToken = newValue
+            set(newValue, for: Button.Key.attributonToken.prefixed)
         }
     }
 
     var hasFetchedPostInstallURL: Bool {
         get {
-            return testHasFetchedPostInstallURL
+            return value(for: Button.Key.postInstallFetchStatus.prefixed) as? Bool ?? false
         }
         set {
-            testHasFetchedPostInstallURL = newValue
+            set(newValue, for: Button.Key.postInstallFetchStatus.prefixed)
         }
-    }
-    
-    required init(userDefaults: UserDefaultsType) {
-        self.userDefaults = userDefaults
-    }
-    
-    func clearAllData() {
-        didCallClearAllData = true
-    }
-
-    func set(_ value: Any?, for key: Defaults.PrefixedKey) {}
-    func value(for key: Defaults.PrefixedKey) -> Any? {
-        return nil
     }
 }

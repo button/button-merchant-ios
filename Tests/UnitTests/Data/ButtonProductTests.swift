@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// ButtonProductTests.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-
+	
 import XCTest
-@testable import Core
+@testable import ButtonMerchant
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+extension ButtonProduct {
+    static func stub() -> ButtonProductCompatible {
+        let product = ButtonProduct()
+        product.id = "prod-test"
+        product.upc = "upc-test"
+        product.name = "test-product"
+        product.value = 100
+        product.quantity = 1
+        product.url = "https://example.com/1"
+        product.attributes = [ "foo": "bar" ]
+        return product
     }
+}
+
+class ButtonProductTests: XCTestCase {
     
+    func testInitialization_createsInstance() {
+        let product = ButtonProduct()
+        XCTAssertNotNil(product)
+        XCTAssertNil(product.id)
+        XCTAssertNil(product.upc)
+        XCTAssertNil(product.categories)
+        XCTAssertNil(product.name)
+        XCTAssertNil(product.currency)
+        XCTAssertNil(product.url)
+        XCTAssertNil(product.attributes)
+        XCTAssertEqual(product.value, 0)
+        XCTAssertEqual(product.quantity, 0)
+    }
 }

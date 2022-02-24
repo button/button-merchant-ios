@@ -26,25 +26,24 @@ import XCTest
 @testable import ButtonMerchant
 
 class ButtonMerchantTests: XCTestCase {
-
-    var testCore: TestCore!
+    
+    var testInstance: TestInternal!
     
     override func setUp() {
         let defaults = TestButtonDefaults(userDefaults: TestUserDefaults())
-        testCore = TestCore(buttonDefaults: defaults,
-                            client: TestClient(session: TestURLSession(),
-                                               userAgent: TestUserAgent(system: TestSystem()),
-                                               defaults: defaults,
-                                               system: TestSystem()),
-                            system: TestSystem(),
-                            notificationCenter: TestNotificationCenter(),
-                            verifier: TestAppIntegrationVerification(application: TestApplication(),
-                                                                     defaults: defaults))
+        testInstance = TestInternal(defaults: defaults,
+                                    client: TestClient(defaults: defaults,
+                                                       system: TestSystem(),
+                                                       network: TestNetwork()),
+                                    system: TestSystem(),
+                                    notificationCenter: TestNotificationCenter(),
+                                    verifier: TestAppIntegrationVerification(application: TestApplication(),
+                                                                             defaults: defaults))
     }
     
     override func tearDown() {
         super.tearDown()
-        ButtonMerchant._core = nil
+        ButtonMerchant._instance = nil
     }
 
     func testBuildNumber() {
@@ -54,49 +53,49 @@ class ButtonMerchantTests: XCTestCase {
     func testConfigureApplicationId() {
         // Arrange
         let applicationId = "app-test"
-        ButtonMerchant._core = testCore
-        
+        ButtonMerchant._instance = testInstance
+
         // Act
         ButtonMerchant.configure(applicationId: applicationId)
 
         // Assert
-        XCTAssertEqual(testCore.applicationId?.rawValue, applicationId)
+        XCTAssertEqual(testInstance.applicationId?.rawValue, applicationId)
     }
     
-    func testCreateCoreCreatesCoreWhenCoreSetToNil() {
+    func testConfigureCreatesInstanceWhenNil() {
         // Arrange
-        ButtonMerchant._core = nil
+        ButtonMerchant._instance = nil
         
         // Act
         ButtonMerchant.configure(applicationId: "app-test")
         
         // Assert
-        XCTAssertTrue(ButtonMerchant._core is Core)
+        XCTAssertTrue(ButtonMerchant._instance is ButtonMerchant.Internal)
     }
 
-    func testTrackIncomingURLInvokesCore() {
+    func testTrackIncomingURL() {
         // Arrange
         let expectedUrl = URL(string: "usebutton.com")!
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.trackIncomingURL(expectedUrl)
-        let actualUrl = testCore.testUrl
+        let actualUrl = testInstance.testUrl
 
         // Assert
         XCTAssertEqual(actualUrl, expectedUrl)
     }
     
-    func testTrackIncomingUserActivityInvokesCore() {
+    func testTrackIncomingUserActivity() {
         // Arrange
         let expectedUrl = URL(string: "https://usebutton.com")!
         let userActivity = NSUserActivity(activityType: "com.usebutton.web_activity")
         userActivity.webpageURL = expectedUrl
         
         // Act
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         ButtonMerchant.trackIncomingUserActivity(userActivity)
-        let actualUrl = testCore.testUrl
+        let actualUrl = testInstance.testUrl
         
         // Assert
         XCTAssertEqual(actualUrl, expectedUrl)
@@ -104,45 +103,45 @@ class ButtonMerchantTests: XCTestCase {
 
     func testAccessingAttributionToken() {
         // Arrange
-        testCore.testToken = "srctok-123"
-        let expectedToken = testCore.testToken
+        testInstance.testToken = "srctok-123"
+        let expectedToken = testInstance.testToken
 
         // Act
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
 
         // Assert
         XCTAssertNotNil(ButtonMerchant.attributionToken)
         XCTAssertEqual(ButtonMerchant.attributionToken, expectedToken)
     }
 
-    func testClearAllDataInvokesCore() {
+    func testClearAllData() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.clearAllData()
 
         // Assert
-        XCTAssertTrue(testCore.didCallClearAllData)
+        XCTAssertTrue(testInstance.didCallClearAllData)
     }
 
-    func testHandlePostInstallURLInvokesCore() {
+    func testHandlePostInstallURL() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.handlePostInstallURL { _, _  in }
 
         // Assert
-        XCTAssertTrue(testCore.didCallFetchPostInstallURL)
+        XCTAssertTrue(testInstance.didCallFetchPostInstallURL)
     }
 
     @available(*, deprecated)
-    func testTrackOrderInvokesCoreWithOrder() {
+    func testTrackOrder() {
         let expectation = self.expectation(description: "trackOrder deprecation error")
         
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.trackOrder(Order(id: "test", amount: Int64(12))) { error in
@@ -156,23 +155,23 @@ class ButtonMerchantTests: XCTestCase {
         self.wait(for: [expectation], timeout: 2.0)
     }
     
-    func testReportOrderInvokesCoreWithOrder() {
+    func testReportOrder() {
         // Arrange
         let expectedOrder = Order(id: "test",
                                   purchaseDate: Date(),
                                   lineItems: [Order.LineItem(id: "unique-id-1234", total: 400)])
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.reportOrder(expectedOrder) { _ in }
         
         // Assert
-        XCTAssertEqual(testCore.testOrder, expectedOrder)
+        XCTAssertEqual(testInstance.testOrder, expectedOrder)
     }
     
     func testIFASetFalse() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.features.includesIFA = false
@@ -183,7 +182,7 @@ class ButtonMerchantTests: XCTestCase {
     
     func testIFASetTrue() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         
         // Act
         ButtonMerchant.features.includesIFA = true
@@ -193,13 +192,13 @@ class ButtonMerchantTests: XCTestCase {
     }
     
     func testActivity_returnsClient() {
-        ButtonMerchant._core = testCore
-        XCTAssertEqualReferences(ButtonMerchant.activity, testCore.client)
+        ButtonMerchant._instance = testInstance
+        XCTAssertEqualReferences(ButtonMerchant.activity, testInstance.client)
     }
     
     func testActivity_productViewed_invokesClient() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         let product = ButtonProduct()
         product.name = "some name"
         
@@ -207,14 +206,14 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.activity.productViewed(product)
         
         // Assert
-        let client = (testCore.client as? TestClient)!
+        let client = (testInstance.client as? TestClient)!
         XCTAssertTrue(client.didCallProductViewed)
         XCTAssertEqual(client.actualProduct?.name, "some name")
     }
     
     func testActivity_productAddedToCart_invokesClient() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         let product = ButtonProduct()
         product.name = "some name"
         
@@ -222,14 +221,14 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.activity.productAddedToCart(product)
         
         // Assert
-        let client = (testCore.client as? TestClient)!
+        let client = (testInstance.client as? TestClient)!
         XCTAssertTrue(client.didCallProductAddedToCart)
         XCTAssertEqual(client.actualProduct?.name, "some name")
     }
     
     func testActivity_cartViewed_invokesClient() {
         // Arrange
-        ButtonMerchant._core = testCore
+        ButtonMerchant._instance = testInstance
         let product = ButtonProduct()
         product.name = "some name"
         
@@ -237,7 +236,7 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.activity.cartViewed([product])
         
         // Assert
-        let client = (testCore.client as? TestClient)!
+        let client = (testInstance.client as? TestClient)!
         XCTAssertTrue(client.didCallCartViewed)
         XCTAssertEqual(client.actualProducts?.first?.name, "some name")
     }

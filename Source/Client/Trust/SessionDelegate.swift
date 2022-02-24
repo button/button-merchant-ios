@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// SessionDelegate.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,21 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
+final internal class SessionDelegate: NSObject, URLSessionDelegate {
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    var evaluator: TrustEvaluatorType
+    
+    required init(systemVersion: String) {
+        if systemVersion.compare("10.3", options: .numeric) != .orderedAscending {
+            evaluator = TrustEvaluator(publicKeys: PEMCertificate.pinnedPublicKeys)
+        } else {
+            evaluator = ImplicitTrustEvaluator()
+        }
     }
     
+    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        evaluator.handleChallenge(challenge, completion: completionHandler)
+    }
 }
