@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// UserDefaultsExtensions.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
-    }
-    
+/**
+ The interface through which the library communicates with `UserDefaults`.
+ - Note: `UserDefaults` methods are redeclared here as needed.
+ */
+public protocol UserDefaultsType: AnyObject {
+    func setValue(_ value: Any?, forKey key: String)
+    func value(forKey: String) -> Any?
+    @discardableResult func synchronize() -> Bool
+    func dictionaryRepresentation() -> [String: Any]
+    func removeObject(forKey defaultName: String)
 }
+
+/**
+ Conforms the system `UserDefaults` class to the `UserDefaultsProtocol`.
+ */
+extension UserDefaults: UserDefaultsType {}

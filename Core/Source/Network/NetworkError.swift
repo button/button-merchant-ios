@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// NetworkError.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,32 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
+public enum NetworkError: Error {
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    /**
+     There was an unknown network error.
+     */
+    case unknown
+    
+    var domain: String {
+        return "com.usebutton.network.error"
     }
     
+    var localizedDescription: String {
+        switch self {
+        case .unknown:
+            return "An unknown network error occured."
+        }
+    }
+}
+
+extension NetworkError: Equatable {
+    
+    /// :nodoc:
+    public static func == (lhs: NetworkError, rhs: NetworkError) -> Bool {
+        return lhs.domain == rhs.domain
+            && lhs.localizedDescription == rhs.localizedDescription
+    }
 }

@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// TestRetryPolicy.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,29 @@
 // SOFTWARE.
 //
 
-import XCTest
+import Foundation
 @testable import Core
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+class TestRetryPolicy: RetryPolicyType {
+    var shouldRetry = true
+    var delay = 0.0
+
+    var didCallNext = false
+
+    func next() {
+        didCallNext = true
     }
-    
+
+    func execute(_ block: @escaping () -> ()) {
+        block()
+    }
+}
+
+class NoRetry: RetryPolicyType {
+    var shouldRetry = false
+    var delay = 0.0
+    func next() {}
+    func execute(_ block: @escaping () -> ()) {
+        block()
+    }
 }

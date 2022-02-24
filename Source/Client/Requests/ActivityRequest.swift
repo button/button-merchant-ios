@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// ActivityRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
+import Foundation
+import Core
 
-import XCTest
-@testable import Core
+struct ActivityRequest: RequestType {
+    static var httpMethod: HTTPMethod = .post
+    static var path = "/v1/app/activity"
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    let ifa: String?
+    let btnRef: String?
+    let activityData: ActivityData
+
+    struct ActivityData: Codable {
+        let name: String
+        let products: [ButtonProduct]?
     }
-    
 }

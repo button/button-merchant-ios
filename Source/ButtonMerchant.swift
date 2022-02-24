@@ -24,6 +24,7 @@
 
 import UIKit
 import AdSupport
+import Core
 
 /**
  `ButtonMerchant` is the main entry point to the library.
@@ -36,12 +37,12 @@ import AdSupport
 final public class ButtonMerchant: NSObject {
     
     // swiftlint:disable:next identifier_name
-    internal static var _core: CoreType?
-    private static var core: CoreType {
+    internal static var _instance: ButtonMerchantInternal?
+    private static var instance: ButtonMerchantInternal {
         get {
-            let core = _core ?? createCore()
-            _core = core
-            return core
+            let instance = _instance ?? createInstance()
+            _instance = instance
+            return instance
         }
         // This should never be set directly
         set { }
@@ -58,7 +59,7 @@ final public class ButtonMerchant: NSObject {
 
     */
     @objc public static var attributionToken: String? {
-        return core.attributionToken
+        return instance.attributionToken
     }
 
     /**
@@ -77,7 +78,7 @@ final public class ButtonMerchant: NSObject {
             let error = ConfigurationError.invalidApplicationId(appicationId: applicationId)
             print("Button :: \(error.localizedDescription)")
         }
-        core.applicationId = appId
+        instance.applicationId = appId
     }
     
     /**
@@ -95,7 +96,7 @@ final public class ButtonMerchant: NSObject {
 
      */
     @objc public static func trackIncomingURL(_ url: URL) {
-        core.trackIncomingURL(url)
+        instance.trackIncomingURL(url)
     }
     
     /**
@@ -115,7 +116,7 @@ final public class ButtonMerchant: NSObject {
         guard let url = userActivity.webpageURL else {
             return
         }
-        core.trackIncomingURL(url)
+        instance.trackIncomingURL(url)
     }
     
     /**
@@ -136,7 +137,7 @@ final public class ButtonMerchant: NSObject {
         - completion: A completion block taking an optional url and optional error.
      */
     @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
-        core.handlePostInstallURL(completion)
+        instance.handlePostInstallURL(completion)
     }
 
     /**
@@ -150,33 +151,33 @@ final public class ButtonMerchant: NSObject {
      ([docs](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api))
     */
     @objc public static func reportOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
-        core.reportOrder(order, completion)
+        instance.reportOrder(order, completion)
     }
 
     /**
      Discards the current session and all persisted data.
      */
     @objc public static func clearAllData() {
-        core.clearAllData()
+        instance.clearAllData()
     }
 
     /**
      An interface through which library features can be enabled/disabled.
      */
     @objc public static var features: Configurable {
-        return core.system
+        return instance.system
     }
     
     /**
      An interface through which user activity can be reported.
      */
     @objc public static var activity: Activity {
-        return core.client
+        return instance.client
     }
-    
+
     // MARK: Private
     
-    private static func createCore() -> CoreType {
+    private static func createInstance() -> ButtonMerchantInternal {
         let system = System(fileManager: FileManager.default,
                             calendar: Calendar.current,
                             adIdManager: ASIdentifierManager.shared(),
@@ -184,14 +185,17 @@ final public class ButtonMerchant: NSObject {
                             screen: UIScreen.main,
                             locale: NSLocale.current,
                             bundle: Bundle.main)
-        let session = URLSession(configuration: .default, delegate: SessionDelegate(system: system), delegateQueue: nil)
-        let buttonDefaults = ButtonDefaults(userDefaults: UserDefaults.button)
-        let client = Client(session: session,
-                            userAgent: UserAgent(libraryVersion: Version.stringValue, system: system),
-                            defaults: buttonDefaults,
-                            system: system)
-        let verifier = AppIntegrationVerification(application: UIApplication.shared, defaults: buttonDefaults)
-        return Core(buttonDefaults: buttonDefaults,
+        let session = URLSession(configuration: .default,
+                                 delegate: SessionDelegate(systemVersion: system.device.systemVersion),
+                                 delegateQueue: nil)
+        let defaults = Defaults(userDefaults: UserDefaults.button)
+        let client = Client(defaults: defaults,
+                            system: system,
+                            network: Network(session: session,
+                                             userAgent: UserAgent(libraryVersion: Version.stringValue, system: system).stringRepresentation,
+                                             defaults: defaults))
+        let verifier = AppIntegrationVerification(application: UIApplication.shared, defaults: defaults)
+        return Internal(defaults: defaults,
                     client: client,
                     system: system,
                     notificationCenter: NotificationCenter.default,

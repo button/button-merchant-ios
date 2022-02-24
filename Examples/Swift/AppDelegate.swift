@@ -40,8 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("To get started, please see: https://developer.usebutton.com/docs/ios-add-merchant-library")
         
-//        #error("Replace with your App ID from the Button Dashboard https://app.usebutton.com")
-        let yourApplicationId: String =  "app-37309f18f5a33a16"
+        #error("Replace with your App ID from the Button Dashboard https://app.usebutton.com")
+        let yourApplicationId: String =  "<# Your application Id #>"
         
         ButtonMerchant.configure(applicationId: yourApplicationId)
 

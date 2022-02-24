@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// OrderRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,32 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
+import Core
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+struct OrderRequest: RequestType {
+    static var httpMethod: HTTPMethod = .post
+    static var path = "/v1/app/order"
+
+    let attributionToken: String?
+    let orderId: String
+    let currency: String
+    let purchaseDate: String
+    let customerOrderId: String?
+    let lineItems: [Order.LineItem]?
+    let customer: Order.Customer?
+    let advertisingId: String?
+
+    init(advertisingId: String?,
+         attributionToken: String?,
+         order: Order) {
+        self.advertisingId = advertisingId
+        self.attributionToken = attributionToken
+        self.orderId = order.id
+        self.currency = order.currencyCode
+        self.purchaseDate = order.purchaseDate
+        self.customerOrderId = order.customerOrderId
+        self.lineItems = order.lineItems
+        self.customer = order.customer
     }
-    
 }

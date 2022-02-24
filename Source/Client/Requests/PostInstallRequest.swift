@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// PostInstallRequest.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,25 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
+import Core
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+struct PostInstallRequest: RequestType {
+    static var httpMethod: HTTPMethod = .post
+    static var path = "/v1/app/deferred-deeplink"
+}
+
+struct PostInstallResponse: ResponseTypeConvertible {
+   var meta: Response.Meta
+   var error: Response.APIError? = nil
+   var object: Object?
+
+    struct Object: Decodable {
+        let action: URL?
+        let attribution: Attribution?
+
+        struct Attribution: Decodable {
+            let btnRef: String?
+        }
     }
-    
 }

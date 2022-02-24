@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// RetryPolicy.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,43 @@
 // SOFTWARE.
 //
 
-import XCTest
-@testable import Core
+import Foundation
 
-class URLSessionTests: XCTestCase {
+public protocol RetryPolicyType {
+    var shouldRetry: Bool { get }
+    var delay: Double { get }
+    func next()
+    func execute(_ block: @escaping () -> ())
+}
+
+public final class RetryPolicy: RetryPolicyType {
+    var attempt = 0
+    var retries: Int
+    var timeoutIntervalInMs: Int
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    public var shouldRetry: Bool {
+        return attempt < retries
     }
     
+    public var delay: Double {
+        guard attempt > 0 else {
+            return 0.0
+        }
+        return exp2(Double(attempt - 1)) * Double(timeoutIntervalInMs) / 1000.0
+    }
+    
+    public required init(retries: Int = 4, timeoutIntervalInMs: Int = 100) {
+        self.retries = retries
+        self.timeoutIntervalInMs = timeoutIntervalInMs
+    }
+    
+    public func next() {
+        attempt += 1
+    }
+
+    public func execute(_ block: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            block()
+        }
+    }
 }

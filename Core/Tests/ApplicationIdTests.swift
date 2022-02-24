@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// ApplicationIdTests.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2020 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +21,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-
+	
 import XCTest
 @testable import Core
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+class ApplicationIdTests: XCTestCase {
+
+    func testInit_validId_returnsInstance() {
+        XCTAssertEqual(ApplicationId("app-abc123")?.rawValue, "app-abc123")
     }
     
+    func testInit_invalidId_returnsNil() {
+        XCTAssertNil(ApplicationId(""))
+        XCTAssertNil(ApplicationId("abc123"))
+        XCTAssertNil(ApplicationId("btn-123"))
+        XCTAssertNil(ApplicationId("btn-app-123"))
+        XCTAssertNil(ApplicationId("app-123?"))
+        XCTAssertNil(ApplicationId("app 123"))
+        XCTAssertNil(ApplicationId("example.com"))
+    }
 }

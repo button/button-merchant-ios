@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// TestUserDefaults.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2018 Button. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,36 @@
 // SOFTWARE.
 //
 
-import XCTest
+import Foundation
 @testable import Core
 
-class URLSessionTests: XCTestCase {
+class TestUserDefaults: UserDefaultsType {
     
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    // Test Properties
+    var values: [String: Any] = [:]
+    var testValue: Any?
+    var didCallSynchronize = false
+    
+    func setValue(_ value: Any?, forKey key: String) {
+        values[key] = value
     }
     
+    func value(forKey: String) -> Any? {
+        let value = values[forKey] ?? nil
+        return value
+    }
+    
+    func synchronize() -> Bool {
+        didCallSynchronize = true
+        return true
+    }
+    
+    func dictionaryRepresentation() -> [String: Any] {
+        return values
+    }
+
+    func removeObject(forKey defaultName: String) {
+        values.removeValue(forKey: defaultName)
+    }
+
 }

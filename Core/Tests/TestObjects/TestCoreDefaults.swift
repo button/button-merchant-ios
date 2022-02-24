@@ -1,7 +1,7 @@
 //
-// URLSessionTests.swift
+// TestCoreDefaults.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,25 @@
 // SOFTWARE.
 //
 
-import XCTest
+import Foundation
 @testable import Core
+	
+class TestCoreDefaults: CoreDefaultsType {
 
-class URLSessionTests: XCTestCase {
-    
-    func testDataTaskReturnsURLSessionDataTaskProtocol() {
-        // Arrange
-        let session = URLSession(configuration: .default) as URLSessionType
-        let expectedRequest = URLRequest(url: URL(string: "https://www.usebutton.com")!)
-        
-        // Act
-        let task = session.dataTask(with: expectedRequest) { _, _, _ in }
-        
-        // Assert
-        XCTAssertNotNil(task)
-        XCTAssertEqual(task.originalRequest, expectedRequest)
+    var userDefaults: UserDefaultsType
+    var sessionId: String?
+    var didCallClearAllData = false
+
+    required init(userDefaults: UserDefaultsType) {
+        self.userDefaults = userDefaults
     }
-    
+
+    func clearAllData() {
+        didCallClearAllData = true
+    }
+
+    func set(_ value: Any?, for key: Defaults.PrefixedKey) {}
+    func value(for key: Defaults.PrefixedKey) -> Any? {
+        return nil
+    }
 }
