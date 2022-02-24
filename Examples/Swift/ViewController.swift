@@ -30,6 +30,7 @@ class ViewController: UITableViewController {
     @IBOutlet weak var attributionTokenCell: UITableViewCell!
     @IBOutlet weak var trackIncomingURLCell: UITableViewCell!
     @IBOutlet weak var reportOrderCell: UITableViewCell!
+    @IBOutlet weak var trackActivityCell: UITableViewCell!
     @IBOutlet weak var clearAllDataCell: UITableViewCell!
     
     var attributionTokenString: String? {
@@ -64,6 +65,8 @@ class ViewController: UITableViewController {
             trackIncomingURL()
         case reportOrderCell:
             reportOrder()
+        case trackActivityCell:
+            trackActivity()
         case clearAllDataCell:
             clearAllData()
         default: break
@@ -77,6 +80,13 @@ class ViewController: UITableViewController {
         let srctok = NSUUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
         let index = srctok.index(srctok.startIndex, offsetBy: 16)
         UIApplication.shared.openURL(URL(string: "merchant-demo:///?btn_ref=fakesrctok-\(srctok[..<index])")!)
+    }
+
+    func trackActivity() {
+        let product = ButtonProduct()
+        product.url = "https://example.com/product1"
+        product.attributes = ["foo": "bar"]
+        ButtonMerchant.activity.productViewed(product)
     }
 
     func reportOrder() {
