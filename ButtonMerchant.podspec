@@ -17,7 +17,10 @@ and join the Button Marketplace.
   s.ios.deployment_target = '9.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'ButtonMerchant/Source/**/*.{swift,h}'
+  s.source_files = [
+    'ButtonMerchant/Source/**/*.{swift,h}',
+    'ButtonCore/Source/**/*.swift',
+  ]
 
   s.pod_target_xcconfig = { "SWIFT_VERSION" => 5.0 }
 end

@@ -1146,7 +1146,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if [ -z \"$CI\" && -z \"$CARTHAGE\" ]; then\n#  \"${PODS_ROOT}/SwiftLint/swiftlint\"\n#fi\n";
+			shellScript = "if [ -z \"$CI\" && -z \"$CARTHAGE\" ]; then\n  \"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
 		};
 		DA0FA2C82062EF38008296A6 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
