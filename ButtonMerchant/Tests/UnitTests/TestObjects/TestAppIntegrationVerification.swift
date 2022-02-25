@@ -24,7 +24,6 @@
 
 import UIKit
 @testable import ButtonMerchant
-@testable import Core
 
 class TestAppIntegrationVerification: AppIntegrationVerificationType {
     var application: UIApplicationType

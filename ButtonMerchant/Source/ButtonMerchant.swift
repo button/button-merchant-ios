@@ -24,7 +24,6 @@
 
 import UIKit
 import AdSupport
-import Core
 
 /**
  `ButtonMerchant` is the main entry point to the library.

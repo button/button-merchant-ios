@@ -24,7 +24,6 @@
 
 import XCTest
 @testable import ButtonMerchant
-@testable import Core
 
 let UUIDPredicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
 

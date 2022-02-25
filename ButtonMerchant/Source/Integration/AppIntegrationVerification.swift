@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import Core
 
 internal protocol AppIntegrationVerificationType: AnyObject {
     var application: UIApplicationType { get }

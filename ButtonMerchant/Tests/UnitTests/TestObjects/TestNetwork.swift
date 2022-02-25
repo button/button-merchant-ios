@@ -23,7 +23,6 @@
 //
 
 import Foundation
-@testable import Core
 @testable import ButtonMerchant
 
 class TestNetwork: NetworkType {

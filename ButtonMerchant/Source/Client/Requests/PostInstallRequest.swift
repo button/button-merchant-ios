@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import Core
 
 struct PostInstallRequest: RequestType {
     static var httpMethod: HTTPMethod = .post

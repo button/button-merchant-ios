@@ -23,7 +23,6 @@
 //
 
 import XCTest
-import Core
 @testable import ButtonMerchant
 
 class ButtonDefaultsTypeTests: XCTestCase {

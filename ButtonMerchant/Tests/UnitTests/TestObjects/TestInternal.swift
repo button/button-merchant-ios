@@ -24,7 +24,6 @@
 
 import Foundation
 @testable import ButtonMerchant
-@testable import Core
 
 class TestInternal: ButtonMerchantInternal {
 

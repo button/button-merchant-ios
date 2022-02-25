@@ -22,7 +22,7 @@
 // SOFTWARE.
 //
 
-import Core
+import Foundation
 
 extension Defaults {
     struct Button {

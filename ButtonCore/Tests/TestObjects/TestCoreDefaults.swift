@@ -23,8 +23,8 @@
 //
 
 import Foundation
-@testable import Core
-	
+@testable import ButtonMerchant
+
 class TestCoreDefaults: CoreDefaultsType {
 
     var userDefaults: UserDefaultsType

@@ -23,7 +23,7 @@
 //
 
 import XCTest
-@testable import Core
+@testable import ButtonMerchant
 
 struct TestRequest: RequestType {
     static var httpMethod: HTTPMethod = .post

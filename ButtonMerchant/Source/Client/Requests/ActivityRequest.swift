@@ -23,7 +23,6 @@
 //
 	
 import Foundation
-import Core
 
 struct ActivityRequest: RequestType {
     static var httpMethod: HTTPMethod = .post

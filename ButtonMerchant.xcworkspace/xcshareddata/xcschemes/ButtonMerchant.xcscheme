@@ -48,20 +48,6 @@
                ReferencedContainer = "container:ButtonMerchant.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FBA6FE3B27C20CDA0059E84E"
-               BuildableName = "CoreUnitTests.xctest"
-               BlueprintName = "CoreUnitTests"
-               ReferencedContainer = "container:ButtonMerchant.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

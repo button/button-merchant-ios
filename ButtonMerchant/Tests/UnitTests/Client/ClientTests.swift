@@ -24,7 +24,6 @@
 
 import XCTest
 @testable import ButtonMerchant
-@testable import Core
 
 class ClientTests: XCTestCase {
 

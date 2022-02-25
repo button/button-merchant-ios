@@ -23,7 +23,6 @@
 //
 
 import AdSupport
-import Core
 
 internal protocol ButtonMerchantInternal {
     var applicationId: ApplicationId? { get set }

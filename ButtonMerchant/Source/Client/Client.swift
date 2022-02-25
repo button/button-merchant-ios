@@ -24,7 +24,6 @@
 
 import Foundation
 import UIKit
-import Core
 
 internal protocol ClientType: Activity {
     var applicationId: ApplicationId? { get set }

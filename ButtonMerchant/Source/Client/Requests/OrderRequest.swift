@@ -23,7 +23,6 @@
 //
 
 import Foundation
-import Core
 
 struct OrderRequest: RequestType {
     static var httpMethod: HTTPMethod = .post
