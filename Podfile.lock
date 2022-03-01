@@ -1,23 +1,16 @@
 PODS:
-  - ButtonMerchant (1.4.4)
-  - SwiftLint (0.25.0)
+  - SwiftLint (0.46.3)
 
 DEPENDENCIES:
-  - ButtonMerchant (from `./`)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
     - SwiftLint
 
-EXTERNAL SOURCES:
-  ButtonMerchant:
-    :path: "./"
-
 SPEC CHECKSUMS:
-  ButtonMerchant: bbd1e0519215d6ce4c9a990eae51d084854cd7af
-  SwiftLint: e14651157288e9e01d6e1a71db7014fb5744a8ea
+  SwiftLint: ae76d82f056734f853c8cd0371503252c606c482
 
-PODFILE CHECKSUM: e6864df46b69637ee2822533e793512d9403dc79
+PODFILE CHECKSUM: d8593da07e582ae8889c20e113231a13615b9f76
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

@@ -20,7 +20,7 @@ platform :ios do
   lane :lint do
     swiftlint(
       mode: :lint,
-      config_file: ".swiftlint.yml",
+      path: "ButtonMerchant/Source",
       output_file: "fastlane/swiftlint.result.json",
       executable: "./Pods/SwiftLint/swiftlint"
     )
@@ -32,7 +32,7 @@ platform :ios do
     run_tests(
       workspace: "ButtonMerchant.xcworkspace",
       scheme: options[:scheme],
-      device: "iPhone X",
+      device: "iPhone 13",
       slack_message: "button-merchant-ios #{options[:scheme]}"
     )
   end

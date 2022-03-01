@@ -2,7 +2,7 @@
 //
 // Package.swift
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -38,12 +38,6 @@ let package = Package(
     targets: [
         .target(
             name: "ButtonMerchant",
-            path: "Source"),
-        .testTarget(
-            name: "UnitTests",
-            path: "Tests/UnitTests"),
-        .testTarget(
-            name: "IntegrationTests",
-            path: "Tests/IntegrationTests")
+            path: "ButtonMerchant/Source")
     ]
 )

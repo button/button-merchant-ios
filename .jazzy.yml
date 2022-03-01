@@ -4,6 +4,7 @@ author_url: https://usebutton.com
 podspec: "ButtonMerchant.podspec"
 output: "docs/latest"
 exclude:
-  - "Source/Extensions/*"
+  - "ButtonMerchant/Source/Extensions/*"
+  - "ButtonCore/*"
 
-copyright: 'Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com) under [MIT License](https://github.com/button/button-merchant-ios-private/blob/master/LICENSE).'
+copyright: 'Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com) under [MIT License](https://github.com/button/button-merchant-ios-private/blob/master/LICENSE).'
