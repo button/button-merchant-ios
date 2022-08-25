@@ -1,7 +1,7 @@
 //
-// ButtonMerchant.h
+// Order.m
 //
-// Copyright © 2018 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2022 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+	
 
-@import Foundation;
+#import "Order.h"
 
-FOUNDATION_EXPORT double ButtonMerchantVersionNumber;
-FOUNDATION_EXPORT const unsigned char ButtonMerchantVersionString[];
+@implementation Order
 
-#define Order BTNOrder
-#define Customer BTNCustomer
+@end

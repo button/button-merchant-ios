@@ -4,11 +4,9 @@ use_frameworks!
 pod 'SwiftLint'
 
 target 'Example' do
-  pod 'ButtonMerchant', :path => './'
 end
 
 target 'Example-ObjC' do
-    pod 'ButtonMerchant', :path => './'
 end
 
 target 'UnitTests' do

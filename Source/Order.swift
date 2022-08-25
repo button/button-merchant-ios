@@ -28,7 +28,7 @@ import Foundation
 Represents an order placed by the user to be reported using `ButtonMerchant.reportOrder(order)`.
  */
 @objcMembers
-final public class Order: NSObject, Codable {
+@objc(BTNOrder) final public class Order: NSObject, Codable {
 
     /**
      The order identifier (required).
