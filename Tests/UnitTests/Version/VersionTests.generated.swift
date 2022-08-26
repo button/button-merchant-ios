@@ -30,11 +30,11 @@ import XCTest
 class VersionTests: XCTestCase {
 
     func testLibraryVersion() {
-        XCTAssertEqual(Version.stringValue, "1.4.4")
+        XCTAssertEqual(Version.stringValue, "1.4.5")
     }
 
     func testPlistVersion() {
       let libraryBundle = Bundle(for: ButtonMerchant.self)
-      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "1.4.4")
+      XCTAssertEqual(libraryBundle.infoDictionary!["CFBundleShortVersionString"] as? String, "1.4.5")
     }
 }
