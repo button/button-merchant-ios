@@ -170,6 +170,18 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertEqual(testCore.testOrder, expectedOrder)
     }
     
+    func testReportEventInvokesCoreReportCustomEvent() {
+        // Arrange
+        ButtonMerchant._core = testCore
+        
+        // Act
+        ButtonMerchant.reportEvent("test event", properties: ["foo": "bar"])
+        
+        // Assert
+        XCTAssertEqual(testCore.testEventName, "test event")
+        XCTAssertEqual(testCore.testEventProperties, ["foo": "bar"])
+    }
+    
     func testIFASetFalse() {
         // Arrange
         ButtonMerchant._core = testCore

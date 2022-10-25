@@ -32,6 +32,8 @@ class TestCore: CoreType {
     var testUrl: URL?
     var testShouldFetchPostInstallURL: Bool?
     var testOrder: Order?
+    var testEventName: String?
+    var testEventProperties: [String: String]?
     var didCallTrackIncomingURL = false
     var didCallClearAllData = false
     var didCallFetchPostInstallURL = false
@@ -79,6 +81,11 @@ class TestCore: CoreType {
     
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?) {
         testOrder = order
+    }
+    
+    func reportCustomEvent(_ name: String, properties: [String: String]?) {
+        testEventName = name
+        testEventProperties = properties
     }
     
     func trackIncomingURL(_ url: URL) {

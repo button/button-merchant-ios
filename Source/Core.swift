@@ -37,6 +37,7 @@ internal protocol CoreType {
     func trackIncomingURL(_ url: URL)
     func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
     func reportOrder(_ order: Order, _ completion: ((Error?) -> Void)?)
+    func reportCustomEvent(_ name: String, properties: [String: String]?)
     init(buttonDefaults: ButtonDefaultsType,
          client: ClientType,
          system: SystemType,
@@ -139,7 +140,8 @@ final internal class Core: CoreType {
                              value: [ "url": filteredURL.absoluteString],
                              attributionToken: incomingToken,
                              time: system.currentDate.ISO8601String,
-                             uuid: UUID().uuidString)
+                             uuid: UUID().uuidString,
+                             source: .button)
         client.reportEvents([event], ifa: system.advertisingId, nil)
     }
     
@@ -202,4 +204,13 @@ final internal class Core: CoreType {
         client.reportOrder(orderRequest: request, completion)
     }
 
+    func reportCustomEvent(_ name: String, properties: [String: String]? = nil) {
+        let event = AppEvent(name: name,
+                             value: properties,
+                             attributionToken: attributionToken,
+                             time: system.currentDate.ISO8601String,
+                             uuid: UUID().uuidString,
+                             source: .custom)
+        client.reportEvents([event], ifa: system.advertisingId, nil)
+    }
 }

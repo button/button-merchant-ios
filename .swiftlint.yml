@@ -181,7 +181,7 @@ unused_optional_binding:
   ignore_optional_try: false
 
 file_length:
-  warning: 500
+  warning: 600
 
 ## Opt-In
 conditional_returns_on_newline: error

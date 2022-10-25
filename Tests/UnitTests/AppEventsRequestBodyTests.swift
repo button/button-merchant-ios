@@ -32,7 +32,8 @@ class AppEventsRequestBodyTests: XCTestCase {
                              value: ["url": "https://example.com"],
                              attributionToken: "some token",
                              time: "2019-07-25T21:30:02.844Z",
-                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
+                             source: .button)
         let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.ifa, "some ifa")
@@ -43,6 +44,7 @@ class AppEventsRequestBodyTests: XCTestCase {
         XCTAssertEqual(body.events.first?.attributionToken, "some token")
         XCTAssertEqual(body.events.first?.time, "2019-07-25T21:30:02.844Z")
         XCTAssertEqual(body.events.first?.uuid, "3b3024dc-e56f-412e-8015-5c2c308126fd")
+        XCTAssertEqual(body.events.first?.source, .button)
     }
     
     func testSerialization_createsDisctionary() {
@@ -50,7 +52,8 @@ class AppEventsRequestBodyTests: XCTestCase {
                              value: ["url": "https://example.com"],
                              attributionToken: "some token",
                              time: "2019-07-25T21:30:02.844Z",
-                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
+                             source: .button)
         let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
@@ -61,9 +64,10 @@ class AppEventsRequestBodyTests: XCTestCase {
                             [
                                 "name": "test-event",
                                 "value": ["url": "https://example.com"],
-                                "promotion_source_token": "some token",
+                                "source_token": "some token",
                                 "time": "2019-07-25T21:30:02.844Z",
-                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd"
+                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd",
+                                "source": "button"
                             ]
                         ]])
     }
@@ -73,7 +77,8 @@ class AppEventsRequestBodyTests: XCTestCase {
                              value: ["url": "https://example.com"],
                              attributionToken: "some token",
                              time: "2019-07-25T21:30:02.844Z",
-                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd")
+                             uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
+                             source: .button)
         let body = AppEventsRequestBody(ifa: nil, events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
@@ -83,9 +88,10 @@ class AppEventsRequestBodyTests: XCTestCase {
                             [
                                 "name": "test-event",
                                 "value": ["url": "https://example.com"],
-                                "promotion_source_token": "some token",
+                                "source_token": "some token",
                                 "time": "2019-07-25T21:30:02.844Z",
-                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd"
+                                "uuid": "3b3024dc-e56f-412e-8015-5c2c308126fd",
+                                "source": "button"
                             ]
                         ]])
     }

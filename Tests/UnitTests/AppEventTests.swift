@@ -27,43 +27,60 @@ import XCTest
 
 class AppEventTests: XCTestCase {
 
+    // swiftlint:disable line_length
     func testInitialization_createsInstance() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         XCTAssertEqual(event.name, "test event")
         XCTAssertEqual(event.value, ["foo": "bar"])
         XCTAssertEqual(event.attributionToken, "some token")
         XCTAssertEqual(event.time, "some time")
         XCTAssertEqual(event.uuid, "some uuid")
+        XCTAssertEqual(event.source, .button)
     }
     
     func testSerialization_createsDictionary() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "value": ["foo": "bar"],
-            "promotion_source_token": "some token",
+            "source_token": "some token",
             "time": "some time",
-            "uuid": "some uuid"
+            "uuid": "some uuid",
+            "source": "button"
         ])
     }
     
     func testMissingValue_omitsValue() {
-        let event = AppEvent(name: "test event", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "test event", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
-            "promotion_source_token": "some token",
+            "source_token": "some token",
             "time": "some time",
-            "uuid": "some uuid"
+            "uuid": "some uuid",
+            "source": "button"
         ])
     }
     
     func testMissingSourceToken_omitsSourceToken() {
-        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil, time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil, time: "some time", uuid: "some uuid", source: .button)
         XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
             "name": "test event",
             "value": ["foo": "bar"],
             "time": "some time",
-            "uuid": "some uuid"
+            "uuid": "some uuid",
+            "source": "button"
         ])
     }
+    
+    func testCustomSource_serializesCustomSource() {
+        let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: nil, time: "some time", uuid: "some uuid", source: .custom)
+        XCTAssertEqual(event.dictionaryRepresentation as NSDictionary, [
+            "name": "test event",
+            "value": ["extra": ["foo": "bar"]],
+            "time": "some time",
+            "uuid": "some uuid",
+            "source": "custom"
+        ])
+    }
+    // swiftlint:enable line_length
 }
