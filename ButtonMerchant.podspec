@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ButtonMerchant'
-  s.version          = '1.4.5'
+  s.version          = '1.5.0'
   s.summary          = 'An open source client library for Button merchants.'
   s.description      = <<-DESC
 The Button Merchant library is a light-weight, open-source method
