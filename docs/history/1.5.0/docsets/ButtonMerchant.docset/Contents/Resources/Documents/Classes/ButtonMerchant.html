@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ButtonMerchant Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/ButtonMerchant" class="dashAnchor"></a>
+    <a title="ButtonMerchant Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ButtonMerchant 1.5.0 Docs</a> (0% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ButtonMerchant Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        ButtonMerchant Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonMerchant.html">ButtonMerchant</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ButtonProduct.html">ButtonProduct</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order.html">Order</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/Customer.html">– Customer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Order/LineItem.html">– LineItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/ButtonMerchantError.html">ButtonMerchantError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ConfigurationError.html">ConfigurationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/NetworkError.html">NetworkError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Activity.html">Activity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/ButtonProductCompatible.html">ButtonProductCompatible</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Configurable.html">Configurable</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs.html#/Version">Version</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ButtonMerchant</h1>
+            <p><code>ButtonMerchant</code> is the main entry point to the library.</p>
+
+<p>To get started with your integration,
+get your application Id from from the <a href="https://app.usebutton.com">Button Dashboard</a>.
+and follow our simple <a href="https://developer.usebutton.com/docs/ios-add-merchant-library">integration guide</a></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Variable/attributionToken" class="dashAnchor"></a>
+                    <a class="token" href="#/">attributionToken</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The last tracked <code>attributionToken</code> from an inbound Button attributed URL.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    &gt; For attribution to work correctly, you must:
+
+</div><ul>
+<li>Always access this token directly—<strong>never cache it</strong>.</li>
+<li>Never manage the lifecycle of this token—Button manages the token validity window server-side.</li>
+<li>Always include this value when reporting orders to your order API</li>
+</ul>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/configure(applicationId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">configure(applicationId:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Configures ButtonMerchant with your application Id.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Note:</p>
+
+<blockquote>
+<p>Get your application Id from from the <a href="https://app.usebutton.com">Button Dashboard</a></p>
+</blockquote>
+
+</div>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/trackIncomingURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">trackIncomingURL(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks the passed URL for a Button attribution and if present stores the token.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>Attention:</p>
+
+<blockquote>
+<p>To correctly attribute customers, you must call this method with every
+incoming <code>url</code> and <code>userActivity</code> from the following <code>UIApplicationDelegate</code> methods:</p>
+</blockquote>
+
+</div><ul>
+<li><p><code>application(_:open:options:)</code></p></li>
+<li><p><code>application(_:userActivity:restorationHandler:)</code></p></li>
+</ul>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/trackIncomingUserActivity(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">trackIncomingUserActivity(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks the URL in the passed NSUserActivity for a Button attribution and if present stores the token.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>Attention:</p>
+
+<blockquote>
+<p>To correctly attribute customers, you must call this method with every
+incoming <code>userActivity</code> from the following <code>UIApplicationDelegate</code> method:</p>
+</blockquote>
+
+</div><ul>
+<li><p><code>application(_:userActivity:restorationHandler:)</code></p></li>
+</ul>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/handlePostInstallURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">handlePostInstallURL(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks to see if the user visited a url prior to installing your app.</p>
+
+<p>If a url is found, your completion handler will be called with the url and you are responsible
+for navigating the user to the relevant content in your app. If a url is not found or an error occurs, your
+completion handler will be called without a url and you can continue with your normal launch sequence.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    <p>Attention:</p>
+
+<blockquote>
+<p>This method checks for a post-install url exactly <em>one time</em> after a user has installed your app.
+Subsequent calls will result in your completion handler being called without a url. You do not need to wait
+for the completion handler before continuing with your normal launch sequence but you should be prepared
+to handle a post-install url if one is found. All subsequent incoming urls will be routed to your
+<code>UIApplicationDelegate</code> as usual.</p>
+</blockquote>
+
+</div>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/reportOrder(_:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/">reportOrder(_:<wbr>completion:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reports an order to Button.</p>
+
+<p>See also: Reporting Orders to Button
+(<a href="https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api">docs</a>)</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Method/clearAllData()" class="dashAnchor"></a>
+                    <a class="token" href="#/">clearAllData()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Discards the current session and all persisted data.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Variable/features" class="dashAnchor"></a>
+                    <a class="token" href="#/">features</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An interface through which library features can be enabled/disabled.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/"></a>
+                    <a name="//apple_ref/swift/Variable/activity" class="dashAnchor"></a>
+                    <a class="token" href="#/">activity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An interface through which user activity can be reported.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>Copyright © 2018 Button, Inc. All rights reserved. (<a href="https://usebutton.com">https://usebutton.com</a>) under <a class="link" href="https://github.com/button/button-merchant-ios-private/blob/master/LICENSE" target="_blank" rel="external noopener">MIT License</a>.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

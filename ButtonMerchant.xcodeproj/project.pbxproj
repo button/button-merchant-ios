@@ -108,6 +108,7 @@
 		DE5464DB2107CB6E001809F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5464DA2107CB6E001809F3 /* ViewController.m */; };
 		DE5464E02107CB6F001809F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE5464DF2107CB6F001809F3 /* Assets.xcassets */; };
 		DE5464E32107CB6F001809F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5464E12107CB6F001809F3 /* LaunchScreen.storyboard */; };
+		DE59498D28F49FA200FD9737 /* ButtonMerchantExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */; };
 		DE5D375328B7D173001AA004 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0F12AD28B7CD970047A61E /* Order.m */; };
 		DE5D375428B7D174001AA004 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0F12AD28B7CD970047A61E /* Order.m */; };
 		DE865F722052E79A00F4054D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE865F712052E79A00F4054D /* AppDelegate.swift */; };
@@ -289,6 +290,7 @@
 		DE5464DD2107CB6E001809F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE5464DF2107CB6F001809F3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE5464E22107CB6F001809F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMerchantExtensions.swift; sourceTree = "<group>"; };
 		DE5A6DFC205326B7007F1F6A /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; indentWidth = 2; name = Fastfile; path = fastlane/Fastfile; sourceTree = "<group>"; tabWidth = 2; };
 		DE865F712052E79A00F4054D /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Examples/Swift/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		DE865F732052F38100F4054D /* ButtonMerchant.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = ButtonMerchant.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -528,6 +530,7 @@
 				DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */,
 				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
 				FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */,
+				DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -795,9 +798,9 @@
 			buildConfigurationList = DE865F9B2052FE5D00F4054D /* Build configuration list for PBXNativeTarget "ButtonMerchant" */;
 			buildPhases = (
 				DA0FA2C82062EF38008296A6 /* Swift Lint */,
+				DE865F812052FE5D00F4054D /* Headers */,
 				DE865F7F2052FE5D00F4054D /* Sources */,
 				DE865F802052FE5D00F4054D /* Frameworks */,
-				DE865F812052FE5D00F4054D /* Headers */,
 				DE865F822052FE5D00F4054D /* Resources */,
 			);
 			buildRules = (
@@ -1170,6 +1173,7 @@
 				DC1F008122CA85F000E789D0 /* Configurable.swift in Sources */,
 				DAA3F2A024E32EA50046DA61 /* ActivityRequestBody.swift in Sources */,
 				DE95967E20856626004BC9EA /* ASIdentifierManagerExtensions.swift in Sources */,
+				DE59498D28F49FA200FD9737 /* ButtonMerchantExtensions.swift in Sources */,
 				DA4AF059208699CA002C3E0E /* NotificationExtensions.swift in Sources */,
 				9E976B87207D1A3000783F1A /* DateExtensions.swift in Sources */,
 				9EB1B0A2207AB5ED00BE0A1A /* FileManagerExtensions.swift in Sources */,

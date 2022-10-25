@@ -576,7 +576,8 @@ class ClientTests: XCTestCase {
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: testSystem)
         client.applicationId = ApplicationId("app-abc123")
-        let event = AppEvent(name: "test-event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "test-event", value: ["foo": "bar"],
+                             attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         
         // Act
         client.reportEvents([event], ifa: "some ifa") { error in
@@ -593,9 +594,10 @@ class ClientTests: XCTestCase {
                     [
                         "name": "test-event",
                         "value": ["foo": "bar"],
-                        "promotion_source_token": "some token",
+                        "source_token": "some token",
                         "time": "some time",
-                        "uuid": "some uuid"
+                        "uuid": "some uuid",
+                        "source": "button"
                     ]
                 ]])
             
@@ -638,7 +640,7 @@ class ClientTests: XCTestCase {
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: TestSystem())
-        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         
         // Act
         client.fetchPostInstallURL { _, _  in }
@@ -685,7 +687,7 @@ class ClientTests: XCTestCase {
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
                             system: TestSystem())
-        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid")
+        let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         client.fetchPostInstallURL { _, _  in }
         client.reportEvents([event], ifa: "some ifa") { _ in }
         

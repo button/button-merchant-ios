@@ -481,4 +481,44 @@ class CoreTests: XCTestCase {
         }
         self.wait(for: [expectation], timeout: 2.0)
     }
+    
+    func testReportCustomEvent_withoutProperties() {
+        // Arrange
+        testDefaults.testToken = "srctok-abc123"
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
+        
+        // Act
+        core.reportCustomEvent("test event")
+        
+        // Assert
+        let actualEvents = testClient.actualEvents
+        XCTAssertEqual(actualEvents?.count, 1)
+        XCTAssertEqual(actualEvents?.first?.name, "test event")
+        XCTAssertEqual(actualEvents?.first?.attributionToken, "srctok-abc123")
+        XCTAssertEqual(actualEvents?.first?.time, "2019-07-25T21:30:02Z")
+        let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+        XCTAssertTrue(predicate.evaluate(with: actualEvents?.first?.uuid))
+        XCTAssertNil(actualEvents?.first?.value)
+        XCTAssertEqual(actualEvents?.first?.source, .custom)
+    }
+    
+    func testReportCustomEvent_withProperties() {
+        // Arrange
+        testDefaults.testToken = "srctok-abc123"
+        testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
+        
+        // Act
+        core.reportCustomEvent("test event", properties: ["foo": "bar"])
+        
+        // Assert
+        let actualEvents = testClient.actualEvents
+        XCTAssertEqual(actualEvents?.count, 1)
+        XCTAssertEqual(actualEvents?.first?.name, "test event")
+        XCTAssertEqual(actualEvents?.first?.attributionToken, "srctok-abc123")
+        XCTAssertEqual(actualEvents?.first?.time, "2019-07-25T21:30:02Z")
+        let predicate = NSPredicate(format: "SELF MATCHES %@", "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}")
+        XCTAssertTrue(predicate.evaluate(with: actualEvents?.first?.uuid))
+        XCTAssertEqual(actualEvents?.first?.value, ["foo": "bar"])
+        XCTAssertEqual(actualEvents?.first?.source, .custom)
+    }
 }
