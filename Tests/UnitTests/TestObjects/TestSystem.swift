@@ -32,16 +32,12 @@ final class TestSystem: SystemType {
     var testCurrentDate: Date
 
     // SystemType
-    var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
-    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
     var bundle: BundleType
-    
-    var advertisingId: String? = "00000000-0000-0000-0000-000000000000"
     
     var currentDate: Date {
         return testCurrentDate
@@ -53,7 +49,6 @@ final class TestSystem: SystemType {
 
     init(fileManager: FileManagerType = TestFileManager(),
          calendar: CalendarType = TestCalendar(),
-         adIdManager: ASIdentifierManagerType = TestAdIdManager(),
          device: UIDeviceType = TestDevice(),
          screen: UIScreenType = TestScreen(),
          locale: LocaleType = TestLocale(),
@@ -65,11 +60,9 @@ final class TestSystem: SystemType {
         
         self.fileManager = fileManager
         self.calendar = calendar
-        self.adIdManager = adIdManager
         self.device = device
         self.screen = screen
         self.locale = locale
         self.bundle = bundle
-        self.includesIFA = true
     }
 }

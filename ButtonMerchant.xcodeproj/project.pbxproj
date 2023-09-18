@@ -99,7 +99,6 @@
 		DE1706E32085633A009FF30B /* TestDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706E120856336009FF30B /* TestDevice.swift */; };
 		DE1706E5208563D7009FF30B /* TestLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706E4208563D7009FF30B /* TestLocale.swift */; };
 		DE1706E7208563F1009FF30B /* TestScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706E6208563F1009FF30B /* TestScreen.swift */; };
-		DE1706E920856417009FF30B /* TestAdIdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1706E820856417009FF30B /* TestAdIdManager.swift */; };
 		DE175A1C20A09DEA005C97B9 /* Version.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE175A1A20A09DDE005C97B9 /* Version.generated.swift */; };
 		DE175A2120A0AFF6005C97B9 /* VersionTests.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE175A2020A0AFF6005C97B9 /* VersionTests.generated.swift */; };
 		DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */; };
@@ -111,6 +110,8 @@
 		DE59498D28F49FA200FD9737 /* ButtonMerchantExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */; };
 		DE5D375328B7D173001AA004 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0F12AD28B7CD970047A61E /* Order.m */; };
 		DE5D375428B7D174001AA004 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = DE0F12AD28B7CD970047A61E /* Order.m */; };
+		DE74427F2A8F04DF009D6BD1 /* ButtonMerchant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE865F842052FE5D00F4054D /* ButtonMerchant.framework */; };
+		DE7442802A8F04DF009D6BD1 /* ButtonMerchant.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE865F842052FE5D00F4054D /* ButtonMerchant.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DE865F722052E79A00F4054D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE865F712052E79A00F4054D /* AppDelegate.swift */; };
 		DE865F8D2052FE5D00F4054D /* ButtonMerchant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE865F842052FE5D00F4054D /* ButtonMerchant.framework */; };
 		DE865F962052FE5D00F4054D /* ButtonMerchant.h in Headers */ = {isa = PBXBuildFile; fileRef = DE865F862052FE5D00F4054D /* ButtonMerchant.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -159,6 +160,13 @@
 			remoteGlobalIDString = DE865F832052FE5D00F4054D;
 			remoteInfo = ButtonMerchant;
 		};
+		DE7442812A8F04DF009D6BD1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DE865F832052FE5D00F4054D;
+			remoteInfo = ButtonMerchant;
+		};
 		DE865F8E2052FE5D00F4054D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
@@ -167,6 +175,20 @@
 			remoteInfo = ButtonMerchant;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DE7442832A8F04DF009D6BD1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DE7442802A8F04DF009D6BD1 /* ButtonMerchant.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1056D6CD4EC26DA7A7B7E86D /* Pods-Example-ObjC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-ObjC.release.xcconfig"; path = "Target Support Files/Pods-Example-ObjC/Pods-Example-ObjC.release.xcconfig"; sourceTree = "<group>"; };
@@ -275,7 +297,6 @@
 		DE1706E120856336009FF30B /* TestDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDevice.swift; sourceTree = "<group>"; };
 		DE1706E4208563D7009FF30B /* TestLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLocale.swift; sourceTree = "<group>"; };
 		DE1706E6208563F1009FF30B /* TestScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScreen.swift; sourceTree = "<group>"; };
-		DE1706E820856417009FF30B /* TestAdIdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAdIdManager.swift; sourceTree = "<group>"; };
 		DE175A1A20A09DDE005C97B9 /* Version.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.generated.swift; sourceTree = "<group>"; };
 		DE175A2020A0AFF6005C97B9 /* VersionTests.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionTests.generated.swift; sourceTree = "<group>"; };
 		DE2F744E208F6535001E4BD6 /* ConfigurationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationError.swift; sourceTree = "<group>"; };
@@ -325,6 +346,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE74427F2A8F04DF009D6BD1 /* ButtonMerchant.framework in Frameworks */,
 				20B25FD4CC0EFA64DBAB0EC0 /* Pods_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -544,7 +566,6 @@
 				9E5475E3206D91A900947A1C /* TestURLSessionDataTask.swift */,
 				9EAA60C4207AC9AC00D21601 /* TestFileManager.swift */,
 				9EAA60C6207AC9FF00D21601 /* TestCalendar.swift */,
-				DE1706E820856417009FF30B /* TestAdIdManager.swift */,
 				DE1706E120856336009FF30B /* TestDevice.swift */,
 				DE1706E6208563F1009FF30B /* TestScreen.swift */,
 				DE1706E4208563D7009FF30B /* TestLocale.swift */,
@@ -743,11 +764,13 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
+				DE7442832A8F04DF009D6BD1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				DE18FC5B28B7E24500558C2E /* PBXTargetDependency */,
+				DE7442822A8F04DF009D6BD1 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = ButtonMerchant;
@@ -1201,7 +1224,6 @@
 				DA0FA2A3205C1EF2008296A6 /* TestCore.swift in Sources */,
 				DA29D894209CF34D00537806 /* UIDeviceTests.swift in Sources */,
 				FBEBC92125435D5900AAE9E5 /* TestAppIntegrationVerification.swift in Sources */,
-				DE1706E920856417009FF30B /* TestAdIdManager.swift in Sources */,
 				DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */,
 				DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */,
 				FB70030B24CF46260050E021 /* AppEventsRequestBodyTests.swift in Sources */,
@@ -1259,6 +1281,11 @@
 			isa = PBXTargetDependency;
 			target = DE865F832052FE5D00F4054D /* ButtonMerchant */;
 			targetProxy = DE18FC5C28B7E24900558C2E /* PBXContainerItemProxy */;
+		};
+		DE7442822A8F04DF009D6BD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DE865F832052FE5D00F4054D /* ButtonMerchant */;
+			targetProxy = DE7442812A8F04DF009D6BD1 /* PBXContainerItemProxy */;
 		};
 		DE865F8F2052FE5D00F4054D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

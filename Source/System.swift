@@ -24,11 +24,9 @@
 
 import UIKit
 
-internal protocol SystemType: Configurable {
+internal protocol SystemType: AnyObject {
     var fileManager: FileManagerType { get }
     var calendar: CalendarType { get }
-    var adIdManager: ASIdentifierManagerType { get }
-    var advertisingId: String? { get }
     var device: UIDeviceType { get }
     var screen: UIScreenType { get }
     var locale: LocaleType { get }
@@ -37,7 +35,6 @@ internal protocol SystemType: Configurable {
     var isNewInstall: Bool { get }
     init(fileManager: FileManagerType,
          calendar: CalendarType,
-         adIdManager: ASIdentifierManagerType,
          device: UIDeviceType,
          screen: UIScreenType,
          locale: LocaleType,
@@ -46,24 +43,12 @@ internal protocol SystemType: Configurable {
 
 internal final class System: SystemType {
     
-    static let allZerosPattern = "^(?:[0+\\-]+){10,}$"
-    
-    var includesIFA: Bool
     var fileManager: FileManagerType
     var calendar: CalendarType
-    var adIdManager: ASIdentifierManagerType
     var device: UIDeviceType
     var screen: UIScreenType
     var locale: LocaleType
     var bundle: BundleType
-
-    var advertisingId: String? {
-        let ifa = self.adIdManager.advertisingIdentifier.uuidString
-        guard self.includesIFA && !ifa.matches(System.allZerosPattern) else {
-            return nil
-        }
-        return ifa
-    }
     
     var currentDate: Date {
         return Date()
@@ -82,18 +67,15 @@ internal final class System: SystemType {
     
     init(fileManager: FileManagerType,
          calendar: CalendarType,
-         adIdManager: ASIdentifierManagerType,
          device: UIDeviceType,
          screen: UIScreenType,
          locale: LocaleType,
          bundle: BundleType) {
         self.fileManager = fileManager
         self.calendar = calendar
-        self.adIdManager = adIdManager
         self.device = device
         self.screen = screen
         self.locale = locale
         self.bundle = bundle
-        self.includesIFA = true
     }
 }

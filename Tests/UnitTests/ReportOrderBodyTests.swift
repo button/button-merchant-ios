@@ -69,8 +69,7 @@ class ReportOrderBodyTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
-                       ["advertising_id": "00000000-0000-0000-0000-000000000000",
-                        "btn_ref": "srctok-abc123",
+                       ["btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,
@@ -85,7 +84,6 @@ class ReportOrderBodyTests: XCTestCase {
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: [])
         let testSystem = TestSystem()
-        testSystem.advertisingId = nil
         // Act
         let body = ReportOrderBody(system: testSystem,
                                    attributionToken: "srctok-abc123",
