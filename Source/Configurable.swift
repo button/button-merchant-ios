@@ -30,9 +30,8 @@ import Foundation
 @objc public protocol Configurable: AnyObject {
 
     /**
-     Indicates whether or not the library will attach IFA to outgoing requests.
-
-     The default value is `true`. If set to `false`, or if the user has limited IFA usage in their device settings, the IFA will not be attached.
+     Deprecated. This library does not read the advertising identifier even when premission is granted by the user.
     */
+    @available(*, deprecated, message: "Advertising identifier is not accessed by this library.")
     var includesIFA: Bool { get set }
 }

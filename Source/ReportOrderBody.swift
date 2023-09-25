@@ -33,7 +33,6 @@ internal struct ReportOrderBody: Codable {
     let customerOrderId: String?
     let lineItems: [Order.LineItem]?
     let customer: Order.Customer?
-    let advertisingId: String?
     
     enum CodingKeys: String, CodingKey {
         case attributionToken = "btn_ref"
@@ -43,7 +42,6 @@ internal struct ReportOrderBody: Codable {
         case customerOrderId = "customer_order_id"
         case lineItems = "line_items"
         case customer
-        case advertisingId = "advertising_id"
     }
     
     init(system: SystemType,
@@ -57,7 +55,6 @@ internal struct ReportOrderBody: Codable {
         self.customerOrderId = order.customerOrderId
         self.lineItems = order.lineItems
         self.customer = order.customer
-        self.advertisingId = system.advertisingId
     }
 
 }

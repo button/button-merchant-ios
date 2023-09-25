@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import AdSupport
 
 /**
  `ButtonMerchant` is the main entry point to the library.
@@ -164,7 +163,7 @@ final public class ButtonMerchant: NSObject {
      An interface through which library features can be enabled/disabled.
      */
     @objc public static var features: Configurable {
-        return core.system
+        return Configured()
     }
     
     /**
@@ -179,7 +178,6 @@ final public class ButtonMerchant: NSObject {
     private static func createCore() -> CoreType {
         let system = System(fileManager: FileManager.default,
                             calendar: Calendar.current,
-                            adIdManager: ASIdentifierManager.shared(),
                             device: UIDevice.current,
                             screen: UIScreen.main,
                             locale: NSLocale.current,
@@ -213,5 +211,15 @@ extension ButtonMerchant {
             return
         }
         completion(ButtonMerchantError.trackOrderDeprecationError)
+    }
+}
+
+private class Configured: Configurable {
+    /**
+     Deprecated. @see Configurable
+     */
+    var includesIFA: Bool {
+        get { return false }
+        set {}
     }
 }

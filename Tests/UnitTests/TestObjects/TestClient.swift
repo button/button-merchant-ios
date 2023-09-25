@@ -52,7 +52,6 @@ class TestClient: ClientType {
     var reportOrderCompletion: ((Error?) -> Void)?
     
     var actualEvents: [AppEvent]?
-    var actualIFA: String?
     var actualReportEventsCompletion: ((Error?) -> Void)?
     var actualProduct: ButtonProductCompatible?
     var actualProducts: [ButtonProductCompatible]?
@@ -82,10 +81,9 @@ class TestClient: ClientType {
         reportOrderCompletion = completion
     }
     
-    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?) {
         didCallReportEvents = true
         actualEvents = events
-        actualIFA = ifa
         actualReportEventsCompletion = completion
     }
     

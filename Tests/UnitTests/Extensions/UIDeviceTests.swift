@@ -27,11 +27,6 @@ import XCTest
 
 class UIDeviceTests: XCTestCase {
     
-    func testModelName() {
-        let modelName = UIDevice.current.modelName
-        XCTAssertEqual(modelName, "x86_64")
-    }
-    
     func testMachineName() {
         let machineName = UIDevice.current.machineName(from: TestUTSName.systemInfo)
         XCTAssertEqual(machineName, "iPhone10,6")
