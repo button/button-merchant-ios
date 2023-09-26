@@ -34,9 +34,8 @@ class AppEventsRequestBodyTests: XCTestCase {
                              time: "2019-07-25T21:30:02.844Z",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
                              source: .button)
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
+        let body = AppEventsRequestBody(events: [event], currentTime: "some time")
         
-        XCTAssertEqual(body.ifa, "some ifa")
         XCTAssertEqual(body.currentTime, "some time")
         XCTAssertEqual(body.events.count, 1)
         XCTAssertEqual(body.events.first?.name, "test-event")
@@ -54,11 +53,10 @@ class AppEventsRequestBodyTests: XCTestCase {
                              time: "2019-07-25T21:30:02.844Z",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
                              source: .button)
-        let body = AppEventsRequestBody(ifa: "some ifa", events: [event], currentTime: "some time")
+        let body = AppEventsRequestBody(events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [
-                        "ifa": "some ifa",
                         "current_time": "some time",
                         "events": [
                             [
@@ -79,7 +77,7 @@ class AppEventsRequestBodyTests: XCTestCase {
                              time: "2019-07-25T21:30:02.844Z",
                              uuid: "3b3024dc-e56f-412e-8015-5c2c308126fd",
                              source: .button)
-        let body = AppEventsRequestBody(ifa: nil, events: [event], currentTime: "some time")
+        let body = AppEventsRequestBody(events: [event], currentTime: "some time")
         
         XCTAssertEqual(body.dictionaryRepresentation as NSDictionary,
                        [

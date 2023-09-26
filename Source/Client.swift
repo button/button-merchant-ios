@@ -58,7 +58,7 @@ internal protocol ClientType: Activity {
     var pendingTasks: [PendingTask] { get set }
     func fetchPostInstallURL(_ completion: @escaping (URL?, String?) -> Void)
     func reportOrder(orderRequest: ReportOrderRequestType, _ completion: ((Error?) -> Void)?)
-    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?)
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?)
     init(session: URLSessionType, userAgent: UserAgentType, defaults: ButtonDefaultsType, system: SystemType)
 }
 
@@ -111,14 +111,14 @@ internal final class Client: ClientType {
         }
     }
     
-    func reportEvents(_ events: [AppEvent], ifa: String?, _ completion: ((Error?) -> Void)?) {
+    func reportEvents(_ events: [AppEvent], _ completion: ((Error?) -> Void)?) {
         guard events.count > 0 else {
             if let completion = completion {
                 completion(ButtonMerchantError.noEventsError)
             }
             return
         }
-        let body = AppEventsRequestBody(ifa: ifa, events: events, currentTime: system.currentDate.ISO8601String)
+        let body = AppEventsRequestBody(events: events, currentTime: system.currentDate.ISO8601String)
         let request = urlRequest(url: Service.appEvents.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, error in
             if let completion = completion {
@@ -227,7 +227,7 @@ internal extension Client {
     }
     
     func reportActivity(_ name: String, products: [ButtonProductCompatible]?) {
-        let body = ActivityRequestBody(ifa: system.advertisingId, attributionToken: ButtonMerchant.attributionToken, name: name, products: products)
+        let body = ActivityRequestBody(attributionToken: ButtonMerchant.attributionToken, name: name, products: products)
         let request = urlRequest(url: Service.activity.urlWith(applicationId), parameters: body.dictionaryRepresentation)
         enqueueRequest(request: request) { _, _ in
             

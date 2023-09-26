@@ -580,7 +580,7 @@ class ClientTests: XCTestCase {
                              attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         
         // Act
-        client.reportEvents([event], ifa: "some ifa") { error in
+        client.reportEvents([event]) { error in
             let request = testSession.lastDataTask?.originalRequest!
             let body = try? JSONDecoder().decode(AppEventsRequestBody.self, from: request!.httpBody!)
             
@@ -588,7 +588,6 @@ class ClientTests: XCTestCase {
             XCTAssertNil(error)
             XCTAssertEqual(request?.url?.absoluteString, "https://app-abc123.mobileapi.usebutton.com/v1/app/events")
             XCTAssertEqual(body.dictionaryRepresentation as NSDictionary, [
-                "ifa": "some ifa",
                 "current_time": "2019-07-25T21:30:02Z",
                 "events": [
                     [
@@ -622,7 +621,7 @@ class ClientTests: XCTestCase {
         client.applicationId = ApplicationId("app-abc123")
         
         // Act
-        client.reportEvents([], ifa: "some ifa") { error in
+        client.reportEvents([]) { error in
             
             // Assert
             XCTAssertFalse(testSession.didCallDataTaskWithRequest)
@@ -644,7 +643,7 @@ class ClientTests: XCTestCase {
         
         // Act
         client.fetchPostInstallURL { _, _  in }
-        client.reportEvents([event], ifa: "some ifa") { _ in }
+        client.reportEvents([event]) { _ in }
         
         // Assert
         XCTAssertEqual(client.pendingTasks.count, 2)
@@ -689,7 +688,7 @@ class ClientTests: XCTestCase {
                             system: TestSystem())
         let event = AppEvent(name: "event1", value: nil, attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         client.fetchPostInstallURL { _, _  in }
-        client.reportEvents([event], ifa: "some ifa") { _ in }
+        client.reportEvents([event]) { _ in }
         
         // Act
         client.applicationId = ApplicationId("app-test")
@@ -711,7 +710,6 @@ class ClientTests: XCTestCase {
         // Arrange
         let testURLSession = TestURLSession()
         let testSystem = TestSystem()
-        testSystem.advertisingId = "some ifa"
         let client = Client(session: testURLSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -727,7 +725,6 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
         XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "product-viewed")
     }
     
@@ -735,7 +732,6 @@ class ClientTests: XCTestCase {
         // Arrange
         let testURLSession = TestURLSession()
         let testSystem = TestSystem()
-        testSystem.advertisingId = "some ifa"
         let client = Client(session: testURLSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -751,7 +747,6 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
         XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "add-to-cart")
     }
     
@@ -759,7 +754,6 @@ class ClientTests: XCTestCase {
         // Arrange
         let testURLSession = TestURLSession()
         let testSystem = TestSystem()
-        testSystem.advertisingId = "some ifa"
         let client = Client(session: testURLSession,
                             userAgent: TestUserAgent(),
                             defaults: TestButtonDefaults(userDefaults: TestUserDefaults()),
@@ -775,7 +769,6 @@ class ClientTests: XCTestCase {
         XCTAssertEqual(task.originalRequest?.url?.absoluteString,
                        "https://app-abc123.mobileapi.usebutton.com/v1/app/activity")
         let json = try? JSONSerialization.jsonObject(with: task.originalRequest!.httpBody!) as? NSDictionary
-        XCTAssertEqual(json?["ifa"] as? String, "some ifa")
         XCTAssertEqual((json?["activity_data"] as? NSDictionary)?["name"] as? String, "cart-viewed")
     }
 }

@@ -113,7 +113,6 @@ class CoreTests: XCTestCase {
     
     func testTrackIncomingURL_withToken_tracksDeeplinkOpened() {
         // Arrange
-        testSystem.advertisingId = "some ifa"
         testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
         let url = URL(string: "http://usebutton.com/with-token?btn_ref=faketok-abc123")!
         
@@ -122,7 +121,6 @@ class CoreTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(testClient.didCallReportEvents)
-        XCTAssertEqual(testClient.actualIFA, "some ifa")
         XCTAssertEqual(testClient.actualEvents?.count, 1)
         XCTAssertEqual(testClient.actualEvents?.first?.name, "btn:deeplink-opened")
         XCTAssertEqual(testClient.actualEvents?.first?.value?["url"], url.absoluteString)
@@ -452,8 +450,7 @@ class CoreTests: XCTestCase {
 
         // swiftlint:disable line_length
         XCTAssertEqual(testClient.testReportOrderRequest!.parameters as NSDictionary,
-                       ["advertising_id": "00000000-0000-0000-0000-000000000000",
-                        "btn_ref": "srctok-abc123",
+                       ["btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
                         "currency": "USD",
                         "purchase_date": date.ISO8601String,

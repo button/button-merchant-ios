@@ -25,14 +25,12 @@
 import Foundation
 
 internal struct ActivityRequestBody {
-    let ifa: String?
     let attributionToken: String?
     let name: String
     let products: [ButtonProductCompatible]?
     
     var dictionaryRepresentation: [String: Any] {
         var dict: [String: Any?] = [
-            "ifa": ifa,
             "btn_ref": attributionToken
         ]
         var data: [String: Any?] = ["name": name]

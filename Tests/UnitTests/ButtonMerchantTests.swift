@@ -193,7 +193,7 @@ class ButtonMerchantTests: XCTestCase {
         XCTAssertFalse(ButtonMerchant.features.includesIFA)
     }
     
-    func testIFASetTrue() {
+    func testIFASetTrueRemainsFalse() {
         // Arrange
         ButtonMerchant._core = testCore
         
@@ -201,7 +201,7 @@ class ButtonMerchantTests: XCTestCase {
         ButtonMerchant.features.includesIFA = true
         
         // Assert
-        XCTAssertTrue(ButtonMerchant.features.includesIFA)
+        XCTAssertFalse(ButtonMerchant.features.includesIFA)
     }
     
     func testActivity_returnsClient() {

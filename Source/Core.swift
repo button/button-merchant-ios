@@ -142,7 +142,7 @@ final internal class Core: CoreType {
                              time: system.currentDate.ISO8601String,
                              uuid: UUID().uuidString,
                              source: .button)
-        client.reportEvents([event], ifa: system.advertisingId, nil)
+        client.reportEvents([event], nil)
     }
     
     private func updateAttributionIfNeeded(token: String?) {
@@ -211,6 +211,6 @@ final internal class Core: CoreType {
                              time: system.currentDate.ISO8601String,
                              uuid: UUID().uuidString,
                              source: .custom)
-        client.reportEvents([event], ifa: system.advertisingId, nil)
+        client.reportEvents([event], nil)
     }
 }
