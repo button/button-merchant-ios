@@ -448,7 +448,6 @@ class CoreTests: XCTestCase {
             expectation.fulfill()
         }
 
-        // swiftlint:disable line_length
         XCTAssertEqual(testClient.testReportOrderRequest!.parameters as NSDictionary,
                        ["btn_ref": "srctok-abc123",
                         "order_id": "order-abc",
@@ -456,7 +455,7 @@ class CoreTests: XCTestCase {
                         "purchase_date": date.ISO8601String,
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
-                        "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c", "is_new": 1]])
+                        "customer": ["id": "customer-id-123", "is_new": 1]])
         
         testClient.reportOrderCompletion!(nil)
         

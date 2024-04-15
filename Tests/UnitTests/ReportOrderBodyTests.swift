@@ -31,7 +31,7 @@ class ReportOrderBodyTests: XCTestCase {
         // Arrange
         let date = Date()
         let customer = Order.Customer(id: "customer-id-123")
-        customer.email = "test@button.com"
+        customer.email = "test@button.com" // Set to confirm deprecated no-op behavior
         let lineItems = [Order.LineItem(id: "unique-id-1234", total: 120)]
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
         
@@ -56,7 +56,7 @@ class ReportOrderBodyTests: XCTestCase {
         let date: Date = Date.ISO8601Formatter.date(from: "2019-06-17T12:08:10-04:00")!
         let email = "test@button.com"
         let customer = Order.Customer(id: "customer-id-123")
-        customer.email = email
+        customer.email = email // Set to confirm deprecated no-op behavior
         let lineItems = [Order.LineItem(id: "unique-id-1234", total: 120)]
         let order = Order(id: "order-abc", purchaseDate: date, lineItems: lineItems)
         order.customer = customer
@@ -75,7 +75,7 @@ class ReportOrderBodyTests: XCTestCase {
                         "purchase_date": date.ISO8601String,
                         "customer_order_id": "customer-order-id-123",
                         "line_items": [["identifier": "unique-id-1234", "quantity": 1, "total": 120]],
-                        "customer": ["id": "customer-id-123", "email_sha256": "21f61e98ab4ae120e88ac6b5dd218ffb8cf3e481276b499a2e0adab80092899c"]])
+                        "customer": ["id": "customer-id-123"]])
     }
     
     func testAdvertisingIdSetToNil() {
