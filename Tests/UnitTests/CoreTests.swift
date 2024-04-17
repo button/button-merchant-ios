@@ -168,7 +168,7 @@ class CoreTests: XCTestCase {
     func testTrackIncomingURL_withFromLandingFromTrackingParams_tracksDeeplinkOpened() {
         // Arrange
         testSystem.testCurrentDate = Date.ISO8601Formatter.date(from: "2019-07-25T21:30:02Z")!
-        let url = URL(string: "http://usebutton.com/no-token/?from_landing=true&from_tracking=false")!
+        let url = URL(string: "http://usebutton.com/no-token/?from_landing=true&from_tracking=false&from_appstore=false")!
 
         // Act
         core.trackIncomingURL(url)
