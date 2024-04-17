@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 //
 // Package.swift
 //
@@ -38,7 +38,10 @@ let package = Package(
     targets: [
         .target(
             name: "ButtonMerchant",
-            path: "Source"),
+            path: "Source",
+            resources: [
+                .copy("Resources/PrivacyInfo.xcprivacy")
+            ]),
         .testTarget(
             name: "UnitTests",
             path: "Tests/UnitTests"),

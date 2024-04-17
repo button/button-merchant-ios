@@ -18,6 +18,7 @@ and join the Button Marketplace.
   s.swift_version = '5.0'
 
   s.source_files = 'Source/**/*.{swift,h}'
+  s.resources = ["Source/Resources/PrivacyInfo.xcprivacy"]
 
-  s.pod_target_xcconfig = { "SWIFT_VERSION" => 5.0 }
+  s.pod_target_xcconfig = { "SWIFT_VERSION" => 5.3 }
 end
