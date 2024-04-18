@@ -120,6 +120,7 @@
 		DEA3F6B92108F0A8009E720E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE5464DC2107CB6E001809F3 /* Main.storyboard */; };
 		DEA3F6BA2108F280009E720E /* MessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA4AF05420868015002C3E0E /* MessageView.xib */; };
 		DEA3F6BB2108F286009E720E /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4AF05220867FFB002C3E0E /* MessageView.swift */; };
+		DED9E4B22BD0D667004F24F3 /* ButtonMerchantDeprecations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED9E4B12BD0D667004F24F3 /* ButtonMerchantDeprecations.swift */; };
 		DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE61B2C20656A090039E47A /* XCTestExtensions.swift */; };
 		FB5AA6AD24D0A19B0057F3A0 /* ApplicationIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */; };
 		FB5AA6AE24D0BADD0057F3A0 /* ApplicationId.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */; };
@@ -322,6 +323,7 @@
 		DE865F8C2052FE5D00F4054D /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE865FA2205304C700F4054D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		DE9BF6352BC63BA800CD9B38 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		DED9E4B12BD0D667004F24F3 /* ButtonMerchantDeprecations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonMerchantDeprecations.swift; sourceTree = "<group>"; };
 		DEE61B2C20656A090039E47A /* XCTestExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExtensions.swift; sourceTree = "<group>"; };
 		F3F48F5FBD0D52C07A253FB6 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FB5AA6AA24D0A11D0057F3A0 /* ApplicationId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationId.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
 				FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */,
 				DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */,
+				DED9E4B12BD0D667004F24F3 /* ButtonMerchantDeprecations.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1193,6 +1196,7 @@
 				DE1706E020855F4C009FF30B /* LocaleExtensions.swift in Sources */,
 				DA4C8C7922D3D909000E15A9 /* ReportOrderRequest.swift in Sources */,
 				9E77202220605506005F740B /* ButtonDefaults.swift in Sources */,
+				DED9E4B22BD0D667004F24F3 /* ButtonMerchantDeprecations.swift in Sources */,
 				DE1706DD20855B22009FF30B /* UIScreenExtensions.swift in Sources */,
 				9EEF58DD208F9161009DA9B6 /* UserAgent.swift in Sources */,
 				9E145C90208F86E600B01ECD /* BundleExtensions.swift in Sources */,

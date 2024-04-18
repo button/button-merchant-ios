@@ -96,7 +96,8 @@ Represents an order placed by the user to be reported using `ButtonMerchant.repo
         let id: String
 
         /**
-         Deprecated. This property is a no-op. Data is not collected.
+         - Important:
+           Deprecated. This property is a no-op. Data is not collected.
         */
         @available(*, deprecated, message: "Setting this property is a no-op. Data is not collected.")
         public var email: String? {

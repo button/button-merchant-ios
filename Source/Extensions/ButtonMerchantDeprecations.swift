@@ -1,7 +1,7 @@
 //
-// Configurable.swift
+// ButtonMerchantDeprecations.swift
 //
-// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2024 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,18 @@
 
 import Foundation
 
-/**
- */
-@objc public protocol Configurable: AnyObject {
+// MARK: - Deprecations
 
+extension ButtonMerchant {
     /**
      - Important:
-       Deprecated. This library does not read the advertising identifier even when permission is granted by the user.
-    */
-    @available(*, deprecated, message: "Advertising identifier is not accessed by this library.")
-    var includesIFA: Bool { get set }
+       This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.
+     */
+    @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
+    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
+        guard let completion = completion else {
+            return
+        }
+        completion(ButtonMerchantError.trackOrderDeprecationError)
+    }
 }

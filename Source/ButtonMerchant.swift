@@ -25,11 +25,12 @@
 import UIKit
 
 /**
- `ButtonMerchant` is the main entry point to the library.
-
- To get started with your integration,
- get your application Id from from the [Button Dashboard](https://app.usebutton.com).
- and follow our simple [integration guide](https://developer.usebutton.com/docs/ios-add-merchant-library)
+  - Note:
+   `ButtonMerchant` is the main entry point to the library.
+    
+ 
+    To get started with your integration, get your application Id from from the [Button Dashboard](https://app.usebutton.com) and follow our simple
+    [integration guide](https://developer.usebutton.com/docs/ios-add-merchant-library).
  */
 @objcMembers
 final public class ButtonMerchant: NSObject {
@@ -47,10 +48,11 @@ final public class ButtonMerchant: NSObject {
     }
     
     /**
-     The last tracked `attributionToken` from an inbound Button attributed URL.
+     The last `attributionToken` from an inbound Button attributed URL.
 
      - Attention:
-     > For attribution to work correctly, you must:
+     For attribution to work correctly, you must:
+    
      - Always access this token directly—**never cache it**.
      - Never manage the lifecycle of this token—Button manages the token validity window server-side.
      - Always include this value when reporting orders to your order API
@@ -64,7 +66,7 @@ final public class ButtonMerchant: NSObject {
      Configures ButtonMerchant with your application Id.
 
      - Note:
-     > Get your application Id from from the [Button Dashboard](https://app.usebutton.com)
+     Get your application Id from from the [Button Dashboard](https://app.usebutton.com)
 
      - Parameters:
         - applicationId: Your application Id (required)
@@ -83,7 +85,7 @@ final public class ButtonMerchant: NSObject {
      Checks the passed URL for a Button attribution and if present stores the token.
 
      - Attention:
-     > To correctly attribute customers, you must call this method with every
+     To correctly attribute customers, you must call this method with every
      incoming `url` and `userActivity` from the following `UIApplicationDelegate` methods:
 
      - `application(_:open:options:)`
@@ -98,10 +100,10 @@ final public class ButtonMerchant: NSObject {
     }
     
     /**
-     Checks the URL in the passed NSUserActivity for a Button attribution and if present stores the token.
+     Checks the URL in the passed NSUserActivity for Button attribution and if present stores the token.
      
      - Attention:
-     > To correctly attribute customers, you must call this method with every
+     To correctly attribute customers, you must call this method with every
      incoming `userActivity` from the following `UIApplicationDelegate` method:
      
      - `application(_:userActivity:restorationHandler:)`
@@ -118,14 +120,14 @@ final public class ButtonMerchant: NSObject {
     }
     
     /**
-     Checks to see if the user visited a url prior to installing your app.
+     Checks to see if the user visited a url destined for your app prior to installing your app.
 
      If a url is found, your completion handler will be called with the url and you are responsible
      for navigating the user to the relevant content in your app. If a url is not found or an error occurs, your
      completion handler will be called without a url and you can continue with your normal launch sequence.
 
      - Attention:
-     > This method checks for a post-install url exactly *one time* after a user has installed your app.
+     This method checks for a post-install url exactly *one time* after a user has installed your app.
      Subsequent calls will result in your completion handler being called without a url. You do not need to wait
      for the completion handler before continuing with your normal launch sequence but you should be prepared
      to handle a post-install url if one is found. All subsequent incoming urls will be routed to your
@@ -145,8 +147,8 @@ final public class ButtonMerchant: NSObject {
        - order: Your order object to be reported.
        - completion: An optional completion block taking an optional error.
 
-     See also: Reporting Orders to Button
-     ([docs](https://developer.usebutton.com/guides/merchants/ios/report-orders-to-button#report-orders-to-buttons-order-api))
+     - SeeAlso:
+       [Reporting Orders to Button](https://developer.usebutton.com/docs/client-side-order-reporting)
     */
     @objc public static func reportOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.reportOrder(order, completion)
@@ -197,26 +199,13 @@ final public class ButtonMerchant: NSObject {
     }
 }
 
-// MARK: - Deprecations
-
-extension ButtonMerchant {
-    /**
-     Deprecated.
-
-     This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.
-     */
-    @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
-    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
-        guard let completion = completion else {
-            return
-        }
-        completion(ButtonMerchantError.trackOrderDeprecationError)
-    }
-}
-
 private class Configured: Configurable {
     /**
-     Deprecated. @see Configurable
+     - Important:
+       Deprecated.
+     
+     - SeeAlso:
+       Configurable
      */
     var includesIFA: Bool {
         get { return false }
