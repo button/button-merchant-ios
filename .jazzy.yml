@@ -1,8 +1,10 @@
+theme: "fullwidth"
 module: ButtonMerchant
 author: Button
 author_url: https://usebutton.com
 podspec: "ButtonMerchant.podspec"
 output: "docs/latest"
+undocumented_text: ""
 exclude:
   - "Source/Extensions/*"
 
