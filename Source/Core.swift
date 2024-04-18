@@ -120,7 +120,8 @@ final internal class Core: CoreType {
                     updateAttributionIfNeeded(token: incomingToken)
                     allowedQueryItems.append(item)
                 case "from_landing",
-                     "from_tracking",
+                    "from_tracking",
+                    "from_appstore",
                      _ where item.name.lowercased().hasPrefix("btn_"):
                     allowedQueryItems.append(item)
                 default:

@@ -1,6 +1,5 @@
 # Button Merchant Library
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/button/button-merchant-ios/badge.svg?t=Nu4idN)](https://coveralls.io/github/button/button-merchant-ios)
 [![Version](https://img.shields.io/cocoapods/v/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant)
 [![Platform](https://img.shields.io/cocoapods/p/ButtonMerchant.svg?style=flat)](http://cocoapods.org/pods/ButtonMerchant)
 
@@ -48,9 +47,3 @@ Button, Inc.
 ## License
 
 ButtonMerchant is available under the MIT license. See the LICENSE file for more info.
-
-## Contributing
-
-We are looking forward to accepting your contributions to this project very soon!
-
-Until then, if you have something you would like to contribute, please [get in touch](opensource@usebutton.com).

@@ -1,7 +1,7 @@
 //
-// StringTests.swift
+// ButtonMerchantDeprecations.swift
 //
-// Copyright © 2019 Button, Inc. All rights reserved. (https://usebutton.com)
+// Copyright © 2024 Button, Inc. All rights reserved. (https://usebutton.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,27 +21,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-	
-import XCTest
 
-class StringTests: XCTestCase {
+import Foundation
 
-    func testIsPlainTextEmail_arbitraryString_returnsFalse() {
-        let email = "not_an_email"
+// MARK: - Deprecations
 
-        XCTAssertFalse(email.isPlainTextEmail)
+extension ButtonMerchant {
+    /**
+     - Important:
+       This method is deprecated and will be removed in a future version. It is safe to remove your usage of this method.
+     */
+    @available(*, deprecated, message: "No longer supported. You can safely remove your usage of this method.")
+    @objc public static func trackOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
+        guard let completion = completion else {
+            return
+        }
+        completion(ButtonMerchantError.trackOrderDeprecationError)
     }
-
-    func testIsPlainTextEmail_hexString_returnsFalse() {
-        let email = "314c70b69a726ae7934806b2a0621a0eb193139e38d9bf6134191faa61b7bb29"
-
-        XCTAssertFalse(email.isPlainTextEmail)
-    }
-
-    func testIsPlainTextEmail_returnsTrue() {
-        let email = "betty@usebutton.com"
-
-        XCTAssertTrue(email.isPlainTextEmail)
-    }
-
 }

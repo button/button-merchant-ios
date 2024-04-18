@@ -145,11 +145,11 @@ class OrderTests: XCTestCase {
 
         // Act
         let customer = Order.Customer(id: id)
-        customer.email = email
+        customer.email = email // Set to confirm deprecated no-op behavior
 
         // Assert
         XCTAssertEqual(customer.id, id)
-        XCTAssertEqual(customer.email, emailSha256)
+        XCTAssertNil(customer.email) // confirms no-op
         XCTAssertNil(customer.isNew)
     }
 
@@ -160,11 +160,11 @@ class OrderTests: XCTestCase {
 
         // Act
         let customer = Order.Customer(id: id)
-        customer.email = emailSha256
+        customer.email = emailSha256 // Set to confirm deprecated no-op behavior
 
         // Assert
         XCTAssertEqual(customer.id, id)
-        XCTAssertEqual(customer.email, emailSha256)
+        XCTAssertNil(customer.email) // confirms no-op
         XCTAssertNil(customer.isNew)
     }
     

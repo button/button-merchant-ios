@@ -96,20 +96,13 @@ Represents an order placed by the user to be reported using `ButtonMerchant.repo
         let id: String
 
         /**
-         The SHA-256 hash of the transacting customer’s lowercase email, as a 64-character hex string.
-
-         **Note**: The value of the e-mail address must be converted to lowercase before
-         computing the hash. The hash itself may use uppercase or lowercase hex characters.
+         - Important:
+           Deprecated. This property is a no-op. Data is not collected.
         */
+        @available(*, deprecated, message: "Setting this property is a no-op. Data is not collected.")
         public var email: String? {
-            didSet {
-                guard let email = self.email else {
-                    return
-                }
-                if email.isPlainTextEmail {
-                    self.email = email.lowercased().sha256
-                }
-            }
+            set {}
+            get { return nil }
         }
         
         /**
@@ -129,7 +122,6 @@ Represents an order placed by the user to be reported using `ButtonMerchant.repo
 
         enum CodingKeys: String, CodingKey {
             case id
-            case email = "email_sha256"
             case isNew = "is_new"
         }
     }

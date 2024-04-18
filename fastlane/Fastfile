@@ -28,12 +28,11 @@ platform :ios do
 
   desc "Run the Button merchant library tests"
   lane :test do |options|
-    lint
-    run_tests(
+    xcodebuild(
+      xcargs: "test",
       workspace: "ButtonMerchant.xcworkspace",
       scheme: options[:scheme],
-      device: "iPhone X",
-      slack_message: "button-merchant-ios #{options[:scheme]}"
+      destination: "name=#{options[:name]},OS=#{options[:os]}"
     )
   end
 
@@ -43,8 +42,7 @@ platform :ios do
       workspace: "ButtonMerchant.xcworkspace",
       proj: "ButtonMerchant.xcodeproj",
       scheme: "ButtonMerchant",
-      ignore: ["Tests/**.*", "Example/**.*"],
-      travis_pro: !options[:show],
+      ignore: ["Tests/**.*", "Example/**.*", "Source/*/UIApplicationExtensions.swift"],
       coveralls: !options[:show],
       simple_output: !options[:show],
       html: options[:show],

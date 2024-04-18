@@ -25,12 +25,12 @@
 import Foundation
 
 /**
- An interface through which library features can be enabled/disabled.
  */
 @objc public protocol Configurable: AnyObject {
 
     /**
-     Deprecated. This library does not read the advertising identifier even when permission is granted by the user.
+     - Important:
+       Deprecated. This library does not read the advertising identifier even when permission is granted by the user.
     */
     @available(*, deprecated, message: "Advertising identifier is not accessed by this library.")
     var includesIFA: Bool { get set }

@@ -7,32 +7,35 @@ on:
     branches: [master]
 jobs:
   test:
-    runs-on:  macos-latest
+    runs-on:  macos-14
+
+    strategy:
+      fail-fast: false
+      matrix: 
+        tests: ['UnitTests', 'IntegrationTests']
+
     steps:
     - name: Clone Repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
+    
     - name: Gem Cache
-      uses: actions/cache@v1
+      uses: ruby/setup-ruby@v1
       with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gem-
-    - name: Cocoapod Cache
-      uses: actions/cache@v1
+        ruby-version: 2.7
+        bundler-cache: true
+
+    - name: CocoaPods Cache
+      uses: actions/cache@v4
       with:
         path: Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pods-
-    - name: Bundle Install
-      run: bundle --path vendor/bundle
+
     - name: Pod Install
       run: |
         bundle exec pod install
-    - name: Run Unit Tests
+
+    - name: ${{ matrix.tests }} Tests
       run: |
-        bundle exec fastlane test scheme:"UnitTests"
-    - name: Run Integration Tests
-      run: |
-        bundle exec fastlane test scheme:"IntegrationTests"
+        bundle exec fastlane test scheme:${{ matrix.tests }} os:17.2 name:"iPhone 15 Pro"

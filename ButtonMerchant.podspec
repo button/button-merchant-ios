@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ButtonMerchant'
-  s.version          = '1.6.0'
+  s.version          = '1.7.0'
   s.summary          = 'An open source client library for Button merchants.'
   s.description      = <<-DESC
 The Button Merchant library is a light-weight, open-source method
@@ -18,6 +18,7 @@ and join the Button Marketplace.
   s.swift_version = '5.0'
 
   s.source_files = 'Source/**/*.{swift,h}'
+  s.resources = ["Source/Resources/PrivacyInfo.xcprivacy"]
 
-  s.pod_target_xcconfig = { "SWIFT_VERSION" => 5.0 }
+  s.pod_target_xcconfig = { "SWIFT_VERSION" => 5.3 }
 end

@@ -29,7 +29,7 @@ public extension ButtonMerchant {
      Reports an event to Button.
      
      - Attention:
-     > This method is not intended for use unless in coordination with your Button representative for your specific integration needs.
+       This method is not intended for use unless in coordination with your Button representative for your specific integration needs.
      
      - Parameters:
         - name: The name of the event
