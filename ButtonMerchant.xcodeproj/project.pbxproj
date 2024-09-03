@@ -131,11 +131,6 @@
 		FB78CAE12618F9360076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
 		FB78CBC6261A6C110076D9C3 /* CustomerCompatibilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */; };
 		FB78CBCC261A6C4F0076D9C3 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = FB78CAE02618F9360076D9C3 /* Customer.m */; };
-		FBEBC8BB25434A5700AAE9E5 /* AppIntegrationVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */; };
-		FBEBC8CD2543557D00AAE9E5 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */; };
-		FBEBC8DF2543576A00AAE9E5 /* TestApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */; };
-		FBEBC92125435D5900AAE9E5 /* TestAppIntegrationVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC92025435D5900AAE9E5 /* TestAppIntegrationVerification.swift */; };
-		FBEBC92825436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC92725436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift */; };
 		FBEBC99625437E1700AAE9E5 /* ButtonMerchantError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */; };
 /* End PBXBuildFile section */
 
@@ -335,11 +330,6 @@
 		FB78CADF2618F9360076D9C3 /* Customer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		FB78CAE02618F9360076D9C3 /* Customer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		FB78CBC5261A6C110076D9C3 /* CustomerCompatibilityTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomerCompatibilityTest.m; sourceTree = "<group>"; };
-		FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntegrationVerification.swift; sourceTree = "<group>"; };
-		FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
-		FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestApplication.swift; sourceTree = "<group>"; };
-		FBEBC92025435D5900AAE9E5 /* TestAppIntegrationVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAppIntegrationVerification.swift; sourceTree = "<group>"; };
-		FBEBC92725436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntegrationVerificationTests.swift; sourceTree = "<group>"; };
 		FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonMerchantError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -457,7 +447,6 @@
 				FB5AA6AC24D0A19B0057F3A0 /* ApplicationIdTests.swift */,
 				DAA3F29A24E305790046DA61 /* ButtonProductTests.swift */,
 				DAD885D024E41B4100E138BF /* ActivityRequestBodyTests.swift */,
-				FBEBC92725436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift */,
 				DE175A2320A0EF12005C97B9 /* Extensions */,
 				DEE61B2B206569EA0039E47A /* TestExtensions */,
 				DA0FA2A1205C1EE8008296A6 /* TestObjects */,
@@ -553,7 +542,6 @@
 				DA756B8222B33762003397E3 /* URLAuthenticationChallengeExtensions.swift */,
 				DA756B8422B3378B003397E3 /* URLProtectionSpaceExtensions.swift */,
 				9E56CE5822B8049C00E75884 /* StringExtensions.swift */,
-				FBEBC8CC2543557D00AAE9E5 /* UIApplicationExtensions.swift */,
 				DE59498C28F49FA200FD9737 /* ButtonMerchantExtensions.swift */,
 				DED9E4B12BD0D667004F24F3 /* ButtonMerchantDeprecations.swift */,
 			);
@@ -563,7 +551,6 @@
 		9EAA60C8207ACA3800D21601 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				FBEBC8DE2543576A00AAE9E5 /* TestApplication.swift */,
 				9E4C496920616B130053E4CA /* TestUserDefaults.swift */,
 				9E6F4342206C171F004242A1 /* TestURLSession.swift */,
 				9E5475E3206D91A900947A1C /* TestURLSessionDataTask.swift */,
@@ -595,7 +582,6 @@
 				DA191A2322D4F75B00ED88B9 /* TestReportOrderRequest.swift */,
 				DA191A2522D5261100ED88B9 /* TestRetryPolicy.swift */,
 				9EAA60C8207ACA3800D21601 /* Foundation */,
-				FBEBC92025435D5900AAE9E5 /* TestAppIntegrationVerification.swift */,
 			);
 			path = TestObjects;
 			sourceTree = "<group>";
@@ -676,7 +662,6 @@
 			isa = PBXGroup;
 			children = (
 				DE8F54BD2BCDC8F800DB880B /* Resources */,
-				FBEBC8BA25434A5700AAE9E5 /* AppIntegrationVerification.swift */,
 				DE175A1920A09BB1005C97B9 /* Version */,
 				DE865F792052F90600F4054D /* ButtonMerchant.swift */,
 				FBEBC99525437E1700AAE9E5 /* ButtonMerchantError.swift */,
@@ -1178,7 +1163,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE175A1C20A09DEA005C97B9 /* Version.generated.swift in Sources */,
-				FBEBC8BB25434A5700AAE9E5 /* AppIntegrationVerification.swift in Sources */,
 				9EB1B0A0207AB43E00BE0A1A /* System.swift in Sources */,
 				DAE8B96F22AF5F0700D11AF9 /* TrustEvaluator.swift in Sources */,
 				DE2F7450208F6552001E4BD6 /* ConfigurationError.swift in Sources */,
@@ -1203,7 +1187,6 @@
 				9E2B4315206C12BC009F2886 /* URLSessionExtensions.swift in Sources */,
 				9E9CDEA72076BD7900A1424C /* Order.swift in Sources */,
 				DA4AF05720869966002C3E0E /* NotificationCenterExtensions.swift in Sources */,
-				FBEBC8CD2543557D00AAE9E5 /* UIApplicationExtensions.swift in Sources */,
 				DA2F912222A83FEE000054D6 /* SessionDelegate.swift in Sources */,
 				DA756B8322B33762003397E3 /* URLAuthenticationChallengeExtensions.swift in Sources */,
 				9EFF2B5A2065965000250269 /* UserDefaultsExtensions.swift in Sources */,
@@ -1239,7 +1222,6 @@
 				9EDED110208FA3930049A56A /* UserAgentTests.swift in Sources */,
 				DA0FA2A3205C1EF2008296A6 /* TestCore.swift in Sources */,
 				DA29D894209CF34D00537806 /* UIDeviceTests.swift in Sources */,
-				FBEBC92125435D5900AAE9E5 /* TestAppIntegrationVerification.swift in Sources */,
 				DA29D892209CDC3100537806 /* URLSessionTests.swift in Sources */,
 				DA756B7922B2DB67003397E3 /* SessionDelegateTests.swift in Sources */,
 				FB70030B24CF46260050E021 /* AppEventsRequestBodyTests.swift in Sources */,
@@ -1251,10 +1233,8 @@
 				DCF4AD0722B7E31C000DA3B2 /* ReportOrderBodyTests.swift in Sources */,
 				DEE61B2D20656A090039E47A /* XCTestExtensions.swift in Sources */,
 				9E77202520607331005F740B /* ButtonMerchantTests.swift in Sources */,
-				FBEBC8DF2543576A00AAE9E5 /* TestApplication.swift in Sources */,
 				DA756B8722B3ECE9003397E3 /* TrustEvaluatorTests.swift in Sources */,
 				9E76FEB32090EEC700BDC844 /* TestUserAgent.swift in Sources */,
-				FBEBC92825436AFA00AAE9E5 /* AppIntegrationVerificationTests.swift in Sources */,
 				9EAA60C5207AC9AC00D21601 /* TestFileManager.swift in Sources */,
 				9E5475E2206D7E0C00947A1C /* ClientTests.swift in Sources */,
 				DA756B6F22B2B717003397E3 /* PEMCertificateTests.swift in Sources */,
@@ -1395,7 +1375,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1446,7 +1426,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1515,7 +1495,6 @@
 				DEVELOPMENT_TEAM = 39F27QYP2C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1545,7 +1524,6 @@
 				DEVELOPMENT_TEAM = 39F27QYP2C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/IntegrationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1640,6 +1618,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1678,6 +1657,7 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1709,7 +1689,6 @@
 				DEVELOPMENT_TEAM = 39F27QYP2C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1737,7 +1716,6 @@
 				DEVELOPMENT_TEAM = 39F27QYP2C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Tests/UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

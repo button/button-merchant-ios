@@ -190,12 +190,10 @@ final public class ButtonMerchant: NSObject {
                             userAgent: UserAgent(libraryVersion: Version.stringValue, system: system),
                             defaults: buttonDefaults,
                             system: system)
-        let verifier = AppIntegrationVerification(application: UIApplication.shared, defaults: buttonDefaults)
         return Core(buttonDefaults: buttonDefaults,
                     client: client,
                     system: system,
-                    notificationCenter: NotificationCenter.default,
-                    verifier: verifier)
+                    notificationCenter: NotificationCenter.default)
     }
 }
 
