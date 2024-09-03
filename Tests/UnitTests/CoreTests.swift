@@ -31,15 +31,12 @@ class CoreTests: XCTestCase {
     var testDefaults: TestButtonDefaults!
     var testNotificationCenter: TestNotificationCenter!
     var testClient: TestClient!
-    var testVerifier: TestAppIntegrationVerification!
     var core: Core!
     
     override func setUp() {
         testSystem = TestSystem()
         testDefaults = TestButtonDefaults(userDefaults: TestUserDefaults())
         testNotificationCenter = TestNotificationCenter()
-        testVerifier = TestAppIntegrationVerification(application: TestApplication(),
-                                                      defaults: testDefaults)
         testClient = TestClient(session: TestURLSession(),
                                 userAgent: TestUserAgent(system: testSystem),
                                 defaults: testDefaults,
@@ -47,8 +44,7 @@ class CoreTests: XCTestCase {
         core = Core(buttonDefaults: testDefaults,
                     client: testClient,
                     system: testSystem,
-                    notificationCenter: testNotificationCenter,
-                    verifier: testVerifier)
+                    notificationCenter: testNotificationCenter)
     }
     
     func testInitialization() {
@@ -56,7 +52,6 @@ class CoreTests: XCTestCase {
         XCTAssertEqualReferences(core.client, testClient)
         XCTAssertEqualReferences(core.system, testSystem)
         XCTAssertEqualReferences(core.notificationCenter, testNotificationCenter)
-        XCTAssertEqualReferences(core.appIntegrationVerifier, testVerifier)
     }
     
     func testSetApplicationId_setClientApplicationId() {
@@ -271,28 +266,6 @@ class CoreTests: XCTestCase {
                        Notification.Name.Button.AttributionTokenDidChange)
         XCTAssertEqual(testNotificationCenter.testUserInfo! as NSDictionary,
                        [Notification.Key.NewToken: expectedSourceToken])
-    }
-    
-    func testTrackIncomingURL_forwardsAttributedURL_toIntegrationVerifier() {
-        // Arrange
-        let url = URL(string: "https://usebutton.com/test?btn_ref=srctok-123")!
-        
-        // Act
-        core.trackIncomingURL(url)
-        
-        // Assert
-        XCTAssertEqual(testVerifier.actualURL, url)
-    }
-    
-    func testTrackIncomingURL_forwardsAnyURL_toIntegrationVerifier() {
-        // Arrange
-        let url = URL(string: "https://example.com")!
-        
-        // Act
-        core.trackIncomingURL(url)
-        
-        // Assert
-        XCTAssertEqual(testVerifier.actualURL, url)
     }
     
     func testAttributionTokenReturnsStoredToken() {

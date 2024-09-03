@@ -37,9 +37,7 @@ class ButtonMerchantTests: XCTestCase {
                                                defaults: defaults,
                                                system: TestSystem()),
                             system: TestSystem(),
-                            notificationCenter: TestNotificationCenter(),
-                            verifier: TestAppIntegrationVerification(application: TestApplication(),
-                                                                     defaults: defaults))
+                            notificationCenter: TestNotificationCenter())
     }
     
     override func tearDown() {

@@ -32,7 +32,6 @@ internal protocol CoreType {
     var notificationCenter: NotificationCenterType { get }
     var shouldFetchPostInstallURL: Bool { get }
     var attributionToken: String? { get set }
-    var appIntegrationVerifier: AppIntegrationVerificationType { get }
     func clearAllData()
     func trackIncomingURL(_ url: URL)
     func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void)
@@ -41,8 +40,7 @@ internal protocol CoreType {
     init(buttonDefaults: ButtonDefaultsType,
          client: ClientType,
          system: SystemType,
-         notificationCenter: NotificationCenterType,
-         verifier: AppIntegrationVerificationType)
+         notificationCenter: NotificationCenterType)
 }
 
 /**
@@ -73,19 +71,15 @@ final internal class Core: CoreType {
         }
     }
     
-    var appIntegrationVerifier: AppIntegrationVerificationType
-    
     required init(buttonDefaults: ButtonDefaultsType,
                   client: ClientType,
                   system: SystemType,
-                  notificationCenter: NotificationCenterType,
-                  verifier: AppIntegrationVerificationType) {
+                  notificationCenter: NotificationCenterType) {
         self.applicationId = nil
         self.buttonDefaults = buttonDefaults
         self.client = client
         self.system = system
         self.notificationCenter = notificationCenter
-        self.appIntegrationVerifier = verifier
     }
 
     /**
@@ -130,8 +124,6 @@ final internal class Core: CoreType {
             }
             urlComponents.queryItems = allowedQueryItems
         }
-        
-        appIntegrationVerifier.handleIncomingURL(url)
         
         guard let filteredURL = urlComponents.url else {
             return

@@ -43,7 +43,6 @@ class TestCore: CoreType {
     var client: ClientType
     var system: SystemType
     var notificationCenter: NotificationCenterType
-    var appIntegrationVerifier: AppIntegrationVerificationType
     
     var attributionToken: String? {
         get {
@@ -61,13 +60,11 @@ class TestCore: CoreType {
     required init(buttonDefaults: ButtonDefaultsType,
                   client: ClientType,
                   system: SystemType,
-                  notificationCenter: NotificationCenterType,
-                  verifier: AppIntegrationVerificationType) {
+                  notificationCenter: NotificationCenterType) {
         self.buttonDefaults = buttonDefaults
         self.client = client
         self.system = system
         self.notificationCenter = notificationCenter
-        self.appIntegrationVerifier = verifier
     }
     
     func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
