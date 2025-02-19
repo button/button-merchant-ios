@@ -1,0 +1,50 @@
+@fastfile_dir = File.expand_path(File.dirname(__FILE__))
+@build_dir = "#{@fastfile_dir}/builds/ButtonMerchant"
+@ios_archive = "#{@build_dir}/ButtonMerchant.iphoneos.xcarchive"
+@sim_archive = "#{@build_dir}/ButtonMerchant.iphonesimulator.xcarchive"
+@xcframework_path = "#{@build_dir}/ButtonMerchant.xcframework"
+@relative_framework_path = 'Products/Library/Frameworks/ButtonMerchant.framework'
+
+platform :ios do
+
+    desc "Build an XCFramework"
+    lane :build do
+        ENV["CI"] = "true"
+        archive_framework(destination: 'generic/platform=ios', output: @ios_archive)
+        archive_framework(destination: 'generic/platform=iOS Simulator', output: @sim_archive)
+        make_xcframework
+    end
+
+    desc "Archives a framework for specific destinations"
+    private_lane :archive_framework do |options|
+        UI.user_error! "❌  You must specify a destination platform!" unless !options[:destination].nil?
+        UI.user_error! "❌  You must specify an output location for the archive!" unless !options[:output].nil?
+        UI.message "🛠 Building #{options[:output]}..."
+        xcodebuild(
+          workspace: 'ButtonMerchant.xcworkspace',
+          scheme: 'ButtonMerchant',
+          configuration: 'Release',
+          destination: options[:destination],
+          archive: true,
+          archive_path: options[:output],
+          build_settings: {
+            "SKIP_INSTALL" => "NO", 
+            "BUILD_LIBRARY_FOR_DISTRIBUTION" => "YES",
+            "SWIFT_TREAT_WARNINGS_AS_ERRORS" => "NO"
+          }
+        )
+    end
+
+    desc "Merges multiple framework archives into an XCFramework"
+    private_lane :make_xcframework do
+      sh "rm -rf #{@xcframework_path}"
+  
+      ios_framework = "#{@ios_archive}/#{@relative_framework_path}"
+      sim_framework = "#{@sim_archive}/#{@relative_framework_path}"
+  
+      ios_debug_symbols = "-debug-symbols #{Dir["#{@ios_archive}/dSYMs/*"].first}"
+      sim_debug_symbols = "-debug-symbols #{Dir["#{@sim_archive}/dSYMs/*"].first}"
+      
+      sh "xcodebuild -create-xcframework -framework #{ios_framework} #{ios_debug_symbols} -framework #{sim_framework} #{sim_debug_symbols} -output #{@xcframework_path}"
+    end
+end
