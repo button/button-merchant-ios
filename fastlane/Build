@@ -30,7 +30,8 @@ platform :ios do
           build_settings: {
             "SKIP_INSTALL" => "NO", 
             "BUILD_LIBRARY_FOR_DISTRIBUTION" => "YES",
-            "SWIFT_TREAT_WARNINGS_AS_ERRORS" => "NO"
+            "SWIFT_TREAT_WARNINGS_AS_ERRORS" => "NO",
+            "OTHER_SWIFT_FLAGS" => "-Xfrontend -module-interface-preserve-types-as-written"
           }
         )
     end
@@ -46,5 +47,22 @@ platform :ios do
       sim_debug_symbols = "-debug-symbols #{Dir["#{@sim_archive}/dSYMs/*"].first}"
       
       sh "xcodebuild -create-xcframework -framework #{ios_framework} #{ios_debug_symbols} -framework #{sim_framework} #{sim_debug_symbols} -output #{@xcframework_path}"
+
+      patch_swiftinterface
+    end
+
+    desc "Strips the conflicting module interface declaration https://github.com/swiftlang/swift/issues/56573"
+    private_lane :patch_swiftinterface do 
+      swiftinterface_files = Dir.glob(File.join(@xcframework_path, "**", "*.swiftinterface"))
+      if swiftinterface_files.empty?
+        UI.user_error!("No swiftinterface files found in #{xcframework_path}")
+      end
+      swiftinterface_files.each do |swiftinterface_file|
+        UI.message("Patching swiftinterface file: #{swiftinterface_file}")
+        content = File.read(swiftinterface_file)
+        new_content = content.gsub("ButtonMerchant.", "")
+        File.open(swiftinterface_file, "w") { |file| file.write(new_content) }
+      end
+      UI.success("Successfully patched #{swiftinterface_files.count} swiftinterface file(s).")
     end
 end
