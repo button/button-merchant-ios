@@ -1,0 +1,19 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/wes/Developer/button-merchant-ios/Source/ButtonMerchantError.swift",
+      "line": 32,
+      "symbol": "ButtonMerchantError.trackOrderDeprecationError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/wes/Developer/button-merchant-ios/Source/ButtonMerchantError.swift",
+      "line": 33,
+      "symbol": "ButtonMerchantError.noEventsError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/wes/Developer/button-merchant-ios"
+}

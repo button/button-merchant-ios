@@ -1,3 +1,4 @@
+import 'Build'
 fastlane_require 'timeout'
 
 @fastfile_dir = File.expand_path(File.dirname(__FILE__))
