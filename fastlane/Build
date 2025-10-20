@@ -3,6 +3,7 @@
 @ios_archive = "#{@build_dir}/ButtonMerchant.iphoneos.xcarchive"
 @sim_archive = "#{@build_dir}/ButtonMerchant.iphonesimulator.xcarchive"
 @xcframework_path = "#{@build_dir}/ButtonMerchant.xcframework"
+@zipped_xcframework_path = "#{@xcframework_path}.zip"
 @relative_framework_path = 'Products/Library/Frameworks/ButtonMerchant.framework'
 
 platform :ios do
@@ -13,6 +14,7 @@ platform :ios do
         archive_framework(destination: 'generic/platform=ios', output: @ios_archive)
         archive_framework(destination: 'generic/platform=iOS Simulator', output: @sim_archive)
         make_xcframework
+        zip(path: @xcframework_path, output_path: @zipped_xcframework_path)
     end
 
     desc "Archives a framework for specific destinations"

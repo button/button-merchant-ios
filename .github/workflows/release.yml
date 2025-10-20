@@ -1,0 +1,99 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Add GitHub to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Read version from Version.generated.swift
+        run: |
+          VERSION=$(grep -oE '[0-9]+\.[0-9]+\.[0-9]+' Source/Version/Version.generated.swift)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Squash release branch into one commit
+        run: |
+          VERSION=${VERSION}
+          git fetch origin master
+          BASE=$(git merge-base HEAD origin/master)
+          git reset $BASE
+          git add -A
+          git commit -m "Release: $VERSION"
+
+      - name: Push to target repo (SSH)
+        run: |
+          REPO="git@github.com:button/button-merchant-iosp.git"
+          git push $REPO HEAD:refs/heads/master --force
+      
+      - name: Push tag (SSH)
+        run: |
+          REPO="git@github.com:button/button-merchant-ios.git"
+          git tag -d $VERSION || true
+          git tag $VERSION
+          git push $REPO $VERSION --force
+
+      - name: Create GitHub Release (cross-repo)
+        env:
+          GITHUB_TOKEN: ${{ secrets.BUTTON_BOT_TOKEN }}
+          VERSION: ${{ env.VERSION }}
+          REPO: button/button-merchant-ios
+        run: |
+          RESPONSE=$(curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/releases \
+            -d @- <<EOF
+          {
+            "tag_name": "$VERSION",
+            "name": "Release $VERSION",
+            "body": "Automated release for $VERSION",
+            "draft": false,
+            "prerelease": false
+          }
+          EOF
+          )
+
+          UPLOAD_URL=$(echo "$RESPONSE" | jq -r .upload_url | sed -e "s/{?name,label}//")
+          echo "UPLOAD_URL=$UPLOAD_URL" >> $GITHUB_ENV
+      
+      - name: Gem Cache
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+
+      - name: Build xcframework
+        run: |
+          bundle install
+          bundle exec fastlane build
+      
+      - name: Upload xcframework
+        env:
+          GH_TOKEN: ${{ secrets.BUTTON_BOT_TOKEN }}
+        run: |
+          curl \
+          -H "Authorization: token $GH_TOKEN" \
+          -H "Content-Type: application/zip" \
+          --data-binary @"fastlane/builds/ButtonMerchant/ButtonMerchant.xcframework.zip" \
+          "$UPLOAD_URL?name=ButtonMerchant.xcframework.zip"
