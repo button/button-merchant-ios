@@ -27,7 +27,7 @@ import UIKit
 
 final class TestSystem: SystemType {
 
-    //Test Properties
+    // Test Properties
     var testIsNewInstall = false
     var testCurrentDate: Date
 

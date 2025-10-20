@@ -27,7 +27,6 @@ import XCTest
 
 class AppEventTests: XCTestCase {
 
-    // swiftlint:disable line_length
     func testInitialization_createsInstance() {
         let event = AppEvent(name: "test event", value: ["foo": "bar"], attributionToken: "some token", time: "some time", uuid: "some uuid", source: .button)
         XCTAssertEqual(event.name, "test event")
@@ -82,5 +81,4 @@ class AppEventTests: XCTestCase {
             "source": "custom"
         ])
     }
-    // swiftlint:enable line_length
 }

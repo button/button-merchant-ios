@@ -22,7 +22,7 @@
 // SOFTWARE.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT double ButtonMerchantVersionNumber;
 FOUNDATION_EXPORT const unsigned char ButtonMerchantVersionString[];

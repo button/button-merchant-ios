@@ -42,9 +42,7 @@ public enum ConfigurationError: Error {
      - Note:
      Get your application Id from from the [Button Dashboard](https://app.usebutton.com)
      */
-    // swiftlint:disable identifier_name
     case invalidApplicationId(appicationId: String)
-    // swiftlint:enable identifier_name
     
     var domain: String {
         return "com.usebutton.merchant.error"

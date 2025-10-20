@@ -44,6 +44,7 @@ final public class ButtonMerchant: NSObject {
             return core
         }
         // This should never be set directly
+        // swiftlint:disable:next unused_setter_value
         set { }
     }
     
@@ -72,7 +73,7 @@ final public class ButtonMerchant: NSObject {
         - applicationId: Your application Id (required)
 
      */
-    @objc public static func configure(applicationId: String) {
+    public static func configure(applicationId: String) {
         let appId = ApplicationId(applicationId)
         if appId == nil {
             let error = ConfigurationError.invalidApplicationId(appicationId: applicationId)
@@ -95,7 +96,7 @@ final public class ButtonMerchant: NSObject {
         - url: A URL that has entered your app from a third party source.
 
      */
-    @objc public static func trackIncomingURL(_ url: URL) {
+    public static func trackIncomingURL(_ url: URL) {
         core.trackIncomingURL(url)
     }
     
@@ -112,7 +113,7 @@ final public class ButtonMerchant: NSObject {
         - userActivity: A NSUserActivity with which your app has been continued.
      
      */
-    @objc public static func trackIncomingUserActivity(_ userActivity: NSUserActivity) {
+    public static func trackIncomingUserActivity(_ userActivity: NSUserActivity) {
         guard let url = userActivity.webpageURL else {
             return
         }
@@ -136,7 +137,7 @@ final public class ButtonMerchant: NSObject {
      - Parameters:
         - completion: A completion block taking an optional url and optional error.
      */
-    @objc public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
+    public static func handlePostInstallURL(_ completion: @escaping (URL?, Error?) -> Void) {
         core.handlePostInstallURL(completion)
     }
 
@@ -150,14 +151,14 @@ final public class ButtonMerchant: NSObject {
      - SeeAlso:
        [Reporting Orders to Button](https://developer.usebutton.com/docs/client-side-order-reporting)
     */
-    @objc public static func reportOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
+    public static func reportOrder(_ order: Order, completion: ((Error?) -> Void)? = nil) {
         core.reportOrder(order, completion)
     }
 
     /**
      Discards the current session and all persisted data.
      */
-    @objc public static func clearAllData() {
+    public static func clearAllData() {
         core.clearAllData()
     }
 
@@ -207,6 +208,7 @@ private class Configured: Configurable {
      */
     var includesIFA: Bool {
         get { return false }
+        // swiftlint:disable:next unused_setter_value
         set {}
     }
 }

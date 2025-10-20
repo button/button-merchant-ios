@@ -101,8 +101,9 @@ Represents an order placed by the user to be reported using `ButtonMerchant.repo
         */
         @available(*, deprecated, message: "Setting this property is a no-op. Data is not collected.")
         public var email: String? {
-            set {}
             get { return nil }
+            // swiftlint:disable:next unused_setter_value
+            set {}
         }
         
         /**

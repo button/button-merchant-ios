@@ -33,7 +33,7 @@ let package = Package(
     products: [
         .library(
             name: "ButtonMerchant",
-            targets: ["ButtonMerchant"]),
+            targets: ["ButtonMerchant"])
     ],
     targets: [
         .target(

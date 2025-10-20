@@ -86,7 +86,7 @@ class ButtonDefaultsTests: XCTestCase {
         defaults.attributionToken = expectedToken
         let actualToken = testUserDefaults.values[ButtonDefaults.Keys.attributonToken.key]
         
-        //Assert
+        // Assert
         XCTAssertEqual(expectedToken, actualToken as? String)
         XCTAssertTrue(testUserDefaults.didCallSynchronize)
     }
@@ -100,7 +100,7 @@ class ButtonDefaultsTests: XCTestCase {
         defaults.attributionToken = nil
         let actualToken = testUserDefaults.values[ButtonDefaults.Keys.attributonToken.key]
         
-        //Assert
+        // Assert
         XCTAssertNil(actualToken)
         XCTAssertTrue(testUserDefaults.didCallSynchronize)
     }
