@@ -43,7 +43,7 @@ jobs:
 
       - name: Push to target repo (SSH)
         run: |
-          REPO="git@github.com:button/button-merchant-iosp.git"
+          REPO="git@github.com:button/button-merchant-ios.git"
           git push $REPO HEAD:refs/heads/master --force
       
       - name: Push tag (SSH)
